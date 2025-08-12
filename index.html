@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<!-- landing page -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spelling Learning Games Hub</title>
+    <link rel="stylesheet" href="global.css">
+    <style>
+        /* Specific styles for the index page to make it a nice hub */
+        .hero-section {
+            background: linear-gradient(to right, #6dd5ed, #2193b0); /* Nice blue gradient */
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .hero-section h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-section p {
+            font-size: 1.5em;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto 50px auto;
+        }
+
+        .game-card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative; /* For the icon positioning */
+            overflow: hidden; /* For the background elements */
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            background-color: rgba(0, 123, 255, 0.1);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .game-card::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(255, 193, 7, 0.1);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .game-card .icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+            color: #007bff; /* Primary blue */
+            position: relative;
+            z-index: 1; /* Bring icon to front */
+        }
+
+        .game-card h3 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .game-card p {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .game-card .play-button {
+            display: inline-block;
+            background-color: #28a745; /* Success green */
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0,123,255,0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .game-card .play-button:hover {
+            background-color: #218838;
+            transform: translateY(-3px);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 60px 15px;
+            }
+            .hero-section h1 {
+                font-size: 2.8em;
+            }
+            .hero-section p {
+                font-size: 1.2em;
+            }
+            .games-grid {
+                grid-template-columns: 1fr; /* Stack cards on small screens */
+                padding: 15px;
+            }
+            .game-card {
+                padding: 20px;
+            }
+            .game-card .icon {
+                font-size: 3.5em;
+            }
+            .game-card h3 {
+                font-size: 1.5em;
+            }
+            .game-card p {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 class="main-title"></h1>
+        </header>
+
+    <div class="hero-section">
+        <h1>Welcome to Your Spelling and Learning Adventure!</h1>
+        <p>Explore interactive Learning games and simulations designed to make Spelling and Learning Education fun and engaging. Get ready to spell, learn, and discover!</p>
+    </div>
+
+    <main class="games-grid">                        
+        <div class="game-card">
+            <div class="icon">📒</div>
+            <h3>ST CHRISTOPHER SCHOOL CBT</h3>
+            <p>Track your progress and identify areas for improvement!</p>
+            <a href="scs-cbt.org.ng/index.html" class="play-button">Login Now</a>
+        </div>
+
+        <div class="game-card">
+            <div class="icon">📚</div>
+            <h3>Spelling Bee 0.2</h3>
+            <p>Test your intellectual knowledge in spelling. Complete challenges to advance through levels!</p>
+            <a href="games/spelling1.html" class="play-button">Play Now</a>
+        </div>
+
+        <div class="game-card">
+            <div class="icon">📖</div>
+            <h3>Spelling Bee 0.3</h3>
+            <p>React quickly spell as many as possible! A fun way to practice quick reflexes and follow instructions.</p>
+            <a onclick="alert('Feature coming soon!');" class="play-button">Explore Now</a>
+        </div>
+
+        <div class="game-card">
+            <div class="icon">🗒️</div>
+            <h3>Spelling Bee 0.4</h3>
+            <p>Explore the human skeleton! Discover and learn about all 207 bones in an interactive way.</p>
+            <a onclick="alert('Feature coming soon!');" class="play-button">Explore Now</a>
+        </div>
+        
+        
+        <div class="game-card">
+            <div class="icon">📓</div>
+            <h3>Spelling Bee 0.5</h3>
+            <p>Navigate the maze, collect healthy snacks, and learn about nutrition on the go!</p>
+            <a onclick="alert('Feature coming soon!');" class="play-button">Explore Now</a>
+        </div>
+        
+        <div class="game-card">
+            <div class="icon">📗</div>
+            <h3>Spelling Bee 0.6</h3>
+            <p>Navigate the maze, collect healthy snacks, and learn about nutrition on the go!</p>
+            <a onclick="alert('Feature coming soon!');" class="play-button">Explore Now</a>
+        </div>
+    </main>
+
+    <footer class="game-footer">
+        &copy; 2025 English Learning. All rights reserved.
+    </footer>
+
+</body>
+</html>
