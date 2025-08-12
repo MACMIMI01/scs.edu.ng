@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">  
+  <meta name="theme-color" content="         
+  <title>Welcome to TestHall!</title>
+  <link rel="icon" type="image/png" href="assets/images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: background-image 1s ease-in-out;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .main-content {
+      text-align: center;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      width: 90%;
+      box-sizing: border-box;
+      flex-shrink: 0;
+      margin-bottom: 70px;
+      position: relative;
+      z-index: 10;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      color: #F8E231;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+    }
+
+    .action-button {
+      background-color: #020169;
+      color: #FFE700;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.2em;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .action-button:hover {
+      background-color: #145cb3;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      background-color: #020169;
+      color: #FFE700;
+      font-size: 0.9em;
+      box-sizing: border-box;
+      z-index: 100;
+    }
+
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+      z-index: 100;
+    }
+
+    @media (max-height: 500px) {
+      body {
+        justify-content: flex-start;
+        padding-top: 50px;
+        padding-bottom: 70px;
+        box-sizing: border-box;
+      }
+
+      .main-content {
+        margin-top: auto;
+        margin-bottom: 50px;
+      }
+
+      h1 {
+        font-size: 2em;
+      }
+
+      p {
+        font-size: 1em;
+      }
+
+      .action-button {
+        padding: 10px 20px;
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <img src="assets/images/logo.png" alt="TestHall Logo" class="logo">
+
+  <div class="main-content">
+    <h1 id="welcome-message">Welcome to TestHall!</h1>
+    <p id="sub-message">Welcome to TestHall, your premier destination for online testing and assessment.</p>
+    <p id="sub-message">Your platform for academic excellence and growth.</p>
+    
+    <a href="#" id="main-action-button" class="action-button">Sing In</a>
+  </div>
+    
+    
+  <footer>
+    <p>&copy; 2024 TestHall. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Background image rotation
+    const backgroundImages = [
+      'assets/images/background/bg1.jpg',
+      'assets/images/background/bg2.jpg',
+      'assets/images/background/bg3.jpg'
+    ];
+
+    // Preload images
+    backgroundImages.forEach((image) => {
+      const img = new Image();
+      img.src = image;
+    });
+
+    // Set initial background image
+    let currentIndex = Math.floor(Math.random() * backgroundImages.length);
+    document.body.style.backgroundImage = `url(${backgroundImages[currentIndex]})`;
+
+    // Rotate background images every 5 seconds
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % backgroundImages.length;
+      document.body.style.backgroundImage = `url(${backgroundImages[currentIndex]})`;
+    }, 5000);
+
+    // Dynamic button behavior
+    document.addEventListener('DOMContentLoaded', () => {
+      const mainActionButton = document.getElementById('main-action-button');
+      const loggedInUserId = localStorage.getItem('loggedIn');
+      if (loggedInUserId) {
+        document.getElementById('welcome-message').textContent = 'Welcome Back to TestHall!';
+        document.getElementById('sub-message').textContent = 'Continue your journey towards excellence.';
+        mainActionButton.textContent = 'Go to Dashboard';
+        mainActionButton.href = 'pages/dashboard.html';
+      } else {
+        mainActionButton.textContent = 'Login';
+        mainActionButton.href = 'pages/login.html';
+      }              
+                
+    });
+  </script>
+</body>
+</html>
