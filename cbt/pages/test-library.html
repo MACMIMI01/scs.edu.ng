@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Library - TestHall</title>
+  <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      display: flex; /* Use flexbox for body to manage sidebar and main content */
+      min-height: 100vh; /* Ensure body takes full viewport height */
+    }
+
+    .sidebar {
+      width: 35px;
+      height: 100vh;
+      background-color: #020169;
+      padding: 10px;
+      box-sizing: border-box;
+      color: #fff;
+      overflow: hidden;
+      border-radius: 5px 0 0 5px;
+      transition: width 0.75s ease;
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 100;
+    }
+
+    .sidebar:hover {
+      width: 200px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      padding: 5px 0;
+    }
+
+    .menu-item i {
+      font-size: 20px;
+      margin-right: 15px;
+      min-width: 25px;
+    }
+
+    .menu-item span {
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .sidebar:hover .menu-item span {
+      opacity: 1;
+    }
+
+    .menu-item:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      padding-left: 5px;
+      border-radius: 5px;
+    }      
+    footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background-color: #020169;
+    color: #fec009;
+    z-index: 100;
+    }      
+    
+    main {
+      margin-left: 80px; /* Space for the collapsed sidebar */
+      padding: 20px;
+      flex-grow: 1; /* Allow main to take up available space */
+      padding-bottom: 70px; /* IMPORTANT: Add padding for the footer */
+      box-sizing: border-box; /* Include padding in element's total width and height */
+    }
+
+    
+    
+    .profile-display-icon {
+      position: fixed;
+      top: 10px;
+      right: 10px; /* Positioned to the top-left, same as sidebar */
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+      cursor: pointer;
+      z-index: 999;
+      transition: transform 0.2s ease;
+    }
+
+    .profile-display-icon:hover {
+        transform: scale(1.05);
+    }
+
+    /* Specific styles for the Test Library content */
+    #test-list {
+        list-style: none; /* Remove default bullet points */
+        padding: 0;
+    }
+    #test-list li {
+        margin-bottom: 15px;
+    }
+    #test-list li a {
+        display: block;
+        background-color: #fec009;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        text-decoration: none;
+        color: #020169;
+        font-weight: bold;
+        position: justified;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    #test-list li a:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+  </style>
+</head>
+<body>
+ <div class="sidebar">
+    <div class="menu-item" onclick="window.location.href='dashboard.html'">
+      <i class="fas fa-tachometer-alt"></i>
+      <span>Dashboard</span>   
+    </div>
+    
+    <div class="menu-item" onclick="window.location.href='test-library.html'">
+      <i class="fas fa-book"></i>
+      <span>Test Library</span>
+    </div>
+    
+    <div class="menu-item" onclick="window.location.href='exam-library.html'">
+      <i class="fas fa-pencil-alt"></i>
+      <span>Exam Library</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='profile.html'">
+      <i class="fas fa-user"></i>
+      <span>My Profile</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='classes.html'">
+      <i class="fas fa-users"></i>
+      <span>Classes</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='guide-FAQ.html'">
+      <i class="fas fa-question-circle"></i>
+      <span>Guide & FAQ</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='about.html'">
+      <i class="fas fa-info-circle"></i>
+      <span>About Us</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='contact.html'">
+      <i class="fas fa-envelope"></i>
+      <span>Contact Us</span>
+    </div>
+    <div class="menu-item" id="logout-button">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Logout</span>
+    </div>
+  </div>
+  <main>
+    <h1>Test Library</h1>
+    <ul id="test-list">
+      </ul>
+  </main>
+  <img id="user-image-display" src="../assets/images/logo.png" alt="User Profile" class="profile-display-icon">
+  <footer>&copy; 2024 TestHall</footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // --- Authentication Check ---
+      const loggedInUserId = localStorage.getItem('loggedInUserId');
+      if (!loggedInUserId) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // --- Logout Button Functionality ---
+      const logoutButton = document.getElementById('logout-button');
+      if (logoutButton) {
+        logoutButton.addEventListener('click', () => {
+          localStorage.removeItem('loggedInUserId');
+          localStorage.removeItem('loggedInUserRole');
+          localStorage.removeItem('loggedInUsername');
+          alert('You have been logged out.');
+          window.location.href = 'login.html';
+        });
+      }
+
+      // --- Profile Picture Display ---
+      const profileDisplayIcon = document.getElementById('user-image-display');
+      let studentData = {}; // Initialize studentData
+
+      fetch('../data/users.json')
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              return response.json();
+          })
+          .then(data => {
+              if (Array.isArray(data)) {
+                  studentData = data.find(user => user.id == loggedInUserId);
+                  if (!studentData) {
+                      console.warn(`User with ID ${loggedInUserId} not found in users.json. Using generic student data.`);
+                      studentData = { id: loggedInUserId, name: 'Generic Student', username: 'generic.user', 'date of birth': 'Unknown', role: 'Student' };
+                  }
+              } else {
+                  studentData = data;
+              }
+
+              if (profileDisplayIcon && studentData) {
+                  const profilePicPath = studentData.profilePicture && studentData.profilePicture !== '' 
+                                         ? studentData.profilePicture 
+                                         : '../assets/profile_pictures/default.jpeg';
+                  profileDisplayIcon.src = profilePicPath;
+                  profileDisplayIcon.alt = `${studentData.name}'s Profile Picture`;
+                  profileDisplayIcon.title = `Go to ${studentData.name}'s Profile`;
+                  profileDisplayIcon.style.cursor = 'pointer';
+                  profileDisplayIcon.onclick = () => {
+                      window.location.href = 'profile.html';
+                  };
+              }
+          })
+          .catch(error => {
+              console.error('Error loading student data:', error);
+              if (profileDisplayIcon) {
+                  profileDisplayIcon.src = '../assets/profile_pictures/default.jpeg';
+                  profileDisplayIcon.alt = 'Default Profile Picture';
+                  profileDisplayIcon.title = 'Default Profile';
+                  profileDisplayIcon.onclick = null;
+              }
+          });
+
+      // --- Dynamic Test List Generation ---
+      const testListElement = document.getElementById('test-list');
+
+      // This array should match the base names of your JSON test files in the 'data/' folder.
+      // You could potentially fetch a manifest JSON file here if you had many tests.
+      const availableTests = [
+        { fileName: 'test_phe_tulip', displayName: 'B⁸ 2nd TERM PHE' },
+        { fileName: 'test_phe_sunflower', displayName: 'B⁹ 2nd TERM PHE' },
+        { fileName: 'test_ict_lavender', displayName: 'ICT Lavender Test' },
+        { fileName: 'test_ict_tulip', displayName: 'ICT Tulip Test' },
+        { fileName: 'test_phe_118', displayName: 'First Aid Knowledge Test' },
+        { fileName: 'test_phe_lavender', displayName: 'B⁷ 3rd TERM PHE' },
+        { fileName: 'third_term_basic_eight_phe', displayName: 'B⁸ 3rd TERM PHE' }
+        // Add more tests here as you create their JSON files
+      ];
+
+      if (testListElement) {
+        testListElement.innerHTML = ''; // Clear any static content
+        availableTests.forEach(test => {
+          const listItem = document.createElement('li');
+          const anchor = document.createElement('a');
+          anchor.href = `test-taking.html?test=${test.fileName}`; // Correct link with query parameter
+          anchor.textContent = test.displayName;
+          listItem.appendChild(anchor);
+          testListElement.appendChild(listItem);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

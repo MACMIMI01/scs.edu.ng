@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🎮 Game Hall</title>
+  <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f0f0f0;
+      margin: 0;
+      font-family: 'Courier New', monospace;
+    }
+    
+    
+    .brand {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #999;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+
+    .console {
+      position: relative;
+      width: 360px;
+      height: 723px;
+      background: linear-gradient(135deg, #FEC009 0%, #020169 100%);
+      border-radius: 40px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+    }
+
+    .console::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 1.5px, transparent 1.5px),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 1.5px, transparent 1.5px);
+      background-size: 30px 30px;
+    }
+    
+    .power-button {
+     position: absolute;
+     bottom: 10px;
+     right: 50px;
+     width: 50px;
+     height: 50px;
+     background-color: #333;
+     border-radius: 50%;
+     cursor: pointer;
+    }
+
+   .power-button:active {
+     background-color: #444;
+    }
+
+   .menu {
+     position: absolute;
+     top: 70px;
+     right: 10px;
+     background-color: #333;
+     padding: 10px;
+     border-radius: 10px;
+     display: none;
+    }
+
+   .menu ul {
+     list-style: none;
+     padding: 0;
+     margin: 0;
+    }
+
+   .menu li {
+     padding: 10px;
+    }  border-bottom: 1px solid #444;
+     cursor: pointer;
+    }
+
+   .menu li:hover {
+     background-color: #444;
+    }
+
+   .console-off {
+     filter: brightness(0);
+     transition: filter 2.5s;
+    }
+
+   .console-on {
+     filter: brightness(1);
+     transition: filter 2.5s;
+    }
+
+    .screen {
+      position: absolute;
+      top: 65px;
+      left: 30px;
+      right: 30px;
+      height: 420px;
+      background: linear-gradient(135deg, #020169 0%, #fec009 100%);
+      border: 5px solid #000;
+      border-radius: 10px;
+      overflow-y: auto;
+      color: #fec009;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .screen h1 {
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .game-card {
+      border: 2px solid cyan;
+      padding: 8px;
+      border-radius: 10px;
+      background-color: #020169;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 12px;
+    }
+
+    .game-card:hover {
+      background-color: #333;
+      transform: scale(1.05);
+    }
+
+    .game-title {
+      margin-top: 5px;
+      font-size: 0.9em;
+    }
+
+    .controls {
+      position: absolute;
+      top: 520px;
+      bottom: 40px;
+      left: 0;
+      right: 0;
+      height: 200px;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 30px;
+    }
+    .d-pad {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .d-pad-up, .d-pad-down, .d-pad-left, .d-pad-right {
+      position: absolute;
+      background: linear-gradient(135deg, #020169 0%, #fec009 100%);
+    }
+
+    .d-pad-up {
+      top: 0;
+      left: 33px;
+      width: 25px;
+      height: 25px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+
+    .d-pad-down {
+      bottom: 0;
+      left: 33px;
+      width: 25px;
+      height: 25px;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    .d-pad-left {
+      top: 33px;
+      left: 0;
+      bottom: 30px;
+      right: 75px;
+      width: 25px;
+      height: 25px;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+
+    .d-pad-right {
+      top: 33px;
+      bottom: 30px;
+      left: 75px;
+      right: 0;
+      width: 25px;
+      height: 25px;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    .d-pad-center {  
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      width: 40px;
+      height: 40px;
+      border-radius: 25px;
+      background-color: #111;
+    }
+
+    .d-pad-up:active, .d-pad-down:active, .d-pad-left:active, .d-pad-right:active, .d-pad-center:active {
+      background-color: #fec009;
+    }
+
+
+    .action-buttons {
+      width: 120px;
+      height: 100px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .action-btn-a {
+      width: 50px;
+      height: 50px;
+      background: #111;
+      border-radius: 50%;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .action-btn-b {
+      width: 50px;
+      height: 50px;
+      background: #111;
+      border-radius: 50%;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+    }    
+        
+    .action-btn-c {
+      width: 50px;
+      height: 50px;
+      background: #111;
+      border-radius: 50%;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+    }
+        
+    .action-btn-d {
+      width: 50px;
+      height: 50px;
+      background: #111;
+      border-radius: 50%;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+    }
+    
+     .action-btn-a:active {
+      background-color: #11ff00;
+    }
+    .action-btn-b:active {
+      background-color: #fec009;
+    }
+    .action-btn-c:active {
+      background-color: #ff001f;
+    }
+    .action-btn-d:active {
+      background-color: #1877F2;
+    }
+
+    .shoulder-btn {
+      position: absolute;
+      top: 20px;
+      width: 120px;
+      height: 30px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .shoulder-left {
+      left: 50px;
+    }
+
+    .shoulder-right {
+      right: 50px;
+    }
+    
+    .shoulder-right:active, .shoulder-right:active {
+      background-color: #020169;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="console">
+    <!-- Shoulder Buttons -->
+    <button class="shoulder-btn shoulder-left" onclick="location.href='../pages/profile.html'">Dashboard</button>
+    <button class="shoulder-btn shoulder-right"></button>
+    
+
+    <!-- Screen Area -->
+    <div class="screen">
+      <h1>🎮 Game Hall</h1>
+      <div class="game-grid">
+        <div class="game-card" onclick="location.href='game/eng-games/index.html'">
+      📚<div class="game-title">SPELLING GAMES</div>
+        </div> 
+                              
+        <div class="game-card" onclick="location.href='game/Brick🫵Breaker.html'">                        
+      🧱<div class="game-title">Brick Breaker</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='game/phe-games/games/obstacle-course/obstacle.html'">            
+        🧗<div class="game-title">Obstacle Run</div>
+        </div>                
+        
+        <div class="game-card" onclick="location.href='game/phe-games/games/traffic-light/traffic.html'">
+      🚦<div class="game-title">Beat Traffic</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='game/tic tac toe Gemini.html'">
+        ⭕❌<div class="game-title">TIC-TAC-TOE</div>
+        </div>                
+        
+        <div class="game-card" onclick="location.href='game/Space Shooter.html'">
+        🚀<div class="game-title">Space Shooter</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='game/Snake.html'">
+      🐍<div class="game-title">Snake</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='game/bonr.html'">
+      🏃<div class="game-title">Maze runner Style</div>
+        </div>  
+              
+        <div class="game-card" onclick="location.href='game/frogger-game/index.html'">
+      🐸<div class="game-title">Frogger Style</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='game/phe-games/games/anatomy-sim/anatomy.html'">
+      🦴<div class="game-title">Anatomy</div>
+        </div>        
+        
+        <div class="game-card" onclick="location.href='game/phe-games/games/maze/maze.html'">
+      🥱<div class="game-title">Nutrition</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='game/pixel-invaders.html'">
+      🎮<div class="game-title">Pixel Invaders</div>
+        </div>
+                
+        <div class="game-card" onclick="location.href='game/brick-stacker.html'">
+      🟩<div class="game-title">Brick Stacker</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='game/pixel-paddle.html'">
+      👾<div class="game-title">Pixel Paddle</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      ⚽<div class="game-title">Soccer</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+        🍜<div class="game-title">Noodles Stall</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🍕<div class="game-title">Pizza Express</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🚦<div class="game-title">Beat this Traffic</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🏍️<div class="game-title">Bikers World</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🚚<div class="game-title">Transport</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🚔<div class="game-title">Police Chase</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+        🚕<div class="game-title">Taxi</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🎾<div class="game-title">Tennis</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🏸<div class="game-title">Badminton</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🥍<div class="game-title">Something like Handball?</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🏏<div class="game-title">Cricket</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🏑<div class="game-title">Board Hockey</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+        🏒<div class="game-title">Ice Hockey</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🥌<div class="game-title">House Keeping</div>
+        </div>
+        
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🛷<div class="game-title">Snow Boarding</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      ⛸️<div class="game-title">Ice Skating</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🛼<div class="game-title">Roller Skating</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🩰<div class="game-title">Ballerina</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+        🛹<div class="game-title">Skate</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      ⛳<div class="game-title">Golf</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🏹<div class="game-title">Wild Hunting</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🪃<div class="game-title">Boomerang</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🪁<div class="game-title">Kite Sky High</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🎣<div class="game-title">Fishing</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+        🤿<div class="game-title">Olympic Swimmer</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🥋<div class="game-title">Taekwondo</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🥊<div class="game-title">Boxing</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🎱<div class="game-title">Pool Snooker</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🏓<div class="game-title">Table Tennis</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🎳<div class="game-title">Bowling</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+        ♟️<div class="game-title">Chess</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🪀<div class="game-title">YoYo</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🧩<div class="game-title">Puzzle</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      👾<div class="game-title">Catch the Bug</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🔫<div class="game-title">Terminator</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🎲<div class="game-title">Dice</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+        🎰<div class="game-title">Jackpot</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🎴<div class="game-title">Korean Card</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🀄<div class="game-title">Japan Card</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🃏<div class="game-title">joker</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🪄<div class="game-title">Magician</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🎨🖌️<div class="game-title">Artist</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+        🥎<div class="game-title">Lawn Tennis</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🏀<div class="game-title">Basketball</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🏐<div class="game-title">Volleyball</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🏈<div class="game-title">American Football</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🏉<div class="game-title">Platformer</div>
+        </div>
+        <div class="game-card" onclick="location.href='cow-401page.html'">
+      🎖️<div class="game-title">General</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+  <div class="d-pad">
+    <button class="d-pad-up">↑</button>
+    <button class="d-pad-down">↓</button>
+    <button class="d-pad-left">←</button>
+    <button class="d-pad-right">→</button>
+    <button class="d-pad-center">🕹️</button>
+  </div>
+  <div class="action-buttons">
+    <button class="action-btn-a">🔔</button>
+    <button class="action-btn-b">⛑️</button>
+    <button class="action-btn-c">🗡️</button>
+    <button class="action-btn-d">🛡️</button>
+  </div>
+</div>
+
+    <!-- Brand -->
+    <div class="brand">ANS11 SNES Classic</div>
+  </div>
+</body>
+<script>
+    let tapCount = 0;
+    let isPaused = false;
+
+    const powerButton = document.createElement('div');
+    powerButton.className = 'power-button';
+    document.querySelector('.console').appendChild(powerButton);
+
+    const menu = document.createElement('div');
+    menu.className = 'menu';
+    menu.innerHTML = `
+      <ul>
+        <li>Settings</li>
+        <li>Games</li>
+        <li>About</li>
+      </ul>
+    `;
+    document.querySelector('.console').appendChild(menu);
+
+    powerButton.addEventListener('click', () => {
+      tapCount++;
+      if (tapCount === 1) {
+        // Pause games
+        isPaused = true;
+        console.log('Games paused');
+      } else if (tapCount === 2) {
+        // Show menu
+        menu.style.display = 'block';
+        console.log('Menu shown');
+      } else if (tapCount >= 3) {
+        // Resume games
+        isPaused = false;
+        console.log('Games resumed');
+        tapCount = 0;
+        menu.style.display = 'none';
+      }
+    });
+
+    const gameCards = document.querySelectorAll('.game-card');
+    let selectedGameIndex = 0;
+    const screenElement = document.querySelector('.screen'); // Get the screen element
+
+    // Function to select a game and scroll it into view
+    function selectGame(index) {
+      // Ensure the index is within bounds
+      if (index < 0) {
+        selectedGameIndex = 0;
+      } else if (index >= gameCards.length) {
+        selectedGameIndex = gameCards.length - 1;
+      } else {
+        selectedGameIndex = index;
+      }
+
+      gameCards.forEach((card, i) => {
+        if (i === selectedGameIndex) {
+          card.style.border = '2px solid #fec009';
+          // Scroll the selected card into view
+          card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+          card.style.border = '2px solid cyan';
+        }
+      });
+    }
+
+    // Initialize the first game as selected
+    selectGame(selectedGameIndex);
+
+    document.querySelector('.d-pad-up').addEventListener('click', () => {
+      // Move up by 2 to simulate moving to the row above
+      selectGame(selectedGameIndex - 2);
+    });
+
+    document.querySelector('.d-pad-down').addEventListener('click', () => {
+      // Move down by 2 to simulate moving to the row below
+      selectGame(selectedGameIndex + 2);
+    });
+
+    document.querySelector('.d-pad-left').addEventListener('click', () => {
+      selectGame(selectedGameIndex - 1);
+    });
+
+    document.querySelector('.d-pad-right').addEventListener('click', () => {
+      selectGame(selectedGameIndex + 1);
+    });
+
+    // Add event listener to the A button to select the game
+    document.querySelector('.d-pad-center').addEventListener('click', () => {
+      // Simulate a click on the selected game card
+      if (gameCards[selectedGameIndex]) {
+        gameCards[selectedGameIndex].click();
+      }
+    });
+</script>
+</html>
+
+
+
+
+

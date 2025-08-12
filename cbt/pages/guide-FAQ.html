@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<!-- guide-FAQ.html -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frequently Asked Questions</title>
+  <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+    }
+
+    .container {
+      display: flex;
+    }
+
+    .sidebar {
+      width: 35px;
+      height: 100vh;
+      background-color: #020169;
+      padding: 10px;
+      box-sizing: border-box;
+      color: #fff;
+      overflow: hidden;
+      border-radius: 5px 0 0 5px;
+      transition: width 0.75s ease;
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 100;
+    }
+
+    .sidebar:hover {
+      width: 200px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      padding: 5px 0;
+    }
+
+    .menu-item i {
+      font-size: 20px;
+      margin-right: 15px;
+      min-width: 25px;
+    }
+
+    .menu-item span {
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .sidebar:hover .menu-item span {
+      opacity: 1;
+    }
+
+    .menu-item:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      padding-left: 5px;
+      border-radius: 5px;
+    }      
+    footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background-color: #020169;
+    color: #fec009;
+    z-index: 100;
+    }
+    .logo {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  }
+  </style>
+</head>
+<body>
+ <div class="container">
+    <div class="sidebar">
+      <div class="menu-item" onclick="window.location.href='dashboard.html'">
+        <i class="fas fa-tachometer-alt"></i>
+        <span>Dashboard</span>
+      </div>
+      
+      <div class="menu-item" onclick="window.location.href='test-library.html'">
+        <i class="fas fa-book"></i>
+        <span>Test Library</span>
+      </div>
+      <div class="menu-item" onclick="window.location.href='test-taking.html'">
+        <i class="fas fa-pencil-alt"></i>
+        <span>Take A Test</span>
+      </div>
+      <div class="menu-item" onclick="window.location.href='profile.html'">
+        <i class="fas fa-user"></i>
+        <span>My Profile</span>
+      </div>
+      <div class="menu-item" onclick="window.location.href='classes.html'">
+        <i class="fas fa-users"></i>
+        <span>Classes</span>
+      </div>
+      <div class="menu-item" onclick="window.location.href='guide-FAQ.html'">
+        <i class="fas fa-question-circle"></i>
+        <span>Guide & FAQ</span>
+      </div>
+      <div class="menu-item" onclick="window.location.href='about.html'">
+        <i class="fas fa-info-circle"></i>
+        <span>About Us</span>
+      </div>
+      <div class="menu-item" onclick="window.location.href='contact.html'">
+        <i class="fas fa-envelope"></i>
+        <span>Contact Us</span>
+      </div>
+      <div class="menu-item" onclick="window.location.href='gamehall.html'">
+          <i class="fas fa-gamepad"></i>
+          <span>Game Hall</span>
+          </div>
+          <div class="menu-item" id="logout-button">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Logout</span>
+              </div>
+    </div>
+    <main style="margin-left: 80px;">
+        <!--content of your website here-->
+        <h1>Guide & FAQ</h1>
+    <h2>Frequently Asked Questions</h2>
+    <ul>
+      <li><strong>Q: How do I take a test?</strong>
+        <p>A: To take a test, navigate to the Test Library page and select the test you want to take.</p>
+      </li>
+      <li><strong>Q: How do I view my test results?</strong>
+        <p>A: Your test results will be displayed on the dashboard page after you submit your test.</p>
+      </li>
+      <!-- Add more FAQs... -->
+    </ul>
+    <h2>Guide</h2>
+    <p>This guide will walk you through the process of using our platform.</p>
+    <ol>
+      <li>Step 1: Create an account and log in.</li>
+      <li>Step 2: Navigate to the Test Library page and select a test.</li>
+      <li>Step 3: Take the test and submit your answers.</li>
+      <li>Step 4: View your test results on the dashboard page.</li>
+    </ol>
+    </main>
+  </div>
+  <img src="../assets/images/logo.png" alt="Logo" class="logo">
+  <footer>&copy; 2024 TestHall</footer>
+  <script>
+      const logoutButton = document.getElementById('logout-button');
+logoutButton.addEventListener('click', () => {
+  localStorage.removeItem('loggedInUserId');
+  localStorage.removeItem('loggedInUserRole');
+  localStorage.removeItem('loggedInUsername');
+  localStorage.removeItem('resultsSummary');
+  alert('You have been logged out.');
+  window.location.href = 'login.html';
+});
+  </script>
+</body>
+</html>

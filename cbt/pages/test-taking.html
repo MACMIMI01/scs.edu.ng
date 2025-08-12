@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Taking - TestHall</title>
+  <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      display: flex; /* Use flexbox for body to manage sidebar and main content */
+      min-height: 100vh; /* Ensure body takes full viewport height */
+    }
+    
+    .sidebar {
+      width: 60px;
+      height: 100vh;
+      background-color: #020169;
+      padding: 20px 10px;
+      box-sizing: border-box;
+      color: #fff;
+      overflow: hidden;
+      border-radius: 5px 0 0 5px;
+      transition: width 0.75s ease, margin-left 0.75s ease; /* Add margin-left transition */
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 200; /* Ensure sidebar is on top */
+    }
+    .sidebar:hover {
+      width: 200px;
+    }
+    /* Style for hiding the sidebar */
+    .sidebar.hidden {
+        width: 0;
+        padding: 0;
+        margin-left: -60px; /* Moves it completely off-screen to the left */
+        overflow: hidden;
+        transition: width 0.75s ease, margin-left 0.75s ease;
+    }
+    /* Adjust main content when sidebar is hidden */
+    body.sidebar-hidden main {
+        margin-left: 0; /* Main content takes full width when sidebar is hidden */
+        transition: margin-left 0.75s ease;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      padding: 5px 0;
+    }
+    .menu-item i {
+      font-size: 20px;
+      margin-right: 15px;
+      min-width: 25px;
+    }
+    .menu-item span {
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .sidebar:hover .menu-item span {
+      opacity: 1;
+    }
+    .menu-item:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      padding-left: 5px;
+      border-radius: 5px;
+    }
+
+    main {
+      margin-left: 80px; /* Space for the collapsed sidebar */
+      padding: 20px;
+      flex-grow: 1; /* Allow main to take up available space */
+      padding-bottom: 70px; /* IMPORTANT: Add padding for the footer */
+      box-sizing: border-box; /* Include padding in element's total width and height */
+    }
+    
+    
+    /* Styles for the detailed results display */
+.detailed-results-preview {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    max-width: 800px; /* Slightly wider to accommodate content */
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    color: #333; /* Default text color for the results */
+    font-size: 0.9em;
+}
+
+.detailed-results-preview section {
+    border: 1px solid #eee;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.detailed-results-preview h2 {
+    color: #020169;
+    font-size: 1.4em;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.detailed-results-preview .header-section,
+.detailed-results-preview .footer-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #020169;
+}
+
+.detailed-results-preview .header-section div {
+    flex: 1;
+    text-align: center;
+}
+
+.detailed-results-preview .header-section img.logo-preview {
+    max-width: 80px; /* Adjust size as needed */
+    height: auto;
+    display: block;
+    margin-left: auto; /* Center image within its flex item */
+    margin-right: auto;
+}
+
+.detailed-results-preview .header-info,
+.detailed-results-preview .student-info,
+.detailed-results-preview .test-details-info {
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.detailed-results-preview .header-info div,
+.detailed-results-preview .test-details-info div {
+    width: 48%; /* Two columns */
+    margin-bottom: 8px;
+}
+
+.detailed-results-preview .student-info-left,
+.detailed-results-preview .student-info-right {
+    flex: 1;
+    padding-right: 10px;
+}
+
+.detailed-results-preview .student-info-right {
+    text-align: right;
+    padding-right: 0; /* No right padding for the image container */
+    padding-left: 10px;
+}
+
+.detailed-results-preview .profile-pic-preview {
+    max-width: 100px; /* Adjust size as needed */
+    height: auto;
+    border-radius: 50%;
+    border: 2px solid #eee;
+    vertical-align: middle;
+    display: block; /* Ensures centering */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.detailed-results-preview .results-table-container {
+    max-height: 300px; /* Limit height for scrollability if many questions */
+    overflow-y: auto;
+    margin-top: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.detailed-results-preview .results-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.detailed-results-preview .results-table th,
+.detailed-results-preview .results-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.detailed-results-preview .results-table th {
+    background-color: #f2f2f2;
+    color: #333;
+    position: sticky; /* Keep header visible on scroll */
+    top: 0;
+    z-index: 1;
+}
+
+.detailed-results-preview .summary-section p {
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.detailed-results-preview .remarks-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.detailed-results-preview .remarks-section > div {
+    flex: 1;
+    padding: 0 10px;
+    border-right: 1px solid #eee; /* Separator line */
+}
+
+.detailed-results-preview .remarks-section > div:last-child {
+    border-right: none;
+}
+
+.detailed-results-preview .remarks-section p {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.detailed-results-preview .signature-line {
+    border-bottom: 1px solid #333;
+    margin-top: 50px; /* Space for signature */
+    margin-bottom: 5px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.detailed-results-preview .signature-label {
+    text-align: center;
+    font-size: 0.85em;
+    color: #666;
+}
+
+.detailed-results-preview .stamp-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.detailed-results-preview .stamp-container img {
+    max-width: 100px; /* Adjust stamp size */
+    height: auto;
+    opacity: 0.7; /* Make stamp appear less solid */
+}
+
+.detailed-results-preview .footer-content {
+    text-align: center;
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+/* Adjustments for the button to fit the new layout */
+#download-pdf-button-container {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px; /* Space from footer */
+}
+
+#download-pdf-button-container button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+#download-pdf-button-container button:hover {
+    background-color: #218838;
+}
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      background-color: #020169;
+      color: #fff;
+      z-index: 1000;
+    }
+    
+    /* UPDATED CSS FOR PROFILE PICTURE DISPLAY */
+    .profile-display-icon {
+      position: fixed; /* Use fixed so it stays even if content scrolls */
+      top: 10px;
+      right: 10px; /* Positioned to the top-left */
+      width: 50px; /* Standard profile pic size */
+      height: 50px;
+      border-radius: 50%; /* Make it circular */
+      object-fit: cover; /* Ensure image covers the area without distortion */
+      border: 2px solid #fff; /* Optional: small white border for visibility */
+      cursor: pointer; /* Indicate it's clickable */
+      z-index: 999; /* High z-index to stay on top of other content */
+      transition: transform 0.2s ease; /* Smooth hover effect */
+    }
+
+    .profile-display-icon:hover {
+        transform: scale(1.05); /* Slightly enlarge on hover */
+    }
+    /* Hide profile icon when sidebar is hidden (during test) */
+    .profile-display-icon.hidden {
+        display: yes;
+    }
+
+    /* Style for the generated results page */
+    #result-page {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px; /* Ensure space below result page if it's long */
+    }
+    #result-page h1 {
+        color: #020169;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+    #result-page p {
+        margin-bottom: 10px;
+        line-height: 1.5;
+    }
+    #download-pdf-button {
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        margin-top: 20px;
+    }
+    #download-pdf-button:hover {
+        background-color: #218838;
+    }
+    
+    /* Specific styles for the test form and button */
+    #test-form ul {
+        list-style: none; /* Remove bullet points */
+        padding: 0;
+        margin-bottom: 20px;
+    }
+    #test-form li {
+        margin-bottom: 10px;
+    }
+    #test-form label {
+        display: block; /* Make label clickable area larger */
+        background-color: #e9e9e9;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+    #test-form label:hover {
+        background-color: #dcdcdc;
+    }
+    #test-form input[type="radio"] {
+        margin-right: 10px;
+    }
+
+    /* Styles for question display and navigation buttons */
+    .question-container {
+        display: none; /* Hide all questions by default */
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .question-container.active {
+        display: block; /* Show only the active question */
+    }
+
+    .navigation-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        padding: 0 20px; /* Add some padding to match container if needed */
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .navigation-buttons button {
+        background-color: #020169;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: background-color 0.3s ease;
+    }
+    .navigation-buttons button:hover {
+        background-color: #145cb3;
+    }
+    .navigation-buttons button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    #finish-test-center-button {
+        display: block; /* Initially shown, will be hidden during results */
+        margin: 30px auto; /* Center the button */
+        background-color: #dc3545; /* Red for final action */
+        color: #fff;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.2em;
+        transition: background-color 0.3s ease;
+    }
+    #finish-test-center-button:hover {
+        background-color: #c82333;
+    }
+    /* Results Table */
+    .results-summary-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    .results-summary-table th, .results-summary-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    .results-summary-table th {
+        background-color: #f2f2f2;
+        color: #333;
+    }
+    .results-summary-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    /* Media query for smaller screens / landscape to adjust layout if necessary */
+    @media (max-height: 500px) { /* Example for typical landscape phone height */
+        main {
+            padding-top: 20px; /* Adjust padding if needed on short screens */
+            padding-bottom: 80px; /* Ensure sufficient space for footer */
+        }
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="menu-item" onclick="window.location.href='dashboard.html'">
+      <i class="fas fa-tachometer-alt"></i>
+      <span>Dashboard</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='test-library.html'">
+      <i class="fas fa-book"></i>
+      <span>Test Library</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='test-taking.html'">
+      <i class="fas fa-pencil-alt"></i>
+      <span>Take A Test</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='profile.html'">
+      <i class="fas fa-user"></i>
+      <span>My Profile</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='classes.html'">
+      <i class="fas fa-users"></i>
+      <span>Classes</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='guide-FAQ.html'">
+      <i class="fas fa-question-circle"></i>
+      <span>Guide & FAQ</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='about.html'">
+      <i class="fas fa-info-circle"></i>
+      <span>About Us</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='contact.html'">
+      <i class="fas fa-envelope"></i>
+      <span>Contact Us</span>
+    </div>
+    <div class="menu-item" id="logout-button">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Logout</span>
+    </div>
+  </div>
+  <main>
+    <h1>Test Taking</h1>
+    <form id="test-form"></form>
+    <div class="navigation-buttons">
+        <button id="prev-question-button" disabled>Previous</button>
+        <button id="next-question-button">Next</button>
+    </div>
+    <button id="finish-test-center-button">Finish Test</button>
+  </main>
+  <img id="user-image-display" src="../assets/images/logo.png" alt="User Profile" class="profile-display-icon">
+  <footer>&copy; 2024 TestHall</footer>
+
+  <script> 
+      document.addEventListener('DOMContentLoaded', () => {
+  const loggedInUserId = localStorage.getItem('loggedInUserId');
+  if (!loggedInUserId) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  const logoutButton = document.getElementById('logout-button');
+  if (logoutButton) {
+    logoutButton.addEventListener('click', () => {
+      localStorage.removeItem('loggedInUserId');
+      localStorage.removeItem('loggedInUserRole');
+      localStorage.removeItem('loggedInUsername');
+      alert('You have been logged out.');
+      window.location.href = 'login.html';
+    });
+  }
+
+  let currentUserId = loggedInUserId;
+  let studentData = {};
+  let score = 0;
+  let currentQuestionIndex = 0;
+  let userAnswers = [];
+  let testQuestions = []; // This will now be populated from JSON
+
+  // Get references to DOM elements
+  const sidebar = document.querySelector('.sidebar');
+  const profileDisplayIcon = document.getElementById('user-image-display');
+  const testForm = document.getElementById('test-form');
+  const testTitle = document.querySelector('main h1');
+  const prevButton = document.getElementById('prev-question-button');
+  const nextButton = document.getElementById('next-question-button');
+  const finishTestCenterButton = document.getElementById('finish-test-center-button');
+  const navigationButtonsContainer = document.querySelector('.navigation-buttons');
+
+  // --- Get Test File Name from URL ---
+  const urlParams = new URLSearchParams(window.location.search);
+  const testFileName = urlParams.get('test');
+
+  let questionsFilePath = '';
+  if (testFileName) {
+      questionsFilePath = `../data/${testFileName}.json`;
+  } else {
+      console.error('No test specified in URL. Redirecting to test library.');
+      alert('Please select a test from the Test Library to begin.');
+      window.location.href = 'test-library.html';
+      return;
+  }
+
+  // --- Fetch User Data and then Test Questions ---
+  Promise.all([
+      fetch('../data/users.json')
+          .then(response => {
+              if (!response.ok) {
+                  if (response.status === 404) {
+                      console.warn('users.json not found. Using dummy student data.');
+                      return { id: currentUserId, name: 'Dummy Student', username: 'dummy.user', 'date of birth': '2000-01-01', role: 'Student' };
+                  }
+                  throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              return response.json();
+          }),
+      fetch(questionsFilePath) // Fetch the specific test questions
+          .then(response => {
+              if (!response.ok) {
+                  if (response.status === 404) {
+                      console.error(`Test file not found: ${questionsFilePath}`);
+                      return Promise.reject('Test file not found');
+                  }
+                  throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              return response.json();
+          })
+  ])
+  .then(([userData, testData]) => {
+      // Process user data
+      if (Array.isArray(userData)) {
+          studentData = userData.find(user => user.id == currentUserId);
+          if (!studentData) {
+              console.warn(`User with ID ${currentUserId} not found in users.json. Using generic student data.`);
+              studentData = { id: currentUserId, name: 'Generic Student', username: 'generic.user', 'date of birth': 'Unknown', role: 'Student' };
+          }
+      } else {
+          studentData = userData; // Case for single user object if not an array
+      }
+
+      // Process test questions
+      testQuestions = testData.questions; // Assuming test JSON has a "questions" array
+      userAnswers = new Array(testQuestions.length).fill(null); // Initialize user answers array
+
+      // Update User Profile Picture Display
+      if (profileDisplayIcon && studentData) {
+          const profilePicPath = studentData.profilePicture && studentData.profilePicture !== ''
+                                 ? studentData.profilePicture
+                                 : '../assets/profile_pictures/default.jpeg';
+          profileDisplayIcon.src = profilePicPath;
+          profileDisplayIcon.alt = `${studentData.name}'s Profile Picture`;
+          profileDisplayIcon.title = `Go to ${studentData.name}'s Profile`;
+          profileDisplayIcon.style.cursor = 'pointer';
+          profileDisplayIcon.onclick = () => {
+              window.location.href = 'profile.html';
+          };
+      } else if (profileDisplayIcon) {
+          profileDisplayIcon.src = '../assets/profile_pictures/default.jpeg';
+          profileDisplayIcon.alt = 'Default Profile Picture';
+          profileDisplayIcon.title = 'Default Profile';
+          profileDisplayIcon.onclick = null;
+      }
+
+      // --- Test Initialization Logic ---
+      displayQuestion(currentQuestionIndex);
+      updateNavigationButtons();
+      hideSidebarAndProfilePic();
+
+      // Event Listeners for navigation buttons
+      prevButton.addEventListener('click', () => {
+          if (currentQuestionIndex > 0) {
+              saveCurrentAnswer();
+              currentQuestionIndex--;
+              displayQuestion(currentQuestionIndex);
+              updateNavigationButtons();
+          }
+      });
+
+      nextButton.addEventListener('click', () => {
+          saveCurrentAnswer();
+          if (currentQuestionIndex < testQuestions.length - 1) {
+              currentQuestionIndex++;
+              displayQuestion(currentQuestionIndex);
+              updateNavigationButtons();
+          } else {
+              finishTest(); // This is the "Finish Test" action when next is clicked on last question
+          }
+      });
+
+      finishTestCenterButton.addEventListener('click', finishTest);
+
+  })
+  .catch(error => {
+      console.error('Error loading data:', error);
+      alert('Failed to load user data or test questions. Please try again.');
+      // Ensure sidebar and profile icon are visible if an error prevents test from starting
+      showSidebarAndProfilePic();
+      // You might want to redirect to dashboard or login if critical data fails to load
+      window.location.href = 'dashboard.html';
+  });
+
+  // --- Functions for test logic ---
+
+  function hideSidebarAndProfilePic() {
+      sidebar.classList.add('hidden');
+      profileDisplayIcon.classList.add('hidden');
+      document.body.classList.add('sidebar-hidden'); // Adjust main content margin
+  }
+
+  function showSidebarAndProfilePic() {
+      sidebar.classList.remove('hidden');
+      profileDisplayIcon.classList.remove('hidden');
+      document.body.classList.remove('sidebar-hidden'); // Restore main content margin
+  }
+
+  function displayQuestion(index) {
+      testForm.innerHTML = ''; // Clear previous question
+      if (index >= 0 && index < testQuestions.length) {
+          const question = testQuestions[index];
+          const questionElement = document.createElement('div');
+          questionElement.classList.add('question-container', 'active');
+
+          const optionLabels = ['A', 'B', 'C', 'D', 'E']; // Supports up to 5 options
+
+          questionElement.innerHTML = `
+            <p><strong>Question ${index + 1} of ${testQuestions.length}:</strong> ${question.question}</p>
+            <ul>
+              ${question.options.map((option, i) => `
+                <li>
+                  <label>
+                    <input type="radio" name="question-${index}" value="${option}" ${userAnswers[index] === option ? 'checked' : ''}>
+                    ${optionLabels[i]}. ${option}
+                  </label>
+                </li>
+              `).join('')}
+            </ul>
+          `;
+          testForm.appendChild(questionElement);
+      }
+  }
+
+  function saveCurrentAnswer() {
+      const selectedOption = document.querySelector(`input[name="question-${currentQuestionIndex}"]:checked`);
+      userAnswers[currentQuestionIndex] = selectedOption ? selectedOption.value : null;
+      console.log(`Question ${currentQuestionIndex + 1} answer saved:`, userAnswers[currentQuestionIndex]);
+  }
+
+  function updateNavigationButtons() {
+      prevButton.disabled = currentQuestionIndex === 0;
+
+      if (currentQuestionIndex === testQuestions.length - 1) {
+          nextButton.textContent = 'Finish Test';
+      } else {
+          nextButton.textContent = 'Next';
+      }
+  }
+
+  function calculateResults() {
+      score = 0;
+      // Calculate score
+      testQuestions.forEach((question, index) => {
+          if (userAnswers[index] === question.correctAnswer) {
+              score++;
+          }
+      });
+
+      const percentage = Math.round((score / testQuestions.length) * 100);
+      const currentDate = new Date().toLocaleDateString();
+      const examinerName = localStorage.getItem('loggedInUsername') || 'NAOMI';
+      const testDisplayName = testFileName.replace(/_/g, ' ');
+
+      const resultsHtml = `
+          <div class="detailed-results-preview">
+              <section class="header-section">
+                  <div>
+                      <img src="../assets/images/logo.png" alt="School Logo" class="logo-preview">
+                  </div>
+                  <div>
+                      <h2>St. Christopher School</h2>
+                      <p style="font-weight: bold; font-size: 1.2em;">TEST RESULTS</p>
+                  </div>
+              </section>
+
+              <section>
+                  <h2>Test Information</h2>
+                  <div class="header-info">
+                      <div><strong>Date:</strong> ${currentDate}</div>
+                      <div><strong>Test Name:</strong> ${testDisplayName}</div>
+                      <div><strong>Examiner:</strong> ${examinerName}</div>
+                  </div>
+              </section>
+
+              <section class="student-section">
+                  <h2>Student Information</h2>
+                  <div class="student-info">
+                      <div class="student-info-left">
+                          <p><strong>Student Name:</strong> ${studentData.name || 'N/A'}</p>
+                          <p><strong>Student ID:</strong> ${studentData.id || 'N/A'}</p>
+                          <p><strong>Class:</strong> ${studentData.class || 'N/A'}</p>
+                      </div>
+                      <div class="student-info-right">
+                          <img src="${studentData.profilePicture || '../assets/profile_pictures/default.jpeg'}" alt="Student Profile Picture" class="profile-pic-preview">
+                      </div>
+                  </div>
+              </section>
+
+              <section>
+                  <h2>Test Details</h2>
+                  <div class="test-details-info">
+                      <div><strong>Total Questions:</strong> ${testQuestions.length}</div>
+                      <div><strong>Score:</strong> ${score}</div>
+                  </div>
+              </section>
+
+              <section>
+                  <h2>Results Section</h2>
+                  <div class="results-table-container">
+                      <table class="results-table">
+                          <thead>
+                              <tr>
+                                  <th>Question</th>
+                                  <th>Your Answer</th>
+                                  <th>Correct Answer</th>
+                                  <th>Score</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              ${testQuestions.map((question, index) => {
+                                  const userAnswer = userAnswers[index] || 'Not Answered';
+                                  const isCorrect = userAnswer === question.correctAnswer;
+                                  const scoreEarned = isCorrect ? 1 : 0;
+                                  return `
+                                      <tr>
+                                          <td>${index + 1}</td>
+                                          <td>${userAnswer}</td>
+                                          <td>${question.correctAnswer}</td>
+                                          <td>${scoreEarned}</td>
+                                      </tr>
+                                  `;
+                              }).join('')}
+                          </tbody>
+                      </table>
+                  </div>
+              </section>
+
+              <section class="summary-section">
+                  <h2>Summary Section</h2>
+                  <p>You scored ${score} out of ${testQuestions.length} questions.</p>
+                  <p>Percentage: ${percentage}%</p>
+              </section>
+
+              <section class="remarks-section">
+                  <div>
+                      <p>Teacher's Remarks:</p>
+                      <div style="height: 80px;"></div> <div class="signature-line"></div>
+                      <div class="signature-label">Class Teacher</div>
+                  </div>
+                  <div>
+                      <p>Principal's Remarks:</p>
+                      <div style="height: 80px;"></div> <div class="signature-line"></div>
+                      <div class="signature-label">Principal</div>
+                  </div>
+              </section>
+
+              <div class="stamp-container">
+                  <img src="../assets/images/stamp.png" alt="School Stamp">
+              </div>
+
+              <section class="footer-section">
+                  <div class="footer-content">
+                      <p>St. Christopher School</p>
+                      <p>Best out only option...</p>
+                  </div>
+              </section>
+          </div>
+
+          <div id="download-pdf-button-container">
+              <button id="final-submit-test-button">Download Official Results PDF</button>
+          </div>
+      `;
+
+      document.querySelector('main').innerHTML = resultsHtml; // Replace main content with results
+
+      const finalSubmitTestButton = document.getElementById('final-submit-test-button');
+      finalSubmitTestButton.addEventListener('click', () => {
+          const confirmation = confirm('Generate official results PDF?');
+          if (confirmation) {
+              finalSubmitTestButton.disabled = true;
+              finalSubmitTestButton.textContent = 'Generating PDF...';
+
+              setTimeout(() => {
+                  const success = generatePdfResults(); // Call your existing PDF generation function
+                  if (success) {
+                      finalSubmitTestButton.textContent = 'PDF Downloaded!';
+                  } else {
+                      finalSubmitTestButton.textContent = 'PDF Failed - Try Again';
+                      finalSubmitTestButton.disabled = false;
+                  }
+              }, 500); // Small delay to show "Generating..."
+          }
+      });
+  }
+
+  function finishTest() {
+      saveCurrentAnswer(); // Save the answer for the last question
+
+      // Hide test elements
+      testForm.style.display = 'none';
+      navigationButtonsContainer.style.display = 'none';
+      finishTestCenterButton.style.display = 'none';
+      testTitle.style.display = 'none'; // Hide "Test Taking" title
+      hideSidebarAndProfilePic(); // Ensure sidebar and profile pic are hidden
+
+      calculateResults(); // Call the now-correct calculateResults function
+  }
+
+  function generatePdfResults() {
+      try {
+          if (typeof jsPDF === 'undefined') {
+              throw new Error('PDF library not loaded');
+          }
+
+          // Create PDF with A4 dimensions (210mm x 297mm)
+          const doc = new jsPDF({
+              orientation: 'portrait',
+              unit: 'mm',
+              format: 'a4'
+          });
+
+          // Set document properties
+          doc.setProperties({
+              title: `Test Results - ${testFileName}`,
+              subject: 'Test Results',
+              author: 'TestHall',
+              creator: 'TestHall Web Application'
+          });
+
+          // ============ FIRST PAGE ============
+          // Header Section
+          doc.setFontSize(16);
+          doc.setFont('helvetica', 'bold');
+          doc.text('St. Christopher School', 105, 20, { align: 'center' });
+
+          // Add logo (placeholder - replace with actual logo)
+          doc.addImage('../assets/images/logo.png', 'PNG', 160, 10, 30, 30);
+
+          // Test Results Title
+          doc.setFontSize(14);
+          doc.text('TEST RESULTS', 105, 40, { align: 'center' });
+
+          // Test Info
+          doc.setFontSize(10);
+          doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 50);
+          doc.text(`Test Name: ${testFileName.replace(/_/g, ' ')}`, 105, 50, { align: 'center' });
+          doc.text(`Examiner: ${localStorage.getItem('loggedInUsername') || 'NAOMI'}`, 20, 55);
+
+          // Student Information
+          doc.setFontSize(12);
+          doc.text('STUDENT INFORMATION', 105, 65, { align: 'center' });
+
+          // Student Details
+          doc.setFontSize(10);
+          doc.text(`Student Name: ${studentData.name}`, 20, 75);
+          doc.text(`Student ID: ${studentData.id}`, 20, 80);
+          doc.text(`Class: ${studentData.class || '10'}`, 20, 85);
+
+          // Student Picture (placeholder - replace with actual image)
+          if (studentData.profilePicture) {
+              // Ensure path is correct and image type is supported by jsPDF
+              doc.addImage(studentData.profilePicture, 'JPEG', 150, 70, 40, 40);
+          }
+
+          // Test Details
+          doc.setFontSize(12);
+          doc.text('TEST DETAILS', 105, 100, { align: 'center' });
+
+          doc.setFontSize(10);
+          doc.text(`Test Name: ${testFileName.replace(/_/g, ' ')}`, 20, 110);
+          doc.text(`Test Date: ${new Date().toLocaleDateString()}`, 120, 110);
+          doc.text(`Total Questions: ${testQuestions.length}`, 20, 115);
+          doc.text(`Score: ${score}`, 120, 115);
+
+          // ============ SECOND PAGE ============
+          doc.addPage();
+
+          // Results Section
+          doc.setFontSize(12);
+          doc.text('RESULTS SECTION', 105, 20, { align: 'center' });
+
+          // Create results table
+          const startY = 30;
+          let currentY = startY;
+
+          // Table header
+          doc.setFontSize(10);
+          doc.setFont('helvetica', 'bold');
+          doc.text('Question', 20, currentY);
+          doc.text('Answer', 60, currentY);
+          doc.text('Score', 100, currentY);
+          doc.line(20, currentY + 2, 190, currentY + 2);
+          currentY += 10;
+
+          // Table rows
+          doc.setFont('helvetica', 'normal');
+          for (let i = 0; i < testQuestions.length; i++) {
+              // Handle potential page breaks for long lists of questions
+              if (currentY > 260) { // If near the bottom of the page (adjust as needed)
+                  doc.addPage();
+                  currentY = 20; // Reset Y for new page
+                  doc.setFont('helvetica', 'bold');
+                  doc.text('Question', 20, currentY);
+                  doc.text('Answer', 60, currentY);
+                  doc.text('Score', 100, currentY);
+                  doc.line(20, currentY + 2, 190, currentY + 2);
+                  currentY += 10;
+                  doc.setFont('helvetica', 'normal');
+              }
+
+              const userAnswer = userAnswers[i] || '-';
+              const isCorrect = userAnswer === testQuestions[i].correctAnswer;
+
+              doc.text(`${i + 1}`, 20, currentY);
+              doc.text(userAnswer, 60, currentY);
+              doc.text(isCorrect ? '1' : '0', 100, currentY);
+              currentY += 5;
+          }
+
+          // Summary Section
+          // Add a new page for summary if needed to avoid overlap with table
+          if (currentY > 200) { // Arbitrary threshold, adjust based on content
+              doc.addPage();
+              currentY = 20;
+          }
+
+          doc.setFontSize(12);
+          doc.text('SUMMARY SECTION', 105, currentY + 10, { align: 'center' });
+
+          doc.setFontSize(10);
+          const percentage = Math.round((score / testQuestions.length) * 100);
+          doc.text(`You scored ${score} out of ${testQuestions.length} questions.`, 20, currentY + 20);
+          doc.text(`Percentage: ${percentage}%`, 20, currentY + 25);
+
+          // Remarks Section
+          doc.setFontSize(12);
+          doc.text('REMARKS', 105, currentY + 35, { align: 'center' });
+
+          doc.setFontSize(10);
+          doc.text('Teacher\'s Remarks:', 20, currentY + 45);
+          doc.line(20, currentY + 47, 90, currentY + 47);
+          doc.text('Principal\'s Remarks:', 120, currentY + 45);
+          doc.line(120, currentY + 47, 190, currentY + 47);
+
+          // Add space for signatures
+          doc.text('_________________________', 30, currentY + 65);
+          doc.text('Class Teacher', 45, currentY + 70);
+
+          doc.text('_________________________', 130, currentY + 65);
+          doc.text('Principal', 145, currentY + 70);
+
+          // School stamp placeholder
+          doc.addImage('../assets/images/stamp.png', 'PNG', 80, currentY + 75, 50, 30);
+
+          // Footer - ensure it's always at the bottom of the last page
+          doc.setFontSize(10);
+          doc.text('St. Christopher School', 105, 285, { align: 'center' });
+          doc.text('Best out only option...', 105, 290, { align: 'center' });
+
+          // Try to save the PDF
+          try {
+              doc.save(`${testFileName.replace(/[^a-z0-9]/gi, '_')}_results.pdf`);
+              return true;
+          } catch (error) {
+              console.error('Error saving PDF:', error);
+              // Fallback to opening in new tab
+              window.open(doc.output('bloburl'), '_blank');
+              return false;
+          }
+      } catch (error) {
+          console.error('PDF generation failed:', error);
+          return false;
+      }
+  }
+});
+
+  </script>
+ </body>
+</html>

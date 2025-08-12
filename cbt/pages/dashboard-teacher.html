@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<!-- dashboard-teacher.html -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - TestHall</title>
+  <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      overflow-x: hidden; /* Prevent horizontal scroll when menu slides out */
+    }
+
+    /* --- Hamburger Icon --- */
+    .hamburger-icon {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 30px; /* Larger icon */
+      color: #020169; /* Blue color for visibility */
+      cursor: pointer;
+      z-index: 1000; /* Make sure it's above everything */
+      background-color: #FEC009; /* Give it a background for contrast */
+      padding: 5px 8px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    /* --- Off-canvas Navigation Menu --- */
+    .off-canvas-menu {
+      position: fixed;
+      top: 0;
+      left: -250px; /* Hidden by default, off-screen to the left */
+      width: 250px; /* Width of the menu */
+      height: 100%;
+      background-color: #020169;
+      color: #fff;
+      padding-top: 80px; /* Space for the hamburger icon above */
+      box-sizing: border-box;
+      transition: left 0.3s ease-in-out; /* Smooth slide transition */
+      z-index: 999; /* Below the hamburger icon */
+      box-shadow: 2px 0 5px rgba(0,0,0,0.5); /* Shadow for depth */
+    }
+
+    .off-canvas-menu.open {
+      left: 0; /* Slide into view */
+    }
+
+    .menu-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .menu-list .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px; /* Adjust padding for menu items */
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .menu-list .menu-item i {
+      font-size: 20px;
+      margin-right: 15px;
+      min-width: 25px; /* Ensure icon has consistent width */
+    }
+
+    .menu-list .menu-item span {
+      white-space: nowrap;
+      font-size: 1.1em;
+    }
+
+    .menu-list .menu-item:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .menu-list .menu-item a {
+        color: inherit; /* Inherit color from parent (.off-canvas-menu) */
+        text-decoration: none;
+        display: flex; /* Make link content flexible */
+        align-items: center;
+        width: 100%; /* Make the link fill the item */
+    }
+
+    /* --- Main Content Area --- */
+    main {
+      margin-left: 0; /* Default margin for non-open state */
+      padding: 20px;
+      padding-top: 80px; /* Push content down to avoid overlapping with hamburger icon */
+      transition: margin-left 0.3s ease-in-out; /* Smooth transition for main content */
+      flex-grow: 1; /* Allow main to take available space */
+      box-sizing: border-box;
+      max-width: 900px; /* Constrain content width */
+      margin-right: auto; /* Center main content */
+    }
+
+    .off-canvas-menu.open + main { /* When menu is open, push main content to the right */
+        margin-left: 250px;
+    }
+
+    /* --- Dashboard Cards (for your main content) --- */
+    .dashboard-card-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .dashboard-card {
+        background-color: #fff;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        cursor: pointer;
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .dashboard-card i {
+        font-size: 40px;
+        color: #1877f2;
+        margin-bottom: 15px;
+    }
+
+    .dashboard-card h3 {
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .dashboard-card p {
+        color: #666;
+        font-size: 0.95em;
+    }
+
+    /* --- Footer and Logo --- */
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        background-color: #020169;
+        color: #fec009;
+        z-index: 1000;
+    }
+
+    .profile-display-icon { /* Renamed from .logo for clarity as it's often a user icon */
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+      cursor: pointer;
+      z-index: 999;
+      transition: transform 0.2s ease;
+    }
+
+    .profile-display-icon:hover {
+        transform: scale(1.05);
+    }
+
+    /* --- Media Queries for responsiveness --- */
+    @media (max-width: 768px) {
+        .off-canvas-menu {
+            width: 200px; /* Slightly smaller menu on small screens */
+            left: -200px;
+        }
+        .off-canvas-menu.open + main {
+            margin-left: 200px;
+        }
+        .dashboard-card-container {
+            grid-template-columns: 1fr; /* Stack cards on small screens */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hamburger-icon {
+            font-size: 25px;
+            top: 15px;
+            left: 15px;
+        }
+        .profile-display-icon {
+            width: 40px;
+            height: 40px;
+            top: 15px;
+            right: 15px;
+        }
+        main {
+            padding: 15px;
+            padding-top: 60px;
+        }
+        .dashboard-card {
+            padding: 20px;
+        }
+        .dashboard-card i {
+            font-size: 35px;
+        }
+    }
+  </style>
+</head>
+<body>
+  <div class="hamburger-icon" id="hamburger-icon">
+    <i class="fas fa-bars"></i>
+  </div>
+
+  <nav class="off-canvas-menu" id="off-canvas-menu">
+    <ul class="menu-list">
+      <li class="menu-item" id="dashboard-link">
+        <i class="fas fa-tachometer-alt"></i>
+        <span>Dashboard</span>
+      </li>      
+     <li class="menu-item" id="test-library-link">
+        <i class="fas fa-book"></i>
+        <span>Test Library</span>
+      </li>
+     <li class="menu-item" id="exam-library-link">
+        <i class="fas fa-pencil-alt"></i>
+        <span>Take An Exam</span>
+      </li>
+      <li class="menu-item" id="profile-link">
+        <i class="fas fa-user-tie"></i>
+        <span>My Profile</span>
+      </li>
+      <li class="menu-item" id="classes-link">
+        <i class="fas fa-users"></i>
+        <span>Classes</span>
+      </li>
+      <li class="menu-item" id="guide-faq-link">
+        <i class="fas fa-question-circle"></i>
+        <span>Guide & FAQ</span>
+      </li>
+      <li class="menu-item" id="about-link">
+        <i class="fas fa-info-circle"></i>
+        <span>About Us</span>
+      </li>
+      <li class="menu-item" id="contact-link">
+        <i class="fas fa-envelope"></i>
+        <span>Contact Us</span>
+      </li>
+      <li class="menu-item" onclick="window.location.href='gamehall.html'">
+       <i class="fas fa-gamepad"></i>
+       <span>Game Hall</span>
+       </li>
+      <li class="menu-item" id="logout-button">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </li>          
+    </ul>
+  </nav>
+
+  <main id="main-content">
+    <h1>St. Christopher School</h1>
+    <h2>Best Our Only Option...</h2>
+    
+    <div class="dashboard-card-container">
+        <div class="dashboard-card" onclick="window.location.href='test-library.html'">
+            <i class="fas fa-scroll"></i>
+            <h3>Start a Test</h3>
+            <p>Browse available tests and begin your assessment.</p>
+        </div>
+                                       
+        <div class="dashboard-card" onclick="window.location.href='exam-library.html'">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <h3> Upcoming Examination</h3>
+            <p>2025/2026 Academic Section.</p>
+        </div>                
+        
+        <div class="dashboard-card" onclick="window.location.href='profile.html'">
+            <i class="fas fa-user-circle"></i>
+            <h3>View Profile</h3>
+            <p>Manage your personal information and settings.</p>
+        </div>
+        <div class="dashboard-card" onclick="alert('Feature coming soon!');">
+            <i class="fas fa-chart-line"></i>
+            <h3>Performance Analytics</h3>
+            <p>Track your progress and identify areas for improvement.</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="window.location.href='classes.html'">
+            <i class="fas fa-users"></i>
+            <h3>My Classes</h3>
+            <p>See your enrolled classes and assigned work.</p>
+        </div>
+         
+         <div class="dashboard-card" onclick="window.location.href='exam-question-generator.html'">
+            <i class="fas fa-question"></i>
+            <h3>Create CBT Questions</h3>
+            <p>Set as many questions as possible and create a .josn file for a subject.</p>
+        </div>
+         
+         <div class="dashboard-card" onclick="window.location.href='exam-library.html'">
+            <i class="fas fas fa-pencil-alt"></i>
+            <h3>EXAM LIBRARY</h3>
+            <p>Engage in educational game to improve your learning experience .</p>
+        </div>
+    
+        <div class="dashboard-card" onclick="window.location.href='profile.html'">
+            <i class="fas fa-gamepad"></i>
+            <h3>PROFILE</h3>
+            <p>Engage in educational game to improve your learning experience .</p>
+        </div>
+       
+        <div class="dashboard-card" onclick="window.location.href='classes.html'">
+            <i class="fas fa-gamepad"></i>
+            <h3>CLASSES</h3>
+            <p>Engage in educational game to improve your learning experience .</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="window.location.href='guide-FAQ.html'">
+            <i class="fas fa-gamepad"></i>
+            <h3>GUIDE</h3>
+            <p>Engage in educational game to improve your learning experience .</p>
+        </div>
+    
+        <div class="dashboard-card" onclick="window.location.href='about.html'">
+            <i class="fas fa-gamepad"></i>
+            <h3>ABOUT US</h3>
+            <p>Engage in educational game to improve your learning experience .</p>
+        </div>
+       
+        <div class="dashboard-card" onclick="window.location.href='contact.html'">
+            <i class="fas fa-gamepad"></i>
+            <h3>CONTACT US</h3>
+            <p>Engage in educational game to improve your learning experience .</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="window.location.href='test-library.html'">
+            <i class="fas fas fa-pencil"></i>
+            <h3>TEST LIBRARY</h3>
+            <p>Engage in educational game to improve your learning experience .</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="window.location.href='dashboard.html'">
+            <i class="fas fa-user-tie"></i>
+            <h3>DASHBOARD</h3>
+            <p>Engage in educational game to improve your learning experience .</p>
+        </div>              
+                 
+        <div class="dashboard-card" onclick="window.location.href='gamehall.html'">
+            <i class="fas fa-gamepad"></i>
+            <h3>GAME HALL</h3>
+            <p>Engage in educational game to improve your learning experience .</p>
+        </div>
+        
+    </div>    
+
+    <section style="margin-top: 40px;">
+        <h2>FAQs</h2>
+        <ul>
+            <li><strong>Q: How do I take a test?</strong>
+                <p>A: To take a test, navigate to the Test Library page and select the test you want to take.</p>
+            </li>
+            <li><strong>Q: How do I view my test results?</strong>
+                <p>A: Your test results will be displayed on the dashboard page after you submit your test.</p>
+            </li>
+            </ul>
+    </section>
+
+    <section style="margin-top: 40px;">
+        <h2>Guide</h2>
+        <p>This guide will walk you through the process of using our platform.</p>
+        <ol>
+            <li>Step 1: Create an account and log in.</li>
+            <li>Step 2: Navigate to the Test Library page and select a test.</li>
+            <li>Step 3: Take the test and submit your answers.</li>
+            <li>Step 4: View your test results on the dashboard page.</li>
+            <ul></ul>
+        </ol>
+        
+    </section>
+  </main>
+  
+  <img id="user-image-display" src="../assets/images/logo.png" alt="User Profile" class="profile-display-icon">
+  <footer>&copy; 2024 TestHall</footer>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const offCanvasMenu = document.getElementById('off-canvas-menu');
+        const mainContent = document.getElementById('main-content'); // Get main content
+        const profileDisplayIcon = document.getElementById('user-image-display');
+        const logoutButton = document.getElementById('logout-button');
+        
+        // --- Hamburger Menu Toggle ---
+        hamburgerIcon.addEventListener('click', () => {
+            offCanvasMenu.classList.toggle('open');
+            // Optional: Toggle a class on main content to push it over, or rely on CSS + sibling selector
+        });
+
+// --- Navigation Links Setup (using specific IDs like in profile.html) ---
+const dashboardLink = document.getElementById('dashboard-link');
+const testLibraryLink = document.getElementById('test-library-link');
+const examTakingLink = document.getElementById('exam-library-link');
+const profileLink = document.getElementById('profile-link');
+const classesLink = document.getElementById('classes-link');
+const guideFaqLink = document.getElementById('guide-faq-link');
+const aboutLink = document.getElementById('about-link');
+const contactLink = document.getElementById('contact-link');
+
+// Add event listeners for navigation
+dashboardLink.addEventListener('click', () => { window.location.href = 'dashboard.html';});
+testLibraryLink.addEventListener('click', () => { window.location.href = 'test-library.html'; });
+examTakingLink.addEventListener('click', () => { window.location.href = 'exam-library.html'; });
+profileLink.addEventListener('click', () => { window.location.href = 'profile.html'; });
+classesLink.addEventListener('click', () => { window.location.href = 'classes.html'; });
+guideFaqLink.addEventListener('click', () => { window.location.href = 'guide-FAQ.html'; });
+aboutLink.addEventListener('click', () => { window.location.href = 'about.html'; });
+contactLink.addEventListener('click', () => { window.location.href = 'contact.html'; });
+        // --- Authentication Check & Profile Display ---
+        const loggedInUserId = localStorage.getItem('loggedInUserId');
+        let studentData = {}; 
+
+        if (!loggedInUserId) {
+            // If not logged in, redirect to login page
+            window.location.href = 'login.html';
+            return; 
+        }
+
+        fetch('../data/users.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (Array.isArray(data)) {
+                    studentData = data.find(user => user.id == loggedInUserId);
+                    if (!studentData) {
+                        console.warn(`User with ID ${loggedInUserId} not found in users.json. Using generic student data.`);
+                        studentData = { id: loggedInUserId, name: 'Generic Student', username: 'generic.user', 'date of birth': 'Unknown', role: 'Student' };
+                    }
+                } else {
+                    studentData = data;
+                }
+
+                if (profileDisplayIcon && studentData) {
+                    const profilePicPath = studentData.profilePicture && studentData.profilePicture !== '' 
+                                           ? studentData.profilePicture 
+                                           : '../assets/profile_pictures/default.jpeg';
+                    profileDisplayIcon.src = profilePicPath;
+                    profileDisplayIcon.alt = `${studentData.name}'s Profile Picture`;
+                    profileDisplayIcon.title = `Go to ${studentData.name}'s Profile`;
+                    profileDisplayIcon.style.cursor = 'pointer';
+                    profileDisplayIcon.onclick = () => {
+                        window.location.href = 'profile.html';
+                    };
+                }
+            })
+            .catch(error => {
+                console.error('Error loading student data:', error);
+                if (profileDisplayIcon) {
+                    profileDisplayIcon.src = '../assets/profile_pictures/default.jpeg';
+                    profileDisplayIcon.alt = 'Default Profile Picture';
+                    profileDisplayIcon.title = 'Default Profile';
+                    profileDisplayIcon.onclick = null;
+                }
+            });
+
+        // --- Logout Button Functionality ---
+        if (logoutButton) {
+            logoutButton.addEventListener('click', () => {
+                localStorage.removeItem('loggedInUserId');
+                localStorage.removeItem('loggedInUserRole');
+                localStorage.removeItem('loggedInUsername');
+                alert('You have been logged out.');
+                window.location.href = 'login.html';
+            });
+        }
+    });
+  </script>
+</body>
+</html>

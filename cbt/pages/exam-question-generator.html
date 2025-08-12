@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCS Exam JSON Generator</title>
+    <!-- Using your project's color palette and style -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #020169;
+            text-align: center;
+            border-bottom: 2px solid #FEC009;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            background-color: #fff;
+        }
+        button {
+            background-color: #020169;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #FEC009;
+            color: #020169;
+        }
+        #add-question-btn {
+            background-color: #28a745;
+        }
+        .remove-question-btn {
+            background-color: #dc3545;
+            font-size: 0.9em;
+            padding: 8px 15px;
+        }
+        .question-block {
+            border-top: 2px dashed #ccc;
+            padding-top: 20px;
+            margin-top: 30px;
+            position: relative;
+        }
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .question-header h2 {
+            margin: 0;
+            color: #020169;
+        }
+        #output-container {
+            margin-top: 40px;
+        }
+        #output-json {
+            width: 100%;
+            min-height: 300px;
+            background-color: #e9ecef;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9em;
+            white-space: pre;
+            box-sizing: border-box;
+        }
+        .copy-button-container {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>CBT Exam JSON Generator</h1>
+
+        <form id="json-generator-form">
+            <div>
+                <label for="testName">Exam Name (e.g., BASIC 7 1ST TERM...)</label>
+                <input type="text" id="testName" required placeholder="Enter the full name of the exam">
+            </div>
+
+            <div id="questions-container">
+                <!-- Question blocks will be added here dynamically -->
+            </div>
+
+            <button type="button" id="add-question-btn">Add Another Question</button>
+            <hr style="margin-top: 30px;">
+            <button type="submit">Generate JSON</button>
+        </form>
+
+        <div id="output-container" style="display: none;">
+            <h2>Generated JSON (Copy this and save it in your .json file)</h2>
+            <div class="copy-button-container">
+                <button id="copy-btn">Copy to Clipboard</button>
+            </div>
+            <textarea id="output-json" readonly></textarea>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('json-generator-form');
+            const addQuestionBtn = document.getElementById('add-question-btn');
+            const questionsContainer = document.getElementById('questions-container');
+            const outputContainer = document.getElementById('output-container');
+            const outputJsonTextarea = document.getElementById('output-json');
+            const copyBtn = document.getElementById('copy-btn');
+            let questionCount = 0;
+
+            // Function to add a new question block to the form
+            const addQuestionBlock = () => {
+                questionCount++;
+                const questionBlock = document.createElement('div');
+                questionBlock.className = 'question-block';
+                questionBlock.dataset.id = questionCount;
+
+                questionBlock.innerHTML = `
+                    <div class="question-header">
+                        <h2>Question ${questionCount}</h2>
+                        <button type="button" class="remove-question-btn">Remove This Question</button>
+                    </div>
+                    <div>
+                        <label for="question-text-${questionCount}">Question Text:</label>
+                        <textarea id="question-text-${questionCount}" class="question-text" required placeholder="e.g., What is the capital of Nigeria?"></textarea>
+                    </div>
+                    <div>
+                        <label for="question-image-${questionCount}">Image URL (Optional):</label>
+                        <input type="text" id="question-image-${questionCount}" class="question-image" placeholder="e.g., ./assets/images/questions/map.png">
+                    </div>
+                    <div>
+                        <label for="question-options-${questionCount}">Options (Enter one option per line):</label>
+                        <textarea id="question-options-${questionCount}" class="question-options" required placeholder="Abuja\nLagos\nKano\nIbadan"></textarea>
+                    </div>
+                    <div>
+                        <label for="correct-answer-${questionCount}">Correct Answer:</label>
+                        <select id="correct-answer-${questionCount}" class="correct-answer-select" required>
+                            <option value="">-- Type options above to populate --</option>
+                        </select>
+                    </div>
+                `;
+                questionsContainer.appendChild(questionBlock);
+            };
+
+            // Function to re-number the question headers after one is removed
+            const renumberQuestions = () => {
+                const allBlocks = document.querySelectorAll('.question-block');
+                questionCount = allBlocks.length;
+                allBlocks.forEach((block, index) => {
+                    block.querySelector('h2').textContent = `Question ${index + 1}`;
+                });
+            };
+
+            // Event listener for adding, removing, and updating questions
+            questionsContainer.addEventListener('input', (e) => {
+                // Dynamically update the correct answer dropdown when options are typed
+                if (e.target.classList.contains('question-options')) {
+                    const optionsTextarea = e.target;
+                    const questionBlock = optionsTextarea.closest('.question-block');
+                    const selectDropdown = questionBlock.querySelector('.correct-answer-select');
+                    const currentSelected = selectDropdown.value;
+
+                    const options = optionsTextarea.value.split('\n').filter(opt => opt.trim() !== '');
+                    selectDropdown.innerHTML = '<option value="">-- Select the correct answer --</option>';
+
+                    options.forEach(opt => {
+                        const optionElement = document.createElement('option');
+                        optionElement.value = opt.trim();
+                        optionElement.textContent = opt.trim();
+                        if (opt.trim() === currentSelected) {
+                            optionElement.selected = true;
+                        }
+                        selectDropdown.appendChild(optionElement);
+                    });
+                }
+            });
+
+            questionsContainer.addEventListener('click', (e) => {
+                // Handle removing a question block
+                if (e.target.classList.contains('remove-question-btn')) {
+                    const questionBlock = e.target.closest('.question-block');
+                    questionBlock.remove();
+                    renumberQuestions();
+                }
+            });
+
+            // Add the first question block automatically on page load
+            addQuestionBlock();
+
+            // Handle "Add Question" button click
+            addQuestionBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                addQuestionBlock();
+            });
+
+            // Handle the final form submission to generate JSON
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const jsonData = {
+                    testName: document.getElementById('testName').value.trim(),
+                    questions: []
+                };
+
+                const allQuestionBlocks = document.querySelectorAll('.question-block');
+                if (allQuestionBlocks.length === 0) {
+                    alert('Please add at least one question.');
+                    return;
+                }
+
+                allQuestionBlocks.forEach(block => {
+                    const questionText = block.querySelector('.question-text').value.trim();
+                    const imageURL = block.querySelector('.question-image').value.trim();
+                    const options = block.querySelector('.question-options').value.split('\n').filter(opt => opt.trim() !== '').map(opt => opt.trim());
+                    const correctAnswer = block.querySelector('.correct-answer-select').value;
+                    
+                    const questionObj = {
+                        question: questionText,
+                        options: options,
+                        correctAnswer: correctAnswer
+                    };
+
+                    // Only add the imageURL key if it has a value
+                    if (imageURL) {
+                        questionObj.imageURL = imageURL;
+                    }
+
+                    jsonData.questions.push(questionObj);
+                });
+
+                outputJsonTextarea.value = JSON.stringify(jsonData, null, 2);
+                outputContainer.style.display = 'block';
+                outputJsonTextarea.focus();
+                outputJsonTextarea.select();
+            });
+            
+            // Handle "Copy to Clipboard" button
+            copyBtn.addEventListener('click', () => {
+                if (!outputJsonTextarea.value) return;
+                navigator.clipboard.writeText(outputJsonTextarea.value).then(() => {
+                    copyBtn.textContent = 'Copied!';
+                    setTimeout(() => {
+                        copyBtn.textContent = 'Copy to Clipboard';
+                    }, 2000);
+                }).catch(err => {
+                    alert('Failed to copy!');
+                    console.error('Copy failed', err);
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

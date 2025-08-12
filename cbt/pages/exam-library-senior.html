@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senior Exam Library - TestHall</title>
+  <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 35px;
+      height: 100vh;
+      background-color: #020169;
+      padding: 10px;
+      color: #fff;
+      overflow: hidden;
+      border-radius: 5px 0 0 5px;
+      transition: width 0.75s ease;
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 100;
+    }
+
+    .sidebar:hover {
+      width: 200px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+      cursor: pointer;
+      padding: 5px 0;
+    }
+
+    .menu-item i {
+      font-size: 20px;
+      margin-right: 15px;
+      min-width: 25px;
+    }
+
+    .menu-item span {
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .sidebar:hover .menu-item span {
+      opacity: 1;
+    }
+
+    .menu-item:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      padding-left: 5px;
+      border-radius: 5px;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    #search-input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px 0 0 5px;
+      width: 250px;
+    }
+
+    #search-button {
+      padding: 10px;
+      border: none;
+      background-color: #020169;
+      color: #fec009;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      background-color: #020169;
+      color: #fec009;
+      z-index: 100;
+    }
+
+    main {
+      margin-left: 80px;
+      padding: 20px;
+      flex-grow: 1;
+      padding-bottom: 70px;
+    }
+
+    .profile-display-icon {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+      cursor: pointer;
+      z-index: 999;
+    }
+
+    #exam-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    #exam-list li {
+      margin-bottom: 15px;
+    }
+
+    #exam-list li a {
+      display: block;
+      background-color: #fec009;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-decoration: none;
+      color: #020169;
+      font-weight: bold;
+      transition: transform 0.2s ease;
+    }
+
+    #exam-list li a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+    <!-- Your sidebar menu items here -->
+  <div class="sidebar">
+    <div class="menu-item" onclick="window.location.href='dashboard.html'">
+      <i class="fas fa-tachometer-alt"></i>
+      <span>Dashboard</span>   
+    </div>
+    
+    <div class="menu-item" onclick="window.location.href='test-library.html'">
+      <i class="fas fa-book"></i>
+      <span>Test Library</span>
+    </div>
+    
+    <div class="menu-item" onclick="window.location.href='exam-library.html'">
+      <i class="fas fa-pencil-alt"></i>
+      <span>Exam Library</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='profile.html'">
+      <i class="fas fa-user"></i>
+      <span>My Profile</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='classes.html'">
+      <i class="fas fa-users"></i>
+      <span>Classes</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='guide-FAQ.html'">
+      <i class="fas fa-question-circle"></i>
+      <span>Guide & FAQ</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='about.html'">
+      <i class="fas fa-info-circle"></i>
+      <span>About Us</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='contact.html'">
+      <i class="fas fa-envelope"></i>
+      <span>Contact Us</span>
+    </div>
+    <div class="menu-item" id="logout-button">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Logout</span>
+    </div>
+  </div>
+  
+  <main>
+    <h1>Senior Exam Library</h1>
+    
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Search exams...">
+      <button id="search-button"><i class="fas fa-search"></i></button>
+    </div>
+    
+    <ul id="exam-list"></ul>
+  </main>
+  
+  <img id="user-image-display" src="../assets/images/logo.png" alt="User Profile" class="profile-display-icon">
+  <footer>&copy; 2024 TestHall</footer>
+
+  <script>
+    // All exam data
+const seniorMathematicsExams = [
+  { fileName: '2025-2026-SS1-MATH-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-MATH-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-MATH-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-MATH-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-MATH-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-MATH-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-MATH-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-MATH-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-MATH-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM MATHEMATICS EXAM 2025/2026' }
+];
+
+const physicsExams = [
+  { fileName: '2025/2026-SS1-PHY-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM PHYSICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-PHY-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM PHYSICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-PHY-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM PHYSICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-PHY-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM PHYSICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-PHY-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM PHYSICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-PHY-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM PHYSICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-PHY-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM PHYSICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-PHY-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM PHYSICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-PHY-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM PHYSICS EXAM 2025/2026' }
+];
+
+const seniorHistoricalStudiesExams = [
+  { fileName: '2025-2026-SS1-HIST-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-HIST-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-HIST-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-HIST-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-HIST-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-HIST-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-HIST-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-HIST-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-HIST-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM HISTORICAL STUDIES EXAM 2025/2026' }
+];
+
+const literatureInEnglishExams = [
+  { fileName: '2025/2026-SS1-LIT-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM LITERATURE IN ENGLISH EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-LIT-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM LITERATURE IN ENGLISH EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-LIT-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM LITERATURE IN ENGLISH EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-LIT-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM LITERATURE IN ENGLISH EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-LIT-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM LITERATURE IN ENGLISH EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-LIT-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM LITERATURE IN ENGLISH EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-LIT-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM LITERATURE IN ENGLISH EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-LIT-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM LITERATURE IN ENGLISH EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-LIT-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM LITERATURE IN ENGLISH EXAM 2025/2026' }
+];
+
+const geographyExams = [
+  { fileName: '2025/2026-SS1-GEO-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM GEOGRAPHY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-GEO-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM GEOGRAPHY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-GEO-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM GEOGRAPHY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-GEO-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM GEOGRAPHY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-GEO-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM GEOGRAPHY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-GEO-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM GEOGRAPHY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-GEO-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM GEOGRAPHY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-GEO-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM GEOGRAPHY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-GEO-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM GEOGRAPHY EXAM 2025/2026' }
+];
+
+const governmentExams = [
+  { fileName: '2025/2026-SS1-GOVT-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM GOVERNMENT EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-GOVT-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM GOVERNMENT EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-GOVT-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM GOVERNMENT EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-GOVT-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM GOVERNMENT EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-GOVT-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM GOVERNMENT EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-GOVT-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM GOVERNMENT EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-GOVT-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM GOVERNMENT EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-GOVT-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM GOVERNMENT EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-GOVT-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM GOVERNMENT EXAM 2025/2026' }
+];
+
+const seniorEnglishStudiesExams = [
+  { fileName: '2025-2026-SS1-ENG-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-ENG-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-ENG-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-ENG-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-ENG-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-ENG-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-ENG-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-ENG-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-ENG-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM ENGLISH STUDIES EXAM 2025/2026' }
+];
+
+const furtherMathematicsExams = [
+  { fileName: '2025/2026-SS1-FMAT-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM FURTHER MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-FMAT-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM FURTHER MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-FMAT-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM FURTHER MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-FMAT-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM FURTHER MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-FMAT-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM FURTHER MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-FMAT-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM FURTHER MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-FMAT-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM FURTHER MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-FMAT-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM FURTHER MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-FMAT-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM FURTHER MATHEMATICS EXAM 2025/2026' }
+];
+
+const seniorDictionExams = [
+  { fileName: '2025-2026-SS1-DION-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-DION-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-DION-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-DION-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-DION-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-DION-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-DION-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-DION-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-DION-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM DICTION EXAM 2025/2026' }
+];
+
+const economicsExams = [
+  { fileName: '2025/2026-SS1-ECON-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-ECON-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-ECON-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-ECON-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-ECON-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-ECON-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-ECON-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-ECON-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-ECON-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM ECONOMICS EXAM 2025/2026' }
+];
+
+const civicEducationExams = [
+  { fileName: '2025-2026-SS1-CEDU-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-CEDU-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-CEDU-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-CEDU-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-CEDU-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-CEDU-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-CEDU-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-CEDU-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-CEDU-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM CIVIC EDUCATION EXAM 2025/2026' }
+];
+
+const commerceExams = [
+  { fileName: '2025/2026-SS1-COMM-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM COMMERCE EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-COMM-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM COMMERCE EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-COMM-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM COMMERCE EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-COMM-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM COMMERCE EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-COMM-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM COMMERCE EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-COMM-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM COMMERCE EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-COMM-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM COMMERCE EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-COMM-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM COMMERCE EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-COMM-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM COMMERCE EXAM 2025/2026' }
+];
+
+const chemistryExams = [
+  { fileName: '2025/2026-SS1-CHEM-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM CHEMISTRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-CHEM-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM CHEMISTRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-CHEM-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM CHEMISTRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-CHEM-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM CHEMISTRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-CHEM-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM CHEMISTRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-CHEM-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM CHEMISTRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-CHEM-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM CHEMISTRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-CHEM-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM CHEMISTRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-CHEM-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM CHEMISTRY EXAM 2025/2026' }
+];
+
+const christianReligiousStudiesExams = [
+  { fileName: '2025-2026-SS1-CRS-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-CRS-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-CRS-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-CRS-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-CRS-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-CRS-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-CRS-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-CRS-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-CRS-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' }
+];
+
+const animalHusbandryExams = [
+  { fileName: '2025/2026-SS1-ANI-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM ANIMAL HUSBANDRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-ANI-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM ANIMAL HUSBANDRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-ANI-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM ANIMAL HUSBANDRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-ANI-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM ANIMAL HUSBANDRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-ANI-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM ANIMAL HUSBANDRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-ANI-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM ANIMAL HUSBANDRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-ANI-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM ANIMAL HUSBANDRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-ANI-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM ANIMAL HUSBANDRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-ANI-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM ANIMAL HUSBANDRY EXAM 2025/2026' }
+];
+
+const biologyExams = [
+  { fileName: '2025/2026-SS1-BIO-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM BIOLOGY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-BIO-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM BIOLOGY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-BIO-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM BIOLOGY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-BIO-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM BIOLOGY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-BIO-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM BIOLOGY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-BIO-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM BIOLOGY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-BIO-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM BIOLOGY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-BIO-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM BIOLOGY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-BIO-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM BIOLOGY EXAM 2025/2026' }
+];
+
+const agriculturalScienceExams = [
+  { fileName: '2025-2026-SS1-ACS-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-ACS-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-ACS-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-ACS-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-ACS-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-ACS-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-ACS-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-ACS-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-ACS-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM AGRICULTURAL SCIENCE EXAM 2025/2026' }
+];
+
+    // Add all other subject arrays...
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Authentication check
+      const loggedInUserId = localStorage.getItem('loggedInUserId');
+      if (!loggedInUserId) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Combine all exams
+      const allExams = [
+        ...seniorMathematicsExams,        
+        ...physicsExams,
+        ...seniorHistoricalStudiesExams,
+        ...literatureInEnglishExams,
+        ...geographyExams,
+        ...governmentExams,
+        ...seniorEnglishStudiesExams,
+        ...furtherMathematicsExams,
+        ...seniorDictionExams,
+        ...economicsExams,
+        ...civicEducationExams,
+        ...commerceExams,
+        ...chemistryExams,
+        ...christianReligiousStudiesExams,
+        ...animalHusbandryExams,
+        ...biologyExams,
+        ...agriculturalScienceExams  
+        // Add all other exam arrays here...
+      ];
+      
+      const examListElement = document.getElementById('exam-list');
+      const searchInput = document.getElementById('search-input');
+      const searchButton = document.getElementById('search-button');
+
+      // Display exams
+      function showExams(exams) {
+        examListElement.innerHTML = '';
+        
+        if (exams.length === 0) {
+          examListElement.innerHTML = '<li class="loading">No exams found</li>';
+          return;
+        }
+        
+        exams.forEach(exam => {
+          const listItem = document.createElement('li');
+          const anchor = document.createElement('a');
+          anchor.href = `exam-taking-senior.html?test=${encodeURIComponent(exam.fileName)}`;
+          anchor.textContent = exam.displayName;
+          listItem.appendChild(anchor);
+          examListElement.appendChild(listItem);
+        });
+      }
+
+      // Initial load - show all exams
+      showExams(allExams);
+
+      // Search functionality
+      function handleSearch() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredExams = allExams.filter(exam => 
+          exam.displayName.toLowerCase().includes(searchTerm)
+        );
+        showExams(filteredExams);
+      }
+
+      searchButton.addEventListener('click', handleSearch);
+      searchInput.addEventListener('input', handleSearch);
+      searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleSearch();
+      });
+
+      // Profile icon click
+      document.getElementById('user-image-display').addEventListener('click', () => {
+        window.location.href = 'profile.html';
+      });
+
+      // Logout functionality
+      document.getElementById('logout-button').addEventListener('click', () => {
+        localStorage.clear();
+        window.location.href = 'login.html';
+      });
+    });
+  </script>
+</body>
+</html>
