@@ -1,0 +1,51 @@
+[
+  {
+  "id": 1,
+  "iconClass": "fas fa-chalkboard-teacher",
+  "title": "JUNIOR SECONDARY ONE",
+  "subtitle": "2025/2026 Academic Section",
+  "link": "B7L.html"
+  },
+  {
+  "id": 2,
+  "iconClass": "fas fa-seedling",
+  "title": "JUNIOR SECONDARY TWO",
+  "subtitle": "2025/2026 Academic Section",
+  "link": "B8T.html"
+  },
+  {
+  "id": 3,
+  "iconClass": "fas fa-graduation-cap",
+  "title": "JUNIOR SECONDARY THREE",
+  "subtitle": "2025/2026 Academic Section",
+  "link": "B9S.html"
+  },
+  {
+  "id": 4,
+  "iconClass": "fas fa-atom",
+  "title": "SENIOR SECONDARY ONE",
+  "subtitle": "Science Department",
+  "link": "SS1-Science.html"
+  },
+  {
+  "id": 5,
+  "iconClass": "fas fa-landmark",
+  "title": "SENIOR SECONDARY ONE",
+  "subtitle": "Arts Department",
+  "link": ""
+  },
+  {
+  "id": 6,
+  "iconClass": "fas fa-book-reader",
+  "title": "BASIC 5: RUBY",
+  "subtitle": "Primary Section",
+  "link": ""
+  },
+  {
+  "id": 7,
+  "iconClass": "fas fa-palette",
+  "title": "NURSERY ONE: TULIP",
+  "subtitle": "Pre-Primary Section",
+  "link": ""
+  }
+]

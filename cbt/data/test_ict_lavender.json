@@ -1,0 +1,41 @@
+{
+  "testName": "PHE Sunflower Test",
+  "questions": [
+    {
+      "question": "Pentathlon events are held on ________ day(s)",
+      "options": ["5", "4", "2", "3", "1"],
+      "correctAnswer": "1"
+    },
+        {
+      "question": "The following are sport promoting agencies in Nigeria except _______",
+      "options": ["CBN", "NSC", "NIS", "CFN", "NAPHER-SD"],
+      "correctAnswer": "CBN"
+    },
+    {
+      "question": "Hurdle, 1500m, 800m, 400m race are for _________ events",
+      "options": ["track", "field", "track and field", "all of the above"],
+      "correctAnswer": "track"
+    },
+    {
+      "question": "The ability to perform one’s work without undue fatique and still have enough energy for social life is _______",
+      "options": ["social fitness", "emotional fitness", "physical fitness", "energy fitness"],
+      "correctAnswer": "physical fitness"
+    },
+    {
+      "question": "Poor officiating results to ______ in sport.",
+      "options": ["fair play", "violence", "good play", "none of the above"],
+      "correctAnswer": "violence"
+    },
+    {
+      "question": "________ is the use of techniques and procedures to improve performance of their athletes",
+      "options": ["sport science", "sport management", "sport psychology", "sport medicine"],
+      "correctAnswer": "sport science"
+    }
+  ]
+}
+
+
+
+
+
+

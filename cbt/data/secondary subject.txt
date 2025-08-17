@@ -1,0 +1,1403 @@
+
+
+JUNIOR SECONDARY SCHOOL 
+-----------------------------------
+AGRICULTURAL SCIENCE
+ACS-JUNIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-JS1-ACS-1ST.json        |
+2025-2026-JS1-ACS-2ND.json        |
+2025-2026-JS1-ACS-3RD.json        |
+-----------------------------------
+2025-2026-JS2-ACS-1ST.json        |
+2025-2026-JS2-ACS-2ND.json        |
+2025-2026-JS2-ACS-3RD.json        |
+-----------------------------------
+2025-2026-JS3-ACS-1ST.json        |
+2025-2026-JS3-ACS-2ND.json        |
+2025-2026-JS3-ACS-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------
+BASIC SCIENCE (BSCI)
+BSCI-JUNIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-JS1-BSCI-1ST.json        |
+2025-2026-JS1-BSCI-2ND.json        |
+2025-2026-JS1-BSCI-3RD.json        |
+-----------------------------------
+2025-2026-JS2-BSCI-1ST.json        |
+2025-2026-JS2-BSCI-2ND.json        |
+2025-2026-JS2-BSCI-3RD.json        |
+-----------------------------------
+2025-2026-JS3-BSCI-1ST.json        |
+2025-2026-JS3-BSCI-2ND.json        |
+2025-2026-JS3-BSCI-3RD.json        |
+-----------------------------------
+
+
+
+
+-----------------------------------
+BASIC TECHNOLOGY (BTEC)
+BTEC-JUNIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-JS1-BTEC-1ST.json        |
+2025-2026-JS1-BTEC-2ND.json        |
+2025-2026-JS1-BTEC-3RD.json        |
+-----------------------------------
+2025-2026-JS2-BTEC-1ST.json        |
+2025-2026-JS2-BTEC-2ND.json        |
+2025-2026-JS2-BTEC-3RD.json        |
+-----------------------------------
+2025-2026-JS3-BTEC-1ST.json        |
+2025-2026-JS3-BTEC-2ND.json        |
+2025-2026-JS3-BTEC-3RD.json        |
+-----------------------------------
+
+
+
+
+-----------------------------------
+BUSINESS STUDIES (BSTU)
+BSTU-JUNIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-JS1-BSTU-1ST.json        |
+2025-2026-JS1-BSTU-2ND.json        |
+2025-2026-JS1-BSTU-3RD.json        |
+-----------------------------------
+2025-2026-JS2-BSTU-1ST.json        |
+2025-2026-JS2-BSTU-2ND.json        |
+2025-2026-JS2-BSTU-3RD.json        |
+-----------------------------------
+2025-2026-JS3-BSTU-1ST.json        |
+2025-2026-JS3-BSTU-2ND.json        |
+2025-2026-JS3-BSTU-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------
+CHRISTIAN RELIGIOUS STUDIES (CRS)
+CRS-JUNIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-JS1-CRS-1ST.json        |
+2025-2026-JS1-CRS-2ND.json        |
+2025-2026-JS1-CRS-3RD.json        |
+-----------------------------------
+2025-2026-JS2-CRS-1ST.json        |
+2025-2026-JS2-CRS-2ND.json        |
+2025-2026-JS2-CRS-3RD.json        |
+-----------------------------------
+2025-2026-JS3-CRS-1ST.json        |
+2025-2026-JS3-CRS-2ND.json        |
+2025-2026-JS3-CRS-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------
+CIVIC EDUCATION (CEDU)
+CEDU-JUNIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-JS1-CEDU-1ST.json        |
+2025-2026-JS1-CEDU-2ND.json        |
+2025-2026-JS1-CEDU-3RD.json        |
+-----------------------------------
+2025-2026-JS2-CEDU-1ST.json        |
+2025-2026-JS2-CEDU-2ND.json        |
+2025-2026-JS2-CEDU-3RD.json        |
+-----------------------------------
+2025-2026-JS3-CEDU-1ST.json        |
+2025-2026-JS3-CEDU-2ND.json        |
+2025-2026-JS3-CEDU-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------
+COMPUTER STUDIES (COMP)
+COMP-JUNIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-JS1-COMP-1ST.json        |
+2025-2026-JS1-COMP-2ND.json        |
+2025-2026-JS1-COMP-3RD.json        |
+-----------------------------------
+2025-2026-JS2-COMP-1ST.json        |
+2025-2026-JS2-COMP-2ND.json        |
+2025-2026-JS2-COMP-3RD.json        |
+-----------------------------------
+2025-2026-JS3-COMP-1ST.json        |
+2025-2026-JS3-COMP-2ND.json        |
+2025-2026-JS3-COMP-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------
+CULTURAL AND CREATIVE ART (CCA)
+CCA-JUNIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-JS1-CCA-1ST.json        |
+2025-2026-JS1-CCA-2ND.json        |
+2025-2026-JS1-CCA-3RD.json        |
+-----------------------------------
+2025-2026-JS2-CCA-1ST.json        |
+2025-2026-JS2-CCA-2ND.json        |
+2025-2026-JS2-CCA-3RD.json        |
+-----------------------------------
+2025-2026-JS3-CCA-1ST.json        |
+2025-2026-JS3-CCA-2ND.json        |
+2025-2026-JS3-CCA-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------
+DICTATION (DITA)
+DITA-JUNIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-JS1-DITA-1ST.json        |
+2025-2026-JS1-DITA-2ND.json        |
+2025-2026-JS1-DITA-3RD.json        |
+-----------------------------------
+2025-2026-JS2-DITA-1ST.json        |
+2025-2026-JS2-DITA-2ND.json        |
+2025-2026-JS2-DITA-3RD.json        |
+-----------------------------------
+2025-2026-JS3-DITA-1ST.json        |
+2025-2026-JS3-DITA-2ND.json        |
+2025-2026-JS3-DITA-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------
+DICTION (DION)
+DION-JUNIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-JS1-DION-1ST.json        |
+2025-2026-JS1-DION-2ND.json        |
+2025-2026-JS1-DION-3RD.json        |
+-----------------------------------
+2025-2026-JS2-DION-1ST.json        |
+2025-2026-JS2-DION-2ND.json        |
+2025-2026-JS2-DION-3RD.json        |
+-----------------------------------
+2025-2026-JS3-DION-1ST.json        |
+2025-2026-JS3-DION-2ND.json        |
+2025-2026-JS3-DION-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------
+ENGLISH STUDIES (ENG)
+ENG-JUNIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-JS1-ENG-1ST.json        |
+2025-2026-JS1-ENG-2ND.json        |
+2025-2026-JS1-ENG-3RD.json        |
+-----------------------------------
+2025-2026-JS2-ENG-1ST.json        |
+2025-2026-JS2-ENG-2ND.json        |
+2025-2026-JS2-ENG-3RD.json        |
+-----------------------------------
+2025-2026-JS3-ENG-1ST.json        |
+2025-2026-JS3-ENG-2ND.json        |
+2025-2026-JS3-ENG-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------
+FRENCH (FRE)
+FRE-JUNIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-JS1-FRE-1ST.json        |
+2025-2026-JS1-FRE-2ND.json        |
+2025-2026-JS1-FRE-3RD.json        |
+-----------------------------------
+2025-2026-JS2-FRE-1ST.json        |
+2025-2026-JS2-FRE-2ND.json        |
+2025-2026-JS2-FRE-3RD.json        |
+-----------------------------------
+2025-2026-JS3-FRE-1ST.json        |
+2025-2026-JS3-FRE-2ND.json        |
+2025-2026-JS3-FRE-3RD.json        |
+-----------------------------------
+
+
+
+
+-----------------------------------
+HISTORICAL STUDIES (HIS)
+HIS-JUNIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-JS1-HIS-1ST.json        |
+2025-2026-JS1-HIS-2ND.json        |
+2025-2026-JS1-HIS-3RD.json        |
+-----------------------------------
+2025-2026-JS2-HIS-1ST.json        |
+2025-2026-JS2-HIS-2ND.json        |
+2025-2026-JS2-HIS-3RD.json        |
+-----------------------------------
+2025-2026-JS3-HIS-1ST.json        |
+2025-2026-JS3-HIS-2ND.json        |
+2025-2026-JS3-HIS-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------
+HOME ECONOMICS (HOM)
+HOM-JUNIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-JS1-HOM-1ST.json        |
+2025-2026-JS1-HOM-2ND.json        |
+2025-2026-JS1-HOM-3RD.json        |
+-----------------------------------
+2025-2026-JS2-HOM-1ST.json        |
+2025-2026-JS2-HOM-2ND.json        |
+2025-2026-JS2-HOM-3RD.json        |
+-----------------------------------
+2025-2026-JS3-HOM-1ST.json        |
+2025-2026-JS3-HOM-2ND.json        |
+2025-2026-JS3-HOM-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------
+MATHEMATICS (MAT)
+MAT-JUNIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-JS1-MAT-1ST.json        |
+2025-2026-JS1-MAT-2ND.json        |
+2025-2026-JS1-MAT-3RD.json        |
+-----------------------------------
+2025-2026-JS2-MAT-1ST.json        |
+2025-2026-JS2-MAT-2ND.json        |
+2025-2026-JS2-MAT-3RD.json        |
+-----------------------------------
+2025-2026-JS3-MAT-1ST.json        |
+2025-2026-JS3-MAT-2ND.json        |
+2025-2026-JS3-MAT-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------
+MUSIC (MUS)
+MUS-JUNIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-JS1-MUS-1ST.json        |
+2025-2026-JS1-MUS-2ND.json        |
+2025-2026-JS1-MUS-3RD.json        |
+-----------------------------------
+2025-2026-JS2-MUS-1ST.json        |
+2025-2026-JS2-MUS-2ND.json        |
+2025-2026-JS2-MUS-3RD.json        |
+-----------------------------------
+2025-2026-JS3-MUS-1ST.json        |
+2025-2026-JS3-MUS-2ND.json        |
+2025-2026-JS3-MUS-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------
+PHYSICAL AND HEALTH EDUCATION (PHE)
+PHE-JUNIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-JS1-PHE-1ST.json        |
+2025-2026-JS1-PHE-2ND.json        |
+2025-2026-JS1-PHE-3RD.json        |
+-----------------------------------
+2025-2026-JS2-PHE-1ST.json        |
+2025-2026-JS2-PHE-2ND.json        |
+2025-2026-JS2-PHE-3RD.json        |
+-----------------------------------
+2025-2026-JS3-PHE-1ST.json        |
+2025-2026-JS3-PHE-2ND.json        |
+2025-2026-JS3-PHE-3RD.json        |
+-----------------------------------
+
+SECURITY EDUCATION (SEC)
+SEC-JUNIOR-2025-2026 ASE          |
+-----------------------------------
+2025-2026-JS1-SEC-1ST.json        |
+2025-2026-JS1-SEC-2ND.json        |
+2025-2026-JS1-SEC-3RD.json        |
+-----------------------------------
+2025-2026-JS2-SEC-1ST.json        |
+2025-2026-JS2-SEC-2ND.json        |
+2025-2026-JS2-SEC-3RD.json        |
+-----------------------------------
+2025-2026-JS3-SEC-1ST.json        |
+2025-2026-JS3-SEC-2ND.json        |
+2025-2026-JS3-SEC-3RD.json        |
+-----------------------------------
+
+
+
+
+-----------------------------------
+SOCIAL STUDIES (SOS)
+SOS-JUNIOR-2025-2026 ASE          |
+-----------------------------------
+2025-2026-JS1-SOS-1ST.json        |
+2025-2026-JS1-SOS-2ND.json        |
+2025-2026-JS1-SOS-3RD.json        |
+-----------------------------------
+2025-2026-JS2-SOS-1ST.json        |
+2025-2026-JS2-SOS-2ND.json        |
+2025-2026-JS2-SOS-3RD.json        |
+----------------------------------|
+2025-2026-JS3-SOS-1ST.json        |
+2025-2026-JS3-SOS-2ND.json        |
+2025-2026-JS3-SOS-3RD.json        |
+-----------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------
+-----------------------------------
+-----------------------------------                 
+-----------------------------------               
+                 
+                 SENIOR SECONDARY SCHOOL
+                 
+-----------------------------------                 
+-----------------------------------                 
+-----------------------------------                 
+-----------------------------------
+
+
+
+
+-----------------------------------
+AGRICULTURAL SCIENCE (ACS)
+ACS-SENIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-SS1-ACS-1ST.json        |
+2025-2026-SS1-ACS-2ND.json        |
+2025-2026-SS1-ACS-3RD.json        |
+-----------------------------------
+2025-2026-SS2-ACS-1ST.json        |
+2025-2026-SS2-ACS-2ND.json        |
+2025-2026-SS2-ACS-3RD.json        |
+-----------------------------------
+2025-2026-SS3-ACS-1ST.json        |
+2025-2026-SS3-ACS-2ND.json        |
+2025-2026-SS3-ACS-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------
+ANIMAL HUSBANDRY (ANI)
+ANI-SENIOR-2025/2026 ASE          |
+-----------------------------------
+2025/2026-SS1-ANI-1ST.json        |
+2025/2026-SS1-ANI-2ND.json        |
+2025/2026-SS1-ANI-3RD.json        |
+-----------------------------------
+2025/2026-SS2-ANI-1ST.json        |
+2025/2026-SS2-ANI-2ND.json        |
+2025/2026-SS2-ANI-3RD.json        |
+-----------------------------------
+2025/2026-SS3-ANI-1ST.json        |
+2025/2026-SS3-ANI-2ND.json        |
+2025/2026-SS3-ANI-3RD.json        |
+----------------------------------- 
+
+
+
+
+
+
+-----------------------------------
+BIOLOGY (BIO)
+BIO-SENIOR-2025/2026 ASE          |
+-----------------------------------
+2025/2026-SS1-BIO-1ST.json        |
+2025/2026-SS1-BIO-2ND.json        |
+2025/2026-SS1-BIO-3RD.json        |
+-----------------------------------
+2025/2026-SS2-BIO-1ST.json        |
+2025/2026-SS2-BIO-2ND.json        |
+2025/2026-SS2-BIO-3RD.json        |
+-----------------------------------
+2025/2026-SS3-BIO-1ST.json        |
+2025/2026-SS3-BIO-2ND.json        |
+2025/2026-SS3-BIO-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------
+CHEMISTRY (CHEM)
+CHEM-SENIOR-2025/2026 ASE          |
+-----------------------------------
+2025/2026-SS1-CHEM-1ST.json        |
+2025/2026-SS1-CHEM-2ND.json        |
+2025/2026-SS1-CHEM-3RD.json        |
+-----------------------------------
+2025/2026-SS2-CHEM-1ST.json        |
+2025/2026-SS2-CHEM-2ND.json        |
+2025/2026-SS2-CHEM-3RD.json        |
+-----------------------------------
+2025/2026-SS3-CHEM-1ST.json        |
+2025/2026-SS3-CHEM-2ND.json        |
+2025/2026-SS3-CHEM-3RD.json        |
+----------------------------------- 
+
+
+
+
+
+-----------------------------------
+CHRISTIAN RELIGIOUS STUDIES (CRS)
+CRS-SENIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-SS1-CRS-1ST.json        |
+2025-2026-SS1-CRS-2ND.json        |
+2025-2026-SS1-CRS-3RD.json        |
+-----------------------------------
+2025-2026-SS2-CRS-1ST.json        |
+2025-2026-SS2-CRS-2ND.json        |
+2025-2026-SS2-CRS-3RD.json        |
+-----------------------------------
+2025-2026-SS3-CRS-1ST.json        |
+2025-2026-SS3-CRS-2ND.json        |
+2025-2026-SS3-CRS-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------
+CIVIC EDUCATION (CEDU)
+CEDU-SENIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-SS1-CEDU-1ST.json        |
+2025-2026-SS1-CEDU-2ND.json        |
+2025-2026-SS1-CEDU-3RD.json        |
+-----------------------------------
+2025-2026-SS2-CEDU-1ST.json        |
+2025-2026-SS2-CEDU-2ND.json        |
+2025-2026-SS2-CEDU-3RD.json        |
+-----------------------------------
+2025-2026-SS3-CEDU-1ST.json        |
+2025-2026-SS3-CEDU-2ND.json        |
+2025-2026-SS3-CEDU-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------
+COMMERCE (COMM)
+COMM-SENIOR-2025/2026 ASE          |
+-----------------------------------
+2025/2026-SS1-COMM-1ST.json        |
+2025/2026-SS1-COMM-2ND.json        |
+2025/2026-SS1-COMM-3RD.json        |
+-----------------------------------
+2025/2026-SS2-COMM-1ST.json        |
+2025/2026-SS2-COMM-2ND.json        |
+2025/2026-SS2-COMM-3RD.json        |
+-----------------------------------
+2025/2026-SS3-COMM-1ST.json        |
+2025/2026-SS3-COMM-2ND.json        |
+2025/2026-SS3-COMM-3RD.json        |
+----------------------------------- 
+
+
+
+
+-----------------------------------
+DICTION (DION)
+DION-SENIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-SS1-DION-1ST.json        |
+2025-2026-SS1-DION-2ND.json        |
+2025-2026-SS1-DION-3RD.json        |
+-----------------------------------
+2025-2026-SS2-DION-1ST.json        |
+2025-2026-SS2-DION-2ND.json        |
+2025-2026-SS2-DION-3RD.json        |
+-----------------------------------
+2025-2026-SS3-DION-1ST.json        |
+2025-2026-SS3-DION-2ND.json        |
+2025-2026-SS3-DION-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------
+ECONOMICS (ECON)
+ECON-SENIOR-2025/2026 ASE          |
+-----------------------------------
+2025/2026-SS1-ECON-1ST.json        |
+2025/2026-SS1-ECON-2ND.json        |
+2025/2026-SS1-ECON-3RD.json        |
+-----------------------------------
+2025/2026-SS2-ECON-1ST.json        |
+2025/2026-SS2-ECON-2ND.json        |
+2025/2026-SS2-ECON-3RD.json        |
+-----------------------------------
+2025/2026-SS3-ECON-1ST.json        |
+2025/2026-SS3-ECON-2ND.json        |
+2025/2026-SS3-ECON-3RD.json        |
+----------------------------------- 
+
+
+
+
+
+-----------------------------------
+ENGLISH STUDIES (ENG)
+ENG-SENIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-SS1-ENG-1ST.json        |
+2025-2026-SS1-ENG-2ND.json        |
+2025-2026-SS1-ENG-3RD.json        |
+-----------------------------------
+2025-2026-SS2-ENG-1ST.json        |
+2025-2026-SS2-ENG-2ND.json        |
+2025-2026-SS2-ENG-3RD.json        |
+-----------------------------------
+2025-2026-SS3-ENG-1ST.json        |
+2025-2026-SS3-ENG-2ND.json        |
+2025-2026-SS3-ENG-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------
+FURTHER MATHEMATICS (FMAT)
+FMAT-SENIOR-2025/2026 ASE          |
+-----------------------------------
+2025/2026-SS1-FMAT-1ST.json        |
+2025/2026-SS1-FMAT-2ND.json        |
+2025/2026-SS1-FMAT-3RD.json        |
+-----------------------------------
+2025/2026-SS2-FMAT-1ST.json        |
+2025/2026-SS2-FMAT-2ND.json        |
+2025/2026-SS2-FMAT-3RD.json        |
+-----------------------------------
+2025/2026-SS3-FMAT-1ST.json        |
+2025/2026-SS3-FMAT-2ND.json        |
+2025/2026-SS3-FMAT-3RD.json        |
+----------------------------------- 
+
+
+
+
+
+-----------------------------------
+GEOGRAPHY (GEO)
+GEO-SENIOR-2025/2026 ASE          |
+-----------------------------------
+2025/2026-SS1-GEO-1ST.json        |
+2025/2026-SS1-GEO-2ND.json        |
+2025/2026-SS1-GEO-3RD.json        |
+-----------------------------------
+2025/2026-SS2-GEO-1ST.json        |
+2025/2026-SS2-GEO-2ND.json        |
+2025/2026-SS2-GEO-3RD.json        |
+-----------------------------------
+2025/2026-SS3-GEO-1ST.json        |
+2025/2026-SS3-GEO-2ND.json        |
+2025/2026-SS3-GEO-3RD.json        |
+-----------------------------------     
+
+
+
+
+
+-----------------------------------
+GOVERNMENT (GOVT)
+GOVT-SENIOR-2025/2026 ASE          |
+-----------------------------------
+2025/2026-SS1-GOVT-1ST.json        |
+2025/2026-SS1-GOVT-2ND.json        |
+2025/2026-SS1-GOVT-3RD.json        |
+-----------------------------------
+2025/2026-SS2-GOVT-1ST.json        |
+2025/2026-SS2-GOVT-2ND.json        |
+2025/2026-SS2-GOVT-3RD.json        |
+-----------------------------------
+2025/2026-SS3-GOVT-1ST.json        |
+2025/2026-SS3-GOVT-2ND.json        |
+2025/2026-SS3-GOVT-3RD.json        |
+----------------------------------- 
+
+
+
+
+
+  
+-----------------------------------
+HISTORICAL STUDIES (HIS)
+HIST-SENIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-SS1-HIST-1ST.json        |
+2025-2026-SS1-HIST-2ND.json        |
+2025-2026-SS1-HIST-3RD.json        |
+-----------------------------------
+2025-2026-SS2-HIST-1ST.json        |
+2025-2026-SS2-HIST-2ND.json        |
+2025-2026-SS2-HIST-3RD.json        |
+-----------------------------------
+2025-2026-SS3-HIST-1ST.json        |
+2025-2026-SS3-HIST-2ND.json        |
+2025-2026-SS3-HIST-3RD.json        |
+-----------------------------------
+
+
+
+
+
+-----------------------------------   
+LITERATURE IN ENGLISH (LIT)
+LIT-SENIOR-2025/2026 ASE          |
+-----------------------------------
+2025/2026-SS1-LIT-1ST.json        |
+2025/2026-SS1-LIT-2ND.json        |
+2025/2026-SS1-LIT-3RD.json        |
+-----------------------------------
+2025/2026-SS2-LIT-1ST.json        |
+2025/2026-SS2-LIT-2ND.json        |
+2025/2026-SS2-LIT-3RD.json        |
+-----------------------------------
+2025/2026-SS3-LIT-1ST.json        |
+2025/2026-SS3-LIT-2ND.json        |
+2025/2026-SS3-LIT-3RD.json        |
+----------------------------------- 
+
+
+
+
+
+
+-----------------------------------
+MATHEMATICS (MATH)
+MATH-SENIOR-2025-2026 ASE
+-----------------------------------
+2025-2026-SS1-MATH-1ST.json        |
+2025-2026-SS1-MATH-2ND.json        |
+2025-2026-SS1-MATH-3RD.json        |
+-----------------------------------
+2025-2026-SS2-MATH-1ST.json        |
+2025-2026-SS2-MATH-2ND.json        |
+2025-2026-SS2-MATH-3RD.json        |
+-----------------------------------
+2025-2026-SS3-MATH-1ST.json        |
+2025-2026-SS3-MATH-2ND.json        |
+2025-2026-SS3-MATH-3RD.json        |
+-----------------------------------
+
+
+
+
+
+
+-----------------------------------
+PHYSICS (PHY)
+PHY-SENIOR-2025/2026 ASE          |
+-----------------------------------
+2025/2026-SS1-PHY-1ST.json        |
+2025/2026-SS1-PHY-2ND.json        |
+2025/2026-SS1-PHY-3RD.json        |
+-----------------------------------
+2025/2026-SS2-PHY-1ST.json        |
+2025/2026-SS2-PHY-2ND.json        |
+2025/2026-SS2-PHY-3RD.json        |
+-----------------------------------
+2025/2026-SS3-PHY-1ST.json        |
+2025/2026-SS3-PHY-2ND.json        |
+2025/2026-SS3-PHY-3RD.json        |
+----------------------------------- 
+
+
+
+-----------------------------------
+-----------------------------------  
+
+
+
+
+
+
+-----------------------------------
+const seniorMathematicsExams = [
+  { fileName: '2025-2026-SS1-MATH-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-MATH-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-MATH-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-MATH-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-MATH-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-MATH-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-MATH-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-MATH-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-MATH-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM MATHEMATICS EXAM 2025/2026' }
+];
+
+
+
+
+
+
+const physicsExams = [
+  { fileName: '2025/2026-SS1-PHY-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM PHYSICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-PHY-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM PHYSICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-PHY-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM PHYSICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-PHY-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM PHYSICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-PHY-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM PHYSICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-PHY-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM PHYSICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-PHY-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM PHYSICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-PHY-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM PHYSICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-PHY-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM PHYSICS EXAM 2025/2026' }
+];
+
+
+
+
+const seniorHistoricalStudiesExams = [
+  { fileName: '2025-2026-SS1-HIST-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-HIST-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-HIST-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-HIST-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-HIST-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-HIST-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-HIST-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-HIST-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-HIST-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM HISTORICAL STUDIES EXAM 2025/2026' }
+];
+
+
+
+
+
+const literatureInEnglishExams = [
+  { fileName: '2025/2026-SS1-LIT-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM LITERATURE IN ENGLISH EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-LIT-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM LITERATURE IN ENGLISH EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-LIT-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM LITERATURE IN ENGLISH EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-LIT-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM LITERATURE IN ENGLISH EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-LIT-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM LITERATURE IN ENGLISH EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-LIT-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM LITERATURE IN ENGLISH EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-LIT-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM LITERATURE IN ENGLISH EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-LIT-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM LITERATURE IN ENGLISH EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-LIT-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM LITERATURE IN ENGLISH EXAM 2025/2026' }
+];
+
+
+
+
+
+const geographyExams = [
+  { fileName: '2025/2026-SS1-GEO-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM GEOGRAPHY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-GEO-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM GEOGRAPHY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-GEO-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM GEOGRAPHY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-GEO-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM GEOGRAPHY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-GEO-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM GEOGRAPHY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-GEO-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM GEOGRAPHY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-GEO-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM GEOGRAPHY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-GEO-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM GEOGRAPHY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-GEO-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM GEOGRAPHY EXAM 2025/2026' }
+];
+
+
+
+
+
+
+const governmentExams = [
+  { fileName: '2025/2026-SS1-GOVT-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM GOVERNMENT EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-GOVT-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM GOVERNMENT EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-GOVT-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM GOVERNMENT EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-GOVT-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM GOVERNMENT EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-GOVT-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM GOVERNMENT EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-GOVT-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM GOVERNMENT EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-GOVT-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM GOVERNMENT EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-GOVT-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM GOVERNMENT EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-GOVT-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM GOVERNMENT EXAM 2025/2026' }
+];
+
+
+
+
+const seniorEnglishStudiesExams = [
+  { fileName: '2025-2026-SS1-ENG-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-ENG-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-ENG-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-ENG-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-ENG-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-ENG-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-ENG-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-ENG-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-ENG-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM ENGLISH STUDIES EXAM 2025/2026' }
+];
+
+
+
+
+
+const furtherMathematicsExams = [
+  { fileName: '2025/2026-SS1-FMAT-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM FURTHER MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-FMAT-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM FURTHER MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-FMAT-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM FURTHER MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-FMAT-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM FURTHER MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-FMAT-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM FURTHER MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-FMAT-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM FURTHER MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-FMAT-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM FURTHER MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-FMAT-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM FURTHER MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-FMAT-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM FURTHER MATHEMATICS EXAM 2025/2026' }
+];
+
+
+
+
+const seniorDictionExams = [
+  { fileName: '2025-2026-SS1-DION-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-DION-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-DION-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-DION-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-DION-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-DION-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-DION-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-DION-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-DION-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM DICTION EXAM 2025/2026' }
+];
+
+
+
+
+
+const economicsExams = [
+  { fileName: '2025/2026-SS1-ECON-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-ECON-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-ECON-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-ECON-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-ECON-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-ECON-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-ECON-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-ECON-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-ECON-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM ECONOMICS EXAM 2025/2026' }
+];
+
+
+
+const civicEducationExams = [
+  { fileName: '2025-2026-SS1-CEDU-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-CEDU-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-CEDU-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-CEDU-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-CEDU-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-CEDU-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-CEDU-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-CEDU-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-CEDU-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM CIVIC EDUCATION EXAM 2025/2026' }
+];
+
+
+
+
+const commerceExams = [
+  { fileName: '2025/2026-SS1-COMM-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM COMMERCE EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-COMM-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM COMMERCE EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-COMM-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM COMMERCE EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-COMM-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM COMMERCE EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-COMM-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM COMMERCE EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-COMM-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM COMMERCE EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-COMM-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM COMMERCE EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-COMM-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM COMMERCE EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-COMM-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM COMMERCE EXAM 2025/2026' }
+];
+
+
+
+const chemistryExams = [
+  { fileName: '2025/2026-SS1-CHEM-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM CHEMISTRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-CHEM-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM CHEMISTRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-CHEM-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM CHEMISTRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-CHEM-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM CHEMISTRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-CHEM-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM CHEMISTRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-CHEM-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM CHEMISTRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-CHEM-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM CHEMISTRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-CHEM-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM CHEMISTRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-CHEM-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM CHEMISTRY EXAM 2025/2026' }
+];
+
+
+
+
+const christianReligiousStudiesExams = [
+  { fileName: '2025-2026-SS1-CRS-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-CRS-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-CRS-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-CRS-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-CRS-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-CRS-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-CRS-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-CRS-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-CRS-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' }
+];
+
+
+
+
+
+const animalHusbandryExams = [
+  { fileName: '2025/2026-SS1-ANI-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM ANIMAL HUSBANDRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-ANI-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM ANIMAL HUSBANDRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-ANI-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM ANIMAL HUSBANDRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-ANI-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM ANIMAL HUSBANDRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-ANI-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM ANIMAL HUSBANDRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-ANI-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM ANIMAL HUSBANDRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-ANI-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM ANIMAL HUSBANDRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-ANI-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM ANIMAL HUSBANDRY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-ANI-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM ANIMAL HUSBANDRY EXAM 2025/2026' }
+];
+
+
+
+const biologyExams = [
+  { fileName: '2025/2026-SS1-BIO-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM BIOLOGY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-BIO-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM BIOLOGY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS1-BIO-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM BIOLOGY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-BIO-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM BIOLOGY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-BIO-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM BIOLOGY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS2-BIO-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM BIOLOGY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-BIO-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM BIOLOGY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-BIO-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM BIOLOGY EXAM 2025/2026' },
+  { fileName: '2025/2026-SS3-BIO-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM BIOLOGY EXAM 2025/2026' }
+];
+
+
+
+const agriculturalScienceExams = [
+  { fileName: '2025-2026-SS1-ACS-1ST', displayName: 'SENIOR SECONDARY 1 1ST TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-ACS-2ND', displayName: 'SENIOR SECONDARY 1 2ND TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-SS1-ACS-3RD', displayName: 'SENIOR SECONDARY 1 3RD TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-ACS-1ST', displayName: 'SENIOR SECONDARY 2 1ST TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-ACS-2ND', displayName: 'SENIOR SECONDARY 2 2ND TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-SS2-ACS-3RD', displayName: 'SENIOR SECONDARY 2 3RD TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-ACS-1ST', displayName: 'SENIOR SECONDARY 3 1ST TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-ACS-2ND', displayName: 'SENIOR SECONDARY 3 2ND TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-SS3-ACS-3RD', displayName: 'SENIOR SECONDARY 3 3RD TERM AGRICULTURAL SCIENCE EXAM 2025/2026' }
+];
+-----------------------------------
+
+
+
+
+
+
+
+
+
+
+
+const agriculturalScienceExams = [
+  { fileName: '2025-2026-JS1-ACS-1ST', displayName: 'BASIC 7 1ST TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-ACS-2ND', displayName: 'BASIC 7 2ND TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-ACS-3RD', displayName: 'BASIC 7 3RD TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-ACS-1ST', displayName: 'BASIC 8 1ST TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-ACS-2ND', displayName: 'BASIC 8 2ND TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-ACS-3RD', displayName: 'BASIC 8 3RD TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-ACS-1ST', displayName: 'BASIC 9 1ST TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-ACS-2ND', displayName: 'BASIC 9 2ND TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-ACS-3RD', displayName: 'BASIC 9 3RD TERM AGRICULTURAL SCIENCE EXAM 2025/2026' }
+];
+
+const basicScienceExams = [
+  { fileName: '2025-2026-JS1-BSCI-1ST', displayName: 'BASIC 7 1ST TERM BASIC SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-BSCI-2ND', displayName: 'BASIC 7 2ND TERM BASIC SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-BSCI-3RD', displayName: 'BASIC 7 3RD TERM BASIC SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-BSCI-1ST', displayName: 'BASIC 8 1ST TERM BASIC SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-BSCI-2ND', displayName: 'BASIC 8 2ND TERM BASIC SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-BSCI-3RD', displayName: 'BASIC 8 3RD TERM BASIC SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-BSCI-1ST', displayName: 'BASIC 9 1ST TERM BASIC SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-BSCI-2ND', displayName: 'BASIC 9 2ND TERM BASIC SCIENCE EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-BSCI-3RD', displayName: 'BASIC 9 3RD TERM BASIC SCIENCE EXAM 2025/2026' }
+];
+
+const basicTechnologyExams = [
+  { fileName: '2025-2026-JS1-BTEC-1ST', displayName: 'BASIC 7 1ST TERM BASIC TECHNOLOGY EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-BTEC-2ND', displayName: 'BASIC 7 2ND TERM BASIC TECHNOLOGY EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-BTEC-3RD', displayName: 'BASIC 7 3RD TERM BASIC TECHNOLOGY EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-BTEC-1ST', displayName: 'BASIC 8 1ST TERM BASIC TECHNOLOGY EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-BTEC-2ND', displayName: 'BASIC 8 2ND TERM BASIC TECHNOLOGY EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-BTEC-3RD', displayName: 'BASIC 8 3RD TERM BASIC TECHNOLOGY EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-BTEC-1ST', displayName: 'BASIC 9 1ST TERM BASIC TECHNOLOGY EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-BTEC-2ND', displayName: 'BASIC 9 2ND TERM BASIC TECHNOLOGY EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-BTEC-3RD', displayName: 'BASIC 9 3RD TERM BASIC TECHNOLOGY EXAM 2025/2026' }
+];
+
+const businessStudiesExams = [
+  { fileName: '2025-2026-JS1-BSTU-1ST', displayName: 'BASIC 7 1ST TERM BUSINESS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-BSTU-2ND', displayName: 'BASIC 7 2ND TERM BUSINESS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-BSTU-3RD', displayName: 'BASIC 7 3RD TERM BUSINESS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-BSTU-1ST', displayName: 'BASIC 8 1ST TERM BUSINESS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-BSTU-2ND', displayName: 'BASIC 8 2ND TERM BUSINESS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-BSTU-3RD', displayName: 'BASIC 8 3RD TERM BUSINESS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-BSTU-1ST', displayName: 'BASIC 9 1ST TERM BUSINESS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-BSTU-2ND', displayName: 'BASIC 9 2ND TERM BUSINESS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-BSTU-3RD', displayName: 'BASIC 9 3RD TERM BUSINESS STUDIES EXAM 2025/2026' }
+];
+
+const christianReligiousStudiesExams = [
+  { fileName: '2025-2026-JS1-CRS-1ST', displayName: 'BASIC 7 1ST TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-CRS-2ND', displayName: 'BASIC 7 2ND TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-CRS-3RD', displayName: 'BASIC 7 3RD TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-CRS-1ST', displayName: 'BASIC 8 1ST TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-CRS-2ND', displayName: 'BASIC 8 2ND TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-CRS-3RD', displayName: 'BASIC 8 3RD TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-CRS-1ST', displayName: 'BASIC 9 1ST TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-CRS-2ND', displayName: 'BASIC 9 2ND TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-CRS-3RD', displayName: 'BASIC 9 3RD TERM CHRISTIAN RELIGIOUS STUDIES EXAM 2025/2026' }
+];
+
+const civicEducationExams = [
+  { fileName: '2025-2026-JS1-CEDU-1ST', displayName: 'BASIC 7 1ST TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-CEDU-2ND', displayName: 'BASIC 7 2ND TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-CEDU-3RD', displayName: 'BASIC 7 3RD TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-CEDU-1ST', displayName: 'BASIC 8 1ST TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-CEDU-2ND', displayName: 'BASIC 8 2ND TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-CEDU-3RD', displayName: 'BASIC 8 3RD TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-CEDU-1ST', displayName: 'BASIC 9 1ST TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-CEDU-2ND', displayName: 'BASIC 9 2ND TERM CIVIC EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-CEDU-3RD', displayName: 'BASIC 9 3RD TERM CIVIC EDUCATION EXAM 2025/2026' }
+];
+
+const computerStudiesExams = [
+  { fileName: '2025-2026-JS1-COMP-1ST', displayName: 'BASIC 7 1ST TERM COMPUTER STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-COMP-2ND', displayName: 'BASIC 7 2ND TERM COMPUTER STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-COMP-3RD', displayName: 'BASIC 7 3RD TERM COMPUTER STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-COMP-1ST', displayName: 'BASIC 8 1ST TERM COMPUTER STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-COMP-2ND', displayName: 'BASIC 8 2ND TERM COMPUTER STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-COMP-3RD', displayName: 'BASIC 8 3RD TERM COMPUTER STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-COMP-1ST', displayName: 'BASIC 9 1ST TERM COMPUTER STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-COMP-2ND', displayName: 'BASIC 9 2ND TERM COMPUTER STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-COMP-3RD', displayName: 'BASIC 9 3RD TERM COMPUTER STUDIES EXAM 2025/2026' }
+];
+
+const culturalAndCreativeArtExams = [
+  { fileName: '2025-2026-JS1-CCA-1ST', displayName: 'BASIC 7 1ST TERM CULTURAL AND CREATIVE ART EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-CCA-2ND', displayName: 'BASIC 7 2ND TERM CULTURAL AND CREATIVE ART EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-CCA-3RD', displayName: 'BASIC 7 3RD TERM CULTURAL AND CREATIVE ART EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-CCA-1ST', displayName: 'BASIC 8 1ST TERM CULTURAL AND CREATIVE ART EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-2ND', displayName: 'BASIC 8 2ND TERM CULTURAL AND CREATIVE ART EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-CCA-3RD', displayName: 'BASIC 8 3RD TERM CULTURAL AND CREATIVE ART EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-CCA-1ST', displayName: 'BASIC 9 1ST TERM CULTURAL AND CREATIVE ART EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-CCA-2ND', displayName: 'BASIC 9 2ND TERM CULTURAL AND CREATIVE ART EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-CCA-3RD', displayName: 'BASIC 9 3RD TERM CULTURAL AND CREATIVE ART EXAM 2025/2026' }
+];
+ 
+const dictationExams = [
+  { fileName: '2025-2026-JS1-DITA-1ST', displayName: 'BASIC 7 1ST TERM DICTATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-DITA-2ND', displayName: 'BASIC 7 2ND TERM DICTATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-DITA-3RD', displayName: 'BASIC 7 3RD TERM DICTATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-DITA-1ST', displayName: 'BASIC 8 1ST TERM DICTATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-DITA-2ND', displayName: 'BASIC 8 2ND TERM DICTATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-DITA-3RD', displayName: 'BASIC 8 3RD TERM DICTATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-DITA-1ST', displayName: 'BASIC 9 1ST TERM DICTATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-DITA-2ND', displayName: 'BASIC 9 2ND TERM DICTATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-DITA-3RD', displayName: 'BASIC 9 3RD TERM DICTATION EXAM 2025/2026' }
+];
+
+const juniorDictionExams = [
+  { fileName: '2025-2026-JS1-DION-1ST', displayName: 'JUNIOR SECONDARY 1 1ST TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-DION-2ND', displayName: 'JUNIOR SECONDARY 1 2ND TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-DION-3RD', displayName: 'JUNIOR SECONDARY 1 3RD TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-DION-1ST', displayName: 'JUNIOR SECONDARY 2 1ST TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-DION-2ND', displayName: 'JUNIOR SECONDARY 2 2ND TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-DION-3RD', displayName: 'JUNIOR SECONDARY 2 3RD TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-DION-1ST', displayName: 'JUNIOR SECONDARY 3 1ST TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-DION-2ND', displayName: 'JUNIOR SECONDARY 3 2ND TERM DICTION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-DION-3RD', displayName: 'JUNIOR SECONDARY 3 3RD TERM DICTION EXAM 2025/2026' }
+];
+
+const englishStudiesExams = [
+  { fileName: '2025-2026-JS1-ENG-1ST', displayName: 'BASIC 7 1ST TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-ENG-2ND', displayName: 'BASIC 7 2ND TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-ENG-3RD', displayName: 'BASIC 7 3RD TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-ENG-1ST', displayName: 'BASIC 8 1ST TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-ENG-2ND', displayName: 'BASIC 8 2ND TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-ENG-3RD', displayName: 'BASIC 8 3RD TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-ENG-1ST', displayName: 'BASIC 9 1ST TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-ENG-2ND', displayName: 'BASIC 9 2ND TERM ENGLISH STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-ENG-3RD', displayName: 'BASIC 9 3RD TERM ENGLISH STUDIES EXAM 2025/2026' }
+];
+
+const frenchExams = [
+  { fileName: '2025-2026-JS1-FRE-1ST', displayName: 'BASIC 7 1ST TERM FRENCH EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-FRE-2ND', displayName: 'BASIC 7 2ND TERM FRENCH EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-FRE-3RD', displayName: 'BASIC 7 3RD TERM FRENCH EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-FRE-1ST', displayName: 'BASIC 8 1ST TERM FRENCH EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-FRE-2ND', displayName: 'BASIC 8 2ND TERM FRENCH EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-FRE-3RD', displayName: 'BASIC 8 3RD TERM FRENCH EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-FRE-1ST', displayName: 'BASIC 9 1ST TERM FRENCH EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-FRE-2ND', displayName: 'BASIC 9 2ND TERM FRENCH EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-FRE-3RD', displayName: 'BASIC 9 3RD TERM FRENCH EXAM 2025/2026' }
+];
+
+const historicalStudiesExams = [
+  { fileName: '2025-2026-JS1-HIS-1ST', displayName: 'BASIC 7 1ST TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-HIS-2ND', displayName: 'BASIC 7 2ND TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-HIS-3RD', displayName: 'BASIC 7 3RD TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-HIS-1ST', displayName: 'BASIC 8 1ST TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-HIS-2ND', displayName: 'BASIC 8 2ND TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-HIS-3RD', displayName: 'BASIC 8 3RD TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-HIS-1ST', displayName: 'BASIC 9 1ST TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-HIS-2ND', displayName: 'BASIC 9 2ND TERM HISTORICAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-HIS-3RD', displayName: 'BASIC 9 3RD TERM HISTORICAL STUDIES EXAM 2025/2026' }
+];
+
+const homeEconomicsExams = [
+  { fileName: '2025-2026-JS1-HOM-1ST', displayName: 'BASIC 7 1ST TERM HOME ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-HOM-2ND', displayName: 'BASIC 7 2ND TERM HOME ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-HOM-3RD', displayName: 'BASIC 7 3RD TERM HOME ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-HOM-1ST', displayName: 'BASIC 8 1ST TERM HOME ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-HOM-2ND', displayName: 'BASIC 8 2ND TERM HOME ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-HOM-3RD', displayName: 'BASIC 8 3RD TERM HOME ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-HOM-1ST', displayName: 'BASIC 9 1ST TERM HOME ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-HOM-2ND', displayName: 'BASIC 9 2ND TERM HOME ECONOMICS EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-HOM-3RD', displayName: 'BASIC 9 3RD TERM HOME ECONOMICS EXAM 2025/2026' }
+];
+
+const mathematicsExams = [
+  { fileName: '2025-2026-JS1-MAT-1ST', displayName: 'BASIC 7 1ST TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-MAT-2ND', displayName: 'BASIC 7 2ND TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-MAT-3RD', displayName: 'BASIC 7 3RD TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-MAT-1ST', displayName: 'BASIC 8 1ST TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-MAT-2ND', displayName: 'BASIC 8 2ND TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-MAT-3RD', displayName: 'BASIC 8 3RD TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-MAT-1ST', displayName: 'BASIC 9 1ST TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-MAT-2ND', displayName: 'BASIC 9 2ND TERM MATHEMATICS EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-MAT-3RD', displayName: 'BASIC 9 3RD TERM MATHEMATICS EXAM 2025/2026' }
+];
+
+const musicExams = [
+  { fileName: '2025-2026-JS1-MUS-1ST', displayName: 'BASIC 7 1ST TERM MUSIC EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-MUS-2ND', displayName: 'BASIC 7 2ND TERM MUSIC EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-MUS-3RD', displayName: 'BASIC 7 3RD TERM MUSIC EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-MUS-', displayName: 'BASIC 8 1ST TERM MUSIC EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-MUS-2ND', displayName: 'BASIC 8 2ND TERM MUSIC EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-MUS-3RD', displayName: 'BASIC 8 3RD TERM MUSIC EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-MUS-1ST', displayName: 'BASIC 9 1ST TERM MUSIC EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-MUS-2ND', displayName: 'BASIC 9 2ND TERM MUSIC EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-MUS-3RD', displayName: 'BASIC 9 3RD TERM MUSIC EXAM 2025/2026' }
+];
+
+const physicalAndHealthEducationExams = [
+  { fileName: '2025-2026-JS1-PHE-1ST', displayName: 'BASIC 7 1ST TERM PHYSICAL AND HEALTH EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-PHE-2ND', displayName: 'BASIC 7 2ND TERM PHYSICAL AND HEALTH EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-PHE-3RD', displayName: 'BASIC 7 3RD TERM PHYSICAL AND HEALTH EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-PHE-1ST', displayName: 'BASIC 8 1ST TERM PHYSICAL AND HEALTH EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-PHE-2ND', displayName: 'BASIC 8 2ND TERM PHYSICAL AND HEALTH EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-PHE-3RD', displayName: 'BASIC 8 3RD TERM PHYSICAL AND HEALTH EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-PHE-1ST', displayName: 'BASIC 9 1ST TERM PHYSICAL AND HEALTH EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-PHE-2ND', displayName: 'BASIC 9 2ND TERM PHYSICAL AND HEALTH EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-PHE-3RD', displayName: 'BASIC 9 3RD TERM PHYSICAL AND HEALTH EDUCATION EXAM 2025/2026' }
+];
+
+const securityEducationExams = [
+  { fileName: '2025-2026-JS1-SEC-1ST', displayName: 'BASIC 7 1ST TERM SECURITY EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-SEC-2ND', displayName: 'BASIC 7 2ND TERM SECURITY EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-SEC-3RD', displayName: 'BASIC 7 3RD TERM SECURITY EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-SEC-1ST', displayName: 'BASIC 8 1ST TERM SECURITY EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-SEC-2ND', displayName: 'BASIC 8 2ND TERM SECURITY EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-SEC-3RD', displayName: 'BASIC 8 3RD TERM SECURITY EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-SEC-1ST', displayName: 'BASIC 9 1ST TERM SECURITY EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-SEC-2ND', displayName: 'BASIC 9 2ND TERM SECURITY EDUCATION EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-SEC-3RD', displayName: 'BASIC 9 3RD TERM SECURITY EDUCATION EXAM 2025/2026' }
+];
+
+const socialStudiesExams = [
+  { fileName: '2025-2026-JS1-SOS-1ST', displayName: 'BASIC 7 1ST TERM SOCIAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-SOS-2ND', displayName: 'BASIC 7 2ND TERM SOCIAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS1-SOS-3RD', displayName: 'BASIC 7 3RD TERM SOCIAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-SOS-1ST', displayName: 'BASIC 8 1ST TERM SOCIAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-SOS-2ND', displayName: 'BASIC 8 2ND TERM SOCIAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS2-SOS-3RD', displayName: 'BASIC 8 3RD TERM SOCIAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-SOS-1ST', displayName: 'BASIC 9 1ST TERM SOCIAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-SOS-2ND', displayName: 'BASIC 9 2ND TERM SOCIAL STUDIES EXAM 2025/2026' },
+  { fileName: '2025-2026-JS3-SOS-3RD', displayName: 'BASIC 9 3RD TERM SOCIAL STUDIES EXAM 2025/2026' }
+];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. FIRST ADD ALL YOUR EXAM ARRAYS HERE
+  const agriculturalScienceExams = [
+    { fileName: '2025-2026-JS1-ACS-1ST', displayName: 'BASIC 7 1ST TERM AGRICULTURAL SCIENCE EXAM 2025/2026' },
+    // ... add all other agricultural science exams
+  ];
+  
+  const basicScienceExams = [
+    { fileName: '2025-2026-JS1-BSCI-1ST', displayName: 'BASIC 7 1ST TERM BASIC SCIENCE EXAM 2025/2026' },
+    // ... add all other basic science exams
+  ];
+  
+  // ... add all your other exam arrays exactly as you have them
+
+  // 2. COMBINE ALL EXAMS INTO ONE ARRAY
+  const allExams = [
+    ...agriculturalScienceExams,
+    ...basicScienceExams,
+    ...basicTechnologyExams,
+    ...businessStudiesExams,
+    ...christianReligiousStudiesExams,
+    ...civicEducationExams,
+    ...computerStudiesExams,
+    ...culturalAndCreativeArtExams,
+    ...dictationExams,
+    ...juniorDictionExams,
+    ...englishStudiesExams,
+    ...frenchExams,
+    ...historicalStudiesExams,
+    ...homeEconomicsExams,
+    ...mathematicsExams,
+    ...musicExams,
+    ...physicalAndHealthEducationExams,
+    ...securityEducationExams,
+    ...socialStudiesExams
+  ];
+
+  // 3. GET DOM ELEMENTS
+  const examListElement = document.getElementById('exam-list');
+  const searchInput = document.getElementById('search-input');
+  const searchButton = document.getElementById('search-button');
+
+  // 4. FUNCTION TO DISPLAY EXAMS
+  function displayExams(examsToShow) {
+    examListElement.innerHTML = ''; // Clear current list
+    
+    if (examsToShow.length === 0) {
+      examListElement.innerHTML = '<li class="loading">No matching exams found</li>';
+      return;
+    }
+    
+    examsToShow.forEach(exam => {
+      const listItem = document.createElement('li');
+      const anchor = document.createElement('a');
+      anchor.href = `test-taking.html?test=${encodeURIComponent(exam.fileName)}`;
+      anchor.textContent = exam.displayName;
+      listItem.appendChild(anchor);
+      examListElement.appendChild(listItem);
+    });
+  }
+
+  // 5. INITIAL LOAD - SHOW ALL EXAMS
+  displayExams(allExams);
+
+  // 6. SEARCH FUNCTIONALITY
+  function handleSearch() {
+    const searchTerm = searchInput.value.toLowerCase().trim();
+    const filteredExams = allExams.filter(exam => 
+      exam.displayName.toLowerCase().includes(searchTerm)
+    );
+    displayExams(filteredExams);
+  }
+
+  // 7. EVENT LISTENERS
+  searchButton.addEventListener('click', handleSearch);
+  searchInput.addEventListener('input', handleSearch);
+  searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') handleSearch();
+  });
+});
+
+
+

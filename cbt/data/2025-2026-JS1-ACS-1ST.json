@@ -1,0 +1,112 @@
+{
+  "testName": "SENIOR CLASS ONE 1ST TERM AGRICULTURAL SCIENCE EXAM 2025/2026",
+  "questions": [
+    {
+      "question": "Study the diagram carefully. This is known as _______.",
+      "imageURL": "../assets/images/questions/farm_basket.png",
+      "options": [
+        "Harvesting tool",
+        "Weeding tool",
+        "Tilling tool",
+        "Irrigation tool"
+      ],
+      "correctAnswer": "Harvesting tool"
+    },    
+    {
+      "question": "A group of people related by blood, marriage, or adoption, often living together is called a _______.",
+     "options": [ 
+        "Community",
+        "Society",
+        "Family",
+        "Peer group",
+        "Club"
+      ],
+      "correctAnswer": "Family"
+    }, ,
+    {
+    "question": "A family consisting of only parents and their children is known as a/an ______ family.",
+    "options": [
+      "Extended",
+      "Blended",
+      "Single-parent",
+      "Nuclear",
+      "Adoptive"
+    ],
+      "correctAnswer": "Nuclear"
+  },
+  {
+    "question": "Grandparents, uncles, aunts, and cousins are typically part of a/an ______ family.",
+    "options": [
+      "Nuclear",
+      "Basic",
+      "Extended",
+      "Single-parent",
+      "Compound"
+    ],
+      "correctAnswer": "Extended"
+  },
+  {
+    "question": "A family formed when parents with children from previous relationships marry is called a ______ family.",
+    "options": [
+      "Nuclear",
+      "Extended",
+      "Blended",
+      "Single-parent",
+      "Traditional"
+    ],
+      "correctAnswer": "Blended"
+  },
+  {
+    "question": "Which of the following is a primary duty of parents/guardians?",
+    "options": [
+      "Playing games all day",
+      "Providing basic needs like food and shelter",
+      "Depending solely on children for income",
+      "Ignoring the children's education",
+      "Encouraging disobedience"
+    ],
+      "correctAnswer": "Providing basic needs like food and shelter"
+  },
+  {
+    "question": "Respecting elders and helping with household chores are primarily the duties of ______ within the family.",
+    "options": [
+      "Parents",
+      "Grandparents",
+      "Neighbours",
+      "Children",
+      "Visitors"
+    ],
+      "correctAnswer": "Children"
+  },
+    {
+      "question": "The branch of agriculture concerned with the cultivation of fruits, vegetables, and flowers is called:",
+      "options": [
+        "Apiculture",
+        "Horticulture",
+        "Agronomy",
+        "Aquaculture"
+      ],
+      "correctAnswer": "Horticulture"
+    },
+    {
+      "question": "Which of these is a method of preventing soil erosion?",
+      "options": [
+        "Overgrazing",
+        "Deforestation",
+        "Bush burning",
+        "Planting cover crops"
+      ],
+      "correctAnswer": "Planting cover crops"
+    },
+    {
+      "question": "A young goat is called a _______.",
+      "options": [
+        "Lamb",
+        "Calf",
+        "Kid",
+        "Piglet"
+      ],
+      "correctAnswer": "Kid"
+    }
+  ]
+}

@@ -1,0 +1,205 @@
+{
+  "testName": "Physical and Health Education Examination",
+  "questions": [
+    {
+      "question": "The organised activities aimed at promoting and protecting the health of students and staff within the school environment is called:",
+      "options": ["School Teaching Programme", "School Health Programme", "School Feeding Programme", "School Sports Programme", "School Cleaning Programme"],
+      "correctAnswer": "School Health Programme"
+    },
+    {
+      "question": "A clean water supply and proper toilet facilities in school contribute to a:",
+      "options": ["School Health Education", "School Nutrition Service", "Healthful School Environment", "School Counselling Service", "Staff Health Promotion"],
+      "correctAnswer": "Healthful School Environment"
+    },
+    {
+      "question": "The overall well-being of an individual, encompassing physical, mental, and social aspects is:",
+      "options": ["Community Health", "School Health", "Personal Health", "Environmental Health", "National Health"],
+      "correctAnswer": "Personal Health"
+    },
+    {
+      "question": "The health status of people living together in a specific area is known as:",
+      "options": ["Personal Health", "School Health", "Environmental Health", "Community Health", "Occupational Health"],
+      "correctAnswer": "Community Health"
+    },
+    {
+      "question": "The introduction of harmful substances into the environment is called:",
+      "options": ["Purification", "Sanitation", "Pollution", "Conservation", "Fermentation"],
+      "correctAnswer": "Pollution"
+    },
+    {
+      "question": "Which of these is a major type of environmental pollution?",
+      "options": ["Soil Erosion", "Deforestation", "Air Pollution", "Overpopulation", "Desertification"],
+      "correctAnswer": "Air Pollution"
+    },
+    {
+      "question": "Smoke from factories and exhaust fumes from vehicles primarily cause:",
+      "options": ["Water Pollution", "Noise Pollution", "Land Pollution", "Air Pollution", "Thermal Pollution"],
+      "correctAnswer": "Air Pollution"
+    },
+    {
+      "question": "Dumping sewage and industrial waste into rivers causes:",
+      "options": ["Air Pollution", "Noise Pollution", "Water Pollution", "Land Pollution", "Visual Pollution"],
+      "correctAnswer": "Water Pollution"
+    },
+    {
+      "question": "Improper disposal of solid waste like plastics and metals leads mainly to:",
+      "options": ["Air Pollution", "Noise Pollution", "Water Pollution", "Land Pollution", "Radioactive Pollution"],
+      "correctAnswer": "Land Pollution"
+    },
+    {
+      "question": "Excessive and unwanted sound in the environment is known as:",
+      "options": ["Air Pollution", "Noise Pollution", "Water Pollution", "Land Pollution", "Light Pollution"],
+      "correctAnswer": "Noise Pollution"
+    },
+    {
+      "question": "A common source of noise pollution is:",
+      "options": ["Planting trees", "Flowing river", "Loud music systems", "Rainfall", "Wind blowing"],
+      "correctAnswer": "Loud music systems"
+    },
+    {
+      "question": "Respiratory diseases like asthma and bronchitis can be aggravated by:",
+      "options": ["Clean Water", "Air Pollution", "Noise Pollution", "Healthy Diet", "Regular Exercise"],
+      "correctAnswer": "Air Pollution"
+    },
+    {
+      "question": "Drinking water contaminated with sewage can lead to diseases like:",
+      "options": ["Asthma", "Cholera", "Hearing loss", "Lung cancer", "Diabetes"],
+      "correctAnswer": "Cholera"
+    },
+    {
+      "question": "Pests like rats and flies are often attracted to areas with high:",
+      "options": ["Noise Pollution", "Air Pollution", "Light Pollution", "Land Pollution (improper waste)", "Water purity"],
+      "correctAnswer": "Land Pollution (improper waste)"
+    },
+    {
+      "question": "Hearing loss, stress, and sleep disturbances are potential health effects of:",
+      "options": ["Air Pollution", "Water Pollution", "Land Pollution", "Noise Pollution", "Soil Erosion"],
+      "correctAnswer": "Noise Pollution"
+    },
+    {
+      "question": "The '3Rs' strategy for waste management stands for:",
+      "options": ["Read, Round, Remember", "Run, Rest, Repeat", "Reduce, Reuse, Recycle", "Repair, Replace, Refuse", "Road, River, Rail"],
+      "correctAnswer": "Reduce, Reuse, Recycle"
+    },
+    {
+      "question": "Using a lunchbox to buy food at the cafeteria during lunch instead of plastic bags is an example of:",
+      "options": ["Recycling", "Reducing", "Reusing", "Refusing", "Repairing"],
+      "correctAnswer": "Reusing"
+    },
+    {
+      "question": "Collecting used paper, plastic, and glass to be made into new products is called:",
+      "options": ["Reducing", "Reusing", "Recycling", "Replanting", "Repairing"],
+      "correctAnswer": "Recycling"
+    },
+    {
+      "question": "Which activity helps in preventing land pollution?",
+      "options": ["Using loud speakers", "Driving small cars", "Proper waste disposal in bins", "Filtering factory smoke", "Boiling drinking water"],
+      "correctAnswer": "Proper waste disposal in bins"
+    },
+    {
+      "question": "Ensuring clean and accessible toilets with handwashing facilities is part of which 'fresh approach' focus?",
+      "options": ["Peer Education", "Mental Health", "Improved Sanitation and Hygiene", "Technology Integration", "Community Links"],
+      "correctAnswer": "Improved Sanitation and Hygiene"
+    },
+    {
+      "question": "An illness or sickness that affects the body's normal functioning is a:",
+      "options": ["Programme", "Component", "Disease", "Prevention", "Pollution"],
+      "correctAnswer": "Disease"
+    },
+    {
+      "question": "Diseases that can spread from one person to another are called:",
+      "options": ["Non-communicable diseases", "Chronic diseases", "Lifestyle diseases", "Communicable diseases", "Genetic diseases"],
+      "correctAnswer": "Communicable diseases"
+    },
+    {
+      "question": "Diseases that generally cannot be spread directly from person to person are:",
+      "options": ["Communicable diseases", "Infectious diseases", "Contagious diseases", "Non-communicable diseases", "Vector-borne diseases"],
+      "correctAnswer": "Non-communicable diseases"
+    },
+    {
+      "question": "The common cold and influenza (flu) are examples of:",
+      "options": ["Non-communicable diseases", "Communicable diseases", "Genetic disorders", "Nutritional deficiencies", "Mental illnesses"],
+      "correctAnswer": "Communicable diseases"
+    },
+    {
+      "question": "Diabetes and Hypertension (High Blood Pressure) are examples of:",
+      "options": ["Communicable diseases", "Infectious diseases", "Non-communicable diseases", "Parasitic diseases", "Viral diseases"],
+      "correctAnswer": "Non-communicable diseases"
+    },
+    {
+      "question": "Washing hands frequently with soap and water helps prevent the spread of:",
+      "options": ["Only non-communicable diseases", "Only genetic disorders", "Many communicable diseases", "Only lifestyle diseases", "Only injuries"],
+      "correctAnswer": "Many communicable diseases"
+    },
+    {
+      "question": "Using insecticide-treated mosquito nets helps prevent:",
+      "options": ["Flu", "Diabetes", "Malaria", "Tuberculosis", "Measles"],
+      "correctAnswer": "Malaria"
+    },
+    {
+      "question": "Eating a balanced diet rich in fruits and vegetables helps prevent:",
+      "options": ["Only communicable diseases", "Many non-communicable diseases", "Only infectious diseases", "Only injuries", "Only waterborne diseases"],
+      "correctAnswer": "Many non-communicable diseases"
+    },
+    {
+      "question": "Regular physical activity is a key preventive measure for:",
+      "options": ["Flu and Common Cold", "Malaria and Cholera", "Heart disease, Diabetes, and Obesity", "Measles and Mumps", "Tuberculosis"],
+      "correctAnswer": "Heart disease, Diabetes, and Obesity"
+    },
+    {
+      "question": "Which of the following is a communicable disease?",
+      "options": ["Asthma", "Diabetes", "Tuberculosis (TB)", "Hypertension", "Cancer"],
+      "correctAnswer": "Tuberculosis (TB)"
+    },
+    {
+      "question": "Malaria is spread through:",
+      "options": ["Coughing or sneezing", "Contaminated food", "The bite of an infected mosquito", "Direct skin contact", "Inherited genes"],
+      "correctAnswer": "The bite of an infected mosquito"
+    },
+    {
+      "question": "Cholera is primarily spread through:",
+      "options": ["Air droplets", "Mosquito bites", "Contaminated water or food", "Sharing clothes", "Animal scratches"],
+      "correctAnswer": "Contaminated water or food"
+    },
+    {
+      "question": "Tuberculosis (TB) is a bacterial infection most commonly affecting the:",
+      "options": ["Heart", "Liver", "Lungs", "Kidneys", "Skin"],
+      "correctAnswer": "Lungs"
+    },
+    {
+      "question": "Hypertension is the medical term for:",
+      "options": ["Low blood sugar", "High blood pressure", "High cholesterol", "Low body temperature", "Rapid heart rate"],
+      "correctAnswer": "High blood pressure"
+    },
+    {
+      "question": "Proper handwashing technique involves using soap and rubbing hands for at least:",
+      "options": ["5 months", "10 days", "20 seconds", "1 hour", "2 weeks"],
+      "correctAnswer": "20 seconds"
+    },
+    {
+      "question": "A critical time to wash hands is:",
+      "options": ["Before watching television", "After using the toilet", "After reading a book", "Before going outside to play", "During sleep"],
+      "correctAnswer": "After using the toilet"
+    },
+    {
+      "question": "The purpose of using soap during handwashing is to:",
+      "options": ["Make hands smell nice only", "Help lift dirt and germs off the skin", "Make the water colder", "Dry the hands faster", "Colour the water"],
+      "correctAnswer": "Help lift dirt and germs off the skin"
+    },
+    {
+      "question": "Covering your mouth and nose when coughing or sneezing helps prevent the spread of:",
+      "options": ["Non communicable disease", "Genetic disorders", "Communicable  diseases", "Waterborne diseases", "Foodborne illnesses"],
+      "correctAnswer": "Communicable  diseases"
+    },
+    {
+      "question": "An example of 'Reusing' would be:",
+      "options": ["Buying fewer items", "Melting down plastic bottles to make chairs", "Using an old jar to store pencils", "Throwing away a broken toy", "Composting fruit peels"],
+      "correctAnswer": "Using an old jar to store pencils"
+    },
+    {
+      "question": "The overall goal of learning about PHE topics like SHP, pollution, and diseases is to:",
+      "options": ["Pass the examination only", "Become a professional athlete", "Promote personal, community, and environmental health", "Learn how to build schools", "Design new types of pollutants"],
+      "correctAnswer": "Promote personal, community, and environmental health"
+    }
+  ]
+}

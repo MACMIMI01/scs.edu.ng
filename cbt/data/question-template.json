@@ -1,0 +1,16 @@
+{
+  "testName": "Physical and Health Education Examination",
+  "questions": [
+    {
+      "question": "The organised activities aimed at promoting and protecting the health of students and staff within the school environment is called:",
+      "options": ["School Teaching Programme", "School Health Programme", "School Feeding Programme", "School Sports Programme", "School Cleaning Programme"],
+      "correctAnswer": "School Health Programme"
+    },
+    {
+      "question": "A clean water supply and proper toilet facilities in school contribute to a:",
+      "options": ["School Health Education", "School Nutrition Service", "Healthful School Environment", "School Counselling Service", "Staff Health Promotion"],
+      "correctAnswer": "Healthful School Environment"
+    },
+    // ... (all the other questions)
+  ]
+}
