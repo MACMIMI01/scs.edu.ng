@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<!--Login.html-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCS CBT Portal - Login</title>
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* INLINE CSS (optimized for compatibility) */
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #020169, #FEC009);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        
+        .login-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 400px;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .school-logo {
+            height: 60px;
+            margin-bottom: 1.5rem;
+        }
+        
+        h1 {
+            color: #020169;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        button {
+            background-color: #020169;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background-color: #FEC009;
+            color: #020169;
+        }
+        
+        .form-toggle {
+            margin-top: 1.5rem;
+            font-size: 14px;
+        }
+        
+        .form-toggle a {
+            color: #020169;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 1.5rem;
+                width: 95%;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <img src="../assets/images/logo.png" alt="SCS Logo" class="school-logo">
+        <h1>SCS CBT Portal</h1>
+        
+        <!-- Login Form -->
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">LOGIN</button>
+        </form>
+        
+        <!-- Signup Toggle -->
+        <div class="form-toggle">
+            <span>New student? </span>
+            <a href="#" id="showSignup">Create account</a>
+        </div>
+        
+        <!-- Signup Form (Hidden) -->
+        <form id="signupForm" style="display: none;">
+            <input type="text" id="regNumber" placeholder="Registration Number" required>
+            <input type="password" id="newPassword" placeholder="Create Password" required>
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+            <select id="classGroup" required>
+                <option value="">Select Class</option>
+                <option value="B9S">B9S</option>
+                <option value="SS3">SS3</option>
+                <!-- Add all classes -->
+            </select>
+            <button type="submit">SIGN UP</button>
+        </form>
+    </div>
+
+    <script>
+        // INLINE JAVASCRIPT (compatible with dashboard)
+        document.addEventListener('DOMContentLoaded', () => {
+            // Form Toggle
+            document.getElementById('showSignup').addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('signupForm').style.display = 'block';
+            });
+            
+            // Login Handler
+            document.getElementById('loginForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                
+                try {
+                    // Replace with actual fetch to users.json
+                    const mockUsers = [
+                        {
+                            id: "B9S-001",
+                            username: "student1",
+                            password: "test123",
+                            role: "student",
+                            class: "B9S",
+                            profilePicture: "../assets/profile_pictures/student1.jpg"
+                        }
+                    ];
+                    
+                    const user = mockUsers.find(u => 
+                        u.username === username && 
+                        u.password === password
+                    );
+                    
+                    if (user) {
+                        // Store data EXACTLY as dashboard expects
+                        localStorage.setItem('loggedInUserId', user.id);
+                        localStorage.setItem('loggedInUsername', user.username);
+                        localStorage.setItem('loggedInUserRole', user.role);
+                        
+                        // Redirect to dashboard
+                        window.location.href = "../pages/dashboard.html";
+                    } else {
+                        alert("Invalid username or password");
+                    }
+                } catch (error) {
+                    console.error("Login error:", error);
+                    alert("Server error. Please try later.");
+                }
+            });
+            
+            // Signup Handler (mock)
+            document.getElementById('signupForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                if (document.getElementById('newPassword').value !== 
+                    document.getElementById('confirmPassword').value) {
+                    alert("Passwords don't match!");
+                    return;
+                }
+                
+                alert("Account created successfully! Please login.");
+                document.getElementById('signupForm').style.display = 'none';
+                document.getElementById('loginForm').style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>

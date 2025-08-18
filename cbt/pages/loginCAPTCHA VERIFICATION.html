@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCS CBT Portal - Login</title>
+    <!-- Favicon -->
+    <link rel="icon" href="../assets/images/favicon.ico">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    
+    <style>
+    /* ===== BASE STYLES ===== */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, #FEC007, #FEC009);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* ===== WATERMARK ===== */
+    body::before {
+        content: "";
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: url('../assets/images/stamp.png') no-repeat center center;
+        background-size: 40%;
+        opacity: 0.03;
+        z-index: -1;
+    }
+
+    /* ===== CONTAINER ===== */
+    .container {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        width: 900px;
+        max-width: 95%;
+        min-height: 600px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* ===== LOGO HEADER ===== */
+    .logo-header {
+        position: absolute;
+        top: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        z-index: 10;
+        width: 100%;
+    }
+
+    .logo-header img {
+        height: 60px;
+        margin-bottom: 10px;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
+
+    .logo-header h2 {
+        color: #020169;
+        font-size: 1.3rem;
+        font-weight: 600;
+    }
+
+    /* ===== FORM STYLES ===== */
+    .form-container {
+        position: absolute;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        padding: 120px 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        transition: all 0.6s ease-in-out;
+    }
+
+    .sign-in {
+        left: 0;
+    }
+
+    .sign-up {
+        left: 50%;
+        opacity: 0;
+        z-index: 1;
+    }
+
+    .container.active .sign-in {
+        transform: translateX(100%);
+    }
+
+    .container.active .sign-up {
+        transform: translateX(-100%);
+        opacity: 1;
+        z-index: 5;
+    }
+
+    .form-icon {
+        font-size: 2.5rem;
+        color: #020169;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    h1 {
+        color: #020169;
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 1.8rem;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 12px 15px;
+        margin: 8px 0;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s;
+    }
+
+    input:focus, select:focus {
+        border-color: #020169;
+        box-shadow: 0 0 0 3px rgba(2, 1, 105, 0.1);
+    }
+
+    button {
+        background: #020169;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        font-weight: 600;
+        margin-top: 15px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    button:hover {
+        background: #FEC009;
+        color: #020169;
+        transform: translateY(-2px);
+    }
+
+    button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    /* ===== TOGGLE PANEL ===== */
+    .toggle-container {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 50%;
+        height: 100%;
+        overflow: hidden;
+        transition: all 0.6s ease-in-out;
+        z-index: 100;
+    }
+
+    .toggle {
+        background: linear-gradient(to right, #020169, #1a1a8a);
+        height: 100%;
+        width: 200%;
+        position: relative;
+        left: -100%;
+        transition: all 0.6s ease-in-out;
+    }
+
+    .toggle-panel {
+        position: absolute;
+        width: 50%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0 40px;
+        text-align: center;
+        color: white;
+    }
+
+    .toggle-left {
+        left: 0;
+        transform: translateX(-200%);
+    }
+
+    .toggle-right {
+        left: 50%;
+    }
+
+    .container.active .toggle {
+        transform: translateX(50%);
+    }
+
+    .container.active .toggle-left {
+        transform: translateX(0);
+    }
+
+    /* ===== CAPTCHA STYLES ===== */
+    .g-recaptcha {
+        margin: 15px 0;
+        transform: scale(0.95);
+        transform-origin: left;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+        .container {
+            min-height: 100vh;
+            border-radius: 0;
+        }
+        
+        .form-container {
+            width: 100%;
+            padding: 120px 30px;
+        }
+        
+        .toggle-container {
+            display: none;
+        }
+        
+        .g-recaptcha {
+            transform: scale(0.85);
+        }
+    }
+    </style>
+</head>
+<body>
+    <!-- Logo Header -->
+    <div class="logo-header">
+        <img src="../assets/images/logo.png" alt="SCS Logo">
+        <h2>St. Christopher's CBT Portal</h2>
+    </div>
+
+    <div class="container" id="container">
+        <!-- Sign Up Form -->
+        <div class="form-container sign-up">
+            <form id="registerForm">
+                <div class="form-icon">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <h1>Create Account</h1>
+                
+                <input type="text" id="firstName" placeholder="First Name" required>
+                <input type="text" id="lastName" placeholder="Last Name" required>
+                <input type="text" id="regUsername" placeholder="Username" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="text" id="dob" placeholder="Date of Birth" onfocus="this.type='date'" required>
+                <input type="text" id="class" placeholder="Class" required>
+                
+                <select id="gender" required>
+                    <option value="" disabled selected>Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+                
+                <select id="role" required>
+                    <option value="" disabled selected>Role</option>
+                    <option value="student">Student</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="admin">Admin</option>
+                </select>
+                
+                <input type="password" id="regPassword" placeholder="Password" required>
+                
+                <!-- CAPTCHA Integration -->
+                <div class="g-recaptcha" 
+                     data-sitekey="6LcY3pApAAAAAKS4p7vXz4Xv7Q9X9qX8X8x8x8x8" 
+                     data-callback="enableSignupBtn"
+                     data-expired-callback="disableSignupBtn">
+                </div>
+                
+                <button type="submit" id="signupBtn" disabled>Sign Up</button>
+            </form>
+        </div>
+
+        <!-- Sign In Form -->
+        <div class="form-container sign-in">
+            <form id="loginForm">
+                <div class="form-icon">
+                    <i class="fas fa-sign-in-alt"></i>
+                </div>
+                <h1>Welcome Back!</h1>
+                
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                
+                <div style="margin: 10px 0; text-align: left;">
+                    <input type="checkbox" id="showPassword" style="width: auto; display: inline;">
+                    <label for="showPassword" style="display: inline; margin-left: 5px;">Show Password</label>
+                </div>
+                
+                <button type="submit">Login</button>
+                
+                <p style="margin-top: 15px;">
+                    Don't have an account? 
+                    <a href="#" id="showSignupLink" style="color: #020169; font-weight: 600;">Sign Up</a>
+                </p>
+            </form>
+        </div>
+
+        <!-- Toggle Panel -->
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Welcome Back!</h1>
+                    <p>Enter your personal details to access your account</p>
+                    <button class="hidden" id="login">Sign In</button>
+                </div>
+                
+                <div class="toggle-panel toggle-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Register your details to join our learning community</p>
+                    <button class="hidden" id="register">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // ===== DOM ELEMENTS =====
+    const container = document.getElementById('container');
+    const registerBtn = document.getElementById('register');
+    const loginBtn = document.getElementById('login');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const showPassword = document.getElementById('showPassword');
+    const passwordInput = document.getElementById('password');
+    const signupBtn = document.getElementById('signupBtn');
+    const showSignupLink = document.getElementById('showSignupLink');
+
+    // ===== EVENT LISTENERS =====
+    registerBtn.addEventListener('click', () => container.classList.add("active"));
+    loginBtn.addEventListener('click', () => container.classList.remove("active"));
+    showSignupLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        container.classList.add("active");
+    });
+
+    // Show/hide password
+    showPassword.addEventListener('change', function() {
+        passwordInput.type = this.checked ? 'text' : 'password';
+    });
+
+    // CAPTCHA Callbacks
+    window.enableSignupBtn = function() {
+        signupBtn.disabled = false;
+    };
+
+    window.disableSignupBtn = function() {
+        signupBtn.disabled = true;
+    };
+
+    // ===== LOGIN HANDLER =====
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+
+        try {
+            // In production: Replace with actual fetch to users.json
+            const mockUsers = [
+                {
+                    id: "B9S-001",
+                    username: "student1",
+                    password: "test123", // In production, store hashed passwords
+                    role: "student",
+                    class: "B9S",
+                    name: "John Doe",
+                    profilePicture: "../assets/profile_pictures/default.jpg"
+                }
+            ];
+            
+            const user = mockUsers.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                // Store user data (matches dashboard requirements)
+                localStorage.setItem('loggedInUserId', user.id);
+                localStorage.setItem('loggedInUsername', user.username);
+                localStorage.setItem('loggedInUserRole', user.role);
+                localStorage.setItem('loggedInClass', user.class);
+                
+                // Redirect to dashboard
+                window.location.href = "../pages/dashboard.html";
+            } else {
+                alert("Invalid username or password");
+            }
+        } catch (error) {
+            console.error("Login error:", error);
+            alert("An error occurred. Please try again.");
+        }
+    });
+
+    // ===== REGISTRATION HANDLER =====
+    registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // 1. Get form values
+        const newUser = {
+            firstName: document.getElementById('firstName').value.trim(),
+            lastName: document.getElementById('lastName').value.trim(),
+            username: document.getElementById('regUsername').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            dob: document.getElementById('dob').value,
+            class: document.getElementById('class').value,
+            gender: document.getElementById('gender').value,
+            role: document.getElementById('role').value,
+            password: document.getElementById('regPassword').value
+        };
+
+        // 2. Validate
+        if (!validateSignup(newUser)) return;
+
+        // 3. Process registration
+        try {
+            await registerUser(newUser);
+            alert("Registration successful! Please login.");
+            container.classList.remove("active");
+            registerForm.reset();
+            grecaptcha.reset();
+            signupBtn.disabled = true;
+        } catch (error) {
+            console.error("Registration failed:", error);
+            alert(error.message);
+        }
+    });
+
+    // ===== VALIDATION FUNCTIONS =====
+    function validateSignup(user) {
+        // Required fields
+        const required = ['firstName', 'lastName', 'username', 'email', 'dob', 'class', 'gender', 'role', 'password'];
+        for (const field of required) {
+            if (!user[field]) {
+                alert(`Please fill in ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
+                return false;
+            }
+        }
+
+        // Email validation
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.email)) {
+            alert("Please enter a valid email address");
+            return false;
+        }
+
+        // Password strength
+        if (user.password.length < 8) {
+            alert("Password must be at least 8 characters");
+            return false;
+        }
+
+        return true;
+    }
+
+    // ===== REGISTRATION FUNCTION =====
+    async function registerUser(userData) {
+        // 1. Verify CAPTCHA
+        const recaptchaResponse = grecaptcha.getResponse();
+        if (!recaptchaResponse) throw new Error("Please complete the CAPTCHA");
+
+        // 2. In production: Verify CAPTCHA with your backend
+        console.log("CAPTCHA response:", recaptchaResponse);
+        // await verifyCaptcha(recaptchaResponse); // Uncomment in production
+
+        // 3. Process registration (mock implementation)
+        return new Promise((resolve, reject) => {
+            // Simulate API call delay
+            setTimeout(() => {
+                try {
+                    // Get existing users
+                    let users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+                    
+                    // Check for duplicates
+                    if (users.some(u => u.username === userData.username)) {
+                        throw new Error("Username already exists");
+                    }
+                    
+                    if (users.some(u => u.email === userData.email)) {
+                        throw new Error("Email already registered");
+                    }
+                    
+                    // Create new user
+                    const newUser = {
+                        id: `SCS-${Date.now()}`,
+                        ...userData,
+                        profilePicture: '../assets/profile_pictures/default.jpg',
+                        createdAt: new Date().toISOString()
+                    };
+                    
+                    // Save to localStorage
+                    users.push(newUser);
+                    localStorage.setItem('registeredUsers', JSON.stringify(users));
+                    
+                    resolve(newUser);
+                } catch (error) {
+                    reject(error);
+                }
+            }, 1000);
+        });
+    }
+
+    // ===== CAPTCHA VERIFICATION (FOR PRODUCTION) =====
+    async function verifyCaptcha(token) {
+        // In production: Replace with actual API call to your backend
+        /*
+        const response = await fetch('/api/verify-captcha', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token })
+        });
+        
+        if (!response.ok) throw new Error("CAPTCHA verification failed");
+        const data = await response.json();
+        if (!data.success) throw new Error("CAPTCHA verification failed");
+        */
+    }
+
+    // ===== INITIAL CHECK =====
+    document.addEventListener('DOMContentLoaded', () => {
+        // Redirect if already logged in
+        if (localStorage.getItem('loggedInUserId')) {
+            window.location.href = "../pages/dashboard.html";
+        }
+    });
+    </script>
+</body>
+</html>

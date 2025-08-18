@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - TestHall</title>
+  <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      background-size: cover; /* Changed to cover for better background image scaling */
+      background-position: center;
+      font-family: Arial, sans-serif; /* Changed from 'Comic Sans MS' for a more professional look */
+      text-align: center;
+      margin: 0; /* Remove default body margin */
+      min-height: 100vh; /* Ensure body takes full viewport height */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: background-image 1s ease-in-out;
+      color: #333; /* Default text color */
+    }
+
+    /* Header Styles */
+    header {
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+        padding: 10px 20px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        box-sizing: border-box;
+    }
+    header nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    header nav ul li {
+        margin-left: 20px;
+    }
+    header nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease;
+    }
+    header nav ul li a:hover {
+        color: #F8E231;
+    }
+    header .logo {
+        height: 40px; /* Adjust logo size */
+        border-radius: 50%;
+        margin-right: auto; /* Push other items to the right */
+    }
+    header #logout-button {
+        background-color: #dc3545; /* Red for logout */
+        color: #fff;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.9em;
+    }
+    header #logout-button:hover {
+        background-color: #c82333;
+    }
+
+    .login-form, #after-login {
+      width: 90%;
+      max-width: 400px;
+      margin: 20px auto; /* Adjusted margin */
+      padding: 30px; /* Increased padding */
+      background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white for better readability */
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+      box-sizing: border-box; /* Include padding in width */
+    }
+    .login-form h2 {
+        color: #020169; /* Facebook blue */
+        margin-bottom: 20px;
+    }
+    .login-form label {
+        display: block;
+        text-align: left;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #555;
+    }
+    .login-form input[type="text"],
+    .login-form input[type="password"] {
+        width: calc(100% - 20px); /* Adjust width for padding */
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1em;
+    }
+    .login-form input[type="submit"],
+    button {
+      background-color: #020169; /* Blue */
+      color: #fff;
+      padding: 12px 25px; /* Larger padding */
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1.1em; /* Larger font */
+      transition: background-color 0.3s ease;
+    }
+    .login-form input[type="submit"]:hover,
+    button:hover {
+      background-color: #fec009; /* Gold on hover */
+    }
+    .show-password-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    .show-password-container input[type="checkbox"] {
+        margin-right: 8px;
+    }
+
+    .welcome-section {
+      padding: 30px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+    }
+    .welcome-section h1 {
+        color: #28a745; /* Green for welcome */
+        margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header id="header" style="display: none;">
+    <nav>
+      <ul>
+        <li><a href="dashboard.html"><img src="../assets/images/logo.png" alt="TestHall Logo" class="logo"></a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="test-library.html">Test Library</a></li>
+        <li><a href="exam-library.html">Exam Library</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="guide-FAQ.html">HELP</a></li>
+        <li><a href="classes.html">Classes</a></li>
+        <li><a href="gamehall.html">Contact</a></li>
+        <li><button id="logout-button">Logout</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="login-form" id="login-form-section">
+    <form id="login-form">
+      <h2>Login to TestHall</h2>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+      <div class="show-password-container">
+        <input type="checkbox" id="show-password">
+        <label for="show-password" style="display: inline; font-weight: normal;">Show Password</label>
+      </div>
+      <input type="submit" value="Login">
+    </form>
+  </div>
+
+  <div class="welcome-section" id="welcome-section" style="display: none;">
+    <h1>Welcome, <span id="welcome-username"></span>!</h1>
+    <p>You have successfully logged in.</p>
+    <button onclick="goToDashboard()">Go to Dashboard</button>
+  </div>
+
+  <script>
+    // --- Background Image Rotation ---
+    const backgroundImages = [
+      '../assets/images/background/bg01.jpg',
+      '../assets/images/background/bg02.jpg',
+      '../assets/images/background/bg03.jpg',
+      '../assets/images/background/bg04.jpg',
+      '../assets/images/background/bg05.jpg',
+      '../assets/images/background/bg06.jpg',
+      '../assets/images/background/bg07.jpg',
+      '../assets/images/background/bg08.jpg',
+      '../assets/images/background/bg09.jpg',
+      '../assets/images/background/bg10.jpg',
+      '../assets/images/background/bg11.jpg',
+      '../assets/images/background/bg12.jpg',
+      '../assets/images/background/bg13.jpg',
+      '../assets/images/background/bg14.jpg',
+      '../assets/images/background/bg15.jpg',
+      '../assets/images/background/bg16.jpg'
+    ];
+
+    // Preload images
+    backgroundImages.forEach((image) => {
+      const img = new Image();
+      img.src = image;
+    });
+
+    let currentIndex = Math.floor(Math.random() * backgroundImages.length);
+    document.body.style.backgroundImage = `url(${backgroundImages[currentIndex]})`;
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % backgroundImages.length;
+      document.body.style.backgroundImage = `url(${backgroundImages[currentIndex]})`;
+    }, 5000); // Change every 5 seconds
+
+    // --- Show/Hide Password ---
+    document.getElementById('show-password').addEventListener('change', function() {
+      const passwordField = document.getElementById('password');
+      if (this.checked) {
+        passwordField.type = 'text';
+      } else {
+        passwordField.type = 'password';
+      }
+    });
+
+    // --- Login Functionality ---
+    document.getElementById('login-form').addEventListener('submit', login);
+
+    async function login(event) {
+      event.preventDefault();
+      const usernameInput = document.getElementById('username').value.trim();
+      const passwordInput = document.getElementById('password').value.trim();
+
+      if (usernameInput === '' || passwordInput === '') {
+        alert('Please fill in both username and password.');
+        return;
+      }
+
+      try {
+        // Fetch users.json from the correct path relative to login.html
+        const response = await fetch('../data/users.json');
+        
+        if (!response.ok) {
+          // If the file is not found or other HTTP error
+          if (response.status === 404) {
+            alert('User data file not found. Please contact ICT personnel for support.');
+            console.error('Error: user not found contact ICT personnel for Assistance');
+          } else {
+            alert(`Error loading user data: HTTP status ${response.status}`);
+            console.error('HTTP error loading users.json:', response.status);
+          }
+          return;
+        }
+
+        const users = await response.json();
+
+        // Find the user with matching username and password
+        // IMPORTANT: In a real application, NEVER store or compare passwords in plaintext client-side.
+        // This is purely for local front-end demonstration. Authentication should be server-side.
+        const user = users.find(u => u.username === usernameInput && u.password === passwordInput);
+
+        if (user) {
+          // Store user ID and role in localStorage for persistence
+          localStorage.setItem('loggedInUserId', user.id);
+          localStorage.setItem('loggedInUserRole', user.role);
+          localStorage.setItem('loggedInUsername', user.username); // Store username for welcome message
+
+          console.log('Login successful! User ID stored:', user.id);
+
+          // Display welcome section
+          document.getElementById('welcome-username').textContent = user.name || user.username;
+          document.getElementById('login-form-section').style.display = 'none';
+          document.getElementById('welcome-section').style.display = 'block';
+
+          // Optionally, redirect to dashboard automatically after a short delay
+          // setTimeout(() => {
+          //   window.location.href = 'dashboard.html';
+          // }, 2000); // Redirect after 2 seconds
+
+        } else {
+          alert('Invalid username or password.');
+          console.warn('Login failed: Invalid credentials provided.');
+        }
+      } catch (error) {
+        console.error('Login process error:', error);
+        alert('An unexpected error occurred during login. Please try again.');
+      }
+    }
+
+    // --- Redirection after Welcome ---
+    function goToDashboard() {
+      window.location.href = 'dashboard.html';
+    }
+
+    // --- Logout Functionality ---
+    document.getElementById('logout-button').addEventListener('click', () => {
+        localStorage.removeItem('loggedInUserId');
+        localStorage.removeItem('loggedInUserRole');
+        localStorage.removeItem('loggedInUsername'); // Clear username as well
+        alert('You have been logged out.');
+        window.location.href = 'login.html'; // Redirect back to login page
+    });
+
+    // --- Check login status on page load (if user is already logged in) ---
+    document.addEventListener('DOMContentLoaded', () => {
+        const loggedInUserId = localStorage.getItem('loggedInUserId');
+        const loggedInUsername = localStorage.getItem('loggedInUsername'); // Retrieve stored username
+
+        if (loggedInUserId && loggedInUsername) {
+            // User is already logged in, show welcome section
+            document.getElementById('login-form-section').style.display = 'none';
+            document.getElementById('welcome-username').textContent = loggedInUsername;
+            document.getElementById('welcome-section').style.display = 'block';
+            document.getElementById('header').style.display = 'block'; // Show header if logged in
+        } else {
+            // Not logged in, ensure login form is visible and header is hidden
+            document.getElementById('login-form-section').style.display = 'block';
+            document.getElementById('welcome-section').style.display = 'none';
+            document.getElementById('header').style.display = 'none';
+        }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- head content -->
+  <style>
+    /* styles */
+  </style>
+</head>
+<body>
+  <header id="header" style="display: none;">
+    <!-- header content -->
+  </header>
+
+  <div class="login-form" id="login-form-section">
+    <form id="login-form">
+      <!-- form content -->
+    </form>
+  </div>
+
+  <div class="welcome-section" id="welcome-section" style="display: none;">
+    <!-- welcome content -->
+  </div>
+
+  <script>
+    // Background image rotation
+    const backgroundImages = [
+      '../assets/images/background/bg01.jpg',
+      '../assets/images/background/bg02.jpg',
+      '../assets/images/background/bg03.jpg',
+      '../assets/images/background/bg04.jpg',
+      '../assets/images/background/bg05.jpg',
+      '../assets/images/background/bg06.jpg',
+      '../assets/images/background/bg07.jpg',
+      '../assets/images/background/bg08.jpg',
+      '../assets/images/background/bg09.jpg',
+      '../assets/images/background/bg10.jpg',
+      '../assets/images/background/bg11.jpg',
+      '../assets/images/background/bg12.jpg',
+      '../assets/images/background/bg13.jpg',
+      '../assets/images/background/bg14.jpg',
+      '../assets/images/background/bg15.jpg',
+      '../assets/images/background/bg16.jpg'
+    ];
+
+    // Preload images
+    backgroundImages.forEach((image) => {
+      const img = new Image();
+      img.src = image;
+    });
+
+    let currentIndex = Math.floor(Math.random() * backgroundImages.length);
+    document.body.style.backgroundImage = `url(${backgroundImages[currentIndex]})`;
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % backgroundImages.length;
+      document.body.style.backgroundImage = `url(${backgroundImages[currentIndex]})`;
+    }, 5000);
+
+    // Show/hide password
+    document.getElementById('show-password').addEventListener('change', function() {
+      const passwordField = document.getElementById('password');
+      if (this.checked) {
+        passwordField.type = 'text';
+      } else {
+        passwordField.type = 'password';
+      }
+    });
+
+    // Login functionality
+    document.getElementById('login-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const usernameInput = document.getElementById('username').value.trim();
+      const passwordInput = document.getElementById('password').value.trim();
+
+      if (!usernameInput || !passwordInput) {
+        alert('Please fill in both username and password.');
+        return;
+      }
+
+      try {
+        const response = await fetch('../data/users.json');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const users = await response.json();
+        const user = users.find((u) => u.username === usernameInput && u.password === passwordInput);
+
+        if (user) {
+          localStorage.setItem('loggedInUserId', user.id);
+          localStorage.setItem('loggedInUserRole', user.role);
+          localStorage.setItem('loggedInUsername', user.username);
+          document.getElementById('welcome-username').textContent = user.name || user.username;
+          document.getElementById('login-form-section').style.display = 'none';
+          document.getElementById('welcome-section').style.display = 'block';
+          document.getElementById('header').style.display = 'block';
+        } else {
+          alert('Invalid username or password.');
+        }
+      } catch (error) {
+        console.error('Login process error:', error);
+        alert('An unexpected error occurred during login. Please try again.');
+      }
+    });
+
+    // Redirection after welcome
+    function goToDashboard() {
+      window.location.href = 'dashboard.html';
+    }
+
+    // Logout functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const logoutButton = document.getElementById('logout-button');
+      if (logoutButton) {
+        logoutButton.addEventListener('click', () => {
+          localStorage.removeItem('loggedInUserId');
+          localStorage.removeItem('loggedInUserRole');
+          localStorage.removeItem('loggedInUsername');
+          alert('You have been logged out.');
+          window.location.href = 'login.html';
+        });
+      }
+    });
+
+    // Check login status on page load
+document.addEventListener('DOMContentLoaded', () => {
+  const loggedInUserId = localStorage.getItem('loggedInUserId');
+  const loggedInUsername = localStorage.getItem('loggedInUsername');
+
+  if (loggedInUserId && loggedInUsername) {
+    document.getElementById('login-form-section').style.display = 'none';
+    document.getElementById('welcome-username').textContent = loggedInUsername;
+    document.getElementById('welcome-section').style.display = 'block';
+    document.getElementById('header').style.display = 'block';
+  } else {
+    document.getElementById('login-form-section').style.display = 'block';
+    document.getElementById('welcome-section').style.display = 'none';
+    document.getElementById('header').style.display = 'none';
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Library - TestHall</title>
+    <!-- Assumes this file is in the /pages/ folder -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="../scripts/auth.js" defer></script>
+    <style>
+        :root { --primary-color: #020169; --accent-color: #FEC009; }
+        body { margin: 0; font-family: Arial, sans-serif; background-color: #f0f2f5; }
+        .hamburger-icon { position: fixed; top: 20px; left: 20px; font-size: 30px; color: var(--primary-color); cursor: pointer; z-index: 1000; background-color: var(--accent-color); padding: 5px 8px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .off-canvas-menu { position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background-color: var(--primary-color); color: #fff; padding-top: 80px; box-sizing: border-box; transition: left 0.3s ease-in-out; z-index: 999; }
+        .off-canvas-menu.open { left: 0; }
+        .menu-list { list-style: none; padding: 0; margin: 0; }
+        .menu-list .menu-item { display: flex; align-items: center; padding: 15px 20px; cursor: pointer; }
+        .menu-list .menu-item i { font-size: 20px; margin-right: 15px; }
+        main { padding: 20px; padding-top: 80px; }
+        .content-container { max-width: 800px; margin: auto; }
+        .search-bar { display: flex; margin-bottom: 20px; }
+        #search-input { flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px 0 0 5px; font-size: 1em; }
+        #search-button { padding: 10px; border: none; background-color: var(--primary-color); color: var(--accent-color); border-radius: 0 5px 5px 0; cursor: pointer; }
+        #exam-list { list-style: none; padding: 0; }
+        #exam-list li { margin-bottom: 10px; }
+        #exam-list li a { display: block; background-color: #fff; padding: 15px 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-decoration: none; color: var(--primary-color); font-weight: bold; transition: all 0.2s ease; border-left: 5px solid var(--accent-color); }
+        #exam-list li a:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        .loading { text-align: center; padding: 20px; color: #666; font-style: italic; }
+        .profile-display-icon { position: fixed; top: 10px; right: 10px; width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; cursor: pointer; z-index: 999; }
+        footer { position: fixed; bottom: 0; width: 100%; text-align: center; padding: 10px; background-color: var(--primary-color); color: var(--accent-color); z-index: 1000; }
+    </style>
+</head>
+<body>
+    <div class="hamburger-icon" id="hamburger-icon"><i class="fas fa-bars"></i></div>
+
+    <nav class="off-canvas-menu" id="off-canvas-menu">
+        <ul class="menu-list">
+            <li class="menu-item" id="dashboard-link"><span>Dashboard</span></li>
+            <li class="menu-item" id="exam-library-link"><span>Exam Library</span></li>
+            <li class="menu-item" id="profile-link"><span>My Profile</span></li>
+            <li class="menu-item" id="logout-button"><span>Logout</span></li>
+        </ul>
+    </nav>
+
+    <main id="main-content">
+        <div class="content-container">
+            <h1>Exam Library</h1>
+            <p id="class-info-text">Showing available exams...</p>
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Search your available exams...">
+                <button id="search-button"><i class="fas fa-search"></i></button>
+            </div>
+            <ul id="exam-list"><li class="loading">Loading exams...</li></ul>
+        </div>
+    </main>
+  
+    <img id="user-image-display" src="../assets/profile_pictures/default.jpeg" alt="User Profile" class="profile-display-icon">
+    <footer>&copy; 2024 TestHall</footer>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- UI & NAVIGATION (No changes needed here) ---
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const offCanvasMenu = document.getElementById('off-canvas-menu');
+        hamburgerIcon.addEventListener('click', () => offCanvasMenu.classList.toggle('open'));
+
+        const redirectToRoleDashboard = () => {
+            const userRole = localStorage.getItem('loggedInUserRole');
+            let url = 'dashboard.html';
+            if (userRole) {
+                const r = userRole.toLowerCase();
+                if (r === 'admin') url = 'dashboard-admin.html';
+                else if (r === 'teacher') url = 'dashboard-teacher.html';
+                else if (r === 'student') url = 'dashboard-student.html';
+                else if (r === 'parent') url = 'dashboard-parents.html';
+            }
+            window.location.href = url;
+        };
+        document.getElementById('dashboard-link').addEventListener('click', redirectToRoleDashboard);
+        document.getElementById('exam-library-link').addEventListener('click', () => window.location.href = 'exam-library.html');
+        document.getElementById('profile-link').addEventListener('click', () => window.location.href = 'profile.html');
+        document.getElementById('logout-button').addEventListener('click', () => {
+            localStorage.clear();
+            // CORRECTED: Path from /pages/ up to the root /login.html
+            window.location.href = 'login.html'; 
+        });
+
+        // --- CORE LOGIC REFACTORED FOR RELIABILITY ---
+        const examListElement = document.getElementById('exam-list');
+        const searchInput = document.getElementById('search-input');
+        const classInfoText = document.getElementById('class-info-text');
+        const profileDisplayIcon = document.getElementById('user-image-display');
+        let allExams = []; // This will be populated after exams.json loads
+        let userSpecificExams = [];
+
+        const loggedInUserId = localStorage.getItem('loggedInUserId');
+
+        // --- STEP 1: FETCH USER DATA FIRST AND IMMEDIATELY UPDATE UI ---
+        // This is now independent and runs right away.
+        fetch('../data/users.json')
+            .then(res => res.ok ? res.json() : Promise.reject('Could not fetch users.json'))
+            .then(users => {
+                const tempUsers = JSON.parse(localStorage.getItem('tempUsers')) || [];
+                const allUsers = [...users, ...tempUsers];
+                const currentUser = allUsers.find(user => user.id === loggedInUserId);
+
+                if (!currentUser) throw new Error("Current user not found in user data.");
+
+                // Immediately update the profile picture and class info text
+                if (currentUser.profilePicture) {
+                    profileDisplayIcon.src = `../${currentUser.profilePicture}`;
+                }
+                profileDisplayIcon.addEventListener('click', () => window.location.href = 'profile.html');
+
+                // Return the found user for the next step in the chain
+                return currentUser;
+            })
+            // --- STEP 2: NOW FETCH EXAM DATA AND FILTER IT ---
+            .then(currentUser => {
+                return fetch('../data/exams.json')
+                    .then(res => res.ok ? res.json() : Promise.reject('Could not fetch exams.json'))
+                    .then(allExamsData => {
+                        allExams = Object.values(allExamsData).flat();
+                        
+                        // Use the currentUser data from the previous step to filter
+                        if (currentUser.role && currentUser.role.toLowerCase() === 'student') {
+                            const userClassId = currentUser.classid;
+                            classInfoText.textContent = `Showing exams for: ${currentUser.class || 'your class'}`;
+                            userSpecificExams = allExams.filter(exam => exam.classId === userClassId);
+                        } else {
+                            userSpecificExams = allExams;
+                            classInfoText.textContent = 'Showing all available exams (Admin/Teacher view)';
+                        }
+                        
+                        displayExams(userSpecificExams);
+                    });
+            })
+            .catch(error => {
+                console.error('Failed to load page data:', error);
+                classInfoText.textContent = 'Could not load exam data.';
+                examListElement.innerHTML = `<li class="loading">Error: ${error.message}</li>`;
+            });
+
+        const displayExams = (exams) => {
+            examListElement.innerHTML = '';
+            if (exams.length === 0) {
+                examListElement.innerHTML = '<li class="loading">No exams are available for your class at this time.</li>';
+                return;
+            }
+            exams.forEach(exam => {
+                const listItem = document.createElement('li');
+                const anchor = document.createElement('a');
+                anchor.href = `exam-taking.html?test=${encodeURIComponent(exam.fileName)}`;
+                anchor.textContent = exam.displayName;
+                listItem.appendChild(anchor);
+                examListElement.appendChild(listItem);
+            });
+        };
+
+        const handleSearch = () => {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const filteredExams = userSpecificExams.filter(exam =>
+                exam.displayName.toLowerCase().includes(searchTerm)
+            );
+            displayExams(filteredExams);
+        };
+        searchInput.addEventListener('input', handleSearch);
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide & FAQ - TestHall</title>
+    <!-- Assumes this file is in the /pages/ folder -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="../scripts/auth.js" defer></script>
+    <style>
+        :root { --primary-color: #020169; --accent-color: #FEC009; }
+        body { margin: 0; font-family: Arial, sans-serif; background-color: #f0f2f5; overflow-x: hidden; }
+        /* --- Hamburger Menu & Sidebar CSS (Consistent with other pages) --- */
+        .hamburger-icon { position: fixed; top: 20px; left: 20px; font-size: 30px; color: var(--primary-color); cursor: pointer; z-index: 1000; background-color: var(--accent-color); padding: 5px 8px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .off-canvas-menu { position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background-color: var(--primary-color); color: #fff; padding-top: 80px; box-sizing: border-box; transition: left 0.3s ease-in-out; z-index: 999; box-shadow: 2px 0 5px rgba(0,0,0,0.5); }
+        .off-canvas-menu.open { left: 0; }
+        .menu-list { list-style: none; padding: 0; margin: 0; }
+        .menu-list .menu-item { display: flex; align-items: center; padding: 15px 20px; cursor: pointer; transition: background 0.3s ease; }
+        .menu-list .menu-item i { font-size: 20px; margin-right: 15px; min-width: 25px; }
+        .menu-list .menu-item span { white-space: nowrap; font-size: 1.1em; }
+        .menu-list .menu-item:hover { background-color: rgba(255, 255, 255, 0.2); }
+
+        /* --- Main Content Area --- */
+        main { padding: 20px; padding-top: 80px; transition: margin-left 0.3s ease-in-out; }
+        .off-canvas-menu.open + main { margin-left: 250px; }
+        .content-container { max-width: 800px; margin: auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .content-container h1, .content-container h2 { color: var(--primary-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 20px; }
+        .content-container p, .content-container li { line-height: 1.7; color: #555; }
+        
+        /* --- NEW: Interactive Accordion Styles for FAQ --- */
+        .faq-accordion details {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: background-color 0.2s;
+        }
+        .faq-accordion details[open] {
+            background-color: #fff;
+        }
+        .faq-accordion summary {
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 15px;
+            cursor: pointer;
+            position: relative;
+            outline: none;
+        }
+        .faq-accordion summary::after {
+            content: '\f078'; /* Font Awesome down arrow */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 20px;
+            transition: transform 0.3s ease;
+        }
+        .faq-accordion details[open] summary::after {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            padding: 0 15px 15px 15px;
+            border-top: 1px solid #dee2e6;
+        }
+
+        /* --- NEW: Styled Guide Section --- */
+        .guide-steps { list-style: none; padding-left: 0; counter-reset: step-counter; }
+        .guide-steps li {
+            counter-increment: step-counter;
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 40px;
+        }
+        .guide-steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            background: var(--primary-color);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        /* --- Footer & Profile Icon --- */
+        footer { position: fixed; bottom: 0; width: 100%; text-align: center; padding: 10px; background-color: var(--primary-color); color: var(--accent-color); z-index: 1000; }
+        .profile-display-icon { position: fixed; top: 10px; right: 10px; width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; cursor: pointer; z-index: 999; }
+    </style>
+</head>
+<body>
+    <div class="hamburger-icon" id="hamburger-icon"><i class="fas fa-bars"></i></div>
+
+    <nav class="off-canvas-menu" id="off-canvas-menu">
+        <ul class="menu-list">
+            <li class="menu-item" id="dashboard-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></li>
+            <li class="menu-item" id="test-library-link"><i class="fas fa-book"></i><span>Test Library</span></li>
+            <li class="menu-item" id="exam-library-link"><i class="fas fa-pencil-alt"></i><span>Exam Library</span></li>
+            <li class="menu-item" id="profile-link"><i class="fas fa-user-tie"></i><span>My Profile</span></li>
+            <li class="menu-item" id="classes-link"><i class="fas fa-users"></i><span>Classes</span></li>
+            <li class="menu-item" id="guide-faq-link"><i class="fas fa-question-circle"></i><span>Guide & FAQ</span></li>
+            <li class="menu-item" id="logout-button"><i class="fas fa-sign-out-alt"></i><span>Logout</span></li>          
+        </ul>
+    </nav>
+
+    <main id="main-content">
+        <div class="content-container">
+            <h1>Guide & FAQ</h1>
+            
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-accordion">
+                <details>
+                    <summary>How do I take a Test or Exam?</summary>
+                    <div class="faq-answer">
+                        <p>To begin an assessment, navigate to either the "Test Library" or "Exam Library" from the side menu. Browse the list of available subjects and click on the one you wish to take. The test will start immediately.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>Where can I see my results?</summary>
+                    <div class="faq-answer">
+                        <p>After you submit a test or exam, you will be shown a results page. You can download a PDF of this result. Past results may be available on your Dashboard, depending on your user role.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>Can I change my answer after selecting it?</summary>
+                    <div class="faq-answer">
+                        <p>Yes. As long as you have not submitted the exam, you can navigate back to any question using the number panel at the bottom of the screen and change your selected option.</p>
+                    </div>
+                </details>
+                 <details>
+                    <summary>What is the difference between a Test and an Exam?</summary>
+                    <div class="faq-answer">
+                        <p>In our system, "Tests" are typically shorter assessments or practice quizzes, while "Exams" are formal, term-end assessments that contribute to your final grade.</p>
+                    </div>
+                </details>
+            </div>
+
+            <h2 style="margin-top: 40px;">Getting Started Guide</h2>
+            <ol class="guide-steps">
+                <li>
+                    <strong>Log In or Register:</strong> Access the platform using your official school credentials. If you are a new user, you can register for temporary 60-minute access.
+                </li>
+                <li>
+                    <strong>Navigate the Dashboard:</strong> Your dashboard is your central hub. From here, you can access all major sections of the platform.
+                </li>
+                <li>
+                    <strong>Select an Assessment:</strong> Go to the "Test Library" or "Exam Library" to find your desired subject. You can use the search bar to filter the list quickly.
+                </li>
+                <li>
+                    <strong>Take the Test:</strong> Answer each question carefully. Use the navigation panel to jump between questions if needed. Your progress is saved as you move to the next question.
+                </li>
+                <li>
+                    <strong>Submit and View Results:</strong> Once you are finished, click the "Submit Exam" button. Your results will be calculated and displayed instantly. Don't forget to download your PDF result slip!
+                </li>
+            </ol>
+        </div>
+    </main>
+  
+    <img id="user-image-display" src="../assets/profile_pictures/default.jpeg" alt="User Profile" class="profile-display-icon">
+    <footer>&copy; 2024 TestHall</footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- UI & NAVIGATION (Consistent with other pages) ---
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const offCanvasMenu = document.getElementById('off-canvas-menu');
+        hamburgerIcon.addEventListener('click', () => offCanvasMenu.classList.toggle('open'));
+
+        const redirectToRoleDashboard = () => {
+            const userRole = localStorage.getItem('loggedInUserRole');
+            let url = 'dashboard.html';
+            if (userRole) {
+                const r = userRole.toLowerCase();
+                if (r === 'admin') url = 'dashboard-admin.html';
+                else if (r === 'teacher') url = 'dashboard-teacher.html';
+                else if (r === 'student') url = 'dashboard-student.html';
+                else if (r === 'parent') url = 'dashboard-parents.html';
+            }
+            window.location.href = url;
+        };
+        
+        // Add event listeners for all menu links
+        document.getElementById('dashboard-link').addEventListener('click', redirectToRoleDashboard);
+        document.getElementById('test-library-link').addEventListener('click', () => window.location.href = 'test-library.html');
+        document.getElementById('exam-library-link').addEventListener('click', () => window.location.href = 'exam-library.html');
+        document.getElementById('profile-link').addEventListener('click', () => window.location.href = 'profile.html');
+        document.getElementById('classes-link').addEventListener('click', () => window.location.href = 'classes.html');
+        document.getElementById('guide-faq-link').addEventListener('click', () => window.location.href = 'guide-FAQ.html');
+        document.getElementById('logout-button').addEventListener('click', () => {
+            localStorage.clear();
+            window.location.href = '../login.html';
+        });
+
+        // --- PROFILE ICON ---
+        const profileDisplayIcon = document.getElementById('user-image-display');
+        const loggedInUserId = localStorage.getItem('loggedInUserId');
+        if (loggedInUserId) {
+            fetch('../data/users.json')
+                .then(res => res.ok ? res.json() : Promise.reject('Failed to load users'))
+                .then(users => {
+                    const tempUsers = JSON.parse(localStorage.getItem('tempUsers')) || [];
+                    const allUsers = [...users, ...tempUsers];
+                    const currentUser = allUsers.find(user => user.id == loggedInUserId);
+                    if (currentUser && currentUser.profilePicture) {
+                        profileDisplayIcon.src = `../${currentUser.profilePicture}`;
+                    }
+                });
+        }
+        profileDisplayIcon.addEventListener('click', () => window.location.href = 'profile.html');
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCS Monthly Challenge</title>
+    <!-- Assumes this file is in the /pages/ folder -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="../scripts/auth.js" defer></script> <!-- Session Checker -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        :root {
+            --primary-color: #020169;
+            --accent-color: #FEC009;
+            --text-color: #343a40;
+            --light-bg: #f8f9fa;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            display: flex; /* For sidebar layout */
+        }
+        /* Basic Sidebar for context */
+        .sidebar { width: 60px; height: 100vh; background-color: var(--primary-color); position: fixed; left: 0; top: 0; }
+        main {
+            margin-left: 60px; /* Space for the sidebar */
+            width: calc(100% - 60px);
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .challenge-container {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            border-top: 8px solid var(--primary-color);
+        }
+        .header {
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .header .month-name {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+        .challenge-details h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .challenge-details .icon {
+            font-size: 4em;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        .challenge-details p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .countdown-timer {
+            background-color: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .countdown-timer h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        #timer {
+            font-size: 2em;
+            font-weight: 700;
+            color: #333;
+        }
+        .submission-area {
+            margin-top: 30px;
+        }
+        .submission-area textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1em;
+            resize: vertical;
+        }
+        .submission-area button {
+            background-color: var(--primary-color);
+            color: #fff;
+            font-size: 1.1em;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        .submission-area button:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .submission-area button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .submitted-message {
+            background-color: #d1e7dd;
+            color: #0f5132;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Sidebar for Navigation Context -->
+    <div class="sidebar">
+        <!-- Add menu items here if needed -->
+    </div>
+
+    <main>
+        <div class="challenge-container">
+            <div class="header">
+                <h1>SCS Monthly <span class="month-name" id="month-name-display">Challenge</span></h1>
+            </div>
+
+            <div class="challenge-details">
+                <div class="icon" id="challenge-icon"></div>
+                <h2 id="challenge-title">Loading Challenge...</h2>
+                <p id="challenge-description"></p>
+            </div>
+
+            <div class="countdown-timer">
+                <h3>Challenge Ends In:</h3>
+                <div id="timer">--:--:--:--</div>
+            </div>
+
+            <div class="submission-area" id="submission-area">
+                <h3>Submit Your Entry</h3>
+                <textarea id="submission-text" placeholder="Type your answer, reflection, or link to your work here..."></textarea>
+                <button id="submit-btn">Submit Challenge Entry</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DATA SOURCE: ALL CHALLENGES FOR THE YEAR ---
+            // This is the "brain" of the page. To change a challenge, you only edit this section.
+            const monthlyChallenges = [
+                { month: 0, name: "January", icon: "fas fa-flag-checkered", title: "Goal Setting Grand Prix", description: "Outline your main academic and personal goal for the year. Describe three concrete steps you will take to achieve it." },
+                { month: 1, name: "February", icon: "fas fa-heart", title: "Kindness Quest", description: "Perform and document three acts of kindness for fellow students or teachers this month. Describe how it made you and the other person feel." },
+                { month: 2, name: "March", icon: "fas fa-book-open", title: "Literary Voyage", description: "Read a book that is not part of your school curriculum. Write a 200-word summary and explain what you learned from it." },
+                { month: 3, name: "April", icon: "fas fa-recycle", title: "Eco-Warrior Challenge", description: "Start a small recycling project at home or in your community. Submit a photo and a brief description of your initiative." },
+                { month: 4, name: "May", icon: "fas fa-brain", title: "Mind-Bender Month", description: "Solve a complex puzzle (like a Rubik's Cube, Sudoku, or a logic problem) and share your strategy or the steps you took to solve it." },
+                { month: 5, name: "June", icon: "fas fa-pen-fancy", title: "Creative Expression Contest", description: "Write a short story, a poem, or draw a piece of art related to the theme of 'New Beginnings'. Submit your creation." },
+                { month: 6, name: "July", icon: "fas fa-users", title: "Community Interview", description: "Interview an elder in your family or community. Share the most interesting story or piece of advice they gave you." },
+                { month: 7, name: "August", icon: "fas fa-code", title: "Tech Innovator Task", description: "Learn a basic concept in coding (e.g., an HTML tag, a Python loop). Write what you learned and how it could be used." },
+                { month: 8, name: "September", icon: "fas fa-running", title: "Fitness Sprint", description: "Set a personal fitness goal for the month (e.g., walk 10,000 steps a day, learn a new sport). Track your progress and share your results." },
+                { month: 9, name: "October", icon: "fas fa-lightbulb", title: "Problem-Solver's Pitch", description: "Identify a small problem in our school and propose a creative, practical solution for it." },
+                { month: 10, name: "November", icon: "fas fa-hand-holding-heart", title: "Gratitude Journal", description: "For one week, write down three things you are grateful for each day. Share your most meaningful entry." },
+                { month: 11, name: "December", icon: "fas fa-calendar-alt", title: "Year in Review", description: "Reflect on your personal growth this year. What was your biggest challenge, and what was your greatest achievement?" }
+            ];
+
+            // --- ELEMENT REFERENCES ---
+            const monthNameDisplay = document.getElementById('month-name-display');
+            const challengeIcon = document.getElementById('challenge-icon');
+            const challengeTitle = document.getElementById('challenge-title');
+            const challengeDescription = document.getElementById('challenge-description');
+            const timerDisplay = document.getElementById('timer');
+            const submissionArea = document.getElementById('submission-area');
+            const submissionText = document.getElementById('submission-text');
+            const submitBtn = document.getElementById('submit-btn');
+
+            // --- CORE LOGIC ---
+            const now = new Date();
+            const currentMonth = now.getMonth(); // 0 for January, 1 for February, etc.
+            const currentChallenge = monthlyChallenges[currentMonth];
+            const userId = localStorage.getItem('loggedInUserId');
+            const submissionKey = `challenge_${now.getFullYear()}_${currentMonth}_${userId}`;
+            
+            // 1. Display the correct challenge content
+            const loadChallenge = () => {
+                if (currentChallenge) {
+                    monthNameDisplay.textContent = currentChallenge.name;
+                    challengeIcon.className = `icon ${currentChallenge.icon}`;
+                    challengeTitle.textContent = currentChallenge.title;
+                    challengeDescription.textContent = currentChallenge.description;
+                } else {
+                    challengeTitle.textContent = "No challenge available for this month.";
+                    challengeDescription.textContent = "Please check back later!";
+                }
+            };
+
+            // 2. Manage the countdown timer
+            const startCountdown = () => {
+                const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+                
+                const updateTimer = () => {
+                    const totalSeconds = (endOfMonth - new Date()) / 1000;
+
+                    if (totalSeconds < 0) {
+                        timerDisplay.textContent = "Challenge Expired";
+                        return;
+                    }
+
+                    const days = Math.floor(totalSeconds / 3600 / 24);
+                    const hours = Math.floor(totalSeconds / 3600) % 24;
+                    const minutes = Math.floor(totalSeconds / 60) % 60;
+                    const seconds = Math.floor(totalSeconds) % 60;
+
+                    timerDisplay.textContent = `${String(days).padStart(2, '0')}:${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                };
+
+                updateTimer(); // Run once immediately
+                setInterval(updateTimer, 1000); // Update every second
+            };
+
+            // 3. Handle user submission
+            const handleSubmission = () => {
+                const entry = submissionText.value.trim();
+                if (entry === "") {
+                    alert("Please write your entry before submitting.");
+                    return;
+                }
+
+                // Save the submission to localStorage
+                localStorage.setItem(submissionKey, entry);
+                
+                // Update the UI to show completion
+                submissionArea.innerHTML = `<div class="submitted-message">Thank you! Your entry for the ${currentChallenge.name} challenge has been submitted successfully.</div>`;
+            };
+            
+            // 4. Check submission status on load
+            const checkSubmissionStatus = () => {
+                if (localStorage.getItem(submissionKey)) {
+                     submissionArea.innerHTML = `<div class="submitted-message">You have already completed the ${currentChallenge.name} challenge. Well done!</div>`;
+                } else {
+                    submitBtn.addEventListener('click', handleSubmission);
+                }
+            };
+
+            // --- INITIALIZE THE PAGE ---
+            loadChallenge();
+            startCountdown();
+            checkSubmissionStatus();
+        });
+    </script>
+</body>
+</html>

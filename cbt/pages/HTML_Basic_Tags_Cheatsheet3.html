@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ultimate HTML Elements Cheat Sheet</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            color: #343a40;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 10px;
+            color: #212529;
+        }
+        h1 {
+            text-align: center;
+            color: #020169; /* SCS Primary Color */
+            border-bottom-color: #FEC009; /* SCS Accent Color */
+        }
+        section {
+            margin-bottom: 40px;
+        }
+        .tag-entry {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-left: 4px solid #020169;
+            background-color: #f8f9fa;
+            border-radius: 0 5px 5px 0;
+        }
+        .tag-name {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 1.1em;
+            color: #d63384;
+        }
+        .tag-description {
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+        .tag-example {
+            border: 1px dashed #ced4da;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        .code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #e9ecef;
+            padding: 2px 4px;
+            border-radius: 3px;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f1f3f5;
+        }
+        img, video, audio {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>The Ultimate HTML Elements Cheat Sheet</h1>
+
+        <!-- ====================================================== -->
+        <!-- SECTION: DOCUMENT STRUCTURE -->
+        <!-- ====================================================== -->
+        <section id="structure">
+            <h2>Document Structure</h2>
+            <p>These tags define the overall structure and metadata of an HTML page.</p>
+
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;html&gt;</span></p>
+                <p class="tag-description">The root element of an HTML page. All other elements are descendants of this tag.</p>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;head&gt;</span></p>
+                <p class="tag-description">Contains meta-information about the document, like the title, styles, and scripts. This content is not displayed on the page.</p>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;body&gt;</span></p>
+                <p class="tag-description">Contains the visible content of the webpage, such as text, images, links, and forms.</p>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;title&gt;</span></p>
+                <p class="tag-description">Sets the title of the browser tab or window. It's placed inside the <code class="code">&lt;head&gt;</code>.</p>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;link&gt;</span> and <span class="tag-name">&lt;style&gt;</span></p>
+                <p class="tag-description"><code class="code">&lt;link&gt;</code> connects to external resources like CSS stylesheets. <code class="code">&lt;style&gt;</code> is used to write CSS directly inside the HTML file (inline/embedded styles).</p>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;script&gt;</span></p>
+                <p class="tag-description">Used to embed or link to JavaScript code to add interactivity to the page.</p>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;meta&gt;</span></p>
+                <p class="tag-description">Provides metadata such as character set (<code class="code">charset="UTF-8"</code>) or viewport settings for mobile responsiveness.</p>
+            </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <!-- SECTION: TEXT AND HEADINGS -->
+        <!-- ====================================================== -->
+        <section id="text">
+            <h2>Text and Headings</h2>
+            <p>Tags used to structure and format text content.</p>
+
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;h1&gt;</span> to <span class="tag-name">&lt;h6&gt;</span></p>
+                <p class="tag-description">Heading tags, from the most important (<code class="code">&lt;h1&gt;</code>) to the least important (<code class="code">&lt;h6&gt;</code>).</p>
+                <div class="tag-example">
+                    <h1>This is a Heading 1</h1>
+                    <h2>This is a Heading 2</h2>
+                    <h3>This is a Heading 3</h3>
+                </div>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;p&gt;</span></p>
+                <p class="tag-description">Defines a paragraph of text.</p>
+                <div class="tag-example">
+                    <p>This is a paragraph. It's used for standard blocks of text.</p>
+                </div>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;strong&gt;</span> and <span class="tag-name">&lt;b&gt;</span></p>
+                <p class="tag-description"><code class="code">&lt;strong&gt;</code> indicates important text (semantically strong). <code class="code">&lt;b&gt;</code> simply makes text bold without adding importance.</p>
+                <div class="tag-example">
+                    <p>This is <strong>important</strong> text. This is just <b>bold</b> text.</p>
+                </div>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;em&gt;</span> and <span class="tag-name">&lt;i&gt;</span></p>
+                <p class="tag-description"><code class="code">&lt;em&gt;</code> adds emphasis (semantically). <code class="code">&lt;i&gt;</code> simply italicizes text (e.g., for a technical term).</p>
+                <div class="tag-example">
+                    <p>You should <em>really</em> learn this. This is an <i>italicized</i> term.</p>
+                </div>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;a&gt;</span></p>
+                <p class="tag-description">The anchor tag, used to create hyperlinks. The <code class="code">href</code> attribute specifies the destination URL.</p>
+                <div class="tag-example">
+                    <a href="https://www.google.com" target="_blank">Click here to visit Google</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <!-- SECTION: LISTS -->
+        <!-- ====================================================== -->
+        <section id="lists">
+            <h2>Lists</h2>
+            <p>Tags for creating ordered and unordered lists.</p>
+
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;ul&gt;</span> and <span class="tag-name">&lt;li&gt;</span></p>
+                <p class="tag-description">Creates an unordered list (bullet points). Each item in the list is defined by a <code class="code">&lt;li&gt;</code> (list item) tag.</p>
+                <div class="tag-example">
+                    <ul>
+                        <li>First item</li>
+                        <li>Second item</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;ol&gt;</span> and <span class="tag-name">&lt;li&gt;</span></p>
+                <p class="tag-description">Creates an ordered list (numbered). Each item is also defined by a <code class="code">&lt;li&gt;</code> tag.</p>
+                <div class="tag-example">
+                    <ol>
+                        <li>First step</li>
+                        <li>Second step</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <!-- SECTION: CONTAINERS & LAYOUT -->
+        <!-- ====================================================== -->
+        <section id="layout">
+            <h2>Containers & Layout</h2>
+            <p>Generic container tags used for grouping content and structuring the page layout.</p>
+
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;div&gt;</span></p>
+                <p class="tag-description">A block-level container. It takes up the full width available and is used to group large sections of content.</p>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;span&gt;</span></p>
+                <p class="tag-description">An inline-level container. It only takes up as much width as necessary and is used to group small pieces of content within a line, like a single word.</p>
+                <div class="tag-example">
+                    <p>This is a paragraph with a <span style="color: #020169; font-weight: bold;">styled span</span> inside it.</p>
+                </div>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;header&gt;</span>, <span class="tag-name">&lt;footer&gt;</span>, <span class="tag-name">&lt;main&gt;</span>, <span class="tag-name">&lt;section&gt;</span></p>
+                <p class="tag-description">Semantic layout tags that describe their content. They function like <code class="code">&lt;div&gt;</code>s but provide more meaning to the browser and developers.</p>
+            </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <!-- SECTION: FORMS -->
+        <!-- ====================================================== -->
+        <section id="forms">
+            <h2>Forms</h2>
+            <p>Tags used to collect user input.</p>
+
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;form&gt;</span></p>
+                <p class="tag-description">The main container for all form elements.</p>
+                <div class="tag-example">
+                    <form action="#">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" placeholder="Enter your username">
+                        
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password">
+
+                        <label>Choose one:</label>
+                        <input type="radio" id="option1" name="choice" value="1">
+                        <label for="option1">Option 1</label>
+                        <input type="radio" id="option2" name="choice" value="2">
+                        <label for="option2">Option 2</label>
+
+                        <label for="comments">Comments:</label>
+                        <textarea id="comments" name="comments" rows="3"></textarea>
+
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;input&gt;</span></p>
+                <p class="tag-description">The most versatile form element. The <code class="code">type</code> attribute changes its function (e.g., <code class="code">text</code>, <code class="code">password</code>, <code class="code">checkbox</code>, <code class="code">radio</code>, <code class="code">submit</code>).</p>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;label&gt;</span></p>
+                <p class="tag-description">A caption for an <code class="code">&lt;input&gt;</code> element. The <code class="code">for</code> attribute links it to the input's <code class="code">id</code>, making it clickable.</p>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;textarea&gt;</span></p>
+                <p class="tag-description">A multi-line text input field.</p>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;select&gt;</span> and <span class="tag-name">&lt;option&gt;</span></p>
+                <p class="tag-description">Creates a dropdown list. Each choice is defined by an <code class="code">&lt;option&gt;</code> tag.</p>
+                <div class="tag-example">
+                    <select name="role">
+                        <option value="student">Student</option>
+                        <option value="teacher">Teacher</option>
+                    </select>
+                </div>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;button&gt;</span></p>
+                <p class="tag-description">A clickable button, often used to submit a form.</p>
+            </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <!-- SECTION: TABLES -->
+        <!-- ====================================================== -->
+        <section id="tables">
+            <h2>Tables</h2>
+            <p>Tags for displaying data in a tabular format.</p>
+
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;table&gt;</span>, <span class="tag-name">&lt;tr&gt;</span>, <span class="tag-name">&lt;th&gt;</span>, <span class="tag-name">&lt;td&gt;</span></p>
+                <p class="tag-description">
+                    <code class="code">&lt;table&gt;</code>: The main table container.<br>
+                    <code class="code">&lt;tr&gt;</code>: Table Row. Defines a row of cells.<br>
+                    <code class="code">&lt;th&gt;</code>: Table Header. A special cell for column headings (bold and centered).<br>
+                    <code class="code">&lt;td&gt;</code>: Table Data. A standard data cell.
+                </p>
+                <div class="tag-example">
+                    <table>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                        </tr>
+                        <tr>
+                            <td>John</td>
+                            <td>Doe</td>
+                        </tr>
+                        <tr>
+                            <td>Jane</td>
+                            <td>Smith</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <!-- SECTION: MEDIA -->
+        <!-- ====================================================== -->
+        <section id="media">
+            <h2>Media</h2>
+            <p>Tags for embedding images, audio, and video.</p>
+
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;img&gt;</span></p>
+                <p class="tag-description">Embeds an image. The <code class="code">src</code> attribute specifies the image path, and the <code class="code">alt</code> attribute provides alternative text for accessibility.</p>
+                <div class="tag-example">
+                    <!-- Note: This is a placeholder image. Replace with a real URL to see it. -->
+                    <img src="https://via.placeholder.com/300x150" alt="A placeholder image">
+                </div>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;video&gt;</span></p>
+                <p class="tag-description">Embeds a video. The <code class="code">controls</code> attribute adds play/pause buttons. The <code class="code">&lt;source&gt;</code> tag specifies the video file.</p>
+                <div class="tag-example">
+                    <!-- This will not play as the source is a placeholder. -->
+                    <video controls width="300">
+                        <source src="/media/my-video.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+            <div class="tag-entry">
+                <p><span class="tag-name">&lt;audio&gt;</span></p>
+                <p class="tag-description">Embeds audio content. Works similarly to the video tag.</p>
+                <div class="tag-example">
+                    <!-- This will not play as the source is a placeholder. -->
+                    <audio controls>
+                        <source src="/media/my-audio.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>
