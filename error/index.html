@@ -1,1 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading | St. Christopher School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* Modern Gradient Background */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #020169 0%, #1a237e 50%, #303f9f 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            overflow: hidden;
+        }
 
+        /* Loading Container */
+        .loading-container {
+            text-align: center;
+            max-width: 600px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Animated Logo */
+        .school-logo {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+            color: #FEC009;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #FEC009 0%, #FFD700 100%);
+            border-radius: 10px;
+            animation: load 3s forwards;
+        }
+
+        @keyframes load {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        /* Loading Text Animation */
+        .loading-text {
+            font-size: 1.2rem;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .loading-text::after {
+            content: '...';
+            position: absolute;
+            animation: dots 1.5s infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+
+        /* Hidden Links (for random selection) */
+        .hidden-links {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <div class="school-logo">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+        <h1>Welcome to St. Christopher School</h1>
+        <p>Preparing your personalized experience...</p>
+        
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+        
+        <div class="loading-text">Loading</div>
+    </div>
+
+    <!-- Hidden links for random redirection -->
+    <div class="hidden-links">
+        <a href="cbt/index.html" id="link1"></a>
+        <a href="Heropage.html" id="link2"></a>
+        <a href="about.html" id="link3"></a>
+        <a href="contact.html" id="link4"></a>
+        <a href="admissions.html" id="link5"></a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Array of possible redirect URLs
+            const redirectUrls = [
+                'cbt/index.html',
+                'Heropage.html',
+                'about.html',
+                'contact.html',
+                'admissions.html'
+            ];
+
+            // Randomly select one URL
+            const randomIndex = Math.floor(Math.random() * redirectUrls.length);
+            const redirectUrl = redirectUrls[randomIndex];
+
+            // Redirect after 3 seconds (matches CSS animation)
+            setTimeout(() => {
+                window.location.href = redirectUrl;
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
