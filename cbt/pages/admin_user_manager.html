@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCS User Manager (Admin Tool)</title>
+    <style>
+        :root { --primary-color: #020169; --accent-color: #FEC009; --error-color: #dc3545; --success-color: #28a745; }
+        body { font-family: Arial, sans-serif; background-color: #f0f2f5; margin: 20px; }
+        .container { max-width: 1000px; margin: auto; background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        h1, h2 { color: var(--primary-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #dee2e6; padding: 12px; text-align: left; }
+        th { background-color: #f8f9fa; }
+        .form-section { background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-top: 30px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em; box-sizing: border-box; }
+        button { background-color: var(--primary-color); color: #fff; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; transition: all 0.3s ease; margin-top: 10px; }
+        button:hover { background-color: var(--accent-color); color: var(--primary-color); }
+        .btn-danger { background-color: var(--error-color); }
+        #output-container { margin-top: 30px; }
+        textarea { width: 100%; min-height: 250px; font-family: monospace; }
+        
+/* Mobile view */
+@media only screen and (max-width: 768px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  th {
+    display: none;
+  }
+
+  td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 200px;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+
+  .id {
+    border-top: 1px solid #dee2e6;
+  }
+
+  .id:before {
+    content: "ID:";
+  }
+
+  .name:before {
+    content: "Name:";
+  }
+
+  .username:before {
+    content: "Username:";
+  }
+
+  .role:before {
+    content: "Role:";
+  }
+
+  .class:before {
+    content: "Class:";
+  }
+
+  .gender:before {
+    content: "Gender:";
+  }
+
+  .email:before {
+    content: "Email:";
+  }
+
+  .passport:before {
+    content: "Passport:";
+  }
+
+  .actions:before {
+    content: "Actions:";
+  }
+}       
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SCS User Manager (ADMIN TOOL)</h1>
+        <p><strong>Important:</strong> This tool modifies your live <code>users.json</code> file. Use with care.</p>
+        
+        <h2>Current Registered Users</h2>
+        
+<table id="users-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Username</th>
+      <th>Role</th>
+      <th>Class</th>
+      <th>Gender</th>
+      <th>Email</th>
+      <th>Passport</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody><!-- User data will be loaded here --></tbody>
+</table>
+
+        <div class="form-section">
+            <h2 id="form-title">Add New User</h2>
+            <form id="user-form">
+                <input type="hidden" id="user-id">
+<!-- Add gender selection, class selection for students, and other fields -->
+<div class="form-grid">
+    <div><label for="name">Full Name</label><input type="text" id="name" required></div>
+    <div><label for="username">Username</label><input type="text" id="username" required></div>
+    <div><label for="password">Password</label><input type="text" id="password" required></div>
+    <div>
+        <label for="role">Role</label>
+        <select id="role" required>
+            <option value="Student">Student</option>
+            <option value="Teacher">Teacher</option>
+            <option value="Parent">Parent</option>
+            <option value="Admin">Admin</option>
+        </select>
+    </div>
+    <div>
+        <label for="gender">Gender</label>
+        <select id="gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+    </div>
+    <div id="class-selection" style="display: none;">
+        <label for="classid">Class</label>
+        <select id="classid">
+            <option value="JS1">JS1 (Basic Seven Lavender)</option>
+            <option value="JS2">JS2 (Basic Eight Tulip)</option>
+            <option value="JS3">JS3 (Basic Nine Sunflower)</option>
+            <option value="SS1">SS1 (Senior Class One)</option>
+            <option value="SS2">SS2 (Senior Class Two)</option>
+            <option value="SS3">SS3 (Senior Class Three)</option>
+        </select>
+    </div>
+    <div id="class-input" style="display: none;">
+        <label for="class">Class</label>
+        <input type="text" id="class">
+    </div>
+    <div><label for="email">Email</label><input type="email" id="email"></div>
+    <div><label for="date-of-birth">Date of Birth</label><input type="date" id="date-of-birth" required></div>
+</div>                                                
+                
+                <button type="submit" id="submit-btn">Add User</button>
+                <button type="button" id="cancel-edit-btn" style="display: none;">Cancel Edit</button>
+            </form>
+        </div>
+
+        <div id="output-container">
+            <h2>Updated <code>users.json</code> Content</h2>
+            <p>1. Copy the text below. <br> 2. Open <code>data/users.json</code> in your project. <br> 3. Paste this content, save the file, and upload it to GitHub.</p>
+            <textarea id="json-output" readonly></textarea>
+        </div>
+    </div>
+
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tableBody = document.querySelector('#users-table tbody');
+    const userForm = document.getElementById('user-form');
+    const jsonOutput = document.getElementById('json-output');
+    const formTitle = document.getElementById('form-title');
+    const submitBtn = document.getElementById('submit-btn');
+    const cancelEditBtn = document.getElementById('cancel-edit-btn');
+    const userIdInput = document.getElementById('user-id');
+    const nameInput = document.getElementById('name');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const roleInput = document.getElementById('role');
+    const genderInput = document.getElementById('gender');
+    const classidInput = document.getElementById('classid');
+    const classInput = document.getElementById('class');
+    const emailInput = document.getElementById('email');
+    const dateOfBirthInput = document.getElementById('date-of-birth');
+
+    let users = [];
+
+    // Load initial users from the local file
+    const loadUsers = async () => {
+  try {
+    const response = await fetch('../data/users.json');
+    if (!response.ok) throw new Error('File not found. Make sure users.json is in the /data folder.');
+    users = await response.json();
+    renderTable();
+    updateJsonOutput();
+  } catch (error) {
+    alert(`Error loading users.json: ${error.message}`);
+  }
+};
+
+    // Render the user table
+    const renderTable = () => {
+  tableBody.innerHTML = '';
+  users.forEach(user => {
+    const row = tableBody.insertRow();
+    row.innerHTML = `
+      <td class="id">${user.id}</td>
+      <td class="name">${user.name}</td>
+      <td class="username">${user.username}</td>
+      <td class="role">${user.role}</td>
+      <td class="class">${user.class}</td>
+      <td class="gender">${user.gender}</td>
+      <td class="email">${user.email}</td>
+      <td class="passport">${user.profilePicture}</td>
+      <td class="actions">
+        <button class="edit-btn" data-id="${user.id}">Edit</button>
+        <button class="delete-btn btn-danger" data-id="${user.id}">Delete</button>
+      </td>
+    `;
+  });
+};
+    // Update the output textarea
+    const updateJsonOutput = () => {
+    const orderedUsers = users.map(user => ({
+        id: user.id,
+        username: user.username,
+        'date of birth': user['date of birth'],
+        password: user.password,
+        name: user.name,
+        role: user.role,
+        class: user.class,
+        classid: user.classid,
+        gender: user.gender,
+        email: user.email,
+        profilePicture: user.profilePicture,
+    }));
+    jsonOutput.value = JSON.stringify(orderedUsers, null, 2);
+};
+
+
+    // Handle form submission (Add or Update)
+    userForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const id = userIdInput.value;
+        const classid = roleInput.value === 'Student' ? classidInput.value : '';
+        const className = roleInput.value === 'Student' ? getClassName(classid) : classInput.value;
+        const user = {
+            name: nameInput.value,
+            username: usernameInput.value,
+            password: passwordInput.value,
+            role: roleInput.value,
+            classid: classid,
+            class: className,
+            gender: genderInput.value,
+            email: emailInput.value || `${usernameInput.value}@scs.infy.uk`,
+            profilePicture: genderInput.value === 'Male' ? '../assets/profile_picture/male.jpeg' : '../assets/profile_picture/female.jpeg',
+            'date of birth': dateOfBirthInput.value,
+        };
+
+        if (id) { // Updating an existing user
+            const index = users.findIndex(u => u.id === id);
+            users[index] = { ...users[index], ...user }; // Keep original ID and other props
+        } else { // Adding a new user
+            user.id = `user_${Date.now()}`; // Generate a unique ID
+            users.push(user);
+        }
+        
+        renderTable();
+        updateJsonOutput();
+        resetForm();
+    });
+
+    // Handle table clicks (Edit or Delete)
+    tableBody.addEventListener('click', (e) => {
+        const id = e.target.dataset.id;
+        if (e.target.classList.contains('edit-btn')) {
+            const user = users.find(u => u.id === id);
+            formTitle.textContent = 'Edit User';
+            submitBtn.textContent = 'Update User';
+            cancelEditBtn.style.display = 'inline-block';
+            userIdInput.value = user.id;
+            nameInput.value = user.name;
+            usernameInput.value = user.username;
+            passwordInput.value = user.password;
+            roleInput.value = user.role;
+            if (user.role === 'Student') {
+                classidInput.value = user.classid;
+                document.getElementById('class-selection').style.display = 'block';
+                document.getElementById('class-input').style.display = 'none';
+            } else {
+                classInput.value = user.class;
+                document.getElementById('class-selection').style.display = 'none';
+                document.getElementById('class-input').style.display = 'block';
+            }
+            genderInput.value = user.gender;
+            emailInput.value = user.email;
+            dateOfBirthInput.value = user['date of birth'];
+        } else if (e.target.classList.contains('delete-btn')) {
+            if (confirm(`Are you sure you want to delete user: ${users.find(u=>u.id===id).name}?`)) {
+                users = users.filter(u => u.id !== id);
+                renderTable();
+                updateJsonOutput();
+            }
+        }
+    });
+
+    roleInput.addEventListener('change', () => {
+        if (roleInput.value === 'Student') {
+            document.getElementById('class-selection').style.display = 'block';
+            document.getElementById('class-input').style.display = 'none';
+        } else {
+            document.getElementById('class-selection').style.display = 'none';
+            document.getElementById('class-input').style.display = 'block';
+        }
+    });
+
+    function getClassName(classid) {
+        const classNames = {
+            'JS1': 'Basic Seven Lavender',
+            'JS2': 'Basic Eight Tulip',
+            'JS3': 'Basic Nine Sunflower',
+            'SS1': 'Senior Class One',
+            'SS2': 'Senior Class Two',
+            'SS3': 'Senior Class Three',
+        };
+        return classNames[classid];
+    }
+
+    // Reset form to "Add User" mode
+    const resetForm = () => {
+        userForm.reset();
+        userIdInput.value = '';
+        formTitle.textContent = 'Add New User';
+        submitBtn.textContent = 'Add User';
+        cancelEditBtn.style.display = 'none';
+        document.getElementById('class-selection').style.display = 'none';
+        document.getElementById('class-input').style.display = 'none';
+    };
+
+    cancelEditBtn.addEventListener('click', resetForm);
+    
+    // Initial load
+    loadUsers();
+});
+    </script>
+</body>
+</html>

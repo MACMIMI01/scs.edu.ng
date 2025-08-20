@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Seven Lavender</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #020169;
+      --accent-color: #fff;
+      --text-color: #333;
+      --bg-color: #f0f2f5;
+      --card-bg: rgba(255, 255, 255, 0.7);
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      overflow-x: hidden;
+    }
+
+    /* Mobile-first navigation */
+    .mobile-menu-btn {
+      display: none;
+      position: fixed;
+      top: 8px;
+      left: 10px;
+      z-index: 1000;
+      background: #fec009;
+      color: var(--primary-color);
+      border: none;
+      font-size: 13px;
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      background-color: var(--primary-color);
+      padding: 20px 15px;
+      color: var(--accent-color);
+      position: fixed;
+      left: -250px;
+      top: 0;
+      z-index: 900;
+      transition: transform 0.3s ease;
+      overflow-y: auto;
+    }
+    
+    .sidebar.active {
+      transform: translateX(250px);
+    }
+    
+    .menu-item {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      padding: 8px 10px;
+      border-radius: 5px;
+    }
+    
+    .menu-item i {
+      font-size: 20px;
+      margin-right: 15px;
+      min-width: 25px;
+    }
+    
+    .menu-item:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Main content */
+    main {
+      padding: 20px;
+      margin-left: 0;
+      transition: margin-left 0.3s ease;
+      padding-bottom: 80px; /* Space for footer */
+    }
+    
+    main.shifted {
+      margin-left: 250px;
+    }
+    
+    h1, h2 {
+      color: var(--primary-color);
+    }
+    
+    /* Glass card slider */
+    .glass-card-container {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 10px 0;
+      margin: 20px 0;
+    }
+    
+    .glass-card-slider {
+      display: flex;
+      width: max-content;
+      gap: 15px;
+      padding: 0 10px;
+    }
+    
+    .glass-card {
+      width: 120px;
+      height: 120px;
+      background: var(--card-bg);
+      border-radius: 15px;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    
+    .glass-card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    
+    /* Logo */
+    .logo {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      z-index: 800;
+    }
+    
+    /* Footer */
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      padding: 15px;
+      background-color: var(--primary-color);
+      color: var(--accent-color);
+      z-index: 800;
+    }
+    
+    /* Media queries */
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .logo {
+        width: 35px;
+        height: 35px;
+      }
+      
+      .glass-card {
+        width: 100px;
+        height: 100px;
+      }
+      
+      .glass-card img {
+        width: 70px;
+        height: 70px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+        margin-top: 40px;
+      }
+      
+      .glass-card {
+        width: 80px;
+        height: 80px;
+      }
+      
+      .glass-card img {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="mobile-menu-btn" id="menuBtn">
+    <i class="fas fa-bars"></i>
+  </button>
+  
+  <div class="sidebar" id="sidebar">
+    <div class="menu-item" onclick="window.location.href='dashboard.html'">
+      <i class="fas fa-tachometer-alt"></i>
+      <span>Dashboard</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='B7L.html'">
+      <i class="fas fa-user-graduate"></i>
+      <span>B7 Lavender</span>
+    </div>
+     <div class="menu-item" onclick="window.location.href='B8T.html'">
+      <i class="fas fa-seedling"></i>
+      <span>B8 Tulip</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='B9S.html'">
+      <i class="fas fa-graduation-cap"></i>
+      <span>B9 Sunflower</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='test-library.html'">
+      <i class="fas fa-book"></i>
+      <span>Test Library</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='test-taking.html'">
+      <i class="fas fa-pencil-alt"></i>
+      <span>Take A Test</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='profile.html'">
+      <i class="fas fa-user"></i>
+      <span>My Profile</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='classes.html'">
+      <i class="fas fa-users"></i>
+      <span>Classes</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='guide-FAQ.html'">
+      <i class="fas fa-question-circle"></i>
+      <span>Guide & FAQ</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='about.html'">
+      <i class="fas fa-info-circle"></i>
+      <span>About Us</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='contact.html'">
+      <i class="fas fa-envelope"></i>
+      <span>Contact Us</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='gamehall.html'">
+      <i class="fas fa-gamepad"></i>
+      <span>Game Hall</span>
+    </div>
+    <div class="menu-item" id="logout-button">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Logout</span>
+    </div>
+  </div>
+  
+  <main id="mainContent">
+    <h1 id="welcome-heading">Do you want to see our Top Student, <span id="display-username"></span>?</h1>
+    <p>Welcome to TestHall, your premier destination for online testing and assessment.</p>
+    <p>Our mission is to provide a comprehensive and user-friendly platform for individuals to test their knowledge and skills.</p>
+    
+    <h2>Top Students</h2>
+    <div class="glass-card-container">
+      <div class="glass-card-slider">
+        <div class="glass-card">
+          <img src="../assets/profile_pictures/daniel.jpeg" alt="Daniel">
+        </div>
+        <div class="glass-card">
+          <img src="../assets/profile_pictures/chibaby.jpeg" alt="Chibaby">
+        </div>
+        <div class="glass-card">
+          <img src="../assets/profile_pictures/emmanuel_o.jpeg" alt="Emmanuel O">
+        </div>
+        <div class="glass-card">
+          <img src="../assets/profile_pictures/emmanuel_s.jpeg" alt="Emmanuel S">
+        </div>
+        <div class="glass-card">
+          <img src="../assets/profile_pictures/excel.jpeg" alt="Excel">
+        </div>
+        <div class="glass-card">
+          <img src="../assets/profile_pictures/fortune.jpeg" alt="Fortune">
+        </div>
+        <div class="glass-card">
+          <img src="../assets/profile_pictures/kendra.jpeg" alt="Kendra">
+        </div>
+        <div class="glass-card">
+          <img src="../assets/profile_pictures/marvelous.jpeg" alt="Marvelous">
+        </div>
+        <div class="glass-card">
+          <img src="../assets/profile_pictures/mia.jpeg" alt="Mia">
+        </div>
+        <div class="glass-card">
+          <img src="../assets/profile_pictures/prince.jpeg" alt="Prince">
+        </div>
+        <div class="glass-card">
+          <img src="../assets/profile_pictures/scotty.jpeg" alt="Scotty">
+        </div>
+        <div class="glass-card">
+          <img src="../assets/profile_pictures/igweh_great.jpeg" alt="Igweh Great">
+        </div>
+        <div class="glass-card">
+          <img src="../assets/profile_pictures/testimony.jpeg" alt="Testimony">
+        </div>
+        <div class="glass-card">
+          <img src="../assets/profile_pictures/tovia.jpeg" alt="Tovia">
+        </div>
+        <div class="glass-card">
+          <img src="../assets/profile_pictures/wealth.jpeg" alt="Wealth">
+        </div>
+        <div class="glass-card">
+          <img src="../assets/profile_pictures/safa.jpeg" alt="Safa">
+        </div>
+        <div class="glass-card">
+          <img src="../assets/profile_pictures/great_eniola.jpeg" alt="Great Eniola">
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <img src="../assets/images/logo.png" alt="Logo" class="logo">
+  <footer>&copy; 2024 TestHall</footer>
+
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('mainContent');
+    
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+      mainContent.classList.toggle('shifted');
+      
+      // Change icon based on state
+      const icon = menuBtn.querySelector('i');
+      if (sidebar.classList.contains('active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!sidebar.contains(e.target) && e.target !== menuBtn) {
+        sidebar.classList.remove('active');
+        mainContent.classList.remove('shifted');
+        const icon = menuBtn.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+    
+    // Display username if available
+    const displayUsername = document.getElementById('display-username');
+    const username = localStorage.getItem('username') || 'Guest';
+    displayUsername.textContent = username;
+  </script>
+</body>
+</html>

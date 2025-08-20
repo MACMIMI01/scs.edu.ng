@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - TestHall</title>
+    <!-- Assumes this file is in the /pages/ folder -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- This script is the security guard for the page -->
+    <script src="../scripts/auth.js" defer></script>
+    <style>
+        :root { --primary-color: #020169; --accent-color: #FEC009; }
+        body { margin: 0; font-family: Arial, sans-serif; background-color: #f0f2f5; overflow-x: hidden; }
+        /* --- Hamburger Menu & Sidebar CSS (Consistent with other pages) --- */
+        .hamburger-icon { position: fixed; top: 20px; left: 20px; font-size: 30px; color: var(--primary-color); cursor: pointer; z-index: 1000; background-color: var(--accent-color); padding: 5px 8px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .off-canvas-menu { position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background-color: var(--primary-color); color: #fff; padding-top: 80px; box-sizing: border-box; transition: left 0.3s ease-in-out; z-index: 999; box-shadow: 2px 0 5px rgba(0,0,0,0.5); }
+        .off-canvas-menu.open { left: 0; }
+        .menu-list { list-style: none; padding: 0; margin: 0; }
+        .menu-list .menu-item { display: flex; align-items: center; padding: 15px 20px; cursor: pointer; transition: background 0.3s ease; }
+        .menu-list .menu-item i { font-size: 20px; margin-right: 15px; min-width: 25px; }
+        .menu-list .menu-item span { white-space: nowrap; font-size: 1.1em; }
+        .menu-list .menu-item:hover { background-color: rgba(255, 255, 255, 0.2); }
+
+        /* --- Main Content Area --- */
+        main { padding: 20px; padding-top: 80px; transition: margin-left 0.3s ease-in-out; }
+        .off-canvas-menu.open + main { margin-left: 250px; }
+        .content-container { max-width: 800px; margin: auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .content-container h1, .content-container h2 { color: var(--primary-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 15px; }
+        .content-container p { line-height: 1.7; color: #555; }
+        
+        /* --- NEW: Social Media Section Styles --- */
+        .social-media-section { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; }
+        .social-icons a {
+            display: inline-flex; justify-content: center; align-items: center;
+            width: 45px; height: 45px; margin: 0 10px;
+            font-size: 22px; color: var(--primary-color);
+            background-color: #e9ecef; border-radius: 50%;
+            text-decoration: none; transition: all 0.3s ease;
+        }
+        .social-icons a:hover {
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        /* --- Footer & Profile Icon --- */
+        footer { position: fixed; bottom: 0; width: 100%; text-align: center; padding: 10px; background-color: var(--primary-color); color: var(--accent-color); z-index: 1000; }
+        .profile-display-icon { position: fixed; top: 10px; right: 10px; width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; cursor: pointer; z-index: 999; }
+    </style>
+</head>
+<body>
+    <!-- Hamburger Icon -->
+    <div class="hamburger-icon" id="hamburger-icon"><i class="fas fa-bars"></i></div>
+
+    <!-- Off-canvas Menu with Correct IDs -->
+    <nav class="off-canvas-menu" id="off-canvas-menu">
+        <ul class="menu-list">
+            <li class="menu-item" id="dashboard-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></li>
+            <li class="menu-item" id="test-library-link"><i class="fas fa-book"></i><span>Test Library</span></li>
+            <li class="menu-item" id="exam-library-link"><i class="fas fa-pencil-alt"></i><span>Exam Library</span></li>
+            <li class="menu-item" id="profile-link"><i class="fas fa-user-tie"></i><span>My Profile</span></li>
+            <li class="menu-item" id="classes-link"><i class="fas fa-users"></i><span>Classes</span></li>
+            <li class="menu-item" id="logout-button"><i class="fas fa-sign-out-alt"></i><span>Logout</span></li>          
+        </ul>
+    </nav>
+
+    <!-- Corrected and Unified Main Content -->
+    <main id="main-content">
+        <div class="content-container">
+            <h1 id="welcome-heading">About TestHall</h1>
+            <p>Welcome, <strong id="display-username">User</strong>! We're glad you're here.</p>
+            <p>TestHall is your premier destination for online testing and assessment at St. Christopher School. Our mission is to provide a comprehensive and user-friendly platform for students to test their knowledge, for teachers to manage assessments, and for parents to track progress.</p>
+            
+            <h2>Our Team</h2>
+            <p>We are a dedicated team of educators and developers committed to providing high-quality online educational solutions that are both effective and easy to use.</p>
+            
+            <h2>Our Values</h2>
+            <ul>
+                <li><strong>Integrity:</strong> Upholding academic honesty and fairness in all assessments.</li>
+                <li><strong>Innovation:</strong> Continuously improving our platform with modern, effective tools.</li>
+                <li><strong>Excellence:</strong> Striving for the highest quality in education and technology.</li>
+            </ul>
+
+            <!-- NEW: Social Media Section -->
+            <div class="social-media-section">
+                <h2>Connect With Us</h2>
+                <div class="social-icons">
+                    <!-- Add your actual social media links in the href="#" -->
+                    <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" title="Twitter / X"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </main>
+  
+    <img id="user-image-display" src="../assets/profile_pictures/default.jpeg" alt="User Profile" class="profile-display-icon">
+    <footer>&copy; 2024 TestHall</footer>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- UI ELEMENTS ---
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const offCanvasMenu = document.getElementById('off-canvas-menu');
+        const profileDisplayIcon = document.getElementById('user-image-display');
+        const logoutButton = document.getElementById('logout-button');
+        const dashboardLink = document.getElementById('dashboard-link');
+        const displayUsernameSpan = document.getElementById('display-username');
+
+        // --- HAMBURGER MENU TOGGLE ---
+        hamburgerIcon.addEventListener('click', () => offCanvasMenu.classList.toggle('open'));
+
+        // --- SMART NAVIGATION LOGIC ---
+        const redirectToRoleDashboard = () => {
+            const userRole = localStorage.getItem('loggedInUserRole');
+            let url = 'dashboard.html';
+            if (userRole) {
+                const r = userRole.toLowerCase();
+                if (r === 'admin') url = 'dashboard-admin.html';
+                else if (r === 'teacher') url = 'dashboard-teacher.html';
+                else if (r === 'student') url = 'dashboard-student.html';
+                else if (r === 'parent') url = 'dashboard-parents.html';
+            }
+            window.location.href = url;
+        };
+        dashboardLink.addEventListener('click', redirectToRoleDashboard);
+
+        // --- LOGOUT ---
+        logoutButton.addEventListener('click', () => {
+            localStorage.clear();
+            window.location.href = 'login.html';
+        });
+
+        // --- CORRECTED: Personalize Page and Set Profile Icon ---
+        const loggedInUsername = localStorage.getItem('loggedInUsername');
+        const loggedInUserId = localStorage.getItem('loggedInUserId');
+
+        // 1. Set the welcome username immediately from localStorage (fast)
+        if (loggedInUsername) {
+            displayUsernameSpan.textContent = loggedInUsername;
+        }
+
+        // 2. Fetch full user data to get the profile picture (slower)
+        if (loggedInUserId) {
+            fetch('../data/users.json')
+                .then(response => response.ok ? response.json() : Promise.reject('Failed to load users.json'))
+                .then(users => {
+                    const tempUsers = JSON.parse(localStorage.getItem('tempUsers')) || [];
+                    const allUsers = [...users, ...tempUsers];
+                    const currentUser = allUsers.find(user => user.id == loggedInUserId);
+                    
+                    if (currentUser && currentUser.profilePicture) {
+                        profileDisplayIcon.src = `../${currentUser.profilePicture}`;
+                    } else {
+                        profileDisplayIcon.src = '../assets/profile_pictures/default.jpeg';
+                    }
+                })
+                .catch(error => console.error('Error loading profile picture:', error));
+        }
+
+        // Make the top-right profile icon clickable
+        profileDisplayIcon.addEventListener('click', () => {
+            window.location.href = 'profile.html';
+        });
+
+        // Add event listeners for other menu links that were missing IDs
+        document.querySelectorAll('.menu-list .menu-item').forEach(item => {
+            const span = item.querySelector('span');
+            if (!span) return;
+            const text = span.textContent.toLowerCase();
+            if (text.includes('test library')) item.addEventListener('click', () => window.location.href = 'test-library.html');
+            if (text.includes('take an exam')) item.addEventListener('click', () => window.location.href = 'exam-library.html');
+            if (text.includes('my profile')) item.addEventListener('click', () => window.location.href = 'profile.html');
+            if (text.includes('classes')) item.addEventListener('click', () => window.location.href = 'classes.html');
+        });
+    });
+    </script>
+</body>
+</html>
+
+
+
+
+
+

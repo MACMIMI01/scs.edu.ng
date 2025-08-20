@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF--8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>St. Christopher School</title>
+    
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        /* General Body Styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        /* Main Container for the Page Content */
+        .page-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px 40px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Page Title Styling */
+        .page-title {
+            color: #020169;
+            font-size: 2.5em;
+            border-bottom: 4px solid #FEC009;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .page-title i {
+            margin-right: 15px;
+            font-size: 0.9em;
+        }
+
+        /* General Content Styling */
+        .page-content h2 {
+            color: #020169;
+            font-size: 1.8em;
+            margin-top: 30px;
+        }
+
+        .page-content p {
+            color: #555;
+            line-height: 1.7;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        /* Special Highlight Box for Admissions */
+        .admissions-highlight {
+            background-color: #e6f2ff;
+            border-left: 6px solid #1877f2;
+            padding: 25px;
+            margin: 40px 0;
+            border-radius: 8px;
+        }
+
+        .admissions-highlight h3 {
+            margin-top: 0;
+            font-size: 1.5em;
+            color: #020169;
+            display: flex;
+            align-items: center;
+        }
+        
+        .admissions-highlight h3 i {
+            margin-right: 10px;
+            color: #1877f2;
+        }
+
+        /* Responsive Design for smaller screens */
+        @media (max-width: 768px) {
+            .page-container {
+                margin: 20px;
+                padding: 20px;
+            }
+            .page-title {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+        <!-- The Title will be loaded here by JavaScript -->
+        <h1 id="page-title"></h1>
+        
+        <!-- The Main Content will be loaded here by JavaScript -->
+        <div id="page-content"></div>
+    </div>
+
+    <script>
+        // This event listener ensures the script runs only after the full HTML page has loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // This JavaScript object holds all the content for our page.
+            // It acts as a temporary, "mock" database.
+            // The content string uses backticks (`) to allow for multiple lines.
+            const pageData = {
+                title: "St. Christopher School",
+                content: `
+                    <h2><i class="fas fa-school" style="color: #FFD43B;"></i> Our Mission & Vision</h2>
+                    <p>At St. Christopher School, our mission is to foster a vibrant learning community that inspires academic excellence, creativity, and personal growth. We are dedicated to nurturing the next generation of leaders and innovators, guided by our motto: <strong>"Best Our Only Option"</strong>.</p>
+                    
+                    <p>We believe in a holistic approach to education, combining rigorous academics with robust programs in arts, athletics, and community service. Our dedicated faculty are experts in their fields and are committed to providing a supportive and challenging environment for all students.</p>
+                    <div class="admissions-highlight">
+                        <h3><i class="fa-solid fa-bullhorn fa-shake"></i> Admissions for 2025/2026 Are Now Open!</h3>
+                        <p>We are excited to announce that we are now accepting applications for the upcoming academic session. We welcome students who are curious, motivated, and eager to make a positive impact on the world.</p>
+                        <p>To learn more about the application process, key dates, and our curriculum, please feel free to contact our admissions office. We look forward to welcoming you to the St. Christopher family!</p>
+                    </div>
+
+                    <h2><i class="fa-solid fa-cogs fa-fade"></i> Our Facilities</h2>
+                    <p>Our campus features state-of-the-art facilities, including modern classrooms, fully-equipped science labs, a comprehensive library, and expansive sports grounds to support the all-round development of our students.</p>
+                `
+            };
+
+            // Get the HTML elements where we want to display our content
+            const titleElement = document.getElementById('page-title');
+            const contentElement = document.getElementById('page-content');
+
+            // Insert the data from our object into the HTML elements
+            // We prepend an icon to the title for a nice visual touch
+            titleElement.innerHTML = `<i class="fas fa-info-circle"></i> ${pageData.title}`;
+            
+            // Use .innerHTML because our content string contains HTML tags that we want the browser to render
+            contentElement.innerHTML = pageData.content; 
+        });
+    </script>
+
+</body>
+</html>

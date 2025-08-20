@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<!-- exam-taking-senior.html -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senior Exam Taking - TestHall</title>
+  <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="./js/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      display: flex;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: 60px;
+      height: 100vh;
+      background-color: #020169;
+      padding: 20px 10px;
+      box-sizing: border-box;
+      color: #fff;
+      overflow: hidden;
+      border-radius: 5px 0 0 5px;
+      transition: width 0.75s ease, margin-left 0.75s ease;
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 200;
+    }
+    .sidebar:hover {
+      width: 200px;
+    }
+    .sidebar.hidden {
+        width: 0;
+        padding: 0;
+        margin-left: -60px;
+        overflow: hidden;
+        transition: width 0.75s ease, margin-left 0.75s ease;
+    }
+    body.sidebar-hidden main {
+        margin-left: 0;
+        transition: margin-left 0.75s ease;
+    }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      padding: 5px 0;
+    }
+    .menu-item i {
+      font-size: 20px;
+      margin-right: 15px;
+      min-width: 25px;
+    }
+    .menu-item span {
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .sidebar:hover .menu-item span {
+      opacity: 1;
+    }
+    .menu-item:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      padding-left: 5px;
+      border-radius: 5px;
+    }
+
+    main {
+      margin-left: 80px;
+      padding: 20px;
+      flex-grow: 1;
+      padding-bottom: 70px;
+      box-sizing: border-box;
+    }
+    
+    /* Styles for the detailed results display */
+    .detailed-results-preview {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+        color: #333;
+        font-size: 0.9em;
+    }
+    .detailed-results-preview section {
+        border-bottom: 1px solid #eee;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+    }
+    .detailed-results-preview h2 {
+        color: #020169;
+        font-size: 1.4em;
+        margin-top: 0;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+    .detailed-results-preview .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .detailed-results-preview .header-section img.logo-preview {
+        max-width: 80px;
+        height: auto;
+    }
+    .detailed-results-preview .student-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    .detailed-results-preview .profile-pic-preview {
+        max-width: 100px;
+        height: auto;
+        border-radius: 50%;
+        border: 2px solid #eee;
+    }
+    .detailed-results-preview .results-table-container {
+        max-height: 300px;
+        overflow-y: auto;
+        margin-top: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    .results-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .results-table th, .results-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    .results-table th {
+        background-color: #f2f2f2;
+        position: sticky; top: 0;
+    }
+    .detailed-results-preview .summary-section p {
+        font-size: 1.1em;
+        font-weight: bold;
+        text-align: center;
+        margin: 10px 0;
+    }
+    .signature-line {
+        border-bottom: 1px solid #333;
+        margin-top: 50px;
+        margin-bottom: 5px;
+    }
+    .signature-label {
+        font-size: 0.85em;
+        color: #666;
+    }
+    /* NEW STYLES FOR REMARKS AND STAMP */
+    .teacher-remarks-section {
+        margin-top: 20px;
+    }
+    .principal-remarks-section {
+        text-align: center;
+        margin-top: 30px;
+    }
+    .stamp-section-right {
+        text-align: right;
+        margin-top: 30px;
+    }
+    .stamp-section-right img {
+        max-width: 100px;
+        height: auto;
+        opacity: 0.7;
+    }
+    .footer-content {
+        text-align: center;
+        font-size: 0.8em;
+        color: #666;
+        margin-top: 20px;
+        padding-top: 10px;
+    }
+    .action-buttons-container {
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        align-items: center;
+    }
+    .action-buttons-container button, .action-buttons-container a {
+        border: none;
+        padding: 12px 25px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.1em;
+        text-decoration: none;
+        color: #fff;
+        transition: background-color 0.3s ease;
+    }
+    .download-pdf-button {
+        background-color: #28a745;
+    }
+    .download-pdf-button:hover {
+        background-color: #218838;
+    }
+    .dashboard-link-button {
+        background-color: #007bff;
+    }
+    .dashboard-link-button:hover {
+        background-color: #0056b3;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      background-color: #020169;
+      color: #fff;
+      z-index: 1000;
+    }
+    .profile-display-icon {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+      cursor: pointer;
+      z-index: 999;
+      transition: transform 0.2s ease;
+    }
+    .profile-display-icon:hover {
+        transform: scale(1.05);
+    }
+    .profile-display-icon.hidden {
+        display: none;
+    }
+    
+    .question-container {
+        display: none;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .question-container.active {
+        display: block;
+    }
+    #test-form ul {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 20px;
+    }
+    #test-form li {
+        margin-bottom: 10px;
+    }
+    #test-form label {
+        display: block;
+        background-color: #f1f1f1;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+    #test-form label:hover {
+        background-color: #e0e0e0;
+    }
+    #test-form input[type="radio"] {
+        margin-right: 10px;
+    }
+
+    .navigation-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        padding: 0 20px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .navigation-buttons button {
+        background-color: #020169;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: background-color 0.3s ease;
+    }
+    .navigation-buttons button:hover {
+        background-color: #145cb3;
+    }
+    .navigation-buttons button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+    #finish-test-center-button {
+        display: block;
+        margin: 30px auto;
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.2em;
+        transition: background-color 0.3s ease;
+    }
+    #finish-test-center-button:hover {
+        background-color: #c82333;
+    }
+    
+    /* STYLES FOR QUESTION NAVIGATION PANEL */
+    .question-nav-panel {
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+    .nav-question-btn {
+        width: 25px;
+        height: 25px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f0f0f0;
+        color: #333;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s, border-color 0.3s;
+    }
+    .nav-question-btn:hover {
+        background-color: #e0e0e0;
+    }
+    .nav-question-btn.current {
+        background-color: #020169;
+        color: #fec009;
+        border-color: #020169;
+    }
+    .nav-question-btn.answered {
+        background-color: #FEC009;
+        color: #020169;
+        border-color: #218838;
+    }
+    
+    /* ADD THIS STYLE FOR QUESTION IMAGES */
+    .question-image {
+        max-width: 100%;
+        height: auto;
+        margin: 15px auto;
+        display: block;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="menu-item" onclick="window.location.href='dashboard.html'"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></div>
+    <div class="menu-item" onclick="window.location.href='test-library.html'"><i class="fas fa-book"></i><span>Test Library</span></div>
+    <div class="menu-item" onclick="window.location.href='test-taking.html'"><i class="fas fa-pencil-alt"></i><span>Take A Test</span></div>
+    <div class="menu-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i><span>My Profile</span></div>
+    <div class="menu-item" onclick="window.location.href='classes.html'"><i class="fas fa-users"></i><span>Classes</span></div>
+    <div class="menu-item" onclick="window.location.href='guide-FAQ.html'"><i class="fas fa-question-circle"></i><span>Guide & FAQ</span></div>
+    <div class="menu-item" onclick="window.location.href='about.html'"><i class="fas fa-info-circle"></i><span>About Us</span></div>
+    <div class="menu-item" onclick="window.location.href='contact.html'"><i class="fas fa-envelope"></i><span>Contact Us</span></div>
+    <div class="menu-item" id="logout-button"><i class="fas fa-sign-out-alt"></i><span>Logout</span></div>
+  </div>
+  <main>
+    <h1>Senior Exam Taking</h1>
+    <form id="test-form"></form>
+    <div id="question-navigation-panel" class="question-nav-panel"></div>
+    <div class="navigation-buttons">
+        <button id="prev-question-button" disabled>Previous</button>
+        <button id="next-question-button">Next</button>
+    </div>
+    <button id="finish-test-center-button">Submit Exam</button>
+  </main>
+  <img id="user-image-display" src="../assets/images/logo.png" alt="User Profile" class="profile-display-icon">
+  <footer>© 2024 TestHall</footer>
+
+  <script> 
+      document.addEventListener('DOMContentLoaded', () => {
+        const loggedInUserId = localStorage.getItem('loggedInUserId');
+        if (!loggedInUserId) {
+            window.location.href = 'login.html';
+            return;
+        }
+
+        const logoutButton = document.getElementById('logout-button');
+        if (logoutButton) {
+            logoutButton.addEventListener('click', () => {
+                localStorage.removeItem('loggedInUserId');
+                localStorage.removeItem('loggedInUserRole');
+                localStorage.removeItem('loggedInUsername');
+                alert('You have been logged out.');
+                window.location.href = 'login.html';
+            });
+        }
+
+        let currentUserId = loggedInUserId;
+        let studentData = {};
+        let score = 0;
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let testQuestions = []; 
+
+        const sidebar = document.querySelector('.sidebar');
+        const profileDisplayIcon = document.getElementById('user-image-display');
+        const testForm = document.getElementById('test-form');
+        const testTitle = document.querySelector('main h1');
+        const prevButton = document.getElementById('prev-question-button');
+        const nextButton = document.getElementById('next-question-button');
+        const finishTestCenterButton = document.getElementById('finish-test-center-button');
+        const navigationButtonsContainer = document.querySelector('.navigation-buttons');
+        const questionNavPanel = document.getElementById('question-navigation-panel'); 
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const testFileName = urlParams.get('test');
+
+        if (!testFileName) {
+            alert('Please select an exam from the Exam Library to begin.');
+            window.location.href = 'exam-library-senior.html';
+            return;
+        }
+        
+        const questionsFilePath = `../data/${testFileName}.json`;
+
+        Promise.all([
+            fetch('../data/users.json').then(res => res.ok ? res.json() : Promise.reject('Users file not found')),
+            fetch(questionsFilePath).then(res => res.ok ? res.json() : Promise.reject('Exam file not found'))
+        ])
+        .then(([users, testData]) => {
+            studentData = users.find(user => user.id == currentUserId) || { id: currentUserId, name: 'Generic Student' };
+            testQuestions = testData.questions || testData; // Handles both formats
+            userAnswers = new Array(testQuestions.length).fill(null);
+            
+            updateProfileIcon();
+            
+            displayQuestion(currentQuestionIndex);
+            updateNavigationButtons();
+            generateQuestionNavPanel();
+            hideSidebarAndProfilePic();
+
+            prevButton.addEventListener('click', () => {
+                if (currentQuestionIndex > 0) {
+                    saveCurrentAnswer();
+                    currentQuestionIndex--;
+                    displayQuestion(currentQuestionIndex);
+                }
+            });
+            nextButton.addEventListener('click', () => {
+                saveCurrentAnswer();
+                if (currentQuestionIndex < testQuestions.length - 1) {
+                    currentQuestionIndex++;
+                    displayQuestion(currentQuestionIndex);
+                } else {
+                    finishTest();
+                }
+            });
+            finishTestCenterButton.addEventListener('click', finishTest);
+        })
+        .catch(error => {
+            console.error('Error loading data:', error);
+            alert(`Failed to load exam data: ${error}. Please contact IT personal or check the file name and try again.`);
+            window.location.href = 'exam-library-senior.html';
+        });
+
+        function updateProfileIcon() {
+            const profilePicPath = studentData.profilePicture || '../assets/profile_pictures/default.jpeg';
+            profileDisplayIcon.src = profilePicPath;
+            profileDisplayIcon.alt = `${studentData.name}'s Profile Picture`;
+            profileDisplayIcon.title = `Go to ${studentData.name}'s Profile`;
+            profileDisplayIcon.onclick = () => window.location.href = 'profile.html';
+        }
+
+        function hideSidebarAndProfilePic() {
+            sidebar.classList.add('hidden');
+            profileDisplayIcon.classList.add('hidden');
+            document.body.classList.add('sidebar-hidden');
+        }
+
+        function showSidebarAndProfilePic() {
+            sidebar.classList.remove('hidden');
+            profileDisplayIcon.classList.remove('hidden');
+            document.body.classList.remove('sidebar-hidden');
+        }
+
+        function displayQuestion(index) {
+            testForm.innerHTML = ''; // Clear previous question content
+            if (index >= 0 && index < testQuestions.length) {
+                const question = testQuestions[index];
+                const questionElement = document.createElement('div');
+                questionElement.classList.add('question-container', 'active');
+                
+                // --- THIS IS THE CRITICAL MISSING LOGIC ---
+                let imageHTML = ''; // Start with an empty string for the image
+                // Check if the imageURL key exists in the JSON and is not empty
+                if (question.imageURL && question.imageURL.trim() !== "") {
+                    // If it exists, build the HTML for the image tag
+                    // NOTE: We are using a relative path './' here
+                    imageHTML = `<img src="${question.imageURL}" alt="Question Diagram" class="question-image">`;
+                }
+                // --- END OF IMAGE LOGIC ---
+
+                const optionLabels = ['A', 'B', 'C', 'D', 'E'];
+
+                // Now, we insert the imageHTML into the question's display
+                questionElement.innerHTML = `
+                    <p><strong>Question ${index + 1} of ${testQuestions.length}:</strong> ${question.question}</p>
+                    ${imageHTML} 
+                    <ul>
+                    ${question.options.map((option, i) => `
+                        <li>
+                        <label>
+                            <input type="radio" name="question-${index}" value="${option}" ${userAnswers[index] === option ? 'checked' : ''}>
+                            ${optionLabels[i]}. ${option}
+                        </label>
+                        </li>
+                    `).join('')}
+                    </ul>
+                `;
+                testForm.appendChild(questionElement);
+                updateNavigationButtons();
+                updateQuestionNavPanel();
+            }
+        }
+
+        function saveCurrentAnswer() {
+            const selectedOption = document.querySelector(`input[name="question-${currentQuestionIndex}"]:checked`);
+            userAnswers[currentQuestionIndex] = selectedOption ? selectedOption.value : userAnswers[currentQuestionIndex];
+            updateQuestionNavPanel();
+        }
+
+        function updateNavigationButtons() {
+            prevButton.disabled = currentQuestionIndex === 0;
+            nextButton.textContent = (currentQuestionIndex === testQuestions.length - 1) ? 'Finish Exam' : 'Next';
+        }
+
+        function generateQuestionNavPanel() {
+            questionNavPanel.innerHTML = '';
+            testQuestions.forEach((_, index) => {
+                const navButton = document.createElement('button');
+                navButton.className = 'nav-question-btn';
+                navButton.textContent = index + 1;
+                navButton.dataset.index = index;
+                navButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    saveCurrentAnswer();
+                    currentQuestionIndex = parseInt(e.target.dataset.index);
+                    displayQuestion(currentQuestionIndex);
+                });
+                questionNavPanel.appendChild(navButton);
+            });
+        }
+
+        function updateQuestionNavPanel() {
+            const navButtons = document.querySelectorAll('.nav-question-btn');
+            navButtons.forEach((button, index) => {
+                button.classList.remove('current', 'answered');
+                if (userAnswers[index] !== null) {
+                    button.classList.add('answered');
+                }
+                if (index === currentQuestionIndex) {
+                    button.classList.add('current');
+                }
+            });
+        }
+
+        function finishTest() {
+            saveCurrentAnswer();
+            [testForm, navigationButtonsContainer, finishTestCenterButton, testTitle, questionNavPanel].forEach(el => el.style.display = 'none');
+            showSidebarAndProfilePic();
+            calculateResults();
+        }
+
+        function calculateResults() {
+            score = 0;
+            userAnswers.forEach((answer, index) => {
+                if (answer === testQuestions[index].correctAnswer) {
+                    score++;
+                }
+            });
+
+            const percentage = Math.round((score / testQuestions.length) * 100);
+            const testDisplayName = testFileName.replace(/_/g, ' ').replace(/\.json/i, '');
+            const currentDate = new Date().toLocaleDateString('en-GB');
+
+            const resultsHtml = `
+            <div class="detailed-results-preview">
+                <section class="header-section">
+                    <div><img src="../assets/images/logo.png" alt="School Logo" class="logo-preview"></div>
+                    <div>
+                        <h2>St. Christopher School</h2>
+                        <p style="font-weight: bold; font-size: 1.2em;">EXAMINATION RESULT</p>
+                    </div>
+                </section>
+                <section>
+                    <h2>Student & Exam Information</h2>
+                    <div class="student-info">
+                        <div>
+                            <p><strong>Student Name:</strong> ${studentData.name || 'N/A'}</p>
+                            <p><strong>Student ID:</strong> ${studentData.id || 'N/A'}</p>
+                            <p><strong>Subject:</strong> ${testDisplayName}</p>
+                            <p><strong>Date:</strong> ${currentDate}</p>
+                        </div>
+                        <div>
+                           <img src="${studentData.profilePicture || '../assets/profile_pictures/default.jpeg'}" alt="Student Profile Picture" class="profile-pic-preview">
+                        </div>
+                    </div>
+                </section>
+                <section class="summary-section">
+                    <h2>Performance Summary</h2>
+                    <p>Score: ${score} / ${testQuestions.length}</p>
+                    <p>Percentage: ${percentage}%</p>
+                </section>
+                <section class="teacher-remarks-section">
+                    <p><strong>Teacher's Remarks:</strong></p>
+                    <div style="height: 100px; border: 1px solid #ccc; border-radius: 4px; margin-top: 5px;"></div>
+                    <div class="signature-line"></div>
+                    <div class="signature-label">Class Teacher Signature</div>
+                </section>
+                <section class="principal-remarks-section">
+                    <p><strong>Principal's Remarks:</strong></p>
+                    <div style="height: 80px; border: 1px solid #ccc; border-radius: 4px; margin-top: 5px;"></div>
+                    <div class="signature-line" style="width: 50%; margin-left: auto; margin-right: auto;"></div>
+                    <div class="signature-label">Principal Signature</div>
+                </section>
+                <section class="stamp-section-right">
+                     <img src="../assets/images/stamp.png" alt="School Stamp">
+                </section>
+            </div>
+            <div class="action-buttons-container">
+                <button id="final-submit-test-button" class="download-pdf-button">Download Official Results PDF</button>
+                <a href="dashboard.html" class="dashboard-link-button">Go to Dashboard</a>
+            </div>
+            `;
+            document.querySelector('main').innerHTML = resultsHtml;
+
+            document.getElementById('final-submit-test-button').addEventListener('click', () => {
+                generatePdfResults();
+            });
+        }
+        
+        // --- UPDATED PDF GENERATION FUNCTION ---
+        function generatePdfResults() {
+            try {
+                if (typeof jsPDF === 'undefined') {
+                    throw new Error('PDF library (jsPDF) is not loaded.');
+                }
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+                const testDisplayName = testFileName.replace(/_/g, ' ').replace(/\.json/i, '');
+                const currentDate = new Date().toLocaleDateString('en-GB');
+                const percentage = Math.round((score / testQuestions.length) * 100);
+
+                // --- Page Content ---
+                let y = 15; // Vertical position tracker
+
+                // Header
+                doc.addImage('../assets/images/logo.png', 'PNG', 15, y, 25, 25);
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(18);
+                doc.text('St. Christopher School', 105, y + 10, { align: 'center' });
+                doc.setFontSize(14);
+                doc.text('Official Result', 105, y + 18, { align: 'center' });
+                y += 35;
+
+                // Student & Test Details
+                doc.setFontSize(12);
+                doc.text('Candidate & Exam Information', 15, y);
+                doc.setLineWidth(0.5);
+                doc.line(15, y + 2, 195, y + 2);
+                y += 10;
+                
+                doc.addImage(profileDisplayIcon.src, 'JPEG', 150, y, 40, 40); // Profile picture
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(11);
+                doc.text(`Student Name: ${studentData.name || 'N/A'}`, 15, y + 5);
+                doc.text(`Student ID: ${studentData.id || 'N/A'}`, 15, y + 12);
+                doc.text(`Class: ${studentData.class || 'N/A'}`, 15, y + 19);
+                doc.text(`Test Name: ${testDisplayName}`, 15, y + 26);
+                doc.text(`Date Taken: ${currentDate}`, 15, y + 33);
+                y += 45;
+
+                // Performance Summary
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(12);
+                doc.text('Performance Summary', 15, y);
+                doc.line(15, y + 2, 195, y + 2);
+                y += 10;
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(11);
+                doc.text(`Final Score: ${score} out of ${testQuestions.length}`, 15, y + 5);
+                doc.text(`Percentage: ${percentage}%`, 15, y + 12);
+                y += 25;
+
+                // Teacher's Remarks
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(12);
+                doc.text("Teacher's Remarks", 15, y);
+                doc.setDrawColor(200); // Light grey color for the box
+                doc.rect(15, y + 5, 180, 40); // The remark box
+                doc.line(15, y + 55, 95, y + 55); // Signature line
+                doc.setFontSize(9);
+                doc.text("Teacher's Signature", 15, y + 59);
+                y += 65;
+
+                // Principal's Remarks
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(12);
+                doc.text("Principal's Remarks", 15, y);
+                doc.rect(15, y + 5, 180, 30); // The remark box
+                doc.line(125, y + 45, 195, y + 45); // Signature line
+                doc.setFontSize(9);
+                doc.text("Principal's Signature", 125, y + 49);
+                y += 50;
+
+                // Stamp
+                doc.addImage('../assets/images/stamp.png', 'PNG', 15, y, 40, 40);
+
+                // Footer
+                doc.setFontSize(10).setTextColor(150);
+                doc.text('St. Christopher School - Best out only option...', 105, 290, { align: 'center' });
+
+                doc.save(`Result_${studentData.name}_${testDisplayName}.pdf`);
+
+            } catch (error) {
+                console.error('PDF generation failed:', error);
+                alert('PDF generation failed. Please ensure all images are available and your browser is not blocking downloads. Error: ' + error.message);
+            }
+        }
+    });
+  </script>
+ </body>
+</html>
