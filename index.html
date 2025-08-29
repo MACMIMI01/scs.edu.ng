@@ -5,14 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>St. Christopher School</title>
     
-    <!-- Link to Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
         /* General Body Styles */
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            /* Use Poppins for a clean, modern look */
+            font-family: 'Poppins', sans-serif;
             background-color: #f0f2f5;
             color: #333;
             background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
@@ -34,13 +38,17 @@
 
         /* Page Title Styling */
         .page-title {
-            color: #020169;
+            /* Use a slightly darker, more professional blue */
+            color: #011627;
             font-size: 2.5em;
-            border-bottom: 4px solid #FEC009;
+            /* Use a more subtle, elegant gold */
+            border-bottom: 4px solid #FCCA46;
             padding-bottom: 15px;
             margin-bottom: 25px;
             display: flex;
             align-items: center;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
         
         .page-title i {
@@ -50,14 +58,15 @@
 
         /* General Content Styling */
         .page-content h2 {
-            color: #020169;
+            color: #011627;
             font-size: 1.8em;
             margin-top: 30px;
+            font-weight: 600;
         }
 
         .page-content p {
-            color: #555;
-            line-height: 1.7;
+            color: #444;
+            line-height: 1.8;
             font-size: 1.1em;
             margin-bottom: 15px;
         }
@@ -65,7 +74,7 @@
         /* Special Highlight Box for Admissions */
         .admissions-highlight {
             background-color: rgba(230, 242, 255, 0.8);
-            border-left: 6px solid #1877f2;
+            border-left: 6px solid #2196F3; /* A cleaner blue */
             padding: 25px;
             margin: 40px 0;
             border-radius: 8px;
@@ -74,14 +83,15 @@
         .admissions-highlight h3 {
             margin-top: 0;
             font-size: 1.5em;
-            color: #020169;
+            color: #011627;
             display: flex;
             align-items: center;
+            font-weight: 600;
         }
         
         .admissions-highlight h3 i {
             margin-right: 10px;
-            color: #1877f2;
+            color: #2196F3;
         }
 
         /* Glassmorphism Cards */
@@ -102,7 +112,8 @@
             padding: 30px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            /* Added smooth transition for all properties */
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             min-height: 200px;
             display: flex;
             flex-direction: column;
@@ -111,26 +122,49 @@
         }
 
         .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.35);
         }
 
         .glass-card i {
             font-size: 3em;
             margin-bottom: 20px;
-            color: #020169;
+            color: #011627;
         }
 
         .glass-card h3 {
             margin: 0 0 15px 0;
-            color: #020169;
+            color: #011627;
             font-size: 1.5em;
+            font-weight: 600;
         }
 
         .glass-card p {
-            color: #333;
+            color: #444;
             margin: 0;
+        }
+
+        /* Typewriter Effect CSS */
+        .typewriter-title {
+            overflow: hidden; /* Ensures the text is hidden until typed */
+            white-space: nowrap; /* Prevents text from wrapping */
+            border-right: .15em solid #FCCA46; /* The typing cursor */
+            animation: 
+                typing 3.5s steps(40, end),
+                blink-caret .75s step-end infinite;
+        }
+
+        /* The typing animation effect */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        /* The typewriter cursor effect */
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #FCCA46; }
         }
 
         /* Responsive Design for smaller screens */
@@ -151,22 +185,17 @@
 <body>
 
     <div class="page-container">
-        <!-- The Title will be loaded here by JavaScript -->
         <h1 id="page-title"></h1>
         
-        <!-- The Main Content will be loaded here by JavaScript -->
         <div id="page-content"></div>
 
-        <!-- Glassmorphism Cards Container -->
         <div class="glass-cards-container">
-            <!-- Card 1: Get Started (CBT) -->
             <div class="glass-card" id="cbt-card">
                 <i class="fas fa-laptop-code"></i>
                 <h3>TestHall CBT</h3>
                 <p>Access our Computer-Based Testing platform for students and teachers</p>
             </div>
 
-            <!-- Card 2: School Website -->
             <div class="glass-card" id="school-card">
                 <i class="fas fa-school"></i>
                 <h3>School Portal</h3>
@@ -176,16 +205,11 @@
     </div>
 
     <script>
-        // This event listener ensures the script runs only after the full HTML page has loaded
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // This JavaScript object holds all the content for our page.
-            // It acts as a temporary, "mock" database.
-            // The content string uses backticks (`) to allow for multiple lines.
             const pageData = {
                 title: "St. Christopher School",
                 content: `
-                    <h2><i class="fas fa-school" style="color: #FFD43B;"></i> Our Mission & Vision</h2>
+                    <h2><i class="fas fa-school" style="color: #FCCA46;"></i> Our Mission & Vision</h2>
                     <p>At St. Christopher School, our mission is to foster a vibrant learning community that inspires academic excellence, creativity, and personal growth. We are dedicated to nurturing the next generation of leaders and innovators, guided by our motto: <strong>"Best Our Only Option"</strong>.</p>
                     
                     <p>We believe in a holistic approach to education, combining rigorous academics with robust programs in arts, athletics, and community service. Our dedicated faculty are experts in their fields and are committed to providing a supportive and challenging environment for all students.</p>
@@ -200,17 +224,33 @@
                 `
             };
 
-            // Get the HTML elements where we want to display our content
             const titleElement = document.getElementById('page-title');
             const contentElement = document.getElementById('page-content');
-
-            // Insert the data from our object into the HTML elements
-            // We prepend an icon to the title for a nice visual touch
-            titleElement.innerHTML = `<i class="fas fa-info-circle"></i> ${pageData.title}`;
             
-            // Use .innerHTML because our content string contains HTML tags that we want the browser to render
-            contentElement.innerHTML = pageData.content; 
+            // Function to create a typewriter effect
+            function typeWriter(element, text, i, callback) {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    setTimeout(() => typeWriter(element, text, i + 1, callback), 50);
+                } else if (callback) {
+                    // Call the callback function once the typing is complete
+                    callback();
+                }
+            }
 
+            // Start the typewriter animation
+            // First, add the icon to the title
+            titleElement.innerHTML = `<i class="fas fa-info-circle"></i>`;
+            // Then, start the typewriter effect on the title text
+            const titleText = pageData.title;
+            const textElement = document.createElement('span');
+            textElement.className = 'typewriter-title';
+            titleElement.appendChild(textElement);
+            typeWriter(textElement, titleText, 0, () => {
+                // After the title is typed, insert the main content
+                contentElement.innerHTML = pageData.content;
+            });
+            
             // Add click handlers for the glass cards
             document.getElementById('cbt-card').addEventListener('click', () => {
                 window.location.href = 'cbt/index.html';
