@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<!-- dashboard-admin.html-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - TestHall</title>
+  <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="../scripts/auth.js" defer></script>
+  <style>
+    :root {
+      --primary: #020169;
+      --primary-light: #2d2b8d;
+      --accent: #FEC009;
+      --accent-dark: #e6b008;
+      --text-dark: #1a1a1a;
+      --text-light: #666;
+      --bg-light: #f8f9fa;
+      --card-bg: #ffffff;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --info: #17a2b8;
+      --border-radius: 12px;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* App Layout */
+    .app-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: white;
+      padding: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+    }
+
+    .school-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .moto {
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .menu-toggle {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .user-profile {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+      cursor: pointer;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 1.5rem 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    /* Dashboard Grid */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .dashboard-card {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      height: 100%;
+    }
+
+    .dashboard-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      background: rgba(2, 1, 105, 0.1);
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-dark);
+    }
+
+    .card-description {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 1rem;
+    }
+
+    /* Navigation Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -280px;
+      width: 280px;
+      height: 100vh;
+      background: var(--primary);
+      color: white;
+      z-index: 1000;
+      transition: var(--transition);
+      overflow-y: auto;
+      padding: 1rem 0;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .close-sidebar {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      padding: 1rem 0;
+    }
+
+    .menu-item {
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .menu-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .menu-item i {
+      width: 24px;
+      text-align: center;
+    }
+
+    /* Overlay when sidebar is open */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .faq-item {
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 1rem;
+    }
+
+    .faq-question {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-dark);
+    }
+
+    .faq-answer {
+      color: var(--text-light);
+    }
+
+    /* Guide Section */
+    .guide-section {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+    }
+
+    .guide-steps {
+      list-style-position: inside;
+      padding-left: 0;
+    }
+
+    .guide-steps li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: auto;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-wrap: wrap;
+      }
+
+      .logo-container {
+        order: 1;
+        flex: 1;
+      }
+
+      .header-actions {
+        order: 2;
+      }
+
+      .school-name {
+        font-size: 1rem;
+      }
+
+      .moto {
+        font-size: 0.7rem;
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .page-title {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header {
+        padding: 0.8rem;
+      }
+
+      .main-content {
+        padding: 1rem 0.8rem;
+      }
+
+      .dashboard-card {
+        padding: 1.2rem;
+      }
+
+      .card-icon {
+        font-size: 2rem;
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+    /* Animation for cards */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .dashboard-card {
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .dashboard-card:nth-child(1) { animation-delay: 0.1s; }
+    .dashboard-card:nth-child(2) { animation-delay: 0.2s; }
+    .dashboard-card:nth-child(3) { animation-delay: 0.3s; }
+    .dashboard-card:nth-child(4) { animation-delay: 0.4s; }
+    .dashboard-card:nth-child(5) { animation-delay: 0.5s; }
+    .dashboard-card:nth-child(6) { animation-delay: 0.6s; }
+    .dashboard-card:nth-child(7) { animation-delay: 0.7s; }
+    .dashboard-card:nth-child(8) { animation-delay: 0.8s; }
+    .dashboard-card:nth-child(9) { animation-delay: 0.9s; }
+    .dashboard-card:nth-child(10) { animation-delay: 1.0s; }
+    .dashboard-card:nth-child(11) { animation-delay: 1.1s; }
+    .dashboard-card:nth-child(12) { animation-delay: 1.2s; }
+    .dashboard-card:nth-child(13) { animation-delay: 1.3s; }
+    .dashboard-card:nth-child(14) { animation-delay: 1.4s; }
+    .dashboard-card:nth-child(15) { animation-delay: 1.5s; }
+    .dashboard-card:nth-child(16) { animation-delay: 1.6s; }
+    .dashboard-card:nth-child(17) { animation-delay: 1.7s; }
+
+
+    /* Utility Classes */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <div class="logo-container">
+          <img src="../assets/images/logo.png" alt="School Logo" class="logo">
+          <div>
+            <div class="school-name">St. Christopher School</div>
+            <div class="moto">Best Our Only Option...</div>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="menu-toggle" id="menu-toggle" aria-label="Open menu">
+            <i class="fas fa-bars"></i>
+          </button>
+          <img id="user-profile-img" src="../assets/profile_pictures/default.jpeg" alt="User Profile" class="user-profile">
+        </div>
+      </div>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h2>Menu</h2>
+        <button class="close-sidebar" id="close-sidebar" aria-label="Close menu">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <ul class="sidebar-menu">
+        <li class="menu-item" id="dashboard-link">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </li>
+        <li class="menu-item" id="test-library-link">
+          <i class="fas fa-book"></i>
+          <span>Test Library</span>
+        </li>
+        <li class="menu-item" id="exam-library-link">
+          <i class="fas fa-pencil-alt"></i>
+          <span>Take An Exam</span>
+        </li>
+        <li class="menu-item" id="profile-link">
+          <i class="fas fa-user-tie"></i>
+          <span>My Profile</span>
+        </li>
+        <li class="menu-item" id="classes-link">
+          <i class="fas fa-users"></i>
+          <span>Classes</span>
+        </li>
+        <li class="menu-item" id="guide-faq-link">
+          <i class="fas fa-question-circle"></i>
+          <span>Guide & FAQ</span>
+        </li>
+        <li class="menu-item" id="about-link">
+          <i class="fas fa-info-circle"></i>
+          <span>About Us</span>
+        </li>
+        <li class="menu-item" id="contact-link">
+          <i class="fas fa-envelope"></i>
+          <span>Contact Us</span>
+        </li>
+        <li class="menu-item" id="gamehall-link">
+          <i class="fas fa-gamepad"></i>
+          <span>Game Hall</span>
+        </li>
+        <li class="menu-item" id="logout-button">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Overlay for sidebar -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <h1 class="page-title">ADMIN TOOL</h1>
+      
+      <div class="dashboard-grid">
+        <div class="dashboard-card" onclick="window.location.href='admin_user_manager.html'">
+          <div class="card-icon">
+            <i class="fas fa-user-plus"></i>
+          </div>
+          <h3 class="card-title">Add User</h3>
+          <p class="card-description">SCS CBT Registration</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="window.location.href='user-profile.html'">
+          <div class="card-icon">
+            <i class="fas fa-search"></i>
+          </div>
+          <h3 class="card-title">Find User</h3>
+          <p class="card-description">Track Registered Users</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="window.location.href='registered-users.html'">
+          <div class="card-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3 class="card-title">Show Users</h3>
+          <p class="card-description">Show Registered Users</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="window.location.href='-url-qr-offline-1.html'">
+          <div class="card-icon">
+            <i class="fas fa-link"></i>
+          </div>
+          <h3 class="card-title">Smart Navigation</h3>
+          <p class="card-description">Link to QR</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="window.location.href='url-qr-offline-2.html'">
+          <div class="card-icon">
+            <i class="fas fa-qrcode"></i>
+          </div>
+          <h3 class="card-title">Fast Web Navigation</h3>
+          <p class="card-description">URL QR</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="window.location.href='WiFi.html'">
+          <div class="card-icon">
+            <i class="fas fa-wifi"></i>
+          </div>
+          <h3 class="card-title">Scan WiFi Code</h3>
+          <p class="card-description">WiFi QR code</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="window.location.href='exam-dbt.html'">
+          <div class="card-icon">
+            <i class="fas fa-database"></i>
+          </div>
+          <h3 class="card-title">Exam Database</h3>
+          <p class="card-description">Select and display available exams</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="window.location.href='exam-question-generator.html'">
+          <div class="card-icon">
+            <i class="fas fa-file-image"></i>
+          </div>
+          <h3 class="card-title">Question + Image</h3>
+          <p class="card-description">CBT Exam JSON Generator with Photos</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="window.location.href='exam-Maker.html'">
+          <div class="card-icon">
+            <i class="fas fa-file-alt"></i>
+          </div>
+          <h3 class="card-title">Exam Converter</h3>
+          <p class="card-description">Advanced question conversion</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="window.location.href='exam-docx-to-json.html'">
+          <div class="card-icon">
+            <i class="fas fa-file-word"></i>
+          </div>
+          <h3 class="card-title">Exam Import-Export</h3>
+          <p class="card-description">Convert DOCX to JSON</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="window.location.href='exam-library-hall.html'">
+          <div class="card-icon">
+            <i class="fas fa-bookmark"></i>
+          </div>
+          <h3 class="card-title">Academic Section</h3>
+          <p class="card-description">All classes examination questions</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="window.location.href='exam-library.html'">
+          <div class="card-icon">
+            <i class="fas fa-chalkboard-teacher"></i>
+          </div>
+          <h3 class="card-title">Upcoming Examination</h3>
+          <p class="card-description">2025/2026 Academic Section</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="window.location.href='profile.html'">
+          <div class="card-icon">
+            <i class="fas fa-user-cog"></i>
+          </div>
+          <h3 class="card-title">My Profile</h3>
+          <p class="card-description">Manage personal information</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="alert('Feature coming soon!');">
+          <div class="card-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3 class="card-title">Performance Analytics</h3>
+          <p class="card-description">Track student progress</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="window.location.href='classes.html'">
+          <div class="card-icon">
+            <i class="fas fa-chalkboard"></i>
+          </div>
+          <h3 class="card-title">SCS Classes</h3>
+          <p class="card-description">All assigned classes</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="window.location.href='gamehall.html'">
+          <div class="card-icon">
+            <i class="fas fa-gamepad"></i>
+          </div>
+          <h3 class="card-title">GAME HALL</h3>
+          <p class="card-description">Educational games for learning</p>
+        </div>
+        
+        <div class="dashboard-card" onclick="window.location.href='users-line.html'">
+          <div class="card-icon">
+            <i class="fas fa-user-tie"></i>
+          </div>
+          <h3 class="card-title">Admin Portal</h3>
+          <p class="card-description">Passworr checker</p>
+        </div>  
+        
+       <div class="dashboard-card" onclick="window.location.href='form.html'">
+          <div class="card-icon">
+            <i class="fas fa-user-secret"></i>
+          </div>
+          <h3 class="card-title">Form Teacher</h3>
+          <p class="card-description">My Assigned Class</p>
+        </div>  
+            
+         <div class="dashboard-card" onclick="window.location.href='extension.html'">
+          <div class="card-icon">
+            <i class="fas fa-rss"></i>
+          </div>
+          <h3 class="card-title">Downloader</h3>
+          <p class="card-description">file extension</p>
+        </div>  
+        
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="faq-section">
+        <h2 class="section-title">FAQs</h2>
+        <div class="faq-item">
+          <div class="faq-question">How do I take a test?</div>
+          <div class="faq-answer">Navigate to the Test Library page and select the test you want to take.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">How do I view my test results?</div>
+          <div class="faq-answer">Your test results will be displayed on the dashboard page after you submit your test.</div>
+        </div>
+      </section>
+
+      <!-- Guide Section -->
+      <section class="guide-section">
+        <h2 class="section-title">Guide</h2>
+        <p>This guide will walk you through the process of using our platform.</p>
+        <ol class="guide-steps">
+          <li>Create an account and log in</li>
+          <li>Navigate to the Test Library page and select a test</li>
+          <li>Take the test and submit your answers</li>
+          <li>View your test results on the dashboard page</li>
+        </ol>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2024 TestHall. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // DOM Elements
+      const menuToggle = document.getElementById('menu-toggle');
+      const closeSidebar = document.getElementById('close-sidebar');
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      const userProfileImg = document.getElementById('user-profile-img');
+      
+      // Menu Toggle Functionality
+      menuToggle.addEventListener('click', () => {
+        sidebar.classList.add('open');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+      
+      closeSidebar.addEventListener('click', closeMenu);
+      overlay.addEventListener('click', closeMenu);
+      
+      function closeMenu() {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+      
+      // Navigation Links
+      const setupNavigation = () => {
+        const dashboardLink = document.getElementById('dashboard-link');
+        const testLibraryLink = document.getElementById('test-library-link');
+        const examTakingLink = document.getElementById('exam-library-link');
+        const profileLink = document.getElementById('profile-link');
+        const classesLink = document.getElementById('classes-link');
+        const guideFaqLink = document.getElementById('guide-faq-link');
+        const aboutLink = document.getElementById('about-link');
+        const contactLink = document.getElementById('contact-link');
+        const gamehallLink = document.getElementById('gamehall-link');
+        const logoutButton = document.getElementById('logout-button');
+        
+        // SMART DASHBOARD LINK
+        dashboardLink.addEventListener('click', () => {
+          closeMenu();
+          const userRole = localStorage.getItem('loggedInUserRole');
+          let dashboardUrl = 'dashboard.html';
+          if (userRole) {
+            const role = userRole.toLowerCase();
+            if (role === 'admin') dashboardUrl = 'dashboard-admin.html';
+            else if (role === 'teacher') dashboardUrl = 'dashboard-teacher.html';
+            else if (role === 'student') dashboardUrl = 'dashboard-student.html';
+            else if (role === 'parent') dashboardUrl = 'dashboard-parents.html';
+          }
+          window.location.href = dashboardUrl;
+        });
+        
+        // REGULAR LINKS
+        testLibraryLink.addEventListener('click', () => { closeMenu(); window.location.href = 'test-library.html'; });
+        examTakingLink.addEventListener('click', () => { closeMenu(); window.location.href = 'exam-library.html'; });
+        profileLink.addEventListener('click', () => { closeMenu(); window.location.href = 'profile.html'; });
+        classesLink.addEventListener('click', () => { closeMenu(); window.location.href = 'classes.html'; });
+        guideFaqLink.addEventListener('click', () => { closeMenu(); window.location.href = 'guide-FAQ.html'; });
+        aboutLink.addEventListener('click', () => { closeMenu(); window.location.href = 'about.html'; });
+        contactLink.addEventListener('click', () => { closeMenu(); window.location.href = 'contact.html'; });
+        gamehallLink.addEventListener('click', () => { closeMenu(); window.location.href = 'gamehall.html'; });
+        
+
+// --- Authentication Check & Profile Display ---
+const loggedInUserId = localStorage.getItem('loggedInUserId');
+let studentData = {}; 
+
+if (!loggedInUserId) {
+    // If not logged in, redirect to login page
+    window.location.href = 'login.html';
+    return; 
+}
+
+// Get the user profile image element
+const userProfileImg = document.getElementById('user-profile-img');
+
+fetch('../data/users.json')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (Array.isArray(data)) {
+            studentData = data.find(user => user.id == loggedInUserId);
+            if (!studentData) {
+                console.warn(`User with ID ${loggedInUserId} not found in users.json. Using generic student data.`);
+                studentData = { id: loggedInUserId, name: 'Generic Student', username: 'generic.user', 'date of birth': 'Unknown', role: 'Student' };
+            }
+        } else {
+            studentData = data;
+        }
+
+        if (userProfileImg && studentData) {
+            const profilePicPath = studentData.profilePicture && studentData.profilePicture !== '' 
+                                   ? studentData.profilePicture 
+                                   : '../assets/profile_pictures/default.jpeg';
+            userProfileImg.src = profilePicPath;
+            userProfileImg.alt = `${studentData.name}'s Profile Picture`;
+            userProfileImg.title = `Go to ${studentData.name}'s Profile`;
+            userProfileImg.style.cursor = 'pointer';
+            userProfileImg.onclick = () => {
+                window.location.href = 'profile.html';
+            };
+        }
+    })
+    .catch(error => {
+        console.error('Error loading student data:', error);
+        if (userProfileImg) {
+            userProfileImg.src = '../assets/profile_pictures/default.jpeg';
+            userProfileImg.alt = 'Default Profile Picture';
+            userProfileImg.title = 'Default Profile';
+            userProfileImg.onclick = null;
+        }
+    });
+
+// --- Logout Button Functionality ---
+logoutButton.addEventListener('click', () => {
+    localStorage.clear(); // Clears all session data
+    window.location.href = 'login.html'; // Redirect to login page
+    
+    });
+  }
+});
+
+  </script>
+</body>
+</html>
+
+<!-- CBT/
+│
+├── 📂 assets/
+│   ├── 📂 images/
+│   │   ├── 📂 background/        # Background images for landing page
+│   │   │   ├── bg1.jpg
+│   │   │   ├── bg2.jpg
+│   │   │   └── bg3.jpg
+│   │   ├── 📂 questions/         # Question-related images
+│   │   │   ├── farm_basket.png
+│   │   │   └── hoe.png
+│   │   ├── favicon.ico           # Site favicon
+│   │   ├── logo.png              # Logo for top-left branding
+│   │   └── stamp.png             # Stamp or watermark image
+│   └── 📂 profile_pictures/      # Default & gender-specific avatars
+│       ├── default.jpeg
+│       ├── male.jpeg
+│       └── female.jpeg -->
+<!-- │
+├── 📂 data/
+│   ├── users.json                # Stores user info & login data
+│   ├── classes.json              # List of classes
+│   ├── exams.json                # Exam metadata
+│   └── test_*.json               # All test data files
+│
+├── 📂 pages/
+│   ├── index.html               
+│   ├── login.html                # Login page
+│   ├── dashboard.html            # Generic dashboard
+│   ├── dashboard-student.html    # Student-specific dashboard
+│   ├── dashboard-teacher.html    # Teacher-specific dashboard
+│   ├── dashboard-admin.html      # Admin dashboard
+│   ├── dashboard-parents.html    # Parent dashboard
+│   ├── profile.html              # User profile page
+│   ├── registered-users.html     # User list
+│   ├── admin_user_manager.html   # Admin user manager
+│   ├── test-taking.html          # Test-taking page
+│   ├── test-library.html         # Test library
+│   ├── exam-taking.html          # Exam interface
+│   ├── exam-library.html         # Exam library
+│   ├── exam-Maker.html           # Exam creation page
+│   ├── exam-dbt.html             # Exam database testing page
+│   ├── exam-docx-to-json.html    # Convert DOCX exams to JSON
+│   ├── exam-question-generator.html # Auto question generator -->
+<!-- │   ├── about.html                # About page
+│   ├── contact.html              # Contact page
+│   ├── classes.html              # Classes overview
+│   ├── admission.html            # Admission info
+│   ├── guide-FAQ.html            # Guides and FAQ
+│   ├── json_generator.html       # JSON generation utility
+│   ├── zip-analyzer.html         # ZIP analyzer tool
+│   ├── HTML_Basic_Tags_Sheet1.html
+│   ├── HTML_Basic_Tags_Sheet2.html
+│   ├── HTML_Basic_Tags_Sheet3.html
+│   ├── WiFi.html                 # Wi-Fi settings/help page
+│   ├── url-qr-offline-1.html     # Offline QR URL generator 1
+│   ├── url-qr-offline-2.html     # Offline QR URL generator 2
+│   ├── url-qr-offline-3.html     # Offline QR URL generator 3
+│   ├── user-addmin-check.html    # User admin check page
+│   ├── user-profile.html         # User profile page
+│   ├── N1.html, N2.html, N3.html # Class-level test pages
+│   ├── PN.html, B1Z.html, B2B.html, ... SS3.html # Other class pages
+│
+└── index.html                # Entry and Landing page (updated with Font Awesome) -->
+
+
+<!-- the first template is what you will use to arrange the rest of the pages
+
+make it professional less emojis and more of fas fa icon 
+take note that profile picture most be visible across all pages except contact, about, quide pages which can be asseced from the landing page 
+
+
+thus us how the uses.json file look like 
+
+ -->

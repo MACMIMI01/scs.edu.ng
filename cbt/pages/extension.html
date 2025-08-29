@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Offline File Creator</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto;}
+    textarea { width: 100%; height: 200px; margin-bottom: 10px;}
+    input, select, button { margin: 5px 0; padding: 8px; width: 100%;}
+  </style>
+</head>
+<body>
+  <h2>📄 Offline File Creator</h2>
+  <textarea id="content" placeholder="Paste your script or text here..."></textarea>
+  <input type="text" id="filename" placeholder="Enter filename (e.g., index)" />
+  <select id="extension">
+    <option value=".txt">.txt</option>
+    <option value=".html">.html</option>
+    <option value=".js">.js</option>
+    <option value=".css">.css</option>
+    <option value=".json">.json</option>
+    <option value=".pdf">.pdf</option>
+  </select>
+  <button onclick="downloadFile()">Download</button>
+
+  <script>
+    function downloadFile() {
+      const content = document.getElementById('content').value;
+      const filename = document.getElementById('filename').value.trim();
+      const extension = document.getElementById('extension').value;
+      if (!filename) return alert('Please enter a filename.');
+
+      const blob = new Blob([content], { type: 'application/octet-stream'});
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = filename + extension;
+      link.click();
+      URL.revokeObjectURL(link.href);
+}
+  </script>
+</body>
+</html>

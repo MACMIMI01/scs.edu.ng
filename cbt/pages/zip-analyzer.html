@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<!-- zip-analyzer.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced ZIP File Structure Analyzer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #020169;
+            --primary-light: #2d2b8d;
+            --accent: #FEC009;
+            --accent-dark: #e6b008;
+            --text-dark: #1a1a1a;
+            --text-light: #666;
+            --bg-light: #f0f2f5;
+            --card-bg: #ffffff;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --info: #17a2b8;
+            --border-radius: 12px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .upload-section {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-input-button {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .file-input-button:hover {
+            background-color: var(--primary-light);
+        }
+
+        .file-name {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .progress-container {
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--accent);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+
+        .stat-card {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            min-width: 150px;
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .tree-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            max-height: 500px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+
+        .tree-item {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .tree-item:hover {
+            background-color: rgba(2, 1, 105, 0.05);
+        }
+
+        .folder {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .file {
+            color: var(--text-dark);
+        }
+
+        .tree-icon {
+            margin-right: 8px;
+            width: 18px;
+            text-align: center;
+        }
+
+        .tree-children {
+            margin-left: 20px;
+            display: block;
+        }
+
+        .tree-children.collapsed {
+            display: none;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: var(--text-light);
+            padding: 30px;
+            font-style: italic;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 25px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn-accent:hover {
+            background-color: var(--accent-dark);
+        }
+
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .file-size {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-left: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .stats-container {
+                flex-direction: column;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Animation for progress bar */
+        @keyframes progressAnimation {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        .progress-bar.animated {
+            animation: progressAnimation 1.5s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-file-archive"></i> ZIP File Structure Analyzer</h1>
+            <p class="description">Upload a ZIP file to analyze its contents with a detailed tree view and comprehensive statistics</p>
+        </div>
+
+        <div class="upload-section">
+            <div class="file-input-wrapper">
+                <div class="file-input-button">
+                    <i class="fas fa-cloud-upload-alt"></i> Choose ZIP File
+                </div>
+                <input type="file" id="fileInput" accept=".zip" />
+            </div>
+            <div class="file-name" id="fileName">No file selected</div>
+            
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number" id="fileCount">0</div>
+                <div class="stat-label">Files</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="folderCount">0</div>
+                <div class="stat-label">Folders</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalSize">0 B</div>
+                <div class="stat-label">Total Size</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="lastModified">-</div>
+                <div class="stat-label">Last Modified</div>
+            </div>
+        </div>
+
+        <div class="tree-container" id="treeContainer">
+            <div class="empty-message">
+                <i class="fas fa-folder-open" style="font-size: 3rem; margin-bottom: 15px; display: block; opacity: 0.5;"></i>
+                Upload a ZIP file to view its structure
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn btn-primary" id="expandAllBtn" disabled>
+                <i class="fas fa-expand"></i> Expand All
+            </button>
+            <button class="btn btn-primary" id="collapseAllBtn" disabled>
+                <i class="fas fa-compress"></i> Collapse All
+            </button>
+            <button class="btn btn-accent" id="exportBtn" disabled>
+                <i class="fas fa-download"></i> Export File List
+            </button>
+        </div>
+    </div>
+
+    <!-- JSZip from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+    
+    <script>
+        /**
+         * ZIP File Structure Analyzer
+         * 
+         * This application allows users to upload ZIP files and analyze their contents
+         * with a detailed tree view, file statistics, and export capabilities.
+         */
+
+        // DOM Element References
+        const fileInput = document.getElementById('fileInput');
+        const fileName = document.getElementById('fileName');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const treeContainer = document.getElementById('treeContainer');
+        const fileCountElem = document.getElementById('fileCount');
+        const folderCountElem = document.getElementById('folderCount');
+        const totalSizeElem = document.getElementById('totalSize');
+        const lastModifiedElem = document.getElementById('lastModified');
+        const expandAllBtn = document.getElementById('expandAllBtn');
+        const collapseAllBtn = document.getElementById('collapseAllBtn');
+        const exportBtn = document.getElementById('exportBtn');
+
+        // Application State
+        let fileTree = null;
+        let fileCount = 0;
+        let folderCount = 0;
+        let totalSize = 0;
+        let lastModifiedDate = null;
+
+        /**
+         * Initialize the application
+         */
+        function init() {
+            // Add event listeners
+            fileInput.addEventListener('change', handleFileSelect);
+            expandAllBtn.addEventListener('click', expandAllFolders);
+            collapseAllBtn.addEventListener('click', collapseAllFolders);
+            exportBtn.addEventListener('click', exportFileList);
+        }
+
+        /**
+         * Handle file selection from input
+         */
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file || !file.name.toLowerCase().endsWith('.zip')) {
+                showError('Please select a valid ZIP file');
+                return;
+            }
+
+            fileName.textContent = file.name;
+            resetStats();
+            showProgress();
+            
+            // Read and process the ZIP file
+            readZipFile(file);
+        }
+
+        /**
+         * Read and process the ZIP file
+         * @param {File} file - The ZIP file to process
+         */
+        function readZipFile(file) {
+            const reader = new FileReader();
+            
+            reader.onloadstart = function() {
+                progressBar.classList.add('animated');
+            };
+            
+            reader.onprogress = function(event) {
+                if (event.lengthComputable) {
+                    const percentLoaded = Math.round((event.loaded / event.total) * 100);
+                    progressBar.style.width = percentLoaded + '%';
+                }
+            };
+            
+            reader.onload = function(event) {
+                JSZip.loadAsync(event.target.result)
+                    .then(zip => {
+                        processZipContents(zip);
+                        hideProgress();
+                    })
+                    .catch(error => {
+                        hideProgress();
+                        showError('Error reading ZIP file: ' + error.message);
+                        console.error(error);
+                    });
+            };
+            
+            reader.onerror = function() {
+                hideProgress();
+                showError('Error reading file');
+            };
+            
+            reader.readAsArrayBuffer(file);
+        }
+
+        /**
+         * Process the contents of the ZIP file
+         * @param {JSZip} zip - The JSZip instance
+         */
+        function processZipContents(zip) {
+            // Reset counters
+            fileCount = 0;
+            folderCount = 0;
+            totalSize = 0;
+            fileTree = {};
+            
+            // Get the last modified date from the first file
+            let firstFile = null;
+            
+            // Process each file in the ZIP
+            zip.forEach((relativePath, zipEntry) => {
+                if (!firstFile) firstFile = zipEntry;
+                
+                const parts = relativePath.split('/');
+                let currentLevel = fileTree;
+                
+                // Build the tree structure
+                parts.forEach((part, index) => {
+                    if (!part) return; // Skip empty parts
+                    
+                    if (index === parts.length - 1 && !zipEntry.dir) {
+                        // It's a file
+                        currentLevel[part] = {
+                            type: 'file',
+                            size: zipEntry._data.uncompressedSize,
+                            compressedSize: zipEntry._data.compressedSize,
+                            date: zipEntry.date
+                        };
+                        fileCount++;
+                        totalSize += zipEntry._data.uncompressedSize;
+                    } else {
+                        // It's a folder
+                        if (!currentLevel[part]) {
+                            currentLevel[part] = {
+                                type: 'folder',
+                                children: {},
+                                expanded: true // Start with folders expanded
+                            };
+                            if (index < parts.length - 1 || zipEntry.dir) {
+                                folderCount++;
+                            }
+                        }
+                        currentLevel = currentLevel[part].children;
+                    }
+                });
+            });
+            
+            // Update the last modified date
+            if (firstFile) {
+                lastModifiedDate = firstFile.date;
+            }
+            
+            // Update the UI
+            updateStatistics();
+            renderTree();
+            enableButtons();
+        }
+
+        /**
+         * Render the file tree
+         */
+        function renderTree() {
+            if (!fileTree || Object.keys(fileTree).length === 0) {
+                treeContainer.innerHTML = '<div class="empty-message">No files found in the ZIP archive</div>';
+                return;
+            }
+            
+            treeContainer.innerHTML = '';
+            treeContainer.appendChild(createTreeElement(fileTree, 0));
+        }
+
+        /**
+         * Create a tree element from the file structure
+         * @param {Object} node - The current node in the file tree
+         * @param {number} depth - The current depth in the tree
+         * @returns {HTMLElement} The tree element
+         */
+        function createTreeElement(node, depth) {
+            const container = document.createElement('div');
+            
+            for (const [name, item] of Object.entries(node)) {
+                const isFolder = item.type === 'folder';
+                const element = document.createElement('div');
+                element.className = `tree-item ${isFolder ? 'folder' : 'file'}`;
+                
+                // Create icon and name
+                const icon = document.createElement('span');
+                icon.className = 'tree-icon';
+                icon.innerHTML = isFolder ? 
+                    (item.expanded ? '<i class="fas fa-folder-open"></i>' : '<i class="fas fa-folder"></i>') : 
+                    '<i class="fas fa-file"></i>';
+                
+                const nameSpan = document.createElement('span');
+                nameSpan.textContent = name;
+                
+                element.appendChild(icon);
+                element.appendChild(nameSpan);
+                
+                // Add file size for files
+                if (!isFolder) {
+                    const sizeSpan = document.createElement('span');
+                    sizeSpan.className = 'file-size';
+                    sizeSpan.textContent = formatFileSize(item.size);
+                    element.appendChild(sizeSpan);
+                }
+                
+                // Add click handler for folders
+                if (isFolder) {
+                    element.addEventListener('click', () => toggleFolder(item, element));
+                }
+                
+                container.appendChild(element);
+                
+                // Add children for expanded folders
+                if (isFolder && item.expanded && item.children) {
+                    const childrenContainer = document.createElement('div');
+                    childrenContainer.className = 'tree-children';
+                    childrenContainer.appendChild(createTreeElement(item.children, depth + 1));
+                    container.appendChild(childrenContainer);
+                }
+            }
+            
+            return container;
+        }
+
+        /**
+         * Toggle folder expansion
+         * @param {Object} folder - The folder object
+         * @param {HTMLElement} element - The folder element
+         */
+        function toggleFolder(folder, element) {
+            folder.expanded = !folder.expanded;
+            
+            // Find the children container
+            const childrenContainer = element.nextElementSibling;
+            if (childrenContainer && childrenContainer.classList.contains('tree-children')) {
+                childrenContainer.classList.toggle('collapsed', !folder.expanded);
+                
+                // Update folder icon
+                const icon = element.querySelector('.tree-icon');
+                icon.innerHTML = folder.expanded ? 
+                    '<i class="fas fa-folder-open"></i>' : 
+                    '<i class="fas fa-folder"></i>';
+            }
+        }
+
+        /**
+         * Expand all folders
+         */
+        function expandAllFolders() {
+            setAllFoldersExpanded(fileTree, true);
+            renderTree();
+        }
+
+        /**
+         * Collapse all folders
+         */
+        function collapseAllFolders() {
+            setAllFoldersExpanded(fileTree, false);
+            renderTree();
+        }
+
+        /**
+         * Recursively set the expanded state for all folders
+         * @param {Object} node - The current node
+         * @param {boolean} expanded - Whether to expand or collapse
+         */
+        function setAllFoldersExpanded(node, expanded) {
+            for (const item of Object.values(node)) {
+                if (item.type === 'folder') {
+                    item.expanded = expanded;
+                    setAllFoldersExpanded(item.children, expanded);
+                }
+            }
+        }
+
+        /**
+         * Export the file list to a text file
+         */
+        function exportFileList() {
+            if (!fileTree) return;
+            
+            let output = `ZIP File Structure Analysis Report\n`;
+            output += `Generated on: ${new Date().toLocaleString()}\n`;
+            output += `Total Files: ${fileCount}\n`;
+            output += `Total Folders: ${folderCount}\n`;
+            output += `Total Size: ${formatFileSize(totalSize)}\n\n`;
+            output += `FILE LIST:\n`;
+            output += generateFileListText(fileTree, '');
+            
+            // Create download link
+            const blob = new Blob([output], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'zip_contents_report.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        /**
+         * Generate text representation of the file list
+         * @param {Object} node - The current node
+         * @param {string} prefix - The prefix for indentation
+         * @returns {string} The text representation
+         */
+        function generateFileListText(node, prefix) {
+            let output = '';
+            
+            for (const [name, item] of Object.entries(node)) {
+                if (item.type === 'folder') {
+                    output += `${prefix}📁 ${name}/\n`;
+                    output += generateFileListText(item.children, prefix + '  ');
+                } else {
+                    output += `${prefix}📄 ${name} (${formatFileSize(item.size)})\n`;
+                }
+            }
+            
+            return output;
+        }
+
+        /**
+         * Format file size in human-readable format
+         * @param {number} bytes - The size in bytes
+         * @returns {string} Formatted size string
+         */
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 B';
+            
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        /**
+         * Update statistics in the UI
+         */
+        function updateStatistics() {
+            fileCountElem.textContent = fileCount.toLocaleString();
+            folderCountElem.textContent = folderCount.toLocaleString();
+            totalSizeElem.textContent = formatFileSize(totalSize);
+            
+            if (lastModifiedDate) {
+                lastModifiedElem.textContent = lastModifiedDate.toLocaleDateString();
+            } else {
+                lastModifiedElem.textContent = 'Unknown';
+            }
+        }
+
+        /**
+         * Show progress indicator
+         */
+        function showProgress() {
+            progressContainer.style.display = 'block';
+            progressBar.style.width = '0%';
+            progressBar.classList.add('animated');
+            treeContainer.innerHTML = '<div class="empty-message"><i class="fas fa-spinner fa-spin"></i> Processing ZIP file...</div>';
+        }
+
+        /**
+         * Hide progress indicator
+         */
+        function hideProgress() {
+            progressContainer.style.display = 'none';
+            progressBar.classList.remove('animated');
+        }
+
+        /**
+         * Enable action buttons
+         */
+        function enableButtons() {
+            expandAllBtn.disabled = false;
+            collapseAllBtn.disabled = false;
+            exportBtn.disabled = false;
+        }
+
+        /**
+         * Reset statistics
+         */
+        function resetStats() {
+            fileCount = 0;
+            folderCount = 0;
+            totalSize = 0;
+            lastModifiedDate = null;
+            
+            fileCountElem.textContent = '0';
+            folderCountElem.textContent = '0';
+            totalSizeElem.textContent = '0 B';
+            lastModifiedElem.textContent = '-';
+            
+            expandAllBtn.disabled = true;
+            collapseAllBtn.disabled = true;
+            exportBtn.disabled = true;
+        }
+
+        /**
+         * Show error message
+         * @param {string} message - The error message
+         */
+        function showError(message) {
+            treeContainer.innerHTML = `<div class="empty-message" style="color: var(--danger);">
+                <i class="fas fa-exclamation-circle"></i> ${message}
+            </div>`;
+        }
+
+        // Initialize the application when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

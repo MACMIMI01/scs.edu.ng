@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">  
+  <title>Basic Seven Lavender</title>
+  <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+  <link rel="stylesheet" href="../scripts/css/font-awesome.min.css">
+  <style>
+    :root {
+      --primary-color: #020169;
+      --accent-color: #fec009;
+      --text-color: #333;
+      --bg-color: #f0f2f5;
+      --card-bg: rgba(255, 255, 255, 0.7);
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      overflow-x: hidden;
+    }
+
+    /* Mobile-first navigation */
+    .mobile-menu-btn {
+      display: none;
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      background: var(--accent-color);
+      color: var(--primary-color);
+      border: none;
+      font-size: 13px;
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      background-color: var(--primary-color);
+      padding: 20px 15px;
+      color: var(--accent-color);
+      position: fixed;
+      left: -250px;
+      top: 0;
+      z-index: 900;
+      transition: transform 0.3s ease;
+      overflow-y: auto;
+    }
+    
+    .sidebar.active {
+      transform: translateX(250px);
+    }
+    
+    .menu-item {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      padding: 8px 10px;
+      border-radius: 5px;
+    }
+    
+    .menu-item i {
+      font-size: 20px;
+      margin-right: 15px;
+      min-width: 25px;
+    }
+    
+    .menu-item:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Main content */
+    main {
+      padding: 20px;
+      margin-left: 0;
+      transition: margin-left 0.3s ease;
+      padding-bottom: 80px; /* Space for footer */
+    }
+    
+    main.shifted {
+      margin-left: 250px;
+    }
+    
+    h1, h2 {
+      color: var(--primary-color);
+    }
+    
+    /* Glass card slider */
+    .glass-card-container {
+      width: 100%;
+      overflow: hidden;
+      padding: 10px 0;
+      margin: 20px 0;
+      position: relative;
+    }
+    
+    .glass-card-slider {
+      display: flex;
+      width: max-content;
+      gap: 15px;
+      padding: 0 10px;
+      animation: scroll 30s linear infinite;
+    }
+    
+    .glass-card {
+      width: 150px;
+      height: 180px;
+      background: var(--card-bg);
+      border-radius: 15px;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      padding: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .glass-card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+    
+    .student-info {
+      text-align: center;
+      width: 100%;
+    }
+    
+    .student-name {
+      font-weight: bold;
+      margin-bottom: 3px;
+      color: var(--primary-color);
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .student-details {
+      font-size: 12px;
+      color: #555;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+    
+    /* Pause animation on hover */
+    .glass-card-container:hover .glass-card-slider {
+      animation-play-state: paused;
+    }
+    
+    /* Logo */
+    .logo {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      z-index: 800;
+    }
+    
+    /* Footer */
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      padding: 15px;
+      background-color: var(--primary-color);
+      color: var(--accent-color);
+      z-index: 800;
+    }
+    
+    /* Media queries */
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .logo {
+        width: 35px;
+        height: 35px;
+      }
+      
+      .glass-card {
+        width: 130px;
+        height: 160px;
+      }
+      
+      .glass-card img {
+        width: 70px;
+        height: 70px;
+      }
+      
+      .student-name {
+        font-size: 13px;
+      }
+      
+      .student-details {
+        font-size: 11px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+        margin-top: 40px;
+      }
+      
+      .glass-card {
+        width: 110px;
+        height: 150px;
+      }
+      
+      .glass-card img {
+        width: 60px;
+        height: 60px;
+      }
+    }
+    
+    /* Styling for the new group photo section */
+#group-photo-container {
+  margin: 40px auto; /* Adds space above/below and centers it */
+  width: 90%; /* Makes the container responsive */
+  max-width: 700px; /* Prevents it from getting too large on big screens */
+  text-align: center; /* Centers the image and caption */
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#group-photo-container img {
+  width: 100%; /* Makes the image fill its container */
+  height: auto; /* Maintains the aspect ratio */
+  border-radius: 10px; /* Softens the corners of the photo */
+}
+
+.photo-caption {
+  margin-top: 15px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+    
+  </style>
+</head>
+<body>
+  <button class="mobile-menu-btn" id="menuBtn">
+    <i class="fas fa-bars"></i>
+  </button>
+  
+  <div class="sidebar" id="sidebar">
+    <div class="menu-item" onclick="window.location.href='dashboard.html'">
+      <i class="fas fa-tachometer-alt"></i>
+      <span>Dashboard</span>
+    </div>
+         <div class="menu-item" onclick="window.location.href='B7L.html'">
+      <i class="fas fa-user-graduate"></i>
+      <span>B7 Lavender</span>
+    </div>
+     <div class="menu-item" onclick="window.location.href='B8T.html'">
+      <i class="fas fa-seedling"></i>
+      <span>B8 Tulip</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='B9S.html'">
+      <i class="fas fa-graduation-cap"></i>
+      <span>B9 Sunflower</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='test-library.html'">
+      <i class="fas fa-book"></i>
+      <span>Test Library</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='test-taking.html'">
+      <i class="fas fa-pencil-alt"></i>
+      <span>Take A Test</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='profile.html'">
+      <i class="fas fa-user"></i>
+      <span>My Profile</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='classes.html'">
+      <i class="fas fa-users"></i>
+      <span>Classes</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='guide-FAQ.html'">
+      <i class="fas fa-question-circle"></i>
+      <span>Guide & FAQ</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='about.html'">
+      <i class="fas fa-info-circle"></i>
+      <span>About Us</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='contact.html'">
+      <i class="fas fa-envelope"></i>
+      <span>Contact Us</span>
+    </div>
+    <div class="menu-item" onclick="window.location.href='gamehall.html'">
+      <i class="fas fa-gamepad"></i>
+      <span>Game Hall</span>
+    </div>
+    <div class="menu-item" id="logout-button">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Logout</span>
+    </div>
+  </div>
+  
+  <main id="mainContent">
+    <h1 id="welcome-heading">Do you want to see our Top Student, <span id="display-username"></span>?</h1>
+    <p>Welcome to TestHall, your premier destination for online testing and assessment.</p>
+    <p>Our mission is to provide a comprehensive and user-friendly platform for individuals to test their knowledge and skills.</p>
+    
+    <h2>Top Students</h2>
+    <div class="glass-card-container">
+      <div class="glass-card-slider" id="studentSlider">
+        <!-- Student cards will be generated by JavaScript -->
+      </div>
+    </div>
+    
+    <!-- V V V V V  THIS IS THE CORRECT PLACEMENT V V V V V -->
+    <!-- Add a new heading for the group photo section -->
+    <h2>BASIC Eigth TULIP</h2>
+    
+    <!-- Create a new container for your group photo with a unique ID -->
+    <div id="group-photo-container">
+      <img src="../assets/profile_pictures/BASIC_EIGHT_TULIP.jpeg" alt="Basic Eight Tulip Class Photo">
+      <p class="photo-caption">Basic Eight Tulip</p> <!-- Optional: Add a caption -->
+    </div>
+    <!-- ^ ^ ^ ^ ^ END OF CORRECTION ^ ^ ^ ^ ^ -->
+<!-- Main content -->
+<main id="mainContent">
+    <h1 id="welcome-heading">Do you want to see our Top Student, <span id="display-username"></span>?</h1>
+    <p>Welcome to TestHall, your premier destination for online testing and assessment.</p>
+    <p>Our mission is to provide a comprehensive and user-friendly platform for individuals to test their knowledge and skills.</p>
+    
+    <h2>Top Students</h2>
+    <!-- This is the scrolling container. Do NOT put the group photo inside here. -->
+    <div class="glass-card-container">
+      <div class="glass-card-slider" id="studentSlider">
+        <!-- Student cards are generated by JavaScript here -->
+      </div>
+    </div>
+
+  </main>
+  
+  
+  
+
+    
+  
+  
+  <img src="../assets/images/logo.png" alt="Logo" class="logo">
+  <footer>&copy; 2024 TestHall</footer>
+
+  <script>
+    // Student data array
+    const students = [
+      { name: "Daniel", details: "Math Champion", image: "../assets/profile_pictures/daniel.jpeg" },
+      { name: "Chibaby", details: "Science Prodigy", image: "../assets/profile_pictures/chibaby.jpeg" },
+      { name: "Emmanuel O", details: "History Buff", image: "../assets/profile_pictures/emmanuel_o.jpeg" },
+      { name: "Emmanuel S", details: "Literature Expert", image: "../assets/profile_pictures/emmanuel_s.jpeg" },
+      { name: "Excel", details: "Programming Whiz", image: "../assets/profile_pictures/excel.jpeg" },
+      { name: "Fortune", details: "Physics Genius", image: "../assets/profile_pictures/fortune.jpeg" },
+      { name: "Kendra", details: "Chemistry Star", image: "../assets/profile_pictures/kendra.jpeg" },
+      { name: "Marvelous", details: "Biology Specialist", image: "../assets/profile_pictures/marvelous.jpeg" },
+      { name: "Mia", details: "Art Prodigy", image: "../assets/profile_pictures/mia.jpeg" },
+      { name: "Prince", details: "Music Maestro", image: "../assets/profile_pictures/prince.jpeg" },
+      { name: "Scotty", details: "Sports Champion", image: "../assets/profile_pictures/scotty.jpeg" },
+      { name: "Igweh Great", details: "Debate Champion", image: "../assets/profile_pictures/igweh_great.jpeg" },
+      { name: "Testimony", details: "Writing Expert", image: "../assets/profile_pictures/testimony.jpeg" },
+      { name: "Tovia", details: "Language Master", image: "../assets/profile_pictures/tovia.jpeg" },
+      { name: "Wealth", details: "Economics Guru", image: "../assets/profile_pictures/wealth.jpeg" },
+      { name: "Safa", details: "Geography Expert", image: "../assets/profile_pictures/safa.jpeg" },
+      { name: "Great Eniola", details: "All-round Achiever", image: "../assets/profile_pictures/great_eniola.jpeg" }
+    ];
+
+    // Generate student cards
+    const studentSlider = document.getElementById('studentSlider');
+    
+    // Duplicate students for seamless looping
+    const duplicatedStudents = [...students, ...students];
+    
+    duplicatedStudents.forEach(student => {
+      const card = document.createElement('div');
+      card.className = 'glass-card';
+      card.innerHTML = `
+        <img src="${student.image}" alt="${student.name}">
+        <div class="student-info">
+          <div class="student-name">${student.name}</div>
+          <div class="student-details">${student.details}</div>
+        </div>
+      `;
+      studentSlider.appendChild(card);
+    });
+
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('mainContent');
+    
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+      mainContent.classList.toggle('shifted');
+      
+      // Change icon based on state
+      const icon = menuBtn.querySelector('i');
+      if (sidebar.classList.contains('active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!sidebar.contains(e.target) && e.target !== menuBtn) {
+        sidebar.classList.remove('active');
+        mainContent.classList.remove('shifted');
+        const icon = menuBtn.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+    
+    // Display username if available
+    const displayUsername = document.getElementById('display-username');
+    const username = localStorage.getItem('username') || 'Guest';
+    displayUsername.textContent = username;
+
+    // Pause animation when user interacts with slider
+    const sliderContainer = document.querySelector('.glass-card-container');
+    sliderContainer.addEventListener('mouseenter', () => {
+      document.querySelector('.glass-card-slider').style.animationPlayState = 'paused';
+    });
+    
+    sliderContainer.addEventListener('mouseleave', () => {
+      document.querySelector('.glass-card-slider').style.animationPlayState = 'running';
+    });
+    
+    // Touch events for mobile
+    sliderContainer.addEventListener('touchstart', () => {
+      document.querySelector('.glass-card-slider').style.animationPlayState = 'paused';
+    });
+    
+    sliderContainer.addEventListener('touchend', () => {
+      setTimeout(() => {
+        document.querySelector('.glass-card-slider').style.animationPlayState = 'running';
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
+
+
+
+[
+  {
+    "id": 1,
+    "username": "Daniel Oluwaboml Ogunlela",
+    "date of birth": "2014-09-09",
+    "password": "Mehdifxf",
+    "name": "Daniel Oluwaboml Ogunlela",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Eight Tulip1",
+    "classid": "JS2",
+    "gender": "Male",
+    "email": "danieloluwabomol@scs.com",
+    "profilePicture": "../assets/profile_pictures/daniel.jpeg"
+  },  
+  {
+    "id": 2,
+    "username": "IGwehGreat123",
+    "date of birth": "2012-02-05",
+    "password": "159876423",
+    "name": "Great Ameachi Igweh",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Male",
+    "email": "igwehgreat123@scs.com",
+    "profilePicture": "../assets/profile_pictures/igweh_great.jpeg"
+  },
+  {
+    "id": 3,
+    "username": "Chibaby",
+    "date of birth": "2013-10-17",
+    "password": "CHI123",
+    "name": "Greatest Chisom Kosisochukwu",
+    "role": "student",
+    "details": "Science Prodigy",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Female",
+    "email": "chibaby@scs.com",
+    "profilePicture": "../assets/profile_pictures/chibaby.jpeg"
+  },
+  {
+    "id": 4,
+    "username": "ken baby-02",
+    "date of birth": "2019-08-02",
+    "password": "17492",
+    "name": "Kendra Oberenwa Lucky",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Female",
+    "email": "kenbaby-02@scs.com",
+    "profilePicture": "../assets/profile_pictures/kendra.jpeg"
+  },
+  {
+    "id": 5,
+    "username": "koko",
+    "date of birth": "2014-06-23",
+    "password": "2014623",
+    "name": "Testimony Kosisochukwu Ikubor",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Female",
+    "email": "koko@scs.com",
+    "profilePicture": "../assets/profile_pictures/testimony.jpeg"
+  },
+  {
+    "id": 6,
+    "username": "Chi Baby",
+    "date of birth": "2014-11-23",
+    "password": "08165704112",
+    "name": "Excel Ozioma Stanley",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Female",
+    "email": "chibabyexcel@scs.com",
+    "profilePicture": "../assets/profile_pictures/excel.jpeg"
+  },
+  {
+    "id": 7,
+    "username": "old man 254",
+    "date of birth": "2014-04-11",
+    "password": "25182",
+    "name": "Emmanuel Oshogbo",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Male",
+    "email": "oldman254@scs.com",
+    "profilePicture": "../assets/profile_pictures/emmanuel_o.jpeg"
+  },
+  {
+    "id": 8,
+    "username": "Gangster 241",
+    "date of birth": "2014-03-02",
+    "password": "SUNDAY EMMANUEL 2014@g.mail.com",
+    "name": "Emmanuel Ebube Sunday",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Male",
+    "email": "gangster241@scs.com",
+    "profilePicture": "../assets/profile_pictures/emmanuel_s.jpeg"
+  },
+  {
+    "id": 9,
+    "username": "Fortune AKA@12",
+    "date of birth": "2013-04-02",
+    "password": "1414",
+    "name": "Fortune Bello Samuel",
+    "role": "student",
+    "details": "Physics Genius",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Male",
+    "email": "fortuneaka12@scs.com",
+    "profilePicture": "../assets/profile_pictures/fortune.jpeg"
+  },
+  {
+    "id": 10,
+    "username": "Scotty",
+    "date of birth": "2014-11-02",
+    "password": "08169895928",
+    "name": "Scott Onyekachukwu Onyibe",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Male",
+    "email": "scotty@scs.com",
+    "profilePicture": "../assets/profile_pictures/scotty.jpeg"
+  },
+  {
+    "id": 11,
+    "username": "PRINCE ODOZI",
+    "date of birth": "2014-09-14",
+    "password": "Princeodozi LY",
+    "name": "PRINCE CHUKWUKA ODOZI",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Male",
+    "email": "princeodozi@scs.com",
+    "profilePicture": "../assets/profile_pictures/prince.jpeg"
+  },
+  {
+    "id": 12,
+    "username": "mia",
+    "date of birth": "2015-09-28",
+    "password": "2015",
+    "name": "Micaiah Obehi Ijeghede",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Female",
+    "email": "mia@scs.com",
+    "profilePicture": "../assets/profile_pictures/mia.jpeg"
+  },
+  {
+    "id": 13,
+    "username": "wealth264$@gmail.com",
+    "date of birth": "2013-04-01",
+    "password": "142013",
+    "name": "Wealth Chukwuyem Hebrew",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Male",
+    "email": "wealth264@scs.com",
+    "profilePicture": "../assets/profile_pictures/wealth.jpeg"
+  },
+  {
+    "id": 14,
+    "username": "Dead Killer 2214",
+    "date of birth": "2014-06-22",
+    "password": "T@EG",
+    "name": "Great Eniola Tunde",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Male",
+    "email": "deadkiller2214@scs.com",
+    "profilePicture": "../assets/profile_pictures/great_eniola.jpeg"
+  },
+  {
+    "id": 15,
+    "username": "Barbie.5F",
+    "date of birth": "2014-05-03",
+    "password": "Barbie, Frozen,Sofia.",
+    "name": "Tovia Ngozichukwuka Ojougboh",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Female",
+    "email": "barbie.5f@scs.com",
+    "profilePicture": "../assets/profile_pictures/tovia.jpeg"
+  },
+  {
+    "id": 16,
+    "username": "MONDAYMARVELOUS 2013@gmail.com",
+    "date of birth": "2013-03-04",
+    "password": "Maevel",
+    "name": "MARVELOUS CHUKWUYEM MONDAY",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Male",
+    "email": "mondaymarvelous2013@scs.com",
+    "profilePicture": "../assets/profile_pictures/marvelous.jpeg"
+  },
+  {
+    "id": 17,
+    "username": "success",
+    "date of birth": "2025-05-20",
+    "password": "2011",
+    "name": "SUCCESS EBUBE SAFA",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Male",
+    "email": "safasuccess@scs.com",
+    "profilePicture": "../assets/profile_pictures/safa.jpeg"
+  },
+  {
+    "id": 18,
+    "username": "David",
+    "date of birth": "2012-01-11",
+    "password": "0126",
+    "name": "David Oladoton Ogunlela",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Senior Class Two",
+    "classid": "SS2",
+    "gender": "Male",
+    "email": "davidoladoton@scs.com",
+    "profilePicture": "../assets/profile_pictures/david.jpeg"
+  },
+  {
+    "id": 19,
+    "username": "cool babe",
+    "date of birth": "2012-11-23",
+    "password": "TUNDE",
+    "name": "Best Oyindamola Tunde",
+    "role": "student",    
+    "class": "Senior Class One",
+    "classid": "SS1",
+    "gender": "Female",
+    "email": "coolbabe@scs.com",
+    "profilePicture": "../assets/profile_pictures/best_oyindamola.jpeg"
+  },
+  {
+    "id": 20,
+    "username": "anointedchibuzor804@gmail.com",
+    "date of birth": "2012-05-29",
+    "password": "Anointed2012#",
+    "name": "Anointed Chibuzor Ndidi",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Senior Class One",
+    "classid": "SS1",
+    "gender": "Male",
+    "email": "anointedchibuzor804@scs.com",
+    "profilePicture": "../assets/profile_pictures/anointed.jpeg"
+  },
+  {
+    "id": 21,
+    "username": "classy baby",
+    "date of birth": "2011-05-11",
+    "password": "",
+    "name": "Bethel Nneoma Stanley",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Senior Class One",
+    "classid": "SS1",
+    "gender": "Female",
+    "email": "classybaby@scs.com",
+    "profilePicture": "../assets/profile_pictures/bethel.jpeg"
+  },
+  {
+    "id": 22,
+    "username": "Kendrick Lucky",
+    "date of birth": "2013-03-18",
+    "password": "KENDRICK2013",
+    "name": "Kendrick Chukwuzimuwa Lucky",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Nine Sunflower",
+    "classid": "JS3",
+    "gender": "Male",
+    "email": "kendricklucky@scs.com",
+    "profilePicture": "../assets/profile_pictures/kendrick.jpeg"
+  },
+  {
+    "id": 23,
+    "username": "Shadow",
+    "date of birth": "2014-01-20",
+    "password": "SonicxShadow",
+    "name": "Elvin Iyosayi Imafidon",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Nine Sunflower",
+    "classid": "JS3",
+    "gender": "Male",
+    "email": "shadow@scs.com",
+    "profilePicture": "../assets/profile_pictures/elvin.jpeg"
+  },
+  {
+    "id": 24,
+    "username": "JycxJV",
+    "date of birth": "2012-09-14",
+    "password": "Ju1357",
+    "name": "Jackvina Ogochukwu Nwagbogu",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Nine Sunflower",
+    "classid": "JS3",
+    "gender": "Female",
+    "email": "jycxjv@scs.com",
+    "profilePicture": "../assets/profile_pictures/jackvina.jpeg"
+  },
+  {
+    "id": 25,
+    "username": "DIDI LOVE 128",
+    "date of birth": "2013-04-30",
+    "password": "JADE128",
+    "name": "Divine Ijeoma Ekemba",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Nine Sunflower",
+    "classid": "JS3",
+    "gender": "Female",
+    "email": "didilove128@scs.com",
+    "profilePicture": "../assets/profile_pictures/divine_ekemba.jpeg"
+  },
+  {
+    "id": 26,
+    "username": "Kendrew209",
+    "date of birth": "2014-07-18",
+    "password": "KO112124",
+    "name": "Kendrew Chukwusomazu Lucky",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Nine Sunflower",
+    "classid": "JS3",
+    "gender": "Male",
+    "email": "kendrew209@scs.com",
+    "profilePicture": "../assets/profile_pictures/kendrew.jpeg"
+  },
+  {
+    "id": 27,
+    "username": "mimilove10",
+    "date of birth": "2014-01-10",
+    "password": "mimispecial123",
+    "name": "Mitchelle Ofure Ijeghede",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Nine Sunflower",
+    "classid": "JS3",
+    "gender": "Female",
+    "email": "mimilove10@scs.com",
+    "profilePicture": "../assets/profile_pictures/mitchelle.jpeg"
+  },
+  {
+    "id": 28,
+    "username": "Divine8254",
+    "date of birth": "2012-06-06",
+    "password": "Divine 5324",
+    "name": "Divine Monday",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Nine Sunflower",
+    "classid": "JS3",
+    "gender": "Male",
+    "email": "divine8254@scs.com",
+    "profilePicture": "../assets/profile_pictures/divine_monday.jpeg"
+  },
+   {
+    "id": 29,
+    "username": "OC Special",
+    "date of birth": "2012-06-06",
+    "password": "OCN301",
+    "name": "Cherish Ngozi Ojemudia",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Nine Sunflower",
+    "classid": "JS3",
+    "gender": "Female",
+    "email": "cspecial@scs.com",
+    "profilePicture": "../assets/profile_pictures/cherish.jpeg"
+  },
+   {
+    "id": 30,
+    "username": "Daniel Finisher",
+    "date of birth": "2013-08-05",
+    "password": "Aka Finisher",
+    "name": "Daniel Ayomiposi Longe",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Nine Sunflower",
+    "classid": "JS3",
+    "gender": "Male",
+    "email": "danielfinisher@scs.com",
+    "profilePicture": "../assets/profile_pictures/finisher.jpeg"
+    },
+    {
+    "id": 31,
+    "username": "ecell",
+    "date of birth": "1960-01-12",
+    "password": "password123",
+    "name": "Excel Solomon",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Seven Lavender",
+    "classid": "JS1",
+    "gender": "Female",
+    "email": "ecell@scs.com",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+    },
+    {
+    "id": 32,
+    "username": "pro",
+    "date of birth": "1960-01-12",
+    "password": "password123",
+    "name": "Providence",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Seven Lavender",
+    "classid": "JS1",
+    "gender": "Female",
+    "email": "pro@scs.com",
+    "profilePicture": "../assets/profile_pictures/id97.jpeg"
+  },
+  {
+    "id": 33,
+    "username": "basic 7",
+    "date of birth": "1960-01-12",
+    "password": "lavender",
+    "name": "BASIC SEVEN LAVENDER",
+    "role": "JSS1",
+    "class": "JUNIOR SECONDARY CLASS ONE",
+    "classid": "JS1",
+    "gender": "Female",
+    "email": "basic7@scs.com",
+    "profilePicture": "../assets/profile_pictures/lavender.jpeg"
+  },    
+  {
+    "id": 34,
+    "username": "Uwa",
+    "date of birth": "2012-07-12",
+    "password": "Sonia world",
+    "name": "Sonia Adesuwa Uwagboe",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Senior Class Two",
+    "classid": "SS2",
+    "gender": "Female",
+    "email": "uwa@scs.com",
+    "profilePicture": "../assets/profile_pictures/uwa.jpeg"
+  },
+  {
+    "id": 35,
+    "username": "Ife Ife",
+    "date of birth": "2013-03-20",
+    "password": "6666",
+    "name": "JUBITA IFECHUKWU MONDAY",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Nine Sunflower",
+    "classid": "JS3",
+    "gender": "Female",
+    "email": "ife@scs.com",
+    "profilePicture": "../assets/profile_pictures/ife.jpeg"
+  },
+  {
+    "id": 36,
+    "username": "OMA",
+    "date of birth": "2013-03-12",
+    "password": "1913",
+    "name": "FAVOUR ONYINYECHI JOHNBULL",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Nine Sunflower",
+    "classid": "JS3",
+    "gender": "Female",
+    "email": "oma@scs.com",
+    "profilePicture": "../assets/profile_pictures/oma.jpeg"
+  },
+  {
+    "id": 37,
+    "username": "username",
+    "date of birth": "0001-01-01",
+    "password": "password",
+    "name": "TEST RUN PROFILE",
+    "role": "TEST RUNNING",
+    "gender": "UNIDENTIFIED",
+    "class": "DEFAULT",
+    "email": "memo@scs.com",
+    "profilePicture": "../assets/profile_pictures/memo.gif"
+  },
+  {
+    "id": 38,
+    "username": "Rosella",
+    "date of birth": "2011-09-24",
+    "password": "2011",
+    "name": "TESTIMONY CHINEDU ONWUBUOYA",
+    "role": "student",
+    "details": "Math Champion",
+    "class": "Basic Nine Sunflower",
+    "classid": "JS3",
+    "gender": "Female",
+    "email": "rosella@scs.com",
+    "profilePicture": "../assets/profile_pictures/rosella.jpeg"
+  },
+  {
+    "id": 39,
+    "username": "E-boy",
+    "date of birth": "1960-01-12",
+    "password": "EDU2206108",
+    "name": "EMEKE EMMANUEL",
+    "role": "ADMIN",
+    "class": "400 LEVEL",
+    "gender": "Male",
+    "email": "emekeemmanuel@gmail.com",
+    "profilePicture": "../assets/profile_pictures/eboy.jpeg"
+  },
+  {
+    "id": 40,
+    "username": "PHE",
+    "date of birth": "1960-01-12",
+    "password": "password123",
+    "name": "Miracle Chukwujindu Nkadi",
+    "role": "Teacher",
+    "class": "E-Library",
+    "gender": "Male",
+    "email": "webmaster@scs.com",
+    "profilePicture": "../assets/profile_pictures/team-2.gif"
+  },
+  {
+    "id": 41,
+    "username": "MacMimi",
+    "date of birth": "1960-01-12",
+    "password": "password123",
+    "name": "Administrator Macmimi",
+    "role": "Parents",
+    "class": "E-Library",
+    "gender": "Male",
+    "email": "webmaster@scs.com",
+    "profilePicture": "../assets/profile_pictures/team-2.gif"
+  },
+  
+  {
+    "id": 42,
+    "username": "username",
+    "date of birth": "0001-01-01",
+    "password": "password",
+    "name": "TEST RUN PROFILE",
+    "role": "TEST RUNNING",
+    "gender": "UNIDENTIFIED",
+    "class": "DEFAULT",
+    "email": "memo@scs.com",
+    "profilePicture": "../assets/profile_pictures/memo.gif"
+  },
+  {
+    "id": 43,
+    "username": "basic 7",
+    "date of birth": "1960-01-12",
+    "password": "lavender",
+    "name": "BASIC SEVEN LAVENDER",
+    "role": "JSS1",
+    "class": "JUNIOR SECONDARY CLASS ONE",
+    "gender": "Female",
+    "email": "basic7@scs.com",
+    "profilePicture": "../assets/profile_pictures/lavender.jpeg"
+  },  
+  {
+    "id": 44,
+    "username": "macmimi",
+    "date of birth": "1960-01-12",
+    "password": "password123",
+    "name": "Miracle Chukwujindu Nkadi",
+    "role": "Web Developer",
+    "class": "E-Library",
+    "gender": "Male",
+    "email": "webmaster@scs.com",
+    "profilePicture": "../assets/profile_pictures/team-2.gif"
+  },
+  {
+    "id": 45,
+    "username": "JSSONE",
+    "date of birth": "2011-09-24",
+    "password": "******",
+    "name": "Miss Namoi Esosa",
+    "role": "Teacher",
+    "details": "Form Teacher",
+    "class": "Basic Seven Lavender",
+    "classid": "JS1",
+    "gender": "Female",
+    "email": "B7L@scs.com",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 46,
+    "username": "JSSTWO",
+    "date of birth": "2011-09-24",
+    "password": "******",
+    "name": "Mr David Ejima",
+    "role": "Teacher",
+    "details": "Form Teacher",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Female",
+    "email": "B8T@scs.com",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 47,
+    "username": "JSSTHREE",
+    "date of birth": "2011-09-24",
+    "password": "******",
+    "name": "Miss Victory",
+    "role": "Techer",
+    "details": "Form Teacher",
+    "class": "Basic Nine Sunflower",
+    "classid": "JS3",
+    "gender": "Female",
+    "email": "B9S@scs.com",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 48,
+    "username": "SSSONE",
+    "date of birth": "2011-09-24",
+    "password": "******",
+    "name": "Sir Alfred Apple",
+    "role": "Teacher",
+    "details": "Form Teacher",
+    "class": "SENIOR CLASS ONE",
+    "classid": "SS1",
+    "gender": "Female",
+    "email": "SS1@scs.com",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 49,
+    "username": "SSSTWO",
+    "date of birth": "2011-09-24",
+    "password": "******",
+    "name": "Mrs Chimaobi",
+    "role": "Teacher",
+    "details": "Form Teacher",
+    "class": "SENIOR CLASS TWO",
+    "classid": "SS2",
+    "gender": "Female",
+    "email": "SS2@scs.com",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 50,
+    "username": "SSSTHREE",
+    "date of birth": "2011-09-24",
+    "password": "******",
+    "name": "Mr Fedlis",
+    "role": "Teacher",
+    "details": "Form Teacher",
+    "class": "SENIOR CLASS THREE",
+    "classid": "SS3",
+    "gender": "Female",
+    "email": "SS3@scs.com",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 99,
+    "username": "WEBMASTER",
+    "date of birth": "1960-01-12",
+    "password": "password123",
+    "name": "Administrator Macmimi",
+    "role": "admin",
+    "details": "Web Novice",
+    "class": "E-Library",
+    "gender": "Male",
+    "email": "webmaster@scs.com",
+    "profilePicture": "../assets/profile_pictures/team-2.gif"
+  }
+]
+      
+      
