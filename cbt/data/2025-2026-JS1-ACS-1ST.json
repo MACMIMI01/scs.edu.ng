@@ -1,5 +1,6 @@
 {
-  "testName": "SENIOR CLASS ONE 1ST TERM AGRICULTURAL SCIENCE EXAM 2025/2026",
+  "testName": "JUNIOR CLASS ONE 1ST TERM AGRICULTURAL SCIENCE EXAM 2025/2026",
+  "instructorName": "Mrs Chimaobi",
   "questions": [
     {
       "question": "Study the diagram carefully. This is known as _______.",
@@ -11,75 +12,21 @@
         "Irrigation tool"
       ],
       "correctAnswer": "Harvesting tool"
-    },    
+    },
     {
-      "question": "A group of people related by blood, marriage, or adoption, often living together is called a _______.",
-     "options": [ 
-        "Community",
-        "Society",
-        "Family",
-        "Peer group",
-        "Club"
-      ],
-      "correctAnswer": "Family"
-    }, ,
-    {
-    "question": "A family consisting of only parents and their children is known as a/an ______ family.",
-    "options": [
-      "Extended",
-      "Blended",
-      "Single-parent",
-      "Nuclear",
-      "Adoptive"
-    ],
-      "correctAnswer": "Nuclear"
-  },
-  {
-    "question": "Grandparents, uncles, aunts, and cousins are typically part of a/an ______ family.",
-    "options": [
-      "Nuclear",
-      "Basic",
-      "Extended",
-      "Single-parent",
-      "Compound"
-    ],
-      "correctAnswer": "Extended"
-  },
-  {
-    "question": "A family formed when parents with children from previous relationships marry is called a ______ family.",
-    "options": [
-      "Nuclear",
-      "Extended",
-      "Blended",
-      "Single-parent",
-      "Traditional"
-    ],
-      "correctAnswer": "Blended"
-  },
-  {
-    "question": "Which of the following is a primary duty of parents/guardians?",
-    "options": [
-      "Playing games all day",
-      "Providing basic needs like food and shelter",
-      "Depending solely on children for income",
-      "Ignoring the children's education",
-      "Encouraging disobedience"
-    ],
-      "correctAnswer": "Providing basic needs like food and shelter"
-  },
-  {
-    "question": "Respecting elders and helping with household chores are primarily the duties of ______ within the family.",
-    "options": [
-      "Parents",
-      "Grandparents",
-      "Neighbours",
-      "Children",
-      "Visitors"
-    ],
-      "correctAnswer": "Children"
-  },
+      "question": "Which of the following is a primary source of protein for farm animals?",
+      "imageURL": "../assets/images/questions/farm-animal.jpeg",
+      "options": [
+        "Water",
+        "Soybean meal",
+        "Cassava peels",
+        "Salt"
+      ],
+      "correctAnswer": "Soybean meal"
+    },
     {
       "question": "The branch of agriculture concerned with the cultivation of fruits, vegetables, and flowers is called:",
+      "imageURL": "../assets/images/questions/fruit.jpeg",
       "options": [
         "Apiculture",
         "Horticulture",
@@ -90,6 +37,7 @@
     },
     {
       "question": "Which of these is a method of preventing soil erosion?",
+      "imageURL": "../assets/images/questions/soil.polution.jpeg",
       "options": [
         "Overgrazing",
         "Deforestation",
@@ -100,6 +48,18 @@
     },
     {
       "question": "A young goat is called a _______.",
+      "imageURL": "../assets/images/questions/goat.jpeg",
+      "options": [
+        "Lamb",
+        "Calf",
+        "Kid",
+        "Piglet"
+      ],
+      "correctAnswer": "Kid"
+    },
+    {
+      "question": "A young goat is called a _______.",
+      "imageURL": "../assets/images/questions/kid.jpeg",
       "options": [
         "Lamb",
         "Calf",
