@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!-- url-qr-offline-2.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <!-- Assumes this file is in the /pages/ folder -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico"> 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        #urlInput {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #020169;
+            color: #FEC009;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #FEC009;
+            color: #020169;
+        }
+
+        #qrcode {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align: center;">Truly Self-Contained QR Code Generator</h1>
+
+    <input type="text" id="urlInput" placeholder="Enter URL or text" value="http://192.168.8.1/index.html">
+    <button onclick="generateQrCode()">Generate QR Code</button>
+
+    <br><br>
+
+    <!-- This is where the QR code will be displayed -->
+    <div id="qrcode"></div>
+
+    <script type="text/javascript" src="../scripts/qrcode.js"></script>
+
+    <script type="text/javascript">
+        var qrcode = null;
+
+        function generateQrCode() {
+            var url = document.getElementById("urlInput").value.trim();
+            var qrCodeContainer = document.getElementById("qrcode");
+
+            if (!url) {
+                alert("Please enter a URL or text");
+                qrCodeContainer.innerHTML = "";
+                return;
+            }
+
+            qrCodeContainer.innerHTML = "";
+
+            qrcode = new QRCode(qrCodeContainer, {
+                text: url,
+                width: 256,
+                height: 256,
+                colorDark: "#020169",
+                colorLight: "#FEC009",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        // Generate a QR code for the default value when the page loads
+        window.onload = generateQrCode;
+    </script>
+
+</body>
+</html>

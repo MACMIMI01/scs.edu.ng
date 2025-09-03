@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<!-- user-addmin-check.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../scripts/css/font-awesome.min.css">
+    <title>SCS User Manager (Admin Tool)</title>
+    <style>
+        :root { --primary-color: #020169; --accent-color: #FEC009; --error-color: #dc3545; --success-color: #28a745; }
+        body { font-family: Arial, sans-serif; background-color: #f0f2f5; margin: 20px; }
+        .container { max-width: 1000px; margin: auto; background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        h1, h2 { color: var(--primary-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #dee2e6; padding: 12px; text-align: left; }
+        th { background-color: #f8f9fa; }
+        .form-section { background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-top: 30px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em; box-sizing: border-box; }
+        button { background-color: var(--primary-color); color: #fff; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; transition: all 0.3s ease; margin-top: 10px; }
+        button:hover { background-color: var(--accent-color); color: var(--primary-color); }
+        .btn-danger { background-color: var(--error-color); }
+        #output-container { margin-top: 30px; }
+        textarea { width: 100%; min-height: 250px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SCS User Manager (ADMIN TOOL)</h1>
+        <p><strong>Important:</strong> This tool modifies your live <code>users.json</code> file. Use with care.</p>
+        
+        <h2>Current Registered Users</h2>
+        <table id="users-table">
+            <thead><tr><th>ID</th><th>Name</th><th>Username</th><th>Role</th><th>Actions</th></tr></thead>
+            <tbody><!-- User data will be loaded here --></tbody>
+        </table>
+
+        <div class="form-section">
+            <h2 id="form-title">Add New User</h2>
+            <form id="user-form">
+                <input type="hidden" id="user-id">
+                <div class="form-grid">
+                    <div><label for="name">Full Name</label><input type="text" id="name" required></div>
+                    <div><label for="username">Username</label><input type="text" id="username" required></div>
+                    <div><label for="password">Password</label><input type="text" id="password" required></div>
+                    <div>
+                        <label for="role">Role</label>
+                        <select id="role" required>
+                            <option value="Student">Student</option>
+                            <option value="Teacher">Teacher</option>
+                            <option value="Parent">Parent</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" id="submit-btn">Add User</button>
+                <button type="button" id="cancel-edit-btn" style="display: none;">Cancel Edit</button>
+            </form>
+        </div>
+
+        <div id="output-container">
+            <h2>Updated <code>users.json</code> Content</h2>
+            <p>1. Copy the text below. <br> 2. Open <code>data/users.json</code> in your project. <br> 3. Paste this content, save the file, and upload it to GitHub.</p>
+            <textarea id="json-output" readonly></textarea>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tableBody = document.querySelector('#users-table tbody');
+        const userForm = document.getElementById('user-form');
+        const jsonOutput = document.getElementById('json-output');
+        const formTitle = document.getElementById('form-title');
+        const submitBtn = document.getElementById('submit-btn');
+        const cancelEditBtn = document.getElementById('cancel-edit-btn');
+        const userIdInput = document.getElementById('user-id');
+        const nameInput = document.getElementById('name');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const roleInput = document.getElementById('role');
+
+        let users = [];
+
+        // Load initial users from the local file
+        const loadUsers = async () => {
+            try {
+                const response = await fetch('../data/user1.json');
+                if (!response.ok) throw new Error('File not found. Make sure users.json is in the /data folder.');
+                users = await response.json();
+                renderTable();
+                updateJsonOutput();
+            } catch (error) {
+                alert(`Error loading users.json: ${error.message}`);
+            }
+        };
+
+        // Render the user table
+        const renderTable = () => {
+            tableBody.innerHTML = '';
+            users.forEach(user => {
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.username}</td>
+                    <td>${user.role}</td>
+                    <td>
+                        <button class="edit-btn" data-id="${user.id}">Edit</button>
+                        <button class="delete-btn btn-danger" data-id="${user.id}">Delete</button>
+                    </td>
+                `;
+            });
+        };
+
+        // Update the output textarea
+        const updateJsonOutput = () => {
+            jsonOutput.value = JSON.stringify(users, null, 2);
+        };
+
+        // Handle form submission (Add or Update)
+        userForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = userIdInput.value;
+            const user = {
+                name: nameInput.value,
+                username: usernameInput.value,
+                password: passwordInput.value,
+                role: roleInput.value,
+                // Add default properties for a new user
+                class: "N/A",
+                profilePicture: "assets/profile_picture/default.jpeg"
+            };
+
+            if (id) { // Updating an existing user
+                const index = users.findIndex(u => u.id === id);
+                users[index] = { ...users[index], ...user }; // Keep original ID and other props
+            } else { // Adding a new user
+                user.id = `user_${Date.now()}`; // Generate a unique ID
+                users.push(user);
+            }
+            
+            renderTable();
+            updateJsonOutput();
+            resetForm();
+        });
+
+        // Handle table clicks (Edit or Delete)
+        tableBody.addEventListener('click', (e) => {
+            const id = e.target.dataset.id;
+            if (e.target.classList.contains('edit-btn')) {
+                const user = users.find(u => u.id === id);
+                formTitle.textContent = 'Edit User';
+                submitBtn.textContent = 'Update User';
+                cancelEditBtn.style.display = 'inline-block';
+                userIdInput.value = user.id;
+                nameInput.value = user.name;
+                usernameInput.value = user.username;
+                passwordInput.value = user.password;
+                roleInput.value = user.role;
+            } else if (e.target.classList.contains('delete-btn')) {
+                if (confirm(`Are you sure you want to delete user: ${users.find(u=>u.id===id).name}?`)) {
+                    users = users.filter(u => u.id !== id);
+                    renderTable();
+                    updateJsonOutput();
+                }
+            }
+        });
+        
+        // Reset form to "Add User" mode
+        const resetForm = () => {
+            userForm.reset();
+            userIdInput.value = '';
+            formTitle.textContent = 'Add New User';
+            submitBtn.textContent = 'Add User';
+            cancelEditBtn.style.display = 'none';
+        };
+
+        cancelEditBtn.addEventListener('click', resetForm);
+        
+        // Initial load
+        loadUsers();
+    });
+    </script>
+</body>
+</html>

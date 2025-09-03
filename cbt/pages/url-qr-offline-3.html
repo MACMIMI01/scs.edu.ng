@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Code Generator</title>
+    <!-- Use a reliable CDN for the qrcode.js library -->
+    <script src="..scripts/js/qrcode.min.js"></script>
+    
+    <script type="text/javascript" src="../scripts/qrcode.js"></script>
+</head>
+<body>
+
+    <h1>QR Code Generator</h1>
+
+    <input type="text" id="urlInput" placeholder="Enter URL here" value="https://www.google.com" size="50">
+    <button onclick="generateQrCode()">Generate QR Code</button>
+
+    <br><br>
+
+    <!-- This is where the QR code will be displayed -->
+    <div id="qrcode"></div>
+
+    <script type="text/javascript">
+        var qrcode = null; // Variable to hold the QR code object
+
+        function generateQrCode() {
+            var url = document.getElementById("urlInput").value;
+            var qrCodeContainer = document.getElementById("qrcode");
+
+            // Clear the previous QR code if it exists
+            qrCodeContainer.innerHTML = "";
+
+            // Create a new QR code
+            qrcode = new QRCode(qrCodeContainer, {
+                text: url,
+                width: 256,
+                height: 256,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        // Generate a QR code for the default value on page load
+        window.onload = generateQrCode;
+    </script>
+
+</body>
+</html>
