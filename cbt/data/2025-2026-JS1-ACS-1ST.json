@@ -1,0 +1,72 @@
+{
+  "testName": "JUNIOR CLASS ONE 1ST TERM AGRICULTURAL SCIENCE EXAM 2025/2026",
+  "instructorName": "Mrs Chimaobi",
+  "questions": [
+    {
+      "question": "Study the diagram carefully. This is known as _______.",
+      "imageURL": "../assets/images/questions/farm_basket.png",
+      "options": [
+        "Harvesting tool",
+        "Weeding tool",
+        "Tilling tool",
+        "Irrigation tool"
+      ],
+      "correctAnswer": "Harvesting tool"
+    },
+    {
+      "question": "Which of the following is a primary source of protein for farm animals?",
+      "imageURL": "../assets/images/questions/farm-animal.jpeg",
+      "options": [
+        "Water",
+        "Soybean meal",
+        "Cassava peels",
+        "Salt"
+      ],
+      "correctAnswer": "Soybean meal"
+    },
+    {
+      "question": "The branch of agriculture concerned with the cultivation of fruits, vegetables, and flowers is called:",
+      "imageURL": "../assets/images/questions/fruit.jpeg",
+      "options": [
+        "Apiculture",
+        "Horticulture",
+        "Agronomy",
+        "Aquaculture"
+      ],
+      "correctAnswer": "Horticulture"
+    },
+    {
+      "question": "Which of these is a method of preventing soil erosion?",
+      "imageURL": "../assets/images/questions/soil.polution.jpeg",
+      "options": [
+        "Overgrazing",
+        "Deforestation",
+        "Bush burning",
+        "Planting cover crops"
+      ],
+      "correctAnswer": "Planting cover crops"
+    },
+    {
+      "question": "A young goat is called a _______.",
+      "imageURL": "../assets/images/questions/goat.jpeg",
+      "options": [
+        "Lamb",
+        "Calf",
+        "Kid",
+        "Piglet"
+      ],
+      "correctAnswer": "Kid"
+    },
+    {
+      "question": "A young goat is called a _______.",
+      "imageURL": "../assets/images/questions/kid.jpeg",
+      "options": [
+        "Lamb",
+        "Calf",
+        "Kid",
+        "Piglet"
+      ],
+      "correctAnswer": "Kid"
+    }
+  ]
+}
