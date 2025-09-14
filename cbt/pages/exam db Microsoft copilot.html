@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Database Generator</title>
+    <link rel="stylesheet" href="https:                                                                   
+    <link rel="stylesheet" <link rel="stylesheet" href="../scripts/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #020169;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section h2 {
+            margin-top: 0;
+        }
+        .section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .section ul li {
+            margin-bottom: 10px;
+        }
+        .filter-btn {
+            margin-right: 10px;
+        }
+        .search-bar {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+        <h1>Exam Database Generator</h1>
+        <div class="section">
+            <h2>Select Classes</h2>
+            <select id="class-select" multiple>
+                <option value="JS1">JS1</option>
+                <option value="JS2">JS2</option>
+                <option value="JS3">JS3</option>
+                <option value="SS1">SS1</option>
+                <option value="SS2">SS2</option>
+                <option value="SS3">SS3</option>
+            </select>
+        </div>
+        <div class="section">
+            <h2>Select Academic Session</h2>
+            <input type="number" id="academic-session" placeholder="Enter academic session year">
+        </div>
+        <div class="section">
+            <h2>Select Terms</h2>
+            <input type="checkbox" id="term-1st" value="1ST">
+            <label for="term-1st">1ST Term</label>
+            <input type="checkbox" id="term-2nd" value="2ND">
+            <label for="term-2nd">2ND Term</label>
+            <input type="checkbox" id="term-3rd" value="3RD">
+            <label for="term-3rd">3RD Term</label>
+        </div>
+        <div class="section">
+            <h2>Select Subjects</h2>
+            <input type="text" id="subject-search" placeholder="Search subjects">
+            <button id="show-all-subjects">Show All Subjects</button>
+            <button id="show-junior-subjects">Show Junior Subjects</button>
+            <button id="show-senior-subjects">Show Senior Subjects</button>
+            <ul id="subject-list">
+                <!-- junior subjects -->
+                <li><input type="checkbox" id="acs" value="ACS"><label for="acs">Agricultural Science</label></li>
+                <li><input type="checkbox" id="bsci" value="BSCI"><label for="bsci">Basic Science</label></li>
+                <li><input type="checkbox" id="btec" value="BTEC"><label for="btec">Basic Technology</label></li>
+                <li><input type="checkbox" id="bst" value="BST"><label for="bst">Business Studies</label></li>
+                <li><input type="checkbox" id="crs" value="CRS"><label for="crs">Christian Religious Studies</label></li>
+                <li><input type="checkbox" id="civ" value="CIV"><label for="civ">Civic Education</label></li>
+                <li><input type="checkbox" id="com" value="COM"><label for="com">Computer Studies</label></li>
+                <!-- senior subjects -->
+                <li><input type="checkbox" id="phy" value="PHY"><label for="phy">Physics</label></li>
+                <li><input type="checkbox" id="chem" value="CHEM"><label for="chem">Chemistry</label></li>
+                <li><input type="checkbox" id="bio" value="BIO"><label for="bio">Biology</label></li>
+            </ul>
+        </div>
+        <button id="generate-json">Generate JSON</button>
+        <div id="json-output"></div>
+    </div>
+    <script>
+        // Get the selected classes
+        const classSelect = document.getElementById('class-select');
+        const academicSessionInput = document.getElementById('academic-session');
+        const termCheckboxes = document.querySelectorAll('input[type="checkbox"][id^="term-"]');
+        const subjectCheckboxes = document.querySelectorAll('#subject-list input[type="checkbox"]');
+        const generateJsonButton = document.getElementById('generate-json');
+        const jsonOutputDiv = document.getElementById('json-output');
+        
+        generateJsonButton.addEventListener('click', () => {
+    const selectedClasses = Array.from(classSelect.selectedOptions).map(option => option.value);
+    const academicSession = academicSessionInput.value;
+    const selectedTerms = Array.from(termCheckboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
+    const selectedSubjects = Array.from(subjectCheckboxes).filter(checkbox => checkbox.checked).map(checkbox => ({
+        id: checkbox.id,
+        value: checkbox.value,
+        label: checkbox.nextElementSibling.textContent,
+    }));
+
+    const jsonData = {
+        classes: selectedClasses,
+        academicSession: `${academicSession}-${parseInt(academicSession) + 1}`,
+        terms: selectedTerms,
+        subjects: selectedSubjects,
+    };
+
+    const formattedJsonData = {};
+
+    selectedClasses.forEach((classValue) => {
+        formattedJsonData[classValue] = selectedSubjects.map(subject => ({
+            fileName: `${jsonData.academicSession}-${classValue}-${subject.value}-${selectedTerms[0]}`,
+            displayName: `${classValue === 'JS1' || classValue === 'JS2' || classValue === 'JS3' ? 'BASIC ' + classValue.slice(2) : 'SENIOR SECONDARY ' + classValue.slice(2)} ${selectedTerms[0]} TERM ${subject.label.toUpperCase()} EXAM ${jsonData.academicSession}`,
+        }));
+    });
+
+    const formattedJson = JSON.stringify(formattedJsonData, null, 2);
+    jsonOutputDiv.textContent = formattedJson;
+});
+</script>
+</body>
+</html>

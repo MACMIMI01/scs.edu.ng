@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<!-- exam-Maker.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../scripts/css/font-awesome.min.css">
+    <title>Advanced Exam-to-JSON Converter</title>
+    <style>
+        :root { --primary-color: #020169; --accent-color: #FEC009; --light-gray: #f0f2f5; --dark-text: #333; --error-color: #dc3545; }
+        body { font-family: Arial, sans-serif; background-color: var(--light-gray); margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        h1, h2 { color: var(--primary-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 20px; }
+        textarea { width: 100%; min-height: 200px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em; box-sizing: border-box; resize: vertical; margin-bottom: 10px; }
+        button { background-color: var(--primary-color); color: #fff; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; transition: all 0.3s ease; }
+        button:hover { background-color: var(--accent-color); color: var(--primary-color); }
+        button:disabled { background-color: #ccc; cursor: not-allowed; }
+        #step-2, #step-3 { display: none; }
+        .review-question { border: 1px solid #ccc; border-radius: 8px; padding: 20px; margin-bottom: 20px; background-color: #fafafa; }
+        .review-question.no-options { border-left: 5px solid var(--error-color); }
+        .review-question p { font-weight: bold; margin-top: 0; }
+        .review-options { list-style: none; padding: 0; }
+        .review-options li { padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-top: 5px; cursor: pointer; transition: background-color 0.2s; }
+        .review-options li:hover { background-color: #e9ecef; }
+        .review-options li.selected { background-color: #28a745; color: white; border-color: #28a745; font-weight: bold; }
+        #final-json-output { white-space: pre; background-color: #2d333b; color: #cdd9e5; padding: 15px; border-radius: 5px; font-family: monospace; overflow-x: auto; }
+        .copy-btn { float: right; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Advanced Exam-to-JSON Converter</h1>
+
+        <!-- =========== STEP 1: PASTE RAW TEXT =========== -->
+        <div id="step-1">
+            <h2>Step 1: Paste Your Exam Questions</h2>
+            <p>Copy the entire exam paper, first type the header, carefully using the pattern below, follow by your exam questions Paste it into the box below.</p>
+            <textarea id="raw-text-input" placeholder="
+SECOND TERM EXAMINATION 2024/2025 ACADEMIC SESSION
+CLASS: BASIC ONE
+SUBJECT: DICTION
+INSTRUCTOR: SIR FEDLIS...">FIRST TERM EXAMINATION 2025/2026 ACADEMIC SESSION
+CLASS: BASIC SEVEN LAVENDER
+SUBJECT: AGRICULTURAL SCIENCE
+INSTRUCTOR: MRS CHIMAOBI RACHAEL
+</textarea>
+            <button id="parse-btn">Parse Exam Paper</button>
+        </div>
+
+        <!-- =========== STEP 2: REVIEW AND SELECT ANSWERS =========== -->
+        <div id="step-2">
+            <h2>Step 2: Review and Select Correct Answers</h2>
+            <p>We've parsed your questions. Please click the correct answer for each. Questions without options are highlighted in red and will be skipped.</p>
+            <div id="review-container"></div>
+            <button id="generate-json-btn" disabled>Generate JSON File</button>
+        </div>
+
+        <!-- =========== STEP 3: COPY FINAL JSON =========== -->
+        <div id="step-3">
+            <h2>Step 3: Copy Your Final JSON Script</h2>
+            <p>Your exam file is ready! Copy the text below and save it as a <code style="background: #e9ecef; padding: 2px 5px; border-radius: 3px;">.json</code> file.</p>
+            <button id="copy-btn" class="copy-btn">Copy to Clipboard</button>
+            <pre><code id="final-json-output"></code></pre>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const step1 = document.getElementById('step-1');
+        const step2 = document.getElementById('step-2');
+        const step3 = document.getElementById('step-3');
+        const rawTextInput = document.getElementById('raw-text-input');
+        const parseBtn = document.getElementById('parse-btn');
+        const reviewContainer = document.getElementById('review-container');
+        const generateJsonBtn = document.getElementById('generate-json-btn');
+        const finalJsonOutput = document.getElementById('final-json-output');
+        const copyBtn = document.getElementById('copy-btn');
+        
+        let parsedQuestions = [];
+        let examTitle = "Generated Exam";
+
+        // --- Event Listener for Step 1 Button ---
+        parseBtn.addEventListener('click', () => {
+            const rawText = rawTextInput.value.trim();
+            if (!rawText) return alert('Please paste some text first.');
+
+            // --- THE NEW, ADVANCED LINE-BY-LINE PARSER ---
+            const lines = rawText.split('\n').filter(line => line.trim() !== '');
+            parsedQuestions = [];
+            let currentQuestion = null;
+
+            // --- Part 1: Auto-detect Headers ---
+            const sessionLine = lines.find(l => l.toUpperCase().includes('SESSION')) || "UNKNOWN SESSION";
+            const classLine = lines.find(l => l.toUpperCase().startsWith('CLASS:')) || "CLASS: UNKNOWN";
+            const subjectLine = lines.find(l => l.toUpperCase().startsWith('SUBJECT:')) || "SUBJECT: UNKNOWN";
+            const instructorLine = lines.find(l => l.toUpperCase().startsWith('INSTRUCTOR:')) || "INSTRUCTOR: UNKNOWN";
+            examTitle = `${classLine.replace('CLASS:', '').trim()} - ${subjectLine.replace('SUBJECT:', '').trim()} - ${sessionLine.trim()}`;
+            instructorName = `${instructorLine.replace('INSTRUCTOR:', '').trim()}`;
+
+
+            // --- Part 2: Parse Questions and Options ---
+            const optionRegex = /\s*\([A-E]\)\.?\s*(.*)/; // Matches "(A). Option Text" or "(A) Option Text"
+
+            for (const line of lines) {
+                const trimmedLine = line.trim();
+                
+                // Check if the line starts with a number like "1." or "12."
+                if (/^\d+\.\s*/.test(trimmedLine)) {
+                    // If we were building a previous question, save it.
+                    if (currentQuestion) {
+                        parsedQuestions.push(currentQuestion);
+                    }
+                    // Start a new question object
+                    currentQuestion = {
+                        question: trimmedLine.replace(/^\d+\.\s*/, ''), // Remove the "1. " part
+                        options: [],
+                        correctAnswer: null
+                    };
+                } else if (currentQuestion) {
+                    // This line is part of the current question, either as more text or as options.
+                    // We'll append it to the question text. The options will be extracted later.
+                    currentQuestion.question += ' ' + trimmedLine;
+                }
+            }
+            // Add the very last question to the list
+            if (currentQuestion) {
+                parsedQuestions.push(currentQuestion);
+            }
+
+            // --- Part 3: Extract Options from the parsed question text ---
+            parsedQuestions.forEach(q => {
+                const parts = q.question.split(/\s*\([A-E]\)\.?\s*/);
+                if (parts.length > 1) {
+                    q.question = parts[0].trim(); // The first part is the actual question
+                    q.options = parts.slice(1).map(opt => opt.trim()); // The rest are options
+                }
+            });
+
+            if (parsedQuestions.length === 0) {
+                alert("Could not parse any questions. Please check the format.");
+                return;
+            }
+
+            displayReviewQuestions();
+            step1.style.display = 'none';
+            step2.style.display = 'block';
+        });
+
+        function displayReviewQuestions() {
+            reviewContainer.innerHTML = '';
+            parsedQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'review-question';
+                
+                let contentHTML = `<p>${index + 1}. ${q.question}</p>`;
+
+                if (q.options.length > 0) {
+                    contentHTML += '<ul class="review-options">';
+                    q.options.forEach((opt, optIndex) => {
+                        contentHTML += `<li data-q-index="${index}" data-opt-index="${optIndex}">${opt}</li>`;
+                    });
+                    contentHTML += '</ul>';
+                } else {
+                    questionDiv.classList.add('no-options');
+                    contentHTML += '<p style="color: red; font-weight: normal;">No options found for this question. make sure options are on the following format bracket open and close with a dot (A). (B). (C). (D). or  It will be skipped.</p>';
+                }
+
+                questionDiv.innerHTML = contentHTML;
+                reviewContainer.appendChild(questionDiv);
+            });
+            checkIfAllAnswered(); // Initial check
+        }
+        
+        reviewContainer.addEventListener('click', (e) => {
+            if (e.target.tagName === 'LI') {
+                const questionIndex = e.target.dataset.qIndex;
+                const optionIndex = e.target.dataset.optIndex;
+                parsedQuestions[questionIndex].correctAnswer = parsedQuestions[questionIndex].options[optionIndex];
+
+                const siblingOptions = e.target.parentElement.querySelectorAll('li');
+                siblingOptions.forEach(li => li.classList.remove('selected'));
+                e.target.classList.add('selected');
+                
+                checkIfAllAnswered();
+            }
+        });
+
+        function checkIfAllAnswered() {
+            // Only consider questions that have options to be answerable
+            const answerableQuestions = parsedQuestions.filter(q => q.options.length > 0);
+            const allAnswered = answerableQuestions.every(q => q.correctAnswer !== null);
+            generateJsonBtn.disabled = !allAnswered || answerableQuestions.length === 0;
+        }
+
+        generateJsonBtn.addEventListener('click', () => {
+            // Filter out questions that had no options
+            const finalQuestions = parsedQuestions.filter(q => q.options.length > 0);
+
+            const finalJsonObject = {
+                testName: examTitle,
+                instructorName: instructorName,
+                questions: finalQuestions
+            };
+
+            finalJsonOutput.textContent = JSON.stringify(finalJsonObject, null, 2);
+            step2.style.display = 'none';
+            step3.style.display = 'block';
+        });
+        
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(finalJsonOutput.textContent).then(() => {
+                copyBtn.textContent = 'Copied!';
+                setTimeout(() => { copyBtn.textContent = 'Copy to Clipboard'; }, 2000);
+            }).catch(err => alert('Failed to copy.'));
+        });
+    });
+    </script>
+</body>
+</html>

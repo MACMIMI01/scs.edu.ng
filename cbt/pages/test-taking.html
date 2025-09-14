@@ -1,0 +1,72 @@
+<!-- pages/test-taking.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Take Test | TestHall</title>
+  <link rel="stylesheet" href="../assets/styles/styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="test-library.html">Test Library</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="login.html">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <h1>Take Test</h1>
+      <p>Test Name: <span id="test-name"></span></p>
+      <p>Test ID: <span id="test-id"></span></p>
+      <p>Time Remaining: <span id="time-remaining">00:00</span></p>
+    </section>
+    <section>
+      <form id="test-form">
+        <!-- populated with test questions -->
+      </form>
+    </section>
+  </main>
+  <script src="../assets/scripts/script.js"></script>
+  <script>
+    // Get the test file name from the URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const testFile = urlParams.get('test');
+
+    if (testFile) {
+      // Load test data and populate form
+      loadTestData(testFile)
+        .then(testData => {
+          document.getElementById('test-name').textContent = testData.name;
+          document.getElementById('test-id').textContent = testData.id;
+          populateTestForm(testData);
+        })
+        .catch(error => {
+          window.location.href = '404.html';
+        });
+    } else {
+      console.error('No test file specified');
+      window.location.href = '404.html';
+    }
+
+    // Timer functionality
+    let timeRemaining = 3600; // 1 hour
+    let timer = setInterval(() => {
+      timeRemaining--;
+      let minutes = Math.floor(timeRemaining / 60);
+      let seconds = timeRemaining % 60;
+      document.getElementById("time-remaining").innerHTML = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      if (timeRemaining === 0) {
+        clearInterval(timer);
+        // Submit test automatically
+        document.getElementById("test-form").submit();
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
