@@ -15,6 +15,19 @@
   },
   {
     "id": 2,
+    "username": "ADAEZE",
+    "date of birth": "2012-03-01",
+    "password": "OnlyoneADA",
+    "name": "JIKEME ADAEZE CLARE",
+    "role": "Student",
+    "class": "Senior Class One",
+    "classid": "SS1",
+    "gender": "Female",
+    "email": "ADAEZE@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 3,
     "username": "alfred_ss1",
     "date_of_birth": "2007-02-14",
     "password": "password123",
@@ -28,7 +41,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 3,
+    "id": 4,
     "username": "amaka_n2",
     "date_of_birth": "2017-06-05",
     "password": "password123",
@@ -42,7 +55,20 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 4,
+    "id": 5,
+    "username": "anita",
+    "date of birth": "2011-04-02",
+    "password": "anita123",
+    "name": "MONDAY ANITA ONIYEY",
+    "role": "Student",
+    "class": "Senior Class Two",
+    "classid": "SS2",
+    "gender": "Female",
+    "email": "anita@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 6,
     "username": "anointedchibuzor804@gmail.com",
     "date of birth": "2012-05-29",
     "password": "Anointed2012#",
@@ -53,13 +79,13 @@
     "classid": "SS1",
     "gender": "Male",
     "email": "anointedchibuzor804@scs.com",
-    "profilePicture": "../assets/profile_pictures/anointed.jpeg"
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 5,
-    "username": "Barbie.5F",
+    "id": 8,
+    "username": "Barbie.SF",
     "date of birth": "2014-05-03",
-    "password": "Barbie, Frozen,Sofia.",
+    "password": "Barbie,Frozen,Sofia.",
     "name": "Tovia Ngozichukwuka Ojougboh",
     "role": "student",
     "details": "Math Champion",
@@ -70,7 +96,7 @@
     "profilePicture": "../assets/profile_pictures/tovia.jpeg"
   },
   {
-    "id": 6,
+    "id": 9,
     "username": "basic 7",
     "date of birth": "1960-01-12",
     "password": "lavender",
@@ -81,9 +107,35 @@
     "gender": "Female",
     "email": "basic7@scs.com",
     "profilePicture": "../assets/profile_pictures/lavender.jpeg"
-  },  
+  },
   {
-    "id": 7,
+    "id": 10,
+    "username": "BEUTIE",
+    "date of birth": "2012-11-23",
+    "password": "BESTIE231",
+    "name": "TUNDE BEST OYINDAMOLA",
+    "role": "Student",
+    "class": "Senior Class One",
+    "classid": "SS1",
+    "gender": "Female",
+    "email": "BEUTIE@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 11,
+    "username": "Brenda Curvy",
+    "date of birth": "2011-10-21",
+    "password": "password123",
+    "name": "BRENDALENE ISIOMA ENELIBE",
+    "role": "Student",
+    "class": "Senior Class One",
+    "classid": "SS1",
+    "gender": "Female",
+    "email": "Brenda Curvy@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 12,
     "username": "Chi Baby",
     "date of birth": "2014-11-23",
     "password": "08165704112",
@@ -97,7 +149,7 @@
     "profilePicture": "../assets/profile_pictures/excel.jpeg"
   },
   {
-    "id": 8,
+    "id": 13,
     "username": "chi_b5b",
     "date_of_birth": "2009-06-15",
     "password": "password123",
@@ -111,7 +163,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 9,
+    "id": 14,
     "username": "Chibaby",
     "date of birth": "2013-10-17",
     "password": "CHI123",
@@ -125,21 +177,21 @@
     "profilePicture": "../assets/profile_pictures/chibaby.jpeg"
   },
   {
-    "id": 10,
+    "id": 15,
     "username": "chidinma_b2b",
     "date_of_birth": "2012-08-25",
     "password": "password123",
     "name": "Chidinma Obi",
     "role": "student",
     "details": "Loves art and crafts",
-    "class": "Basic Two",
+    "class": "Basic Two Dasiy",
     "classid": "B2B",
     "gender": "Female",
     "email": "chidinma.b2b@scs.com",
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 11,
+    "id": 16,
     "username": "chika_b9s",
     "date_of_birth": "2008-10-15",
     "password": "password123",
@@ -153,7 +205,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 12,
+    "id": 17,
     "username": "chinedu_B1B",
     "date_of_birth": "2013-05-12",
     "password": "password123",
@@ -167,7 +219,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 13,
+    "id": 18,
     "username": "chinwe_ss1",
     "date_of_birth": "2007-11-30",
     "password": "password123",
@@ -181,7 +233,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 14,
+    "id": 19,
     "username": "chioma_b8t",
     "date_of_birth": "2009-07-12",
     "password": "password123",
@@ -195,7 +247,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 15,
+    "id": 20,
     "username": "chioma_ike",
     "date_of_birth": "2009-11-20",
     "password": "password123",
@@ -209,7 +261,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 16,
+    "id": 21,
     "username": "classy baby",
     "date of birth": "2011-05-11",
     "password": "",
@@ -220,10 +272,10 @@
     "classid": "SS1",
     "gender": "Female",
     "email": "classybaby@scs.com",
-    "profilePicture": "../assets/profile_pictures/bethel.jpeg"
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 17,
+    "id": 22,
     "username": "cool babe",
     "date of birth": "2012-11-23",
     "password": "TUNDE",
@@ -236,7 +288,33 @@
     "profilePicture": "../assets/profile_pictures/best_oyindamola.jpeg"
   },
   {
-    "id": 18,
+    "id": 23,
+    "username": "daddy",
+    "date of birth": "2014-04-09",
+    "password": "314782(+)",
+    "name": "DESMOND ONYEBUCHI FRIDAY",
+    "role": "Student",
+    "class": "Basic Seven Lavender",
+    "classid": "JS1",
+    "gender": "Male",
+    "email": "daddy@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
+  },
+  {
+    "id": 24,
+    "username": "DADY",
+    "date of birth": "2012-04-27",
+    "password": "22259667798",
+    "name": "DIAMOND OLUCHI ONYEKA",
+    "role": "Student",
+    "class": "Basic Seven Lavender",
+    "classid": "JS1",
+    "gender": "Male",
+    "email": "DADY@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
+  },
+  {
+    "id": 25,
     "username": "Daniel Finisher",
     "date of birth": "2013-08-05",
     "password": "Aka Finisher",
@@ -247,24 +325,24 @@
     "classid": "JS3",
     "gender": "Male",
     "email": "danielfinisher@scs.com",
-    "profilePicture": "../assets/profile_pictures/finisher.jpeg"
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 19,
+    "id": 26,
     "username": "Daniel Oluwaboml Ogunlela",
     "date of birth": "2014-09-09",
     "password": "Mehdifxf",
     "name": "Daniel Oluwaboml Ogunlela",
     "role": "student",
     "details": "Math Champion",
-    "class": "Basic Eight Tulip1",
+    "class": "Basic Eight Tulip",
     "classid": "JS2",
     "gender": "Male",
     "email": "danieloluwabomol@scs.com",
     "profilePicture": "../assets/profile_pictures/daniel.jpeg"
   },
   {
-    "id": 20,
+    "id": 27,
     "username": "daniel_JS1",
     "date_of_birth": "2008-05-27",
     "password": "password123",
@@ -278,7 +356,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 21,
+    "id": 28,
     "username": "daniel_n1",
     "date_of_birth": "2017-06-12",
     "password": "password123",
@@ -292,7 +370,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 22,
+    "id": 29,
     "username": "daniel_n3",
     "date_of_birth": "2016-04-11",
     "password": "password123",
@@ -306,7 +384,20 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 23,
+    "id": 30,
+    "username": "Dave",
+    "date of birth": "0001-01-31",
+    "password": "IBuDeall,allDAVid",
+    "name": "DAVID IBUDE",
+    "role": "Student",
+    "class": "Basic Seven Lavender",
+    "classid": "JS1",
+    "gender": "Male",
+    "email": "Dave@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
+  },
+  {
+    "id": 31,
     "username": "David",
     "date of birth": "2012-01-11",
     "password": "0126",
@@ -320,7 +411,7 @@
     "profilePicture": "../assets/profile_pictures/david.jpeg"
   },
   {
-    "id": 24,
+    "id": 32,
     "username": "david_ss3",
     "date_of_birth": "2007-04-10",
     "password": "password123",
@@ -334,7 +425,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 25,
+    "id": 33,
     "username": "Dead Killer 2214",
     "date of birth": "2014-06-22",
     "password": "T@EG",
@@ -348,7 +439,20 @@
     "profilePicture": "../assets/profile_pictures/great_eniola.jpeg"
   },
   {
-    "id": 26,
+    "id": 34,
+    "username": "Di",
+    "date of birth": "2017-05-18",
+    "password": "6(6DOavwx9o9z23",
+    "name": "DAVID SOMTOCHUKWU ALFRED",
+    "role": "Student",
+    "class": "Basic Seven Lavender",
+    "classid": "JS1",
+    "gender": "Male",
+    "email": "Di@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
+  },
+  {
+    "id": 35,
     "username": "DIDI LOVE 128",
     "date of birth": "2013-04-30",
     "password": "JADE128",
@@ -359,10 +463,10 @@
     "classid": "JS3",
     "gender": "Female",
     "email": "didilove128@scs.com",
-    "profilePicture": "../assets/profile_pictures/divine_ekemba.jpeg"
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 27,
+    "id": 36,
     "username": "Divine8254",
     "date of birth": "2012-06-06",
     "password": "Divine 5324",
@@ -373,10 +477,23 @@
     "classid": "JS3",
     "gender": "Male",
     "email": "divine8254@scs.com",
-    "profilePicture": "../assets/profile_pictures/divine_monday.jpeg"
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 28,
+    "id": 37,
+    "username": "DoDo",
+    "date of birth": "2015-02-13",
+    "password": "Dominionuhure2025kingas6ooo",
+    "name": "DOMINION ONYEABUCHI UHURE",
+    "role": "Student",
+    "class": "Basic Seven Lavender",
+    "classid": "JS1",
+    "gender": "Male",
+    "email": "DoDo@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
+  },
+  {
+    "id": 38,
     "username": "E-boy",
     "date of birth": "1960-01-12",
     "password": "EDU2206108",
@@ -388,7 +505,7 @@
     "profilePicture": "../assets/profile_pictures/eboy.jpeg"
   },
   {
-    "id": 29,
+    "id": 39,
     "username": "ebele_b4b",
     "date_of_birth": "2010-08-22",
     "password": "password123",
@@ -402,7 +519,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 30,
+    "id": 40,
     "username": "ebele_n3",
     "date_of_birth": "2016-08-17",
     "password": "password123",
@@ -416,7 +533,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 31,
+    "id": 41,
     "username": "ecell",
     "date of birth": "1960-01-12",
     "password": "password123",
@@ -430,21 +547,21 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 32,
+    "id": 42,
     "username": "emeka_b2b",
     "date_of_birth": "2012-06-10",
     "password": "password123",
     "name": "Emeka Okoye",
     "role": "student",
     "details": "Enjoys sports and science",
-    "class": "Basic Two",
+    "class": "Basic Two Dasiy",
     "classid": "B2B",
     "gender": "Male",
     "email": "emeka.b2b@scs.com",
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 33,
+    "id": 43,
     "username": "emeka_b8t",
     "date_of_birth": "2009-03-23",
     "password": "password123",
@@ -458,7 +575,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 34,
+    "id": 44,
     "username": "emeka_okafor",
     "date_of_birth": "2010-08-23",
     "password": "password123",
@@ -472,7 +589,33 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 35,
+    "id": 45,
+    "username": "Faith",
+    "date of birth": "2015-05-18",
+    "password": "(EESSttEERR10)",
+    "name": "ESTHER OLUWAHOKI KAKA",
+    "role": "Student",
+    "class": "Basic Seven Lavender",
+    "classid": "JS1",
+    "gender": "Female",
+    "email": "Faith@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 46,
+    "username": "FAVOUR",
+    "date of birth": "2011-09-14",
+    "password": "FAVO543",
+    "name": "OSHOGBO GODSFAVOUR AMARACHI ",
+    "role": "Student",
+    "class": "Senior Class One",
+    "classid": "SS1",
+    "gender": "Female",
+    "email": "FAVOUR@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 47,
     "username": "felix_b9s",
     "date_of_birth": "2008-06-30",
     "password": "password123",
@@ -486,7 +629,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 36,
+    "id": 48,
     "username": "Fortune AKA@12",
     "date of birth": "2013-04-02",
     "password": "1414",
@@ -500,7 +643,7 @@
     "profilePicture": "../assets/profile_pictures/fortune.jpeg"
   },
   {
-    "id": 37,
+    "id": 49,
     "username": "fred_ss3",
     "date_of_birth": "2005-07-18",
     "password": "password123",
@@ -514,7 +657,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 38,
+    "id": 50,
     "username": "Gangster 241",
     "date of birth": "2014-03-02",
     "password": "SUNDAY EMMANUEL 2014@g.mail.com",
@@ -528,7 +671,20 @@
     "profilePicture": "../assets/profile_pictures/emmanuel_s.jpeg"
   },
   {
-    "id": 39,
+    "id": 51,
+    "username": "Gift Chukwuemeke",
+    "date of birth": "2011-08-04",
+    "password": "password123",
+    "name": "GIFT CHUKWUEMEKE",
+    "role": "Student",
+    "class": "Basic Nine Sunflower",
+    "classid": "JS3",
+    "gender": "Female",
+    "email": "Gift Chukwuemeke@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 52,
     "username": "grace_pn",
     "date_of_birth": "2018-04-22",
     "password": "password123",
@@ -542,7 +698,46 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 40,
+    "id": 53,
+    "username": "his noob",
+    "date of birth": "2013-02-08",
+    "password": "james2013123",
+    "name": "James Amechi Nwoye Onyesomazu",
+    "role": "Student",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Male",
+    "email": "his noob@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
+  },
+  {
+    "id": 54,
+    "username": "honeywell",
+    "date of birth": "2010-03-23",
+    "password": "honeypass2010",
+    "name": "IKUBOR HONEYWELL CHINEDU",
+    "role": "Student",
+    "class": "Senior Class One",
+    "classid": "SS1",
+    "gender": "Male",
+    "email": "honeywell@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
+  },
+  {
+    "id": 55,
+    "username": "IFE",
+    "date of birth": "2014-09-06",
+    "password": "IVANA",
+    "name": "CHUKWUEMEKE  IVA",
+    "role": "Student",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Female",
+    "email": "IFE@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 56,
     "username": "Ife Ife",
     "date of birth": "2013-03-20",
     "password": "6666",
@@ -553,10 +748,10 @@
     "classid": "JS3",
     "gender": "Female",
     "email": "ife@scs.com",
-    "profilePicture": "../assets/profile_pictures/ife.jpeg"
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 41,
+    "id": 57,
     "username": "ifeoma_b3b",
     "date_of_birth": "2011-07-20",
     "password": "password123",
@@ -570,7 +765,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 42,
+    "id": 58,
     "username": "ifeoma_ss3",
     "date_of_birth": "2005-11-29",
     "password": "password123",
@@ -584,8 +779,8 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 43,
-    "username": "IGwehGreat123",
+    "id": 59,
+    "username": "IgwehGreat123",
     "date of birth": "2012-02-05",
     "password": "159876423",
     "name": "Great Ameachi Igweh",
@@ -595,10 +790,23 @@
     "classid": "JS2",
     "gender": "Male",
     "email": "igwehgreat123@scs.com",
-    "profilePicture": "../assets/profile_pictures/igweh_great.jpeg"
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 44,
+    "id": 60,
+    "username": "ITOHAN",
+    "date of birth": "2014-04-12",
+    "password": "MIMI",
+    "name": "UWADIALE MTCHELLE",
+    "role": "Student",
+    "class": "Basic Eight Tulip",
+    "classid": "JS2",
+    "gender": "Female",
+    "email": "ITOHAN@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 61,
     "username": "james_JS1",
     "date_of_birth": "2010-09-01",
     "password": "password123",
@@ -612,7 +820,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 45,
+    "id": 62,
     "username": "john_daniels",
     "date_of_birth": "2009-03-15",
     "password": "password123",
@@ -626,7 +834,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 46,
+    "id": 63,
     "username": "john_ss2",
     "date_of_birth": "2006-08-22",
     "password": "password123",
@@ -640,7 +848,20 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 47,
+    "id": 64,
+    "username": "Josh",
+    "date of birth": "2016-06-01",
+    "password": "22112",
+    "name": "JOSEPH LONGE AYOOLA",
+    "role": "Student",
+    "class": "Basic Seven Lavender",
+    "classid": "JS1",
+    "gender": "Male",
+    "email": "Josh@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
+  },
+  {
+    "id": 65,
     "username": "joshua_pn",
     "date_of_birth": "2018-01-15",
     "password": "password123",
@@ -654,7 +875,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 48,
+    "id": 66,
     "username": "JSSONE",
     "date of birth": "2011-09-24",
     "password": "******",
@@ -668,7 +889,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 49,
+    "id": 67,
     "username": "JSSTHREE",
     "date of birth": "2011-09-24",
     "password": "******",
@@ -682,7 +903,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 50,
+    "id": 68,
     "username": "JSSTWO",
     "date of birth": "2011-09-24",
     "password": "******",
@@ -696,7 +917,20 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 51,
+    "id": 69,
+    "username": "Juanita_JMV",
+    "date of birth": "2011-08-14",
+    "password": "password123",
+    "name": "JUANITA IHIEKONYE IDUWE",
+    "role": "Student",
+    "class": "Senior Class One",
+    "classid": "SS1",
+    "gender": "Female",
+    "email": "Juanita_JMV@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 70,
     "username": "JycxJV",
     "date of birth": "2012-09-14",
     "password": "Ju1357",
@@ -710,7 +944,7 @@
     "profilePicture": "../assets/profile_pictures/jackvina.jpeg"
   },
   {
-    "id": 52,
+    "id": 71,
     "username": "ken baby-02",
     "date of birth": "2019-08-02",
     "password": "17492",
@@ -724,7 +958,7 @@
     "profilePicture": "../assets/profile_pictures/kendra.jpeg"
   },
   {
-    "id": 53,
+    "id": 72,
     "username": "Kendrew209",
     "date of birth": "2014-07-18",
     "password": "KO112124",
@@ -735,10 +969,10 @@
     "classid": "JS3",
     "gender": "Male",
     "email": "kendrew209@scs.com",
-    "profilePicture": "../assets/profile_pictures/kendrew.jpeg"
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 54,
+    "id": 73,
     "username": "Kendrick Lucky",
     "date of birth": "2013-03-18",
     "password": "KENDRICK2013",
@@ -749,10 +983,10 @@
     "classid": "JS3",
     "gender": "Male",
     "email": "kendricklucky@scs.com",
-    "profilePicture": "../assets/profile_pictures/kendrick.jpeg"
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 55,
+    "id": 74,
     "username": "koko",
     "date of birth": "2014-06-23",
     "password": "2014623",
@@ -766,7 +1000,20 @@
     "profilePicture": "../assets/profile_pictures/testimony.jpeg"
   },
   {
-    "id": 56,
+    "id": 75,
+    "username": "Kosy Joan",
+    "date of birth": "2012-07-12",
+    "password": "password123",
+    "name": "JOAN KOSISOCHUKWU ONYEAGHOR",
+    "role": "Student",
+    "class": "Senior Class One",
+    "classid": "SS1",
+    "gender": "Female",
+    "email": "Kosy Joan@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 76,
     "username": "lola_n1",
     "date_of_birth": "2017-09-05",
     "password": "password123",
@@ -780,19 +1027,19 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 57,
+    "id": 77,
     "username": "macmimi",
     "date of birth": "1960-01-12",
     "password": "password123",
     "name": "Miracle Chukwujindu Nkadi",
-    "role": "Web Developer",
+    "role": "webmaster",
     "class": "E-Library",
     "gender": "Male",
     "email": "webmaster@scs.com",
-    "profilePicture": "../assets/profile_pictures/team-2.gif"
+    "profilePicture": "../assets/profile_pictures/webmaster.jpeg"
   },
   {
-    "id": 58,
+    "id": 78,
     "username": "MacMimi",
     "date of birth": "1960-01-12",
     "password": "password123",
@@ -801,10 +1048,36 @@
     "class": "E-Library",
     "gender": "Male",
     "email": "webmaster@scs.com",
-    "profilePicture": "../assets/profile_pictures/team-2.gif"
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 59,
+    "id": 79,
+    "username": "mama",
+    "date of birth": "2016-03-16",
+    "password": "A(AnNaBeLlA)",
+    "name": "ANNABEL FUTURE CHUKWUDI",
+    "role": "Student",
+    "class": "Basic Seven Lavender",
+    "classid": "JS1",
+    "gender": "Female",
+    "email": "mama@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 80,
+    "username": "mama",
+    "date of birth": "2015-07-06",
+    "password": "you can no my password 123",
+    "name": "FEDORA NNAKE SAM-CHUKS",
+    "role": "Student",
+    "class": "Basic Seven Lavender",
+    "classid": "JS1",
+    "gender": "Female",
+    "email": "mama@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 81,
     "username": "mercy_JS1",
     "date_of_birth": "2010-12-15",
     "password": "password123",
@@ -818,7 +1091,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 60,
+    "id": 82,
     "username": "mia",
     "date of birth": "2015-09-28",
     "password": "2015",
@@ -832,7 +1105,7 @@
     "profilePicture": "../assets/profile_pictures/mia.jpeg"
   },
   {
-    "id": 61,
+    "id": 83,
     "username": "micheal_b5b",
     "date_of_birth": "2009-12-01",
     "password": "password123",
@@ -846,7 +1119,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 62,
+    "id": 84,
     "username": "mimilove10",
     "date of birth": "2014-01-10",
     "password": "mimispecial123",
@@ -857,10 +1130,10 @@
     "classid": "JS3",
     "gender": "Female",
     "email": "mimilove10@scs.com",
-    "profilePicture": "../assets/profile_pictures/mitchelle.jpeg"
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 63,
+    "id": 85,
     "username": "miss_namoi_esosa",
     "date_of_birth": "1985-02-14",
     "password": "password123",
@@ -874,7 +1147,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 64,
+    "id": 86,
     "username": "MONDAYMARVELOUS 2013@gmail.com",
     "date of birth": "2013-03-04",
     "password": "Maevel",
@@ -888,7 +1161,7 @@
     "profilePicture": "../assets/profile_pictures/marvelous.jpeg"
   },
   {
-    "id": 65,
+    "id": 87,
     "username": "morayo_JS1",
     "date_of_birth": "2008-10-11",
     "password": "password123",
@@ -902,7 +1175,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 66,
+    "id": 88,
     "username": "mr_aba_n1",
     "date_of_birth": "1982-03-24",
     "password": "password123",
@@ -916,7 +1189,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 67,
+    "id": 89,
     "username": "mr_chuks_b3b",
     "date_of_birth": "1975-05-10",
     "password": "password123",
@@ -930,7 +1203,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 68,
+    "id": 90,
     "username": "mr_david_ejima",
     "date_of_birth": "1980-11-10",
     "password": "password123",
@@ -944,7 +1217,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 69,
+    "id": 91,
     "username": "mr_fedlis_ss3",
     "date_of_birth": "1973-01-15",
     "password": "password123",
@@ -958,7 +1231,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 70,
+    "id": 92,
     "username": "mr_joseph_b5b",
     "date_of_birth": "1982-11-20",
     "password": "password123",
@@ -972,7 +1245,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 71,
+    "id": 93,
     "username": "mr_tunde_n3",
     "date_of_birth": "1980-11-23",
     "password": "password123",
@@ -986,7 +1259,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 72,
+    "id": 94,
     "username": "mrs_ada_B1B",
     "date_of_birth": "1980-02-20",
     "password": "password123",
@@ -1000,7 +1273,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 73,
+    "id": 95,
     "username": "mrs_chimaobi_ss2",
     "date_of_birth": "1978-10-25",
     "password": "password123",
@@ -1014,7 +1287,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 74,
+    "id": 96,
     "username": "mrs_chioma_b4b",
     "date_of_birth": "1985-07-10",
     "password": "password123",
@@ -1028,7 +1301,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 75,
+    "id": 97,
     "username": "mrs_fatima_b6b",
     "date_of_birth": "1980-08-30",
     "password": "password123",
@@ -1042,7 +1315,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 76,
+    "id": 98,
     "username": "mrs_jade_pn",
     "date_of_birth": "1980-02-17",
     "password": "password123",
@@ -1056,21 +1329,21 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 77,
+    "id": 99,
     "username": "mrs_joy_b2b",
     "date_of_birth": "1978-11-30",
     "password": "password123",
     "name": "Mrs Joy Eze",
     "role": "Teacher",
-    "details": "Form Teacher of Basic Two",
-    "class": "Basic Two",
+    "details": "Form Teacher of Basic Two Dasiy",
+    "class": "Basic Two Dasiy",
     "classid": "B2B",
     "gender": "Female",
     "email": "b2b@scs.com",
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 78,
+    "id": 100,
     "username": "mrs_mary_ss3",
     "date_of_birth": "1975-08-20",
     "password": "password123",
@@ -1084,7 +1357,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 79,
+    "id": 101,
     "username": "mrs_ngozi_n2",
     "date_of_birth": "1983-07-12",
     "password": "password123",
@@ -1098,7 +1371,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 80,
+    "id": 102,
     "username": "mrs_victory_ogbu",
     "date_of_birth": "1978-05-09",
     "password": "password123",
@@ -1112,7 +1385,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 81,
+    "id": 103,
     "username": "ngozi_B1B",
     "date_of_birth": "2013-09-15",
     "password": "password123",
@@ -1126,7 +1399,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 82,
+    "id": 104,
     "username": "ngozi_ss2",
     "date_of_birth": "2006-12-03",
     "password": "password123",
@@ -1140,7 +1413,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 83,
+    "id": 105,
     "username": "OC Special",
     "date of birth": "2012-06-06",
     "password": "OCN301",
@@ -1151,10 +1424,10 @@
     "classid": "JS3",
     "gender": "Female",
     "email": "cspecial@scs.com",
-    "profilePicture": "../assets/profile_pictures/cherish.jpeg"
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 84,
+    "id": 106,
     "username": "old man 254",
     "date of birth": "2014-04-11",
     "password": "25182",
@@ -1168,7 +1441,7 @@
     "profilePicture": "../assets/profile_pictures/emmanuel_o.jpeg"
   },
   {
-    "id": 85,
+    "id": 107,
     "username": "OMA",
     "date of birth": "2013-03-12",
     "password": "1913",
@@ -1179,10 +1452,23 @@
     "classid": "JS3",
     "gender": "Female",
     "email": "oma@scs.com",
-    "profilePicture": "../assets/profile_pictures/oma.jpeg"
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 86,
+    "id": 108,
+    "username": "owen",
+    "date of birth": "2015-11-16",
+    "password": "C9E79on",
+    "name": "OWEN OTITOCHUKWUKA EBIE",
+    "role": "Student",
+    "class": "Basic Seven Lavender",
+    "classid": "JS1",
+    "gender": "Male",
+    "email": "owen@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
+  },
+  {
+    "id": 109,
     "username": "paul_b3b",
     "date_of_birth": "2011-04-15",
     "password": "password123",
@@ -1196,7 +1482,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 87,
+    "id": 110,
     "username": "PHE",
     "date of birth": "1960-01-12",
     "password": "password123",
@@ -1205,10 +1491,23 @@
     "class": "E-Library",
     "gender": "Male",
     "email": "webmaster@scs.com",
-    "profilePicture": "../assets/profile_pictures/team-2.gif"
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 88,
+    "id": 111,
+    "username": "precious",
+    "date of birth": "0001-04-20",
+    "password": "(providence)B7L",
+    "name": "PROVIDENCE EHIM ENIM PRECIOUS EHIEDU",
+    "role": "Student",
+    "class": "Basic Seven Lavender",
+    "classid": "JS1",
+    "gender": "Female",
+    "email": "precious@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 112,
     "username": "PRINCE ODOZI",
     "date of birth": "2014-09-14",
     "password": "Princeodozi LY",
@@ -1222,7 +1521,20 @@
     "profilePicture": "../assets/profile_pictures/prince.jpeg"
   },
   {
-    "id": 89,
+    "id": 113,
+    "username": "Princess",
+    "date of birth": "2015-12-18",
+    "password": "password123",
+    "name": "CHRISTABEL CHUKWUAMAKA ODOZI",
+    "role": "Student",
+    "class": "Basic Seven Lavender",
+    "classid": "JS1",
+    "gender": "Female",
+    "email": "Princess@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
+  },
+  {
+    "id": 114,
     "username": "pro",
     "date of birth": "1960-01-12",
     "password": "password123",
@@ -1233,10 +1545,10 @@
     "classid": "JS1",
     "gender": "Female",
     "email": "pro@scs.com",
-    "profilePicture": "../assets/profile_pictures/id97.jpeg"
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 90,
+    "id": 115,
     "username": "rachel_ss3",
     "date_of_birth": "2007-11-05",
     "password": "password123",
@@ -1250,7 +1562,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 91,
+    "id": 116,
     "username": "Rosella",
     "date of birth": "2011-09-24",
     "password": "2011",
@@ -1261,10 +1573,10 @@
     "classid": "JS3",
     "gender": "Female",
     "email": "rosella@scs.com",
-    "profilePicture": "../assets/profile_pictures/rosella.jpeg"
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 92,
+    "id": 117,
     "username": "Scotty",
     "date of birth": "2014-11-02",
     "password": "08169895928",
@@ -1278,10 +1590,10 @@
     "profilePicture": "../assets/profile_pictures/scotty.jpeg"
   },
   {
-    "id": 93,
+    "id": 118,
     "username": "Shadow",
     "date of birth": "2014-01-20",
-    "password": "SonicxShadow",
+    "password": "speedy",
     "name": "Elvin Iyosayi Imafidon",
     "role": "student",
     "details": "Math Champion",
@@ -1289,10 +1601,10 @@
     "classid": "JS3",
     "gender": "Male",
     "email": "shadow@scs.com",
-    "profilePicture": "../assets/profile_pictures/elvin.jpeg"
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 94,
+    "id": 119,
     "username": "sir_alfred_apple",
     "date_of_birth": "1978-07-10",
     "password": "password123",
@@ -1306,7 +1618,20 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 95,
+    "id": 120,
+    "username": "son",
+    "date of birth": "2014-05-28",
+    "password": "008123",
+    "name": "ALEXANDER RAMENA PETER",
+    "role": "Student",
+    "class": "Basic Seven Lavender",
+    "classid": "JS1",
+    "gender": "Male",
+    "email": "son@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
+  },
+  {
+    "id": 121,
     "username": "SSSONE",
     "date of birth": "2011-09-24",
     "password": "******",
@@ -1320,11 +1645,11 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 96,
+    "id": 122,
     "username": "SSSTHREE",
     "date of birth": "2011-09-24",
     "password": "******",
-    "name": "Mr Fedlis",
+    "name": "Mrs Floursh",
     "role": "Teacher",
     "details": "Form Teacher",
     "class": "SENIOR CLASS THREE",
@@ -1334,7 +1659,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 97,
+    "id": 123,
     "username": "SSSTWO",
     "date of birth": "2011-09-24",
     "password": "******",
@@ -1348,7 +1673,7 @@
     "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 98,
+    "id": 124,
     "username": "success",
     "date of birth": "2025-05-20",
     "password": "2011",
@@ -1362,7 +1687,33 @@
     "profilePicture": "../assets/profile_pictures/safa.jpeg"
   },
   {
-    "id": 99,
+    "id": 125,
+    "username": "Sweet Heart",
+    "date of birth": "2025-09-23",
+    "password": "(512)",
+    "name": "SUNSHINE AFAM",
+    "role": "Student",
+    "class": "Basic Seven Lavender",
+    "classid": "JS1",
+    "gender": "Male",
+    "email": "Sweet Heart@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
+  },
+  {
+    "id": 126,
+    "username": "sweety",
+    "date of birth": "2015-07-16",
+    "password": "5829543852",
+    "name": "TRIUMPH ELUAGUNI MONDAY",
+    "role": "Student",
+    "class": "Basic Seven Lavender",
+    "classid": "JS1",
+    "gender": "Male",
+    "email": "sweety@scs.infy.uk",
+    "profilePicture": "../assets/profile_pictures/male.jpeg"
+  },
+  {
+    "id": 127,
     "username": "timothy_n2",
     "date_of_birth": "2017-02-10",
     "password": "password123",
@@ -1376,7 +1727,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 100,
+    "id": 128,
     "username": "tobi_b4b",
     "date_of_birth": "2010-03-12",
     "password": "password123",
@@ -1390,7 +1741,7 @@
     "profilePicture": "../assets/profile_pictures/male.jpeg"
   },
   {
-    "id": 101,
+    "id": 129,
     "username": "username",
     "date of birth": "0001-01-01",
     "password": "password",
@@ -1402,7 +1753,7 @@
     "profilePicture": "../assets/profile_pictures/memo.gif"
   },
   {
-    "id": 102,
+    "id": 130,
     "username": "Uwa",
     "date of birth": "2012-07-12",
     "password": "Sonia world",
@@ -1413,10 +1764,10 @@
     "classid": "SS2",
     "gender": "Female",
     "email": "uwa@scs.com",
-    "profilePicture": "../assets/profile_pictures/uwa.jpeg"
+    "profilePicture": "../assets/profile_pictures/female.jpeg"
   },
   {
-    "id": 103,
+    "id": 131,
     "username": "wealth264$@gmail.com",
     "date of birth": "2013-04-01",
     "password": "142013",
@@ -1430,7 +1781,7 @@
     "profilePicture": "../assets/profile_pictures/wealth.jpeg"
   },
   {
-    "id": 104,
+    "id": 132,
     "username": "WEBMASTER",
     "date of birth": "1960-01-12",
     "password": "password123",
@@ -1440,6 +1791,6 @@
     "class": "E-Library",
     "gender": "Male",
     "email": "webmaster@scs.com",
-    "profilePicture": "../assets/profile_pictures/team-2.gif"
+    "profilePicture": "../assets/profile_pictures/webmaster.jpeg"
   }
 ]
