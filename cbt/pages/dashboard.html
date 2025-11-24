@@ -1,572 +1,437 @@
 <!DOCTYPE html>
-<!-- dashboard.html -->
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home - TestHall</title>
-  <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
-  <link rel="stylesheet" href="../scripts/css/font-awesome.min.css">
-   <script src="../scripts/auth.js" defer></script>
-  <style>
-    /* Root colors */
-    :root {
-      --primary-color: #020169; /* Dark Blue */
-      --accent-color: #FEC009;  /* Yellow */
-      --background-color: #f0f2f5;
-      --text-dark: #333;
-      --text-light: #fff;
-      --text-muted: #666;
-      --card-bg: #fff;
-      --shadow-light: rgba(0, 0, 0, 0.1);
-      --shadow-hover: rgba(0, 0, 0, 0.15);
-    }
-
-    /* Reset and base */
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--background-color);
-      color: var(--text-dark);
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    /* Hamburger Icon */
-    .hamburger-icon {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      font-size: 30px;
-      color: var(--primary-color);
-      cursor: pointer;
-      z-index: 1100;
-      background-color: var(--accent-color);
-      padding: 6px 10px;
-      border-radius: 6px;
-      box-shadow: 0 3px 6px var(--shadow-light);
-      transition: background-color 0.3s ease;
-    }
-    .hamburger-icon:hover,
-    .hamburger-icon:focus {
-      background-color: #d9b007;
-      outline: none;
-    }
-
-    /* Off-canvas Navigation Menu */
-    .off-canvas-menu {
-      position: fixed;
-      top: 0;
-      left: -260px;
-      width: 260px;
-      height: 100%;
-      background-color: var(--primary-color);
-      color: var(--text-light);
-      padding-top: 90px;
-      box-sizing: border-box;
-      transition: left 0.3s ease-in-out;
-      z-index: 1050;
-      box-shadow: 3px 0 8px rgba(0, 0, 0, 0.4);
-      font-weight: 600;
-      user-select: none;
-    }
-    .off-canvas-menu.open {
-      left: 0;
-    }
-
-    .menu-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .menu-item {
-      display: flex;
-      align-items: center;
-      padding: 16px 24px;
-      cursor: pointer;
-      transition: background-color 0.25s ease;
-      font-size: 1.1rem;
-      border-left: 4px solid transparent;
-    }
-    .menu-item i {
-      font-size: 20px;
-      margin-right: 18px;
-      min-width: 28px;
-      text-align: center;
-    }
-    .menu-item:hover,
-    .menu-item:focus {
-      background-color: rgba(254, 192, 9, 0.2);
-      border-left-color: var(--accent-color);
-      outline: none;
-    }
-    .menu-item a {
-      color: inherit;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      width: 100%;
-    }
-
-    /* Main Content Area */
-    main {
-      margin-left: 0;
-      padding: 24px 32px 80px;
-      padding-top: 90px;
-      transition: margin-left 0.3s ease-in-out;
-      max-width: 960px;
-      margin-right: auto;
-      flex-grow: 1;
-      width: 100%;
-    }
-    .off-canvas-menu.open + main {
-      margin-left: 260px;
-    }
-
-    /* Headings */
-    #school-name {
-      text-align: center;
-      color: var(--primary-color);
-      font-weight: 700;
-      font-size: 2.2rem;
-      margin-bottom: 0.25rem;
-      user-select: none;
-    }
-    #moto {
-      text-align: center;
-      color: var(--primary-color);
-      font-style: italic;
-      font-weight: 500;
-      margin-top: 0;
-      margin-bottom: 1.5rem;
-      user-select: none;
-    }
-    #title-page {
-      text-align: center;
-      color: var(--accent-color);
-      font-weight: 700;
-      font-size: 1.8rem;
-      margin-bottom: 2rem;
-      user-select: none;
-    }
-
-    /* Dashboard Cards Container */
-    .dashboard-card-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-    @media (min-width: 1200px) {
-      .dashboard-card-container {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-    @media (min-width: 1600px) {
-      .dashboard-card-container {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-
-    /* Dashboard Cards */
-    .dashboard-card {
-      background-color: var(--card-bg);
-      padding: 28px 24px;
-      border-radius: 12px;
-      box-shadow: 0 6px 14px var(--shadow-light);
-      text-align: center;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      cursor: pointer;
-      user-select: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 180px;
-    }
-    .dashboard-card:hover,
-    .dashboard-card:focus {
-      transform: translateY(-6px);
-      box-shadow: 0 10px 25px var(--shadow-hover);
-      outline: none;
-    }
-    .dashboard-card i {
-      font-size: 44px;
-      color: var(--primary-color);
-      margin-bottom: 16px;
-      user-select: none;
-    }
-    .dashboard-card h3 {
-      color: var(--primary-color);
-      margin-bottom: 10px;
-      font-weight: 700;
-      font-size: 1.3rem;
-      user-select: none;
-    }
-    .dashboard-card p {
-      color: var(--text-muted);
-      font-size: 1rem;
-      line-height: 1.4;
-      user-select: none;
-    }
-
-    /* Minor Content Sections */
-    .Minor-content {
-      background-color: var(--card-bg);
-      padding: 28px 24px;
-      border-radius: 12px;
-      box-shadow: 0 6px 14px var(--shadow-light);
-      margin-top: 40px;
-      user-select: none;
-    }
-    .Minor-content:hover,
-    .Minor-content:focus-within {
-      box-shadow: 0 10px 25px var(--shadow-hover);
-      outline: none;
-    }
-    .Minor-content h2 {
-      color: var(--primary-color);
-      font-weight: 700;
-      margin-bottom: 16px;
-      user-select: none;
-    }
-    .Minor-content p,
-    .Minor-content li {
-      color: var(--text-muted);
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-    .Minor-content ol,
-    .Minor-content ul {
-      padding-left: 1.3rem;
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-    .Minor-content li strong {
-      color: var(--primary-color);
-    }
-
-    /* Profile Display Icon */
-    .profile-display-icon {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2.5px solid var(--text-light);
-      cursor: pointer;
-      z-index: 1100;
-      box-shadow: 0 2px 6px var(--shadow-light);
-      transition: transform 0.25s ease;
-    }
-    .profile-display-icon:hover,
-    .profile-display-icon:focus {
-      transform: scale(1.1);
-      outline: none;
-    }
-
-    /* Footer */
-    footer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      text-align: center;
-      padding: 12px 0;
-      background-color: var(--primary-color);
-      color: var(--accent-color);
-      font-weight: 600;
-      font-size: 0.95rem;
-      user-select: none;
-      z-index: 1000;
-      box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.15);
-    }
-
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
-      .off-canvas-menu {
-        width: 220px;
-        left: -220px;
-      }
-      .off-canvas-menu.open + main {
-        margin-left: 220px;
-      }
-      .dashboard-card-container {
-        grid-template-columns: 1fr;
-      }
-    }
-    @media (max-width: 480px) {
-      .hamburger-icon {
-        font-size: 26px;
-        top: 15px;
-        left: 15px;
-        padding: 5px 8px;
-      }
-      .profile-display-icon {
-        width: 44px;
-        height: 44px;
-        top: 15px;
-        right: 15px;
-      }
-      main {
-        padding: 20px 16px 80px;
-        padding-top: 80px;
-      }
-      .dashboard-card {
-        padding: 22px 18px;
-        min-height: 160px;
-      }
-      .dashboard-card i {
-        font-size: 38px;
-      }
-      .dashboard-card h3 {
-        font-size: 1.15rem;
-      }
-      .Minor-content {
-        padding: 22px 18px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="hamburger-icon" id="hamburger-icon">
-    <i class="fas fa-bars"></i>
-  </div>
-
-  <nav class="off-canvas-menu" id="off-canvas-menu">
-    <ul class="menu-list">
-      <li class="menu-item" id="dashboard-link">
-        <i class="fas fa-tachometer-alt"></i>
-        <span>Dashboard</span>
-      </li>      
-     <li class="menu-item" id="test-library-link">
-        <i class="fas fa-book"></i>
-        <span>Test Library</span>
-      </li>
-     <li class="menu-item" id="exam-library-link">
-        <i class="fas fa-pencil-alt"></i>
-        <span>Take An Exam</span>
-      </li>
-      <li class="menu-item" id="profile-link">
-        <i class="fas fa-user-tie"></i>
-        <span>My Profile</span>
-      </li>
-      <li class="menu-item" id="classes-link">
-        <i class="fas fa-users"></i>
-        <span>Classes</span>
-      </li>
-      <li class="menu-item" id="guide-faq-link">
-        <i class="fas fa-question-circle"></i>
-        <span>Guide & FAQ</span>
-      </li>
-      <li class="menu-item" id="about-link">
-        <i class="fas fa-info-circle"></i>
-        <span>About Us</span>
-      </li>
-      <li class="menu-item" id="contact-link">
-        <i class="fas fa-envelope"></i>
-        <span>Contact Us</span>
-      </li>
-      <li class="menu-item" onclick="window.location.href='gamehall.html'">
-       <i class="fas fa-gamepad"></i>
-       <span>Game Hall</span>
-       </li>
-      <li class="menu-item" id="logout-button">
-        <i class="fas fa-sign-out-alt"></i>
-        <span>Logout</span>
-      </li>          
-    </ul>
-  </nav>
-
-  <main id="main-content">
-    <h1>St. Christopher School</h1>
-    <h2>Best Our Only Option...</h2>
-    
-    <div class="dashboard-card-container">
-        <div class="dashboard-card" onclick="window.location.href='test-library.html'">
-            <i class="fas fa-scroll"></i>
-            <h3>Start a Test</h3>
-            <p>Browse available tests and begin your assessment.</p>
-        </div>
-                                       
-        <div class="dashboard-card" onclick="window.location.href='exam-library.html'">
-            <i class="fas fa-chalkboard-teacher"></i>
-            <h3> Upcoming Examination</h3>
-            <p>2025/2026 Academic Section.</p>
-        </div>                
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | SCS CBT</title>
+    <!-- Project Assets & Libraries -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Local Font Awesome Fallback -->
+    <link rel="stylesheet" href="../scripts/css/font-awesome.min.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
         
-        <div class="dashboard-card" onclick="window.location.href='profile.html'">
-            <i class="fas fa-user-circle"></i>
-            <h3>View Profile</h3>
-            <p>Manage your personal information and settings.</p>
-        </div>
-        <div class="dashboard-card" onclick="alert('Feature coming soon!');">
-            <i class="fas fa-chart-line"></i>
-            <h3>Performance Analytics</h3>
-            <p>Track your progress and identify areas for improvement.</p>
-        </div>
-        
-        <div class="dashboard-card" onclick="window.location.href='classes.html'">
-            <i class="fas fa-users"></i>
-            <h3>My Classes</h3>
-            <p>See your enrolled classes and assigned work.</p>
-        </div>
+        /*
+        ===================================================================
+            0. GLOBAL CONFIGURATION & BASE STYLES
+        ===================================================================
+        */
+        :root {
+            --primary-blue: #020169; /* Deep Tech Blue */
+            --accent-gold: #FEC009; /* Bright Gold/Amber */
+            --background-light: #f0f2f5;
+            --white: #ffffff;
+            --dark-text: #333;
+            --muted-text: #666;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+        }
+        * { box-sizing: border-box; }
+        body { 
+            margin: 0; 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--background-light); 
+            color: var(--dark-text);
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; /* For sticky footer */
+        }
+        ul { list-style: none; padding: 0; margin: 0; }
 
-        
-        <div class="dashboard-card" id="smart-dashboard-card">
-            <i class="fas fa-user-tie"></i>
-            <h3>DASHBOARD</h3>
-            <p>Return to your main dashboard home.</p>
- <!-- (Optional: I updated the text to be more descriptive) -->
-        </div>
-                 
-        <div class="dashboard-card" onclick="window.location.href='gamehall.html'">
-            <i class="fas fa-gamepad"></i>
-            <h3>GAME HALL</h3>
-            <p>Engage in educational game to improve your learning experience .</p>
-        </div>
-    </div>
+        /*
+        ===================================================================
+            1. RESPONSIVE NAVIGATION SYSTEM
+        ===================================================================
+        */
 
-    <section style="margin-top: 40px;">
-        <h2>FAQs</h2>
-        <ul>
-            <li><strong>Q: How do I take a test?</strong>
-                <p>A: To take a test, navigate to the Test Library page and select the test you want to take.</p>
-            </li>
-            <li><strong>Q: How do I view my test results?</strong>
-                <p>A: Your test results will be displayed on the dashboard page after you submit your test.</p>
-            </li>
-            </ul>
-    </section>
+        /* --- 1.1 Mobile/Tablet Navigation --- */
+        .hamburger-icon { 
+            display: block; 
+            position: fixed; 
+            top: 20px; 
+            left: 20px; 
+            font-size: 30px; 
+            color: var(--primary-blue); 
+            cursor: pointer; 
+            z-index: 1100; 
+            background-color: var(--accent-gold); 
+            padding: 6px 10px; 
+            border-radius: 6px; 
+            box-shadow: var(--shadow); 
+            border: none;
+            transition: var(--transition);
+        }
+        .sidebar { 
+            position: fixed; 
+            top: 0; 
+            left: -260px; /* Hidden by default (Mobile) */
+            width: 260px; 
+            height: 100%; 
+            background-color: var(--primary-blue); 
+            color: var(--white); 
+            padding-top: 90px; 
+            box-sizing: border-box; 
+            transition: left 0.3s ease-in-out; 
+            z-index: 1050; 
+            box-shadow: 3px 0 8px rgba(0,0,0,0.4); 
+        }
+        .sidebar.open { left: 0; } /* JS class for mobile view */
+        main { padding: 30px; padding-top: 90px; width: 100%; flex-grow: 1; } /* Main content on mobile */
 
-    <section style="margin-top: 40px;">
-        <h2>Guide</h2>
-        <p>This guide will walk you through the process of using our platform.</p>
-        <ol>
-            <li>Step 1: Create an account and log in.</li>
-            <li>Step 2: Navigate to the Test Library page and select a test.</li>
-            <li>Step 3: Take the test and submit your answers.</li>
-            <li>Step 4: View your test results on the dashboard page.</li>
-            <ul></ul>
-        </ol>
-        
-    </section>
-  </main>
-  
-  <img id="user-image-display" src="../assets/images/logo.png" alt="User Profile" class="profile-display-icon">
-  <footer>&copy; 2024 TestHall</footer>
-
-      <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const hamburgerIcon = document.getElementById('hamburger-icon');
-        const offCanvasMenu = document.getElementById('off-canvas-menu');
-        const profileDisplayIcon = document.getElementById('user-image-display');
-        const logoutButton = document.getElementById('logout-button');
-        
-        // --- Hamburger Menu Toggle ---
-        hamburgerIcon.addEventListener('click', () => {
-            offCanvasMenu.classList.toggle('open');
-        });
-
-        // ===================================================================
-        //                      *** THE MAIN FIX IS HERE ***
-        // ===================================================================
-
-        // --- Smart Navigation Links Setup ---
-        const dashboardLink = document.getElementById('dashboard-link');
-        const testLibraryLink = document.getElementById('test-library-link');
-        const examTakingLink = document.getElementById('exam-library-link');
-        const profileLink = document.getElementById('profile-link');
-        const classesLink = document.getElementById('classes-link');
-        const guideFaqLink = document.getElementById('guide-faq-link');
-        const aboutLink = document.getElementById('about-link');
-        const contactLink = document.getElementById('contact-link');
-
-        // SMART DASHBOARD LINK
-        dashboardLink.addEventListener('click', () => {
-            const userRole = localStorage.getItem('loggedInUserRole');
-            let dashboardUrl = 'dashboard.html'; // Default fallback
-            if (userRole) {
-                const role = userRole.toLowerCase();
-                if (role === 'admin') dashboardUrl = 'dashboard-admin.html';
-                else if (role === 'teacher') dashboardUrl = 'dashboard-teacher.html';
-                else if (role === 'student') dashboardUrl = 'dashboard-student.html';
-                else if (role === 'parent') dashboardUrl = 'dashboard-parents.html';
-            }
-            window.location.href = dashboardUrl;
-        });
-
-        // REGULAR LINKS (These don't need special logic)
-        testLibraryLink.addEventListener('click', () => { window.location.href = 'test-library.html'; });
-        examTakingLink.addEventListener('click', () => { window.location.href = 'exam-library.html'; });
-        profileLink.addEventListener('click', () => { window.location.href = 'profile.html'; });
-        classesLink.addEventListener('click', () => { window.location.href = 'classes.html'; });
-        guideFaqLink.addEventListener('click', () => { window.location.href = 'guide-FAQ.html'; });
-        aboutLink.addEventListener('click', () => { window.location.href = 'about.html'; });
-        contactLink.addEventListener('click', () => { window.location.href = 'contact.html'; });
-
-        // --- Authentication Check & Profile Display ---
-        const loggedInUserId = localStorage.getItem('loggedInUserId');
-        let studentData = {}; 
-
-        if (!loggedInUserId) {
-            // If not logged in, redirect to login page
-            window.location.href = 'login.html';
-            return; 
+        /* --- 1.2 Menu Item Styles (Shared) --- */
+        .menu-item { 
+            display: flex; 
+            align-items: center; 
+            padding: 16px 24px; 
+            cursor: pointer; 
+            transition: background-color 0.25s ease, border-left 0.25s ease; 
+            font-size: 1.1rem; 
+            border-left: 4px solid transparent; 
+        }
+        .menu-item i { font-size: 20px; margin-right: 18px; min-width: 28px; text-align: center; }
+        .menu-item span { white-space: nowrap; }
+        .menu-item:hover, .menu-item:focus { 
+            background-color: rgba(254, 192, 9, 0.2); 
+            border-left-color: var(--accent-gold); 
+            outline: none;
         }
 
-        fetch('../data/users.json')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (Array.isArray(data)) {
-                    studentData = data.find(user => user.id == loggedInUserId);
-                    if (!studentData) {
-                        console.warn(`User with ID ${loggedInUserId} not found in users.json. Using generic student data.`);
-                        studentData = { id: loggedInUserId, name: 'Generic Student', username: 'generic.user', 'date of birth': 'Unknown', role: 'Student' };
-                    }
-                } else {
-                    studentData = data;
-                }
+        /* --- 1.3 Profile Icon --- */
+        .profile-display-icon { 
+            position: fixed; 
+            top: 15px; 
+            right: 15px; 
+            width: 52px; 
+            height: 52px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            border: 2.5px solid var(--accent-gold); /* Highlight border */
+            cursor: pointer; 
+            z-index: 1100; 
+            box-shadow: var(--shadow); 
+            transition: transform 0.25s ease, border-color 0.25s ease; 
+        }
+        .profile-display-icon:hover { transform: scale(1.1); border-color: var(--primary-blue); }
 
-                if (profileDisplayIcon && studentData) {
-                    const profilePicPath = studentData.profilePicture && studentData.profilePicture !== '' 
-                                           ? studentData.profilePicture 
-                                           : '../assets/profile_pictures/default.jpeg';
-                    profileDisplayIcon.src = profilePicPath;
-                    profileDisplayIcon.alt = `${studentData.name}'s Profile Picture`;
-                    profileDisplayIcon.title = `Go to ${studentData.name}'s Profile`;
-                    profileDisplayIcon.style.cursor = 'pointer';
-                    profileDisplayIcon.onclick = () => {
-                        window.location.href = 'profile.html';
-                    };
-                }
-            })
-            .catch(error => {
-                console.error('Error loading student data:', error);
-                if (profileDisplayIcon) {
-                    profileDisplayIcon.src = '../assets/profile_pictures/default.jpeg';
-                    profileDisplayIcon.alt = 'Default Profile Picture';
-                    profileDisplayIcon.title = 'Default Profile';
-                    profileDisplayIcon.onclick = null;
-                }
+        /*
+        ===================================================================
+            2. DESKTOP OPTIMIZATION (min-width: 1024px)
+        ===================================================================
+        */
+        @media (min-width: 1024px) {
+            .hamburger-icon { display: none; }
+            /* Sidebar: Collapsed by default, visible */
+            .sidebar { left: 0; width: 80px; padding-top: 20px; transition: width 0.3s ease; }
+            /* Sidebar: Expanded on hover */
+            .sidebar:hover { width: 260px; }
+            
+            /* Main Content: Adjust margin for sidebar */
+            main { 
+                margin-left: 80px; 
+                width: calc(100% - 80px); 
+                transition: margin-left 0.3s ease, width 0.3s ease; 
+            }
+            /* Main Content: Push over when sidebar expands */
+            .sidebar:hover ~ main { 
+                margin-left: 260px; 
+                width: calc(100% - 260px);
+            }
+
+            /* Menu Text: Hide when collapsed, show on hover */
+            .menu-item span { opacity: 0; transition: opacity 0.2s ease; }
+            .sidebar:hover .menu-item span { opacity: 1; }
+        }
+
+        /*
+        ===================================================================
+            3. DASHBOARD CONTENT STYLES
+        ===================================================================
+        */
+
+        /* --- Header --- */
+        .welcome-header { margin-bottom: 40px; }
+        .welcome-header h1 { 
+            font-size: clamp(2rem, 4vw, 2.5rem); 
+            font-weight: 700; 
+            color: var(--primary-blue); 
+        }
+        .welcome-header p { 
+            font-size: 1.1rem; 
+            color: var(--muted-text); 
+            margin-top: 5px; 
+            border-bottom: 2px solid var(--accent-gold); 
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        /* --- Grid --- */
+        .dashboard-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 24px; 
+        }
+        .dashboard-card { 
+            background-color: var(--white); 
+            padding: 28px 24px; 
+            border-radius: 12px; 
+            box-shadow: var(--shadow); 
+            text-align: center; 
+            transition: var(--transition); 
+            cursor: pointer; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 180px; 
+            border-top: 5px solid var(--primary-blue); /* Professional border highlight */
+        }
+        .dashboard-card:hover { 
+            transform: translateY(-6px); 
+            box-shadow: var(--shadow-hover); 
+            border-top-color: var(--accent-gold); /* Color change on hover */
+        }
+        .dashboard-card i { 
+            font-size: 48px; 
+            color: var(--primary-blue); 
+            margin-bottom: 16px;
+            transition: color 0.3s;
+        }
+        .dashboard-card:hover i { color: var(--accent-gold); }
+        .dashboard-card h3 { 
+            color: var(--dark-text); 
+            margin-bottom: 8px; 
+            font-size: 1.3rem; 
+            font-weight: 600;
+        }
+        .dashboard-card p { 
+            color: var(--muted-text); 
+            font-size: 0.95rem; 
+            line-height: 1.4; 
+        }
+
+        /*
+        ===================================================================
+            4. FOOTER STYLES
+        ===================================================================
+        */
+        footer { 
+            background-color: var(--primary-blue); 
+            color: var(--white); 
+            padding: 30px 20px 20px; 
+            margin-top: 50px; /* Space above footer */
+            width: 100%;
+        }
+        .footer-content { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+            gap: 30px; 
+            max-width: 1200px; 
+            margin: 0 auto 30px auto; 
+        }
+        .footer-column h3 { 
+            color: var(--accent-gold); 
+            margin-bottom: 15px; 
+            padding-bottom: 5px; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+            font-size: 1.1rem; 
+        }
+        .footer-links li { 
+            margin-bottom: 8px; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            font-size: 0.95rem; 
+        }
+        .footer-links i { 
+            color: var(--accent-gold); 
+            min-width: 16px; 
+            text-align: center; 
+        }
+        .copyright { 
+            text-align: center; 
+            padding-top: 20px; 
+            border-top: 1px solid rgba(255, 255, 255, 0.1); 
+            font-size: 0.85rem; 
+        }
+    </style>
+</head>
+<body>
+    
+    <button class="hamburger-icon" id="hamburger-icon" aria-label="Toggle navigation menu">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <nav class="sidebar" id="sidebar" aria-label="Main Navigation">
+        <ul class="menu-list">
+            <li class="menu-item" onclick="window.location.href='dashboard.html'"><i class="fas fa-tachometer-alt"></i><span>Dashboard Overview</span></li>
+            <li class="menu-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i><span>My Profile</span></li>
+            <li class="menu-item" onclick="window.location.href='notes.html'"><i class="fas fa-book-open"></i><span>Lecture Notes</span></li>
+            <li class="menu-item" onclick="window.location.href='test-library.html'"><i class="fas fa-vial"></i><span>Take a Test</span></li>
+            <li class="menu-item" id="logout-button"><i class="fas fa-sign-out-alt"></i><span>Secure Logout</span></li>
+        </ul>
+    </nav>
+
+    <img id="user-image-display" src="../assets/profile_pictures/default.jpeg" alt="User Profile" class="profile-display-icon">
+
+    <main id="main-content">
+        <header class="welcome-header">
+            <h1 id="welcome-title">Welcome!</h1>
+            <p id="welcome-subtitle">Here's your overview for today.</p>
+        </header>
+
+        <section id="dashboard-grid" class="dashboard-grid" aria-label="Role-Based Dashboard Cards">
+            <p style="text-align: center; grid-column: 1 / -1;">Loading dashboard content...</p>
+        </section>
+    </main>
+
+    <!-- System Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>System Status</h3>
+                <p>SCS CBT Platform is operational. Committed to providing robust and accessible educational resources.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Access</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-angle-right"></i><a href="dashboard.html">Dashboard</a></li>
+                    <li><i class="fas fa-angle-right"></i><a href="profile.html">Profile Settings</a></li>
+                    <li><i class="fas fa-angle-right"></i><a href="notes.html">Lecture Resources</a></li>
+                    <li><i class="fas fa-angle-right"></i><a href="#" id="footer-logout">Initiate Logout</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Support Contact</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> Agbor-Obi, Delta State, Nigeria.</li>
+                    <li><i class="fas fa-phone"></i> +234 (0) 000-000-0000</li>
+                    <li><i class="fas fa-envelope"></i> info@scs.org.ng</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 St. Christopher School. All Rights Reserved. | EdTech Solution v1.0</p>
+        </div>
+    </footer>
+    
+    <script>
+    (function() {
+        // --- Element Selections ---
+        const sidebar = document.getElementById('sidebar');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const profileIcon = document.getElementById('user-image-display');
+        const welcomeTitle = document.getElementById('welcome-title');
+        const dashboardGrid = document.getElementById('dashboard-grid');
+        
+        // --- Logout Handlers ---
+        const logoutButtons = [
+            document.getElementById('logout-button'),
+            document.getElementById('footer-logout')
+        ];
+        logoutButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => { 
+                e.preventDefault();
+                localStorage.clear(); 
+                window.location.href = 'login.html'; 
             });
-
-        // --- Logout Button Functionality ---
-        logoutButton.addEventListener('click', () => {
-            localStorage.clear(); // Clears all session data
-            window.location.href = '../pages/login.html'; // Go up one level to find login.html
         });
-    });
-  </script>
+
+        // --- Navigation ---
+        hamburgerIcon.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+        // =================================================================
+        //  CORE LOGIC: FULLY DATA-DRIVEN DASHBOARD
+        // =================================================================
+        
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 1. Get user data from localStorage
+            const userId = localStorage.getItem('loggedInUserId');
+            const userRole = localStorage.getItem('loggedInUserRole');
+
+            // 2. Authentication Check
+            if (!userId || !userRole) {
+                // In a professional app, avoid alert() and use silent redirect or modal
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // 3. Fetch all required data in parallel for speed
+            try {
+                const [usersResponse, configResponse] = await Promise.all([
+                    fetch('../data/users.json'),
+                    fetch('../data/dashboard-config.json')
+                ]);
+
+                if (!usersResponse.ok || !configResponse.ok) {
+                    throw new Error('Failed to load required configuration files (users.json or dashboard-config.json).');
+                }
+
+                const users = await usersResponse.json();
+                const config = await configResponse.json();
+
+                // 4. Personalize the page & handle profile picture
+                const currentUser = users.find(user => user.id == userId);
+                if (currentUser) {
+                    welcomeTitle.textContent = `Welcome, ${currentUser.name || currentUser.username}!`;
+                    // Update profile icon
+                    const profilePicPath = currentUser.profilePicture || '../assets/profile_pictures/default.jpeg';
+                    profileIcon.src = profilePicPath;
+                    profileIcon.alt = `${currentUser.name}'s Profile`;
+                    profileIcon.onclick = () => window.location.href = 'profile.html';
+                }
+
+                // 5. Generate the dashboard based on the user's role
+                generateDashboard(userRole.toLowerCase(), config);
+
+            } catch (error) {
+                dashboardGrid.innerHTML = `<p style="color: red; text-align: center; grid-column: 1 / -1;">Error loading dashboard data. Please contact support. Error: ${error.message}</p>`;
+                console.error(error);
+            }
+        });
+
+        /**
+         * Finds the correct cards for the user's role and generates the HTML for them.
+         * @param {string} role - The user's role (e.g., 'student').
+         * @param {object} config - The loaded dashboard-config.json object.
+         */
+        function generateDashboard(role, config) {
+            const cardsForRole = config[role];
+
+            if (!cardsForRole || cardsForRole.length === 0) {
+                dashboardGrid.innerHTML = '<p style="grid-column: 1 / -1;">No dashboard items are configured for your role in the system.</p>';
+                return;
+            }
+
+            dashboardGrid.innerHTML = ''; // Clear loading message
+
+            cardsForRole.forEach(cardData => {
+                const cardElement = document.createElement('article');
+                cardElement.className = 'dashboard-card';
+                cardElement.setAttribute('tabindex', '0'); // Make cards focusable
+                
+                cardElement.innerHTML = `
+                    <i class="${cardData.icon}"></i>
+                    <h3>${cardData.title}</h3>
+                    <p>${cardData.description}</p>
+                `;
+                
+                cardElement.onclick = () => {
+                    if (cardData.link && cardData.link.includes('.html')) {
+                        window.location.href = cardData.link;
+                    } else {
+                        // Use console.log instead of alert for non-critical features
+                        console.info(`Feature for '${cardData.title}' coming soon!`);
+                        alert(`Feature: ${cardData.title} is currently under development.`);
+                    }
+                };
+                
+                dashboardGrid.appendChild(cardElement);
+            });
+        }
+
+    })();
+    </script>
 </body>
 </html>
