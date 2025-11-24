@@ -165,10 +165,10 @@ const redirectToDashboard = (role) => {
 //only index.hrml is at the ROOT, Since login.html is not at the ROOT, all paths to pages must include '../pages/'
 let url = '../pages/dashboard.html'; // Default fallback
 const r = role ? role.toLowerCase() : '';
-if (r === 'admin') url = '../pages/dashboard-admin.html';
-else if (r === 'teacher') url = '../pages/dashboard-teacher.html';
-else if (r === 'student') url = '../pages/dashboard-student.html';
-else if (r === 'parent') url = '../pages/dashboard-parents.html';
+if (r === 'admin') url = '../pages/dashboard.html';
+else if (r === 'teacher') url = '../pages/dashboard.html';
+else if (r === 'student') url = '../pages/dashboard.html';
+else if (r === 'parent') url = '../pages/dashboard.html';
 window.location.href = url;
 };
 
