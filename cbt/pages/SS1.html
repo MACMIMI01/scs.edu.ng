@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Citation Scanner</title>
+    <style>
+        body { font-family: sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; background-color: #f4f4f9; }
+        h1 { color: #333; text-align: center; }
+        .container { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        
+        /* Upload Area Styles */
+        .upload-area { border: 2px dashed #ccc; padding: 2rem; text-align: center; margin-bottom: 2rem; border-radius: 8px; }
+        
+        /* Buttons */
+        .btn { background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 1rem; margin: 5px; }
+        .btn:hover { background-color: #0056b3; }
+        .btn-green { background-color: #28a745; }
+        .btn-green:hover { background-color: #218838; }
+        .btn-outline { background-color: transparent; border: 2px solid #333; color: #333; }
+        .btn-outline:hover { background-color: #ddd; }
+
+        /* Results Grid */
+        .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
+        .card { background: #fff; border: 1px solid #ddd; padding: 1rem; border-radius: 8px; }
+        .card h3 { margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; }
+        .list-group { list-style: none; padding: 0; max-height: 300px; overflow-y: auto; }
+        .list-group li { padding: 5px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; }
+        
+        /* Alerts */
+        .alert { padding: 1rem; border-radius: 5px; margin-bottom: 1rem; }
+        .alert-warning { background-color: #fff3cd; color: #856404; }
+        #loading { display: none; text-align: center; font-weight: bold; color: #555; }
+
+        /* Print Styling: Hides buttons when printing/saving as PDF */
+        @media print {
+            body { background-color: white; margin: 0; }
+            .container { box-shadow: none; border: none; padding: 0; }
+            .upload-area, .action-buttons { display: none !important; }
+            .list-group { max-height: none; } /* Show full lists in print */
+        }
+    </style>
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <h1>📄 Document Reference Scanner</h1>
+    
+    <div class="upload-area">
+        <p style="color: #666;">Upload your Project (PDF or DOCX)</p>
+        <input type="file" id="fileInput" accept=".pdf,.docx">
+        <br><br>
+        <button class="btn" onclick="startScan()">Scan Document</button>
+    </div>
+
+    <div id="loading">Processing document... please wait...</div>
+
+    <div id="outputArea" style="display:none;">
+        
+        <!-- Action Buttons for Download -->
+        <div class="action-buttons" style="text-align: right; border-bottom: 1px solid #eee; padding-bottom: 1rem;">
+            <button class="btn btn-outline" onclick="window.print()">🖨️ Print / Save PDF</button>
+            <button class="btn btn-green" onclick="downloadTxt()">⬇️ Download Text Report</button>
+        </div>
+
+        <div id="warningsContainer" style="margin-top: 1rem;"></div>
+
+        <div class="results-grid">
+            <!-- Missing from Bib -->
+            <div class="card">
+                <h3 style="color: #d9534f;">⚠️ Cited in Text, Missing in Bibliography</h3>
+                <ul id="missingList" class="list-group"></ul>
+            </div>
+
+            <!-- Unused in Bib -->
+            <div class="card">
+                <h3 style="color: #f0ad4e;">📚 In Bibliography, Not Used</h3>
+                <ul id="unusedList" class="list-group"></ul>
+            </div>
+        </div>
+
+        <div class="results-grid">
+            <div class="card">
+                <h3>🔍 Raw Text Citations</h3>
+                <ul id="textList" class="list-group"></ul>
+            </div>
+            <div class="card">
+                <h3>📖 Raw Bib Entries</h3>
+                <ul id="bibList" class="list-group"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- 1. Scanning Logic ---
+
+    async function startScan() {
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0];
+        
+        if (!file) {
+            alert("Please select a file first.");
+            return;
+        }
+
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('outputArea').style.display = 'none';
+        document.getElementById('warningsContainer').innerHTML = '';
+
+        try {
+            let text = "";
+            if (file.name.endsWith('.docx')) {
+                text = await extractDocx(file);
+            } else if (file.name.endsWith('.pdf')) {
+                text = await extractPdf(file);
+            } else {
+                alert("Only .docx and .pdf files are supported.");
+                return;
+            }
+            analyzeText(text);
+        } catch (err) {
+            console.error(err);
+            alert("Error reading file: " + err.message);
+        } finally {
+            document.getElementById('loading').style.display = 'none';
+        }
+    }
+
+    async function extractDocx(file) {
+        const arrayBuffer = await file.arrayBuffer();
+        const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
+        return result.value;
+    }
+
+    async function extractPdf(file) {
+        const arrayBuffer = await file.arrayBuffer();
+        const loadingTask = pdfjsLib.getDocument(arrayBuffer);
+        const pdf = await loadingTask.promise;
+        let fullText = "";
+        for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const textContent = await page.getTextContent();
+            fullText += textContent.items.map(item => item.str).join(' ') + "\n";
+        }
+        return fullText;
+    }
+
+    function analyzeText(fullText) {
+        const refHeaders = ["REFERENCES", "References", "BIBLIOGRAPHY", "Bibliography", "WORKS CITED"];
+        let splitIndex = -1;
+        
+        for (let header of refHeaders) {
+            const index = fullText.lastIndexOf(header);
+            if (index > splitIndex) splitIndex = index;
+        }
+
+        let bodyText = fullText;
+        let refText = "";
+
+        if (splitIndex !== -1 && splitIndex > fullText.length * 0.5) {
+            bodyText = fullText.substring(0, splitIndex);
+            refText = fullText.substring(splitIndex);
+        } else {
+            document.getElementById('warningsContainer').innerHTML = 
+                `<div class="alert alert-warning">Could not automatically find a 'References' section. Treating entire document as body text.</div>`;
+        }
+
+        // Regex for (Name, Year)
+        const citationRegex = /\(([A-Za-z\s&.]+),\s+(\d{4})\)/g;
+        const inTextSet = new Set();
+        let match;
+        while ((match = citationRegex.exec(bodyText)) !== null) {
+            let name = match[1].replace(/e\.g\.|see\s/i, '').trim();
+            inTextSet.add(`${name}, ${match[2]}`);
+        }
+
+        const refSet = new Set();
+        if (refText) {
+            const lines = refText.split('\n');
+            const yearRegex = /\((\d{4})\)/; 
+            lines.forEach(line => {
+                if (line.length < 5) return;
+                const yMatch = line.match(yearRegex);
+                if (yMatch) {
+                    const year = yMatch[1];
+                    const words = line.trim().split(' ');
+                    if (words.length > 0) {
+                        let nameCandidate = words[0].replace(/,/g, '');
+                        if (/^[A-Za-z]/.test(nameCandidate)) {
+                            refSet.add(`${nameCandidate}, ${year}`);
+                        }
+                    }
+                }
+            });
+        }
+
+        const inTextArray = Array.from(inTextSet).sort();
+        const refArray = Array.from(refSet).sort();
+
+        const missingFromBib = [];
+        const unusedInBib = [];
+
+        inTextArray.forEach(cite => {
+            const [cName, cYear] = cite.split(', ');
+            const cFirstWord = cName.split(' ')[0]; 
+            const found = refArray.some(ref => {
+                const [rName, rYear] = ref.split(', ');
+                return rYear === cYear && rName.includes(cFirstWord);
+            });
+            if (!found) missingFromBib.push(cite);
+        });
+
+        refArray.forEach(ref => {
+            const [rName, rYear] = ref.split(', ');
+            const found = inTextArray.some(cite => {
+                const [cName, cYear] = cite.split(', ');
+                return cYear === rYear && cName.includes(rName);
+            });
+            if (!found) unusedInBib.push(ref);
+        });
+
+        displayList('missingList', missingFromBib);
+        displayList('unusedList', unusedInBib);
+        displayList('textList', inTextArray);
+        displayList('bibList', refArray);
+
+        document.getElementById('outputArea').style.display = 'block';
+    }
+
+    function displayList(elementId, items) {
+        const ul = document.getElementById(elementId);
+        ul.innerHTML = '';
+        if (items.length === 0) {
+            ul.innerHTML = '<li style="color:green;">None found</li>';
+        } else {
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                ul.appendChild(li);
+            });
+        }
+    }
+
+    // --- 2. Download / Export Logic ---
+
+    function getListContent(elementId) {
+        const ul = document.getElementById(elementId);
+        const items = ul.getElementsByTagName('li');
+        let text = "";
+        for (let item of items) {
+            text += "- " + item.innerText + "\n";
+        }
+        return text;
+    }
+
+    function downloadTxt() {
+        const date = new Date().toLocaleString();
+        const missing = getListContent('missingList');
+        const unused = getListContent('unusedList');
+        const inText = getListContent('textList');
+        const inBib = getListContent('bibList');
+
+        const reportContent = `CITATION SCAN REPORT
+Generated on: ${date}
+========================================
+
+1. MISSING FROM BIBLIOGRAPHY
+(Cited in text, but not found in reference list)
+----------------------------------------
+${missing}
+
+2. UNUSED REFERENCES
+(Found in reference list, but never cited in text)
+----------------------------------------
+${unused}
+
+3. RAW DATA: FOUND IN TEXT
+----------------------------------------
+${inText}
+
+4. RAW DATA: FOUND IN BIBLIOGRAPHY
+----------------------------------------
+${inBib}
+`;
+
+        // Create a Blob (file-like object)
+        const blob = new Blob([reportContent], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        
+        // Create a temporary link to trigger download
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "citation_report.txt";
+        document.body.appendChild(a);
+        a.click();
+        
+        // Cleanup
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Config Editor | SCS CBT Tool</title>
+  <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+  <!-- Use FA 6.5.0 for modern icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../scripts/css/font-awesome.min.css">
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+    
+    :root {
+        /* SCS CBT Theme Colors */
+        --primary-blue: #020169; /* Deep Tech Blue */
+        --accent-gold: #FEC009; /* Bright Gold/Amber */
+        --background-light: #f0f2f5;
+        --white: #ffffff;
+        --dark-text: #333;
+        --muted-text: #666;
+        --success-green: #28a745;
+        --danger-red: #dc3545;
+        --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        --panel-bg: var(--white);
+    }
+    * { box-sizing: border-box; }
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: var(--background-light);
+        min-height: 100vh;
+        padding: 30px 20px;
+    }
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+    }
+    .panel {
+        background: var(--panel-bg);
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: var(--shadow);
+    }
+    h1 {
+        color: var(--primary-blue);
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2.5rem;
+        border-bottom: 3px solid var(--accent-gold);
+        padding-bottom: 10px;
+    }
+    h2 {
+        color: var(--dark-text);
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+    }
+    
+    /* --- Form and Input Styles --- */
+    .form-group { margin-bottom: 20px; position: relative; }
+    label { display: block; margin-bottom: 8px; color: var(--primary-blue); font-weight: 600; font-size: 0.95rem; }
+    input, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: border-color 0.3s;
+        font-family: inherit;
+    }
+    textarea { resize: vertical; min-height: 60px; }
+    input:focus, textarea:focus { outline: none; border-color: var(--primary-blue); }
+    
+    .icon-preview {
+      display: flex; align-items: center; gap: 15px; padding: 15px;
+      background: var(--background-light); border-radius: 6px; margin-top: 10px;
+      border: 1px dashed #ccc;
+    }
+    .icon-preview i { font-size: 32px; color: var(--primary-blue); }
+    .btn {
+        background: var(--primary-blue); color: var(--white); border: none;
+        padding: 12px 28px; border-radius: 6px; cursor: pointer; font-size: 1rem;
+        font-weight: 600; width: 100%; transition: all 0.2s; margin-top: 10px;
+    }
+    .btn:hover { background: #00014a; box-shadow: 0 5px 15px rgba(2, 1, 105, 0.2); }
+    .btn-secondary { background: var(--muted-text); }
+    .btn-secondary:hover { background: #555; }
+
+    /* --- Role and File Controls --- */
+    .controls-header { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px;}
+    .role-selector-wrapper { margin-top: 10px; border: 1px solid #ddd; padding: 15px; border-radius: 8px;}
+    .role-btn {
+        padding: 8px 15px; background: #e9ecef; border: 2px solid transparent;
+        border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s;
+        font-size: 0.9rem; margin-right: 5px; margin-bottom: 5px;
+    }
+    .role-btn:hover { border-color: var(--primary-blue); }
+    .role-btn.active { background: var(--primary-blue); color: var(--white); border-color: var(--primary-blue); }
+    .role-btn.multi-select { background: var(--accent-gold); color: var(--dark-text); border-color: var(--accent-gold);}
+    .role-btn.multi-select.active { background: var(--primary-blue); color: var(--white); border-color: var(--primary-blue); }
+
+    /* --- Card List --- */
+    .dashboard-items { max-height: 500px; overflow-y: auto; padding-right: 5px; }
+    .dashboard-item {
+        background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 10px;
+        border-left: 4px solid var(--accent-gold); transition: background 0.2s;
+    }
+    .dashboard-item:hover { background: #e5e5e5; }
+    .dashboard-item-header { display: flex; align-items: center; gap: 15px; margin-bottom: 8px; }
+    .dashboard-item-header i { font-size: 24px; color: var(--primary-blue); }
+    .dashboard-item-title { font-weight: 600; color: var(--dark-text); flex: 1; }
+    .dashboard-item-desc { font-size: 13px; color: var(--muted-text); margin-bottom: 5px; }
+    .dashboard-item-link { font-size: 12px; color: var(--primary-blue); font-weight: 500;}
+    .item-actions { display: flex; gap: 5px; margin-top: 10px; }
+    .btn-small { padding: 6px 12px; font-size: 12px; width: auto; margin: 0; }
+    .btn-edit { background: var(--success-green); }
+    .btn-delete { background: var(--danger-red); }
+    .btn-edit:hover { background: #218838; }
+    .btn-delete:hover { background: #c82333; }
+    
+    /* --- JSON Output --- */
+    .code-output {
+        background: #2d2d2d; color: #f8f8f2; padding: 20px; border-radius: 8px;
+        font-family: 'Courier New', monospace; font-size: 12px; overflow-x: auto;
+        position: relative; max-height: 600px; overflow-y: auto;
+    }
+    .copy-btn, .download-btn {
+        float: right; background: var(--accent-gold); color: var(--dark-text);
+        border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;
+        font-size: 12px; font-weight: 600; margin-left: 10px;
+    }
+    .copy-btn:hover, .download-btn:hover { background: #d9a400; }
+    
+    /* --- Dropdowns --- */
+    .icon-dropdown, .link-dropdown {
+      max-height: 200px; overflow-y: auto; border: 1px solid #ddd; border-radius: 6px;
+      margin-top: 5px; background: var(--white); position: absolute; width: 100%;
+      z-index: 1000; box-shadow: var(--shadow);
+    }
+    .icon-option, .link-option {
+      padding: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid #f0f0f0; font-size: 0.9rem;
+    }
+    .icon-option:hover, .link-option:hover { background: var(--background-light); }
+    .icon-option i { font-size: 20px; width: 30px; text-align: center; color: var(--primary-blue); }
+    .link-option span { 
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis;
+        max-width: 90%;
+        color: var(--muted-text);
+    }
+
+    /* --- Responsive Adjustments --- */
+    @media (max-width: 968px) {
+        .container { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <h1><i class="fas fa-tools"></i> Dashboard Config Editor</h1>
+  <div class="container">
+    <!-- Left Panel: Form -->
+    <div class="panel">
+        <div class="controls-header">
+            <h2>Configuration Source</h2>
+            <p style="font-size: 0.9rem; color: var(--muted-text);">Load existing config or download the generated file to update your dashboard.</p>
+            <input type="file" id="fileLoad" accept=".json" style="margin-top: 10px; padding: 5px; border: 1px solid #ccc; background: var(--background-light);">
+        </div>
+
+        <h2>Select Roles to Add/Edit</h2>
+        <div class="role-selector-wrapper">
+             <p style="font-size: 0.8rem; color: var(--danger-red); margin-bottom: 10px;" id="multi-select-message">
+                Click a button to select that role. You can select multiple roles to add a card to all of them.
+            </p>
+            <div id="roleSelector" class="role-selector">
+                <!-- Buttons are populated dynamically by script -->
+            </div>
+        </div>
+
+        <h2 id="formTitle" style="margin-top: 30px;">Add New Link</h2>
+        <form id="linkForm">
+            <div class="form-group">
+                <label for="linkTitle">Title</label>
+                <input type="text" id="linkTitle" placeholder="e.g., View Profile" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="linkDesc">Description</label>
+                <textarea id="linkDesc" placeholder="e.g., Manage your personal information and settings." required></textarea>
+            </div>
+            
+            <!-- Link Search/Suggestion -->
+            <div class="form-group">
+                <label for="linkUrl">Link Path (Type to search project links)</label>
+                <input type="text" id="linkUrl" placeholder="Search page links: e.g., profile.html">
+                <div id="linkDropdown" class="link-dropdown" style="display: none;"></div>
+            </div>
+            
+            <!-- Icon Search/Selection -->
+            <div class="form-group">
+                <label for="iconSearch">Choose Icon (Type to search Font Awesome icons)</label>
+                <input type="text" id="iconSearch" placeholder="Search icons... (e.g., user, book, cog)">
+                <div id="iconDropdown" class="icon-dropdown" style="display: none;"></div>
+            </div>
+            
+            <div class="icon-preview" id="iconPreview">
+                <i class="fas fa-link"></i>
+                <span>No icon selected</span>
+            </div>
+            
+            <button type="submit" class="btn" id="submitBtn"><i class="fas fa-plus-circle"></i> Add Link</button>
+            <button type="button" class="btn btn-secondary" id="cancelBtn" style="display: none;" onclick="cancelEdit()"><i class="fas fa-times-circle"></i> Cancel Edit</button>
+        </form>
+    </div>
+    
+    <!-- Right Panel: Current Links & JSON -->
+    <div class="panel">
+      <h2>Current Links - <span id="currentRole">Student</span></h2>
+      <div class="dashboard-items" id="dashboardItems">
+        <p style="text-align: center; color: var(--muted-text); padding: 40px 0;">Loading links...</p>
+      </div>
+      
+      <h2 style="margin-top: 30px;">JSON Output</h2>
+      <div class="code-output">
+        <button class="copy-btn" onclick="copyJSON()"><i class="fas fa-copy"></i> Copy</button>
+        <button class="download-btn" onclick="downloadJSON()"><i class="fas fa-download"></i> Download</button>
+        <pre id="jsonOutput">{}</pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Configuration and State ---
+    
+    const LINK_LIST_PATH = '../tool/dashboard-config-links.txt'; 
+    const ICON_CSS_PATH = '../scripts/css/font-awesome.min.css'; 
+    const INITIAL_ROLE = 'student';
+
+    const initialTemplateData = {
+        "student": [{"title":"Start a Test","description":"Browse available tests and begin an assessment.","icon":"fas fa-pencil-alt","link":"test-library.html"},{"title":"View Notes","description":"Access your class notes and study materials.","icon":"fas fa-book-reader","link":"notes.html"},{"title":"My Grades","description":"Check your test results and performance.","icon":"fas fa-chart-line","link":"grades.html"}],
+        "teacher": [{"title":"Manage Notes","description":"Upload and organize lesson notes for your classes.","icon":"fas fa-file-upload","link":"json-merger-generator.html"},{"title":"Gradebook","description":"Review student submissions and assign grades.","icon":"fas fa-tasks","link":"gradebook.html"},{"title":"My Classes","description":"View your assigned classes and student rosters.","icon":"fas fa-chalkboard-teacher","link":"classes.html"}],
+        "admin": [{"title":"Content Management","description":"Oversee all lesson notes and test materials.","icon":"fas fa-book-medical","link":"json-merger-generator.html"},{"title":"Start a Test","description":"Browse available tests and begin your assessment.","icon":"fas fa-scroll","link":"test-library.html"},{"title":"Lecture Hall","description":"Available Lesson Note.","icon":"fas fa-chalkboard-teacher","link":"lectures.html"},{"title":"Upcoming Examination","description":"2025/2026 Academic Section.","icon":"fas fa-atom","link":"exam-library.html"},{"title":"View Profile","description":"Manage your personal information and settings.","icon":"fas fa-user-circle","link":"profile.html"},{"title":"User Management","description":"Add, edit, and manage all user accounts.","icon":"fas fa-users-cog","link":"admin_user_manager.html"},{"title":"Performance Analytics","description":"Track your progress and identify areas for improvement.","icon":"fas fa-chart-line"},{"title":"My Classes","description":"See your enrolled classes and assigned work.","link":"classes.html","icon":"fas fa-users"},{"title":"Game Hall","description":"Engage in educational games to improve your learning experience.","link":"gamehall.html","icon":"fas fa-gamepad"},{"title":"System Settings","description":"Configure application settings and parameters.", "icon": "fas fa-cogs", "link": "settings.html"}],
+        "webmaster": [{"title":"User Management","description":"Add, edit, and manage all user accounts.","icon":"fas fa-users-cog","link":"admin_user_manager.html"},{"title":"Content Management","description":"Oversee all lesson notes and test materials.","icon":"fas fa-book-medical","link":"json-merger-generator.html"},{"title":"System Settings","description":"Configure application settings and parameters.","icon":"fas fa-cogs","link":"settings.html"},{"title":"Update Lesson List","description":"add new lesson note to lesson library.","icon":"fas fa-book-plus","link":"add-to-note-library.html"}],
+        "parent": [{"title":"Manage Notes","description":"Upload and organize lesson notes for your classes.","icon":"fas fa-file-upload","link":"json-merger-generator.html"},{"title":"Gradebook","description":"Review student submissions and assign grades.","icon":"fas fa-tasks","link":"gradebook.html"},{"title":"My Classes","description":"View your assigned classes and student rosters.","icon":"fas fa-chalkboard-teacher","link":"classes.html"}]
+    };
+
+    let dashboardData = {};
+    let currentRole = INITIAL_ROLE;
+    let selectedRoles = new Set([INITIAL_ROLE]); // Tracks roles for multi-select adding
+    let icons = [];
+    let linkPaths = [];
+    let selectedIcon = 'fas fa-link';
+    let editingIndex = -1;
+    
+    // --- Utility Functions ---
+
+    function updateDashboard() {
+        const container = document.getElementById('dashboardItems');
+        const items = dashboardData[currentRole] || [];
+        document.getElementById('currentRole').textContent = currentRole.charAt(0).toUpperCase() + currentRole.slice(1);
+        
+        // Update button states
+        document.querySelectorAll('.role-btn').forEach(btn => {
+            btn.classList.remove('active', 'multi-select');
+            const role = btn.dataset.role;
+            if (role === currentRole) {
+                btn.classList.add('active');
+            }
+            if (selectedRoles.has(role) && editingIndex === -1) {
+                 btn.classList.add('multi-select');
+            }
+            if (selectedRoles.has(role) && role === currentRole && editingIndex === -1) {
+                 btn.classList.add('multi-select', 'active');
+            }
+        });
+        
+        // Update multi-select message
+        const rolesCount = selectedRoles.size;
+        document.getElementById('multi-select-message').innerHTML = `
+            <strong>${rolesCount} Role${rolesCount !== 1 ? 's' : ''} Selected:</strong> ${Array.from(selectedRoles).map(r => r.charAt(0).toUpperCase() + r.slice(1)).join(', ')}. 
+            ${editingIndex === -1 ? 'New cards will be added to all selected roles.' : '<span style="color:red; font-weight:600;">Currently in EDIT mode. Saving will only affect the displayed role.</span>'}
+        `;
+        document.getElementById('submitBtn').innerHTML = editingIndex === -1 ? `<i class="fas fa-plus-circle"></i> Add to ${rolesCount} Role${rolesCount !== 1 ? 's' : ''}` : `<i class="fas fa-save"></i> Save Changes`;
+
+
+        if (items.length === 0) {
+            container.innerHTML = '<p style="text-align: center; color: var(--muted-text); padding: 40px 0;">No links yet</p>';
+            return;
+        }
+        
+        container.innerHTML = items.map((item, index) => `
+            <div class="dashboard-item">
+              <div class="dashboard-item-header">
+                <i class="${item.icon || 'fas fa-question-circle'}"></i>
+                <div class="dashboard-item-title">${item.title}</div>
+              </div>
+              <div class="dashboard-item-desc">${item.description}</div>
+              ${item.link ? `<div class="dashboard-item-link">Link: ${item.link}</div>` : ''}
+              <div class="item-actions">
+                <button class="btn btn-small btn-edit" onclick="editItem(${index})"><i class="fas fa-edit"></i> Edit</button>
+                <button class="btn btn-small btn-delete" onclick="deleteItem(${index})"><i class="fas fa-trash"></i> Delete</button>
+              </div>
+            </div>
+        `).join('');
+    }
+
+    function updateJSON() {
+      document.getElementById('jsonOutput').textContent = JSON.stringify(dashboardData, null, 2);
+    }
+
+    function resetForm() {
+        editingIndex = -1;
+        document.getElementById('linkForm').reset();
+        document.getElementById('formTitle').textContent = 'Add New Link';
+        document.getElementById('cancelBtn').style.display = 'none';
+        
+        selectedIcon = 'fas fa-link';
+        document.getElementById('iconSearch').value = '';
+        document.getElementById('linkUrl').value = '';
+        document.getElementById('iconPreview').innerHTML = `<i class="fas fa-link"></i><span>No icon selected</span>`;
+        
+        // Re-enable multi-select mode if needed
+        if (selectedRoles.size === 0) selectedRoles.add(INITIAL_ROLE);
+        updateDashboard();
+    }
+
+    // --- Core Action Handlers (Multi-Role Adjusted) ---
+    
+    function handleRoleClick(role, event) {
+        if (editingIndex !== -1) {
+            // If in edit mode, switch the currently displayed role
+            currentRole = role;
+            updateDashboard();
+        } else {
+            // If in add mode, manage multi-selection
+            if (selectedRoles.has(role)) {
+                if (selectedRoles.size > 1) {
+                    selectedRoles.delete(role);
+                }
+            } else {
+                selectedRoles.add(role);
+            }
+            // Always display the role that was just clicked
+            currentRole = role;
+            updateDashboard();
+        }
+        event.currentTarget.focus();
+    }
+    
+    function editItem(index) {
+        editingIndex = index;
+        const item = dashboardData[currentRole][index];
+        
+        document.getElementById('linkTitle').value = item.title;
+        document.getElementById('linkDesc').value = item.description;
+        document.getElementById('linkUrl').value = item.link || '';
+        
+        selectIcon(item.icon);
+
+        document.getElementById('formTitle').textContent = `Edit Link for ${currentRole.toUpperCase()}`;
+        document.getElementById('cancelBtn').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        updateDashboard(); // Updates submit button text
+    }
+
+    document.getElementById('linkForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const newItem = {
+            title: document.getElementById('linkTitle').value,
+            description: document.getElementById('linkDesc').value,
+            icon: selectedIcon
+        };
+        
+        const link = document.getElementById('linkUrl').value.trim();
+        if (link) newItem.link = link;
+        
+        if (editingIndex >= 0) {
+            // EDIT MODE: Affects only the current displayed role
+            dashboardData[currentRole][editingIndex] = newItem;
+        } else {
+            // ADD MODE: Affects all selected roles
+            selectedRoles.forEach(role => {
+                if (!dashboardData[role]) dashboardData[role] = [];
+                dashboardData[role].push(newItem);
+            });
+        }
+        
+        resetForm();
+        updateDashboard();
+        updateJSON();
+    });
+
+    // --- File/Data Loading ---
+    
+    function handleFileLoad(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            try {
+                const json = JSON.parse(event.target.result);
+                if (typeof json === 'object' && (json.student || json.admin)) {
+                    dashboardData = json;
+                    updateDashboard();
+                    updateJSON();
+                    alert(`✅ Successfully loaded '${file.name}'!`);
+                } else {
+                    throw new Error('File structure invalid. Must contain role objects (e.g., "student").');
+                }
+            } catch (error) {
+                alert('❌ Error loading JSON file: ' + error.message);
+            }
+        };
+        reader.readAsText(file);
+    }
+    
+    async function loadLinkPaths() {
+        try {
+            const response = await fetch(LINK_LIST_PATH);
+            if (!response.ok) throw new Error("Link file not found or failed to load.");
+            const text = await response.text();
+            
+            // Process paths relative to the current file (cbt/pages/editor.html)
+            linkPaths = text
+                .trim().split('\n')
+                .map(line => line.trim())
+                .filter(path => path) 
+                .map(path => {
+                    if (path.startsWith('pages/')) {
+                        return path.substring('pages/'.length); 
+                    }
+                    if (path.startsWith('data/')) {
+                        return '../' + path; 
+                    }
+                    return path;
+                })
+                .sort();
+            console.log(`Loaded ${linkPaths.length} potential links for suggestions.`);
+        } catch (e) {
+            console.error("Failed to load project link file:", e);
+        }
+    }
+
+    // --- Icon Logic (Enhanced) ---
+
+    async function loadIconsFromCSS() {
+        try {
+            const response = await fetch(ICON_CSS_PATH);
+            if (!response.ok) throw new Error("Font Awesome CSS not found.");
+            const css = await response.text();
+            
+            const iconMatches = css.match(/\.(fa|fas|fab|far)-([a-z0-9-]+):before/g) || [];
+            const iconSet = new Set();
+            
+            iconMatches.forEach(match => {
+              const nameMatch = match.match(/\.(fa|fas|fab|far)-([a-z0-9-]+)/);
+              if (nameMatch) {
+                const prefix = nameMatch[1];
+                const name = nameMatch[2];
+                if (!name.match(/^(lg|2x|3x|4x|5x|fw|ul|li|border|pull|spin|pulse|rotate|flip|stack|inverse|rotate-\d+|sr-only)$/)) {
+                  if (prefix === 'fas') {
+                    iconSet.add(`fas fa-${name}`);
+                  }
+                }
+              }
+            });
+            icons = Array.from(iconSet).sort();
+            console.log(`Loaded ${icons.length} Font Awesome icons.`);
+        } catch (e) {
+            console.error("Failed to load Font Awesome CSS for icon parsing. Icon search disabled.", e);
+        }
+    }
+
+    function populateIconDropdown(iconList) {
+        const dropdown = document.getElementById('iconDropdown');
+        dropdown.innerHTML = '';
+        const listToDisplay = iconList.slice(0, 50); // Limit results
+        
+        listToDisplay.forEach(iconClass => {
+            const option = document.createElement('div');
+            option.className = 'icon-option';
+            const iconName = iconClass.split(' fa-')[1];
+            option.innerHTML = `<i class="${iconClass}"></i><span>${iconName}</span>`;
+            option.onclick = () => selectIcon(iconClass);
+            dropdown.appendChild(option);
+        });
+        dropdown.style.display = iconList.length > 0 && document.activeElement === document.getElementById('iconSearch') ? 'block' : 'none';
+    }
+
+    function selectIcon(iconClass) {
+        selectedIcon = iconClass;
+        const preview = document.getElementById('iconPreview');
+        preview.style.display = 'flex';
+        const iconName = iconClass.split(' fa-')[1];
+        preview.innerHTML = `<i class="${iconClass}"></i><span>${iconName}</span>`;
+        document.getElementById('iconDropdown').style.display = 'none';
+        document.getElementById('iconSearch').value = iconName;
+    }
+
+    document.getElementById('iconSearch').addEventListener('input', (e) => {
+        const search = e.target.value.toLowerCase();
+        const filtered = icons.filter(icon => icon.includes(search));
+        populateIconDropdown(filtered);
+    });
+    
+    document.getElementById('iconSearch').addEventListener('focus', () => {
+        populateIconDropdown(icons);
+    });
+    document.getElementById('iconSearch').addEventListener('blur', (e) => {
+        setTimeout(() => document.getElementById('iconDropdown').style.display = 'none', 100);
+    });
+
+    // --- Link Logic ---
+
+    function populateLinkDropdown(linkList) {
+        const dropdown = document.getElementById('linkDropdown');
+        dropdown.innerHTML = '';
+
+        const listToDisplay = linkList.slice(0, 50);
+        listToDisplay.forEach(linkPath => {
+            const option = document.createElement('div');
+            option.className = 'link-option';
+            option.title = linkPath;
+            const displayName = linkPath.split('/').pop();
+            option.innerHTML = `<span>${displayName}</span>`;
+            option.onclick = () => selectLink(linkPath);
+            dropdown.appendChild(option);
+        });
+        dropdown.style.display = linkList.length > 0 && document.activeElement === document.getElementById('linkUrl') ? 'block' : 'none';
+    }
+
+    document.getElementById('linkUrl').addEventListener('input', (e) => {
+        const search = e.target.value.toLowerCase();
+        const dropdown = document.getElementById('linkDropdown');
+        
+        if (search.length > 0) {
+            const filtered = linkPaths.filter(path => path.toLowerCase().includes(search));
+            populateLinkDropdown(filtered);
+            dropdown.style.display = 'block';
+        } else {
+            dropdown.style.display = 'none';
+        }
+    });
+
+    document.getElementById('linkUrl').addEventListener('focus', () => {
+        populateLinkDropdown(linkPaths);
+    });
+
+    document.getElementById('linkUrl').addEventListener('blur', () => {
+        setTimeout(() => document.getElementById('linkDropdown').style.display = 'none', 100);
+    });
+
+
+    // --- Global Actions ---
+    function copyJSON() {
+      const json = document.getElementById('jsonOutput').textContent;
+      navigator.clipboard.writeText(json).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = '✅ Copied!';
+        setTimeout(() => btn.textContent = '<i class="fas fa-copy"></i> Copy', 2000);
+      });
+    }
+
+    function downloadJSON() {
+        const jsonString = JSON.stringify(dashboardData, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'dashboard-config.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        alert("Download complete! Replace the file named 'dashboard-config.json' in your '../data/' folder.");
+    }
+    
+    // --- Initialization ---
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Set up Role Buttons
+        const roleSelector = document.getElementById('roleSelector');
+        Object.keys(initialTemplateData).forEach(role => {
+            const btn = document.createElement('button');
+            btn.className = 'role-btn';
+            btn.dataset.role = role;
+            btn.textContent = role.charAt(0).toUpperCase() + role.slice(1);
+            btn.onclick = (e) => handleRoleClick(role, e);
+            roleSelector.appendChild(btn);
+        });
+
+        // Load data concurrently
+        await Promise.all([
+            loadIconsFromCSS(),
+            loadLinkPaths()
+        ]);
+        
+        // Final initialization
+        document.getElementById('fileLoad').addEventListener('change', handleFileLoad);
+        initializeConfig();
+    });
+  </script>
+</body>
+</html>

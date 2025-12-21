@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find & Replace Tool - St. Christopher School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800;900&family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #020169;
+            --accent-gold: #FEC009;
+            --dark-text: #333333;
+            --light-text: #666666;
+            --background-light: #f0f2f5;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --success-green: #4CAF50;
+            --warning-orange: #FF9800;
+            --error-red: #F44336;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--dark-text);
+            line-height: 1.6;
+            background-color: var(--background-light);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Raleway', sans-serif;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary-blue);
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 15px;
+        }
+        
+        .logo-text {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .logo-text span {
+            color: var(--accent-gold);
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 40px 0;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .page-title h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .page-title p {
+            color: var(--light-text);
+            font-size: 1.1rem;
+        }
+        
+        /* Tool Container */
+        .tool-container {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .tool-section {
+            margin-bottom: 25px;
+        }
+        
+        .tool-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-gold);
+        }
+        
+        /* Text Areas */
+        .text-area {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 5px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+            transition: var(--transition);
+        }
+        
+        .text-area:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(2, 1, 105, 0.1);
+        }
+        
+        /* Controls */
+        .controls-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .controls-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 5px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(2, 1, 105, 0.1);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .checkbox-group input {
+            margin-right: 10px;
+        }
+        
+        /* Buttons */
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background-color: #010144;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background-color: var(--success-green);
+            color: var(--white);
+        }
+        
+        .btn-success:hover {
+            background-color: #3d8b40;
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background-color: var(--warning-orange);
+            color: var(--white);
+        }
+        
+        .btn-warning:hover {
+            background-color: #e68a00;
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+        
+        /* Stats */
+        .stats-container {
+            background-color: var(--light-gray);
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background-color: var(--white);
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 30px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            color: var(--accent-gold);
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-gold);
+            padding-left: 5px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 5px;
+            color: var(--white);
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            transform: translateX(100%);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .notification.success {
+            background-color: var(--success-green);
+        }
+        
+        .notification.error {
+            background-color: var(--error-red);
+        }
+        
+        .notification.warning {
+            background-color: var(--warning-orange);
+        }
+        
+        /* Highlight */
+        .highlight {
+            background-color: rgba(254, 192, 9, 0.3);
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        
+        .current-highlight {
+            background-color: var(--accent-gold);
+            color: var(--primary-blue);
+            font-weight: 700;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="../assets/images/logo.png" alt="St. Christopher School Logo">
+                <div class="logo-text">ST. CHRISTOPHER <span>SCHOOL</span></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container main-content">
+        <div class="page-title">
+            <h1>Find & Replace Tool</h1>
+            <p>Advanced text processing utility for content editing</p>
+        </div>
+
+        <div class="tool-container">
+            <div class="tool-section">
+                <h3>Input Text</h3>
+                <textarea id="inputText" class="text-area" placeholder="Paste your text here..."></textarea>
+            </div>
+
+            <div class="tool-section">
+                <h3>Find & Replace Options</h3>
+                <div class="controls-grid">
+                    <div class="form-group">
+                        <label for="findText">Text to Find</label>
+                        <input type="text" id="findText" class="form-control" placeholder="Enter text to find">
+                    </div>
+                    <div class="form-group">
+                        <label for="replaceText">Replace With</label>
+                        <input type="text" id="replaceText" class="form-control" placeholder="Enter replacement text">
+                    </div>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="caseSensitive">
+                    <label for="caseSensitive">Case Sensitive</label>
+                </div>
+                
+                <div class="button-group">
+                    <button id="findBtn" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Find
+                    </button>
+                    <button id="replaceBtn" class="btn btn-success">
+                        <i class="fas fa-exchange-alt"></i> Replace
+                    </button>
+                    <button id="replaceAllBtn" class="btn btn-warning">
+                        <i class="fas fa-sync-alt"></i> Replace All
+                    </button>
+                    <button id="resetBtn" class="btn btn-outline">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+                
+                <div class="stats-container">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="matchesCount">0</div>
+                            <div class="stat-label">Matches Found</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="replacementsCount">0</div>
+                            <div class="stat-label">Replacements Made</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="currentMatch">0</div>
+                            <div class="stat-label">Current Match</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tool-section">
+                <h3>Output Text</h3>
+                <div id="outputText" class="text-area" readonly></div>
+                
+                <div class="button-group">
+                    <button id="copyBtn" class="btn btn-primary">
+                        <i class="fas fa-copy"></i> Copy to Clipboard
+                    </button>
+                    <button id="clearBtn" class="btn btn-outline">
+                        <i class="fas fa-trash"></i> Clear All
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Us</h3>
+                    <p>St. Christopher School is committed to providing a world-class education that prepares students for success in university and beyond.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://cbt.scs.infy.uk">Home</a></li>
+                        <li><a href="https://cbt.scs.infy.uk">Academic Programs</a></li>
+                        <li><a href="https://cbt.scs.infy.uk">Student Portal</a></li>
+                        <li><a href="https://cbt.scs.infy.uk">Resources</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 50 Obi Ikechukwu Road, Agbor-Obi, Delta State</li>
+                        <li><i class="fas fa-phone"></i> +234 (0) 000-000-0000</li>
+                        <li><i class="fas fa-envelope"></i> info@scs.org.ng</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 St. Christopher School. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const inputText = document.getElementById('inputText');
+            const outputText = document.getElementById('outputText');
+            const findText = document.getElementById('findText');
+            const replaceText = document.getElementById('replaceText');
+            const caseSensitive = document.getElementById('caseSensitive');
+            const findBtn = document.getElementById('findBtn');
+            const replaceBtn = document.getElementById('replaceBtn');
+            const replaceAllBtn = document.getElementById('replaceAllBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const matchesCount = document.getElementById('matchesCount');
+            const replacementsCount = document.getElementById('replacementsCount');
+            const currentMatch = document.getElementById('currentMatch');
+            const notification = document.getElementById('notification');
+            
+            // State variables
+            let matches = [];
+            let currentMatchIndex = -1;
+            let replacementCount = 0;
+            let originalText = inputText.value;
+            
+            // Initialize output with input text
+            outputText.textContent = originalText;
+            
+            // Functions
+            function showNotification(message, type) {
+                notification.textContent = message;
+                notification.className = `notification ${type}`;
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+            
+            function findMatches() {
+                const searchText = findText.value;
+                if (!searchText) {
+                    showNotification('Please enter text to find', 'error');
+                    return;
+                }
+                
+                const text = inputText.value;
+                const flags = caseSensitive.checked ? 'g' : 'gi';
+                const regex = new RegExp(searchText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
+                
+                matches = [];
+                let match;
+                while ((match = regex.exec(text)) !== null) {
+                    matches.push({
+                        index: match.index,
+                        length: match[0].length,
+                        text: match[0]
+                    });
+                }
+                
+                matchesCount.textContent = matches.length;
+                currentMatchIndex = -1;
+                
+                if (matches.length > 0) {
+                    highlightMatches();
+                    showNotification(`Found ${matches.length} matches`, 'success');
+                } else {
+                    outputText.innerHTML = inputText.value;
+                    showNotification('No matches found', 'warning');
+                }
+            }
+            
+            function highlightMatches() {
+                let text = inputText.value;
+                let highlightedText = '';
+                let lastIndex = 0;
+                
+                matches.forEach((match, index) => {
+                    // Add text before match
+                    highlightedText += text.substring(lastIndex, match.index);
+                    
+                    // Add highlighted match
+                    if (index === currentMatchIndex) {
+                        highlightedText += `<span class="current-highlight">${match.text}</span>`;
+                    } else {
+                        highlightedText += `<span class="highlight">${match.text}</span>`;
+                    }
+                    
+                    lastIndex = match.index + match.length;
+                });
+                
+                // Add remaining text
+                highlightedText += text.substring(lastIndex);
+                
+                outputText.innerHTML = highlightedText;
+                currentMatch.textContent = currentMatchIndex + 1;
+            }
+            
+            function replaceCurrent() {
+                if (matches.length === 0) {
+                    showNotification('No matches to replace', 'warning');
+                    return;
+                }
+                
+                if (currentMatchIndex === -1) {
+                    showNotification('Please find matches first', 'warning');
+                    return;
+                }
+                
+                const match = matches[currentMatchIndex];
+                const text = inputText.value;
+                const replacement = replaceText.value;
+                
+                // Replace the match
+                const newText = text.substring(0, match.index) + 
+                               replacement + 
+                               text.substring(match.index + match.length);
+                
+                inputText.value = newText;
+                outputText.textContent = newText;
+                
+                // Update matches after replacement
+                replacementCount++;
+                replacementsCount.textContent = replacementCount;
+                
+                showNotification('Replacement made successfully', 'success');
+                
+                // Adjust match indices for subsequent matches
+                const lengthDiff = replacement.length - match.length;
+                
+                for (let i = currentMatchIndex + 1; i < matches.length; i++) {
+                    matches[i].index += lengthDiff;
+                }
+                
+                // Remove the replaced match
+                matches.splice(currentMatchIndex, 1);
+                matchesCount.textContent = matches.length;
+                
+                if (matches.length > 0) {
+                    if (currentMatchIndex >= matches.length) {
+                        currentMatchIndex = matches.length - 1;
+                    }
+                    highlightMatches();
+                } else {
+                    outputText.textContent = inputText.value;
+                    currentMatchIndex = -1;
+                    currentMatch.textContent = '0';
+                }
+            }
+            
+            function replaceAll() {
+                const searchText = findText.value;
+                const replacement = replaceText.value;
+                
+                if (!searchText) {
+                    showNotification('Please enter text to find', 'error');
+                    return;
+                }
+                
+                const flags = caseSensitive.checked ? 'g' : 'gi';
+                const regex = new RegExp(searchText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
+                
+                const newText = inputText.value.replace(regex, replacement);
+                inputText.value = newText;
+                outputText.textContent = newText;
+                
+                // Calculate number of replacements
+                const matchCount = (inputText.value.match(regex) || []).length;
+                const originalMatchCount = (originalText.match(regex) || []).length;
+                const replacementsMade = originalMatchCount - matchCount;
+                
+                replacementCount += replacementsMade;
+                replacementsCount.textContent = replacementCount;
+                
+                matches = [];
+                matchesCount.textContent = '0';
+                currentMatchIndex = -1;
+                currentMatch.textContent = '0';
+                
+                showNotification(`Replaced all ${replacementsMade} occurrences`, 'success');
+            }
+            
+            function resetAll() {
+                inputText.value = originalText;
+                outputText.textContent = originalText;
+                findText.value = '';
+                replaceText.value = '';
+                matches = [];
+                matchesCount.textContent = '0';
+                replacementCount = 0;
+                replacementsCount.textContent = '0';
+                currentMatchIndex = -1;
+                currentMatch.textContent = '0';
+                caseSensitive.checked = false;
+                
+                showNotification('Text has been reset', 'success');
+            }
+            
+            function copyToClipboard() {
+                if (!outputText.textContent) {
+                    showNotification('No text to copy', 'warning');
+                    return;
+                }
+                
+                navigator.clipboard.writeText(outputText.textContent)
+                    .then(() => {
+                        showNotification('Text copied to clipboard', 'success');
+                    })
+                    .catch(err => {
+                        showNotification('Failed to copy text', 'error');
+                        console.error('Could not copy text: ', err);
+                    });
+            }
+            
+            function clearAll() {
+                inputText.value = '';
+                outputText.textContent = '';
+                findText.value = '';
+                replaceText.value = '';
+                matches = [];
+                matchesCount.textContent = '0';
+                replacementCount = 0;
+                replacementsCount.textContent = '0';
+                currentMatchIndex = -1;
+                currentMatch.textContent = '0';
+                
+                showNotification('All fields cleared', 'success');
+            }
+            
+            // Event Listeners
+            findBtn.addEventListener('click', findMatches);
+            replaceBtn.addEventListener('click', replaceCurrent);
+            replaceAllBtn.addEventListener('click', replaceAll);
+            resetBtn.addEventListener('click', resetAll);
+            copyBtn.addEventListener('click', copyToClipboard);
+            clearBtn.addEventListener('click', clearAll);
+            
+            // Initialize with sample text
+            outputText.textContent = inputText.value;
+        });
+    </script>
+</body>
+</html>

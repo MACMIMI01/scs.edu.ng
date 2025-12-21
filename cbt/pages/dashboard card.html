@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Link Builder</title>
+  <link rel="stylesheet" href="../scripts/css/font-awesome.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .panel {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+    h1 {
+      color: white;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 32px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 24px;
+      border-bottom: 2px solid #667eea;
+      padding-bottom: 10px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+      font-weight: 600;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    .icon-preview {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+    .icon-preview i {
+      font-size: 32px;
+      color: #667eea;
+    }
+    .icon-preview span {
+      color: #666;
+      font-size: 14px;
+    }
+    .btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      width: 100%;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    .btn:active {
+      transform: translateY(0);
+    }
+    .dashboard-preview {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      min-height: 200px;
+    }
+    .dashboard-link {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px;
+      background: white;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+    .dashboard-link:hover {
+      transform: translateX(5px);
+    }
+    .dashboard-link i {
+      font-size: 24px;
+      color: #667eea;
+      width: 40px;
+      text-align: center;
+    }
+    .dashboard-link .link-info {
+      flex: 1;
+    }
+    .dashboard-link .link-title {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 4px;
+    }
+    .dashboard-link .link-url {
+      font-size: 12px;
+      color: #999;
+    }
+    .dashboard-link .delete-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .code-output {
+      background: #2d2d2d;
+      color: #f8f8f2;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      position: relative;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .copy-btn:hover {
+      background: #5568d3;
+    }
+    .icon-search {
+      position: relative;
+      margin-bottom: 10px;
+    }
+    .icon-dropdown {
+      max-height: 300px;
+      overflow-y: auto;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      margin-top: 5px;
+      background: white;
+    }
+    .icon-option {
+      padding: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .icon-option:hover {
+      background: #f8f9fa;
+    }
+    .icon-option i {
+      font-size: 20px;
+      width: 30px;
+      text-align: center;
+      color: #667eea;
+    }
+    @media (max-width: 968px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>📊 Dashboard Link Builder</h1>
+  <div class="container">
+    <!-- Left Panel: Form -->
+    <div class="panel">
+      <h2>Add New Link</h2>
+      <form id="linkForm">
+        <div class="form-group">
+          <label for="linkTitle">Link Title</label>
+          <input type="text" id="linkTitle" placeholder="e.g., User Profile" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="linkUrl">Link URL</label>
+          <input type="text" id="linkUrl" placeholder="e.g., /profile.php or https://example.com" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="iconSearch">Choose Icon</label>
+          <input type="text" id="iconSearch" placeholder="Search icons... (e.g., user, home, chart)">
+          <div id="iconDropdown" class="icon-dropdown" style="display: none;"></div>
+        </div>
+        
+        <div class="icon-preview" id="iconPreview" style="display: none;">
+          <i class="fa fa-question-circle"></i>
+          <span>No icon selected</span>
+        </div>
+        
+        <button type="submit" class="btn">➕ Add Link to Dashboard</button>
+      </form>
+    </div>
+    
+    <!-- Right Panel: Preview & Code -->
+    <div class="panel">
+      <h2>Dashboard Preview</h2>
+      <div class="dashboard-preview" id="dashboardPreview">
+        <p style="text-align: center; color: #999; padding: 40px 0;">Your links will appear here</p>
+      </div>
+      
+      <h2 style="margin-top: 30px;">Generated Code</h2>
+      <div class="code-output" id="codeOutput">
+        <button class="copy-btn" onclick="copyCode()">📋 Copy</button>
+        <pre id="codeContent"><!-- Add links above to generate code --></pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let links = [];
+    let icons = [];
+    let selectedIcon = { prefix: 'fa', name: 'link' };
+
+    // Load Font Awesome icons
+    fetch('../scripts/css/font-awesome.min.css')
+      .then(response => response.text())
+      .then(css => {
+        // Extract all icon classes
+        const iconMatches = css.match(/\.fa-([a-z0-9-]+):before/g) || [];
+        const brandMatches = css.match(/\.fab\.fa-([a-z0-9-]+):before/g) || [];
+        
+        const iconSet = new Set();
+        
+        iconMatches.forEach(match => {
+          const name = match.match(/fa-([a-z0-9-]+)/)[1];
+          if (!name.match(/^(lg|2x|3x|4x|5x|fw|ul|li|border|pull|spin|pulse|rotate|flip|stack|inverse)$/)) {
+            iconSet.add(JSON.stringify({ prefix: 'fa', name }));
+          }
+        });
+        
+        brandMatches.forEach(match => {
+          const name = match.match(/fa-([a-z0-9-]+)/)[1];
+          iconSet.add(JSON.stringify({ prefix: 'fab', name }));
+        });
+        
+        icons = Array.from(iconSet).map(str => JSON.parse(str));
+        populateIconDropdown(icons);
+      })
+      .catch(error => {
+        console.error('Error loading icons:', error);
+      });
+
+    function populateIconDropdown(iconList) {
+      const dropdown = document.getElementById('iconDropdown');
+      dropdown.innerHTML = '';
+      
+      iconList.slice(0, 100).forEach(icon => {
+        const option = document.createElement('div');
+        option.className = 'icon-option';
+        option.innerHTML = `
+          <i class="${icon.prefix} fa-${icon.name}"></i>
+          <span>${icon.name}</span>
+        `;
+        option.onclick = () => selectIcon(icon);
+        dropdown.appendChild(option);
+      });
+    }
+
+    function selectIcon(icon) {
+      selectedIcon = icon;
+      const preview = document.getElementById('iconPreview');
+      preview.style.display = 'flex';
+      preview.innerHTML = `
+        <i class="${icon.prefix} fa-${icon.name}"></i>
+        <span>${icon.name}</span>
+      `;
+      document.getElementById('iconDropdown').style.display = 'none';
+      document.getElementById('iconSearch').value = icon.name;
+    }
+
+    // Icon search functionality
+    document.getElementById('iconSearch').addEventListener('input', (e) => {
+      const search = e.target.value.toLowerCase();
+      const dropdown = document.getElementById('iconDropdown');
+      
+      if (search.length > 0) {
+        const filtered = icons.filter(icon => icon.name.includes(search));
+        populateIconDropdown(filtered);
+        dropdown.style.display = 'block';
+      } else {
+        dropdown.style.display = 'none';
+      }
+    });
+
+    document.getElementById('iconSearch').addEventListener('focus', () => {
+      if (icons.length > 0) {
+        document.getElementById('iconDropdown').style.display = 'block';
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.form-group')) {
+        document.getElementById('iconDropdown').style.display = 'none';
+      }
+    });
+
+    // Form submission
+    document.getElementById('linkForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const title = document.getElementById('linkTitle').value;
+      const url = document.getElementById('linkUrl').value;
+      
+      links.push({
+        title,
+        url,
+        icon: selectedIcon
+      });
+      
+      updateDashboard();
+      updateCode();
+      
+      // Reset form
+      document.getElementById('linkForm').reset();
+      document.getElementById('iconPreview').style.display = 'none';
+      selectedIcon = { prefix: 'fa', name: 'link' };
+    });
+
+    function updateDashboard() {
+      const preview = document.getElementById('dashboardPreview');
+      
+      if (links.length === 0) {
+        preview.innerHTML = '<p style="text-align: center; color: #999; padding: 40px 0;">Your links will appear here</p>';
+        return;
+      }
+      
+      preview.innerHTML = links.map((link, index) => `
+        <div class="dashboard-link">
+          <i class="${link.icon.prefix} fa-${link.icon.name}"></i>
+          <div class="link-info">
+            <div class="link-title">${link.title}</div>
+            <div class="link-url">${link.url}</div>
+          </div>
+          <button class="delete-btn" onclick="deleteLink(${index})">Delete</button>
+        </div>
+      `).join('');
+    }
+
+    function deleteLink(index) {
+      links.splice(index, 1);
+      updateDashboard();
+      updateCode();
+    }
+
+    function updateCode() {
+      const codeContent = document.getElementById('codeContent');
+      
+      if (links.length === 0) {
+        codeContent.textContent = '<!-- Add links above to generate code -->';
+        return;
+      }
+      
+      const code = links.map(link => 
+        `<a href="${link.url}" class="dashboard-link">
+  <i class="${link.icon.prefix} fa-${link.icon.name}"></i>
+  <span>${link.title}</span>
+</a>`
+      ).join('\n\n');
+      
+      codeContent.textContent = code;
+    }
+
+    function copyCode() {
+      const code = document.getElementById('codeContent').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = '✅ Copied!';
+        setTimeout(() => {
+          btn.textContent = '📋 Copy';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

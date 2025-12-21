@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Taking - TestHall</title>
+    <!-- Assumes this file is in the /pages/ folder -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+<link rel="stylesheet" href="../scripts/css/font-awesome.min.css">
+    <!-- CRITICAL: jsPDF is required for PDF generation -->
+    <script src="../js/jspdf.umd.min.js"></script>    
+    <style>
+        /* All CSS will be added in the next step */
+                :root { --primary-color: #020169; --accent-color: #FEC009; }
+        body { margin: 0; font-family: Arial, sans-serif; background-color: #f0f2f5; }
+        
+        /* --- Sidebar & Hamburger Menu Styles --- */
+        .hamburger-icon { position: fixed; top: 20px; left: 20px; font-size: 30px; color: var(--primary-color); cursor: pointer; z-index: 1000; background-color: var(--accent-color); padding: 5px 8px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .off-canvas-menu { position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background-color: var(--primary-color); color: #fff; padding-top: 80px; box-sizing: border-box; transition: left 0.3s ease-in-out; z-index: 999; }
+        .off-canvas-menu.open { left: 0; }
+        .menu-list { list-style: none; padding: 0; margin: 0; }
+        .menu-list .menu-item { display: flex; align-items: center; padding: 15px 20px; cursor: pointer; }
+        .menu-list .menu-item i { font-size: 20px; margin-right: 15px; }
+        
+        /* --- Main Content --- */
+        main { padding: 20px; padding-top: 80px; transition: margin-left 0.3s ease-in-out; }
+        .main-container { max-width: 800px; margin: auto; }
+        h1#exam-title { text-align: center; color: var(--primary-color); margin-bottom: 30px; }
+
+        /* --- Exam View Styles --- */
+        #exam-questions-wrapper.hidden { display: none; }
+        .question-container { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .question-image { max-width: 100%; height: auto; margin: 15px auto; display: block; border-radius: 5px; }
+        .question-container ul { list-style: none; padding: 0; }
+        .question-container label { display: block; background-color: #f1f1f1; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
+        .question-actions { text-align: right; margin-top: 20px; }
+        .clear-answer-btn { background: #6c757d; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 0.9em; }
+        .question-nav-panel { max-width: 700px; margin: 20px auto; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+        .nav-question-btn { width: 35px; height: 35px; border: 1px solid #ccc; border-radius: 5px; background-color: #fff; cursor: pointer; font-weight: bold; }
+        .nav-question-btn.current { background-color: var(--primary-color); color: var(--accent-color); }
+        .nav-question-btn.answered { background-color: var(--accent-color); color: var(--primary-color); }
+        .navigation-buttons { display: flex; justify-content: space-between; max-width: 700px; margin: 20px auto; }
+        .navigation-buttons button, #finish-exam-btn { background-color: var(--primary-color); color: #fff; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-size: 1em; }
+        .navigation-buttons button:disabled { background-color: #ccc; }
+        .finish-button-container { text-align: center; margin-top: 40px; }
+        #finish-exam-btn { background-color: #dc3545; font-size: 1.2em; }
+
+        /* --- Final Results Card Styles --- */
+        .detailed-results-preview { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); color: #333; }
+        .detailed-results-preview section { border-bottom: 1px solid #eee; margin-bottom: 15px; padding-bottom: 15px; }
+        .detailed-results-preview .header-section { display: flex; justify-content: space-between; align-items: center; }
+        .detailed-results-preview .student-info { display: flex; justify-content: space-between; align-items: flex-start; }
+        .profile-pic-preview { max-width: 100px; height: auto; border-radius: 50%; border: 2px solid var(--accent-color); }
+        .summary-section p { font-size: 1.1em; font-weight: bold; text-align: center; }
+        .action-buttons-container { display: flex; justify-content: center; gap: 20px; border-bottom: none; }
+        .download-pdf-button, .dashboard-link-button { border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-size: 1.1em; color: #fff; text-decoration: none; }
+        .download-pdf-button { background-color: #28a745; }
+        .dashboard-link-button { background-color: #007bff; }
+
+        /* --- Footer & Profile Icon --- */
+        footer { position: fixed; bottom: 0; width: 100%; text-align: center; padding: 10px; background-color: var(--primary-color); color: var(--accent-color); z-index: 1000; }
+        .profile-display-icon { position: fixed; top: 10px; right: 10px; width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; cursor: pointer; z-index: 999; }
+
+
+    </style>
+</head>
+<body>
+    <!-- The Hamburger Menu (hidden during exam) -->
+    <div class="hamburger-icon" id="hamburger-icon" style="display: none;"><i class="fas fa-bars"></i></div>
+    <nav class="off-canvas-menu" id="off-canvas-menu">
+        <ul class="menu-list">
+            <li class="menu-item" id="dashboard-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></li>
+            <li class="menu-item" id="exam-library-link"><i class="fas fa-pencil-alt"></i><span>Exam Library</span></li>
+            <li class="menu-item" id="profile-link"><i class="fas fa-user-tie"></i><span>My Profile</span></li>
+            <li class="menu-item" id="logout-button"><i class="fas fa-sign-out-alt"></i><span>Logout</span></li>
+        </ul>
+    </nav>
+
+    <!-- The Main Content Area -->
+    <main>
+        <div class="main-container">
+            <h1 id="exam-title">Loading Exam...</h1>
+            
+            <!-- This wrapper holds the entire exam experience -->
+            <div id="exam-questions-wrapper">
+                <form id="test-form"></form>
+                <div id="question-navigation-panel" class="question-nav-panel"></div>
+                <div class="navigation-buttons">
+                    <button id="prev-btn" disabled>Previous</button>
+                    <button id="next-btn">Next</button>
+                </div>
+                <div class="finish-button-container">
+                    <button id="finish-exam-btn">Finish Exam</button>
+                </div>
+            </div>
+
+            <!-- This wrapper is for the final, graphical results -->
+            <div id="results-wrapper" style="display: none;">
+                <!-- Results will be injected here by JavaScript -->
+            </div>
+        </div>
+    </main>
+  
+    <!-- The user's profile icon (top right) -->
+    <img id="user-image-display" src="../assets/profile_pictures/default.jpeg" alt="User Profile" class="profile-display-icon">
+    
+    <!-- The footer -->
+    <footer>&copy; 2024 TestHall</footer>
+
+    <script>
+        // The complete script will go here
+        
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- SECTION 1: AUTHENTICATION GUARD ---
+        const loggedInUserId = localStorage.getItem('loggedInUserId');
+        const expirationTime = localStorage.getItem('sessionExpiration');
+        if (!loggedInUserId) {
+            window.location.href = '../login.html';
+            return;
+        }
+        if (expirationTime && Date.now() > parseInt(expirationTime, 10)) {
+            localStorage.clear();
+            alert('Your temporary 60-minute session has expired.');
+            window.location.href = '../login.html?reason=unregistered';
+            return;
+        }
+
+        // --- SECTION 2: ELEMENT REFERENCES & STATE ---
+        const ui = {
+            title: document.getElementById('exam-title'),
+            examWrapper: document.getElementById('exam-questions-wrapper'),
+            resultsWrapper: document.getElementById('results-wrapper'),
+            form: document.getElementById('test-form'),
+            navPanel: document.getElementById('question-navigation-panel'),
+            prevBtn: document.getElementById('prev-btn'),
+            nextBtn: document.getElementById('next-btn'),
+            finishBtn: document.getElementById('finish-exam-btn'),
+            hamburger: document.getElementById('hamburger-icon'),
+            menu: document.getElementById('off-canvas-menu'),
+            profileIcon: document.getElementById('user-image-display'),
+        };
+        
+        let state = {
+            questions: [], userAnswers: [], studentData: {}, testData: {},
+            score: 0, currentIndex: 0
+        };
+
+        // --- SECTION 3: INITIALIZATION ---
+        const initializeExam = async () => {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const testFileName = urlParams.get('test');
+                if (!testFileName) throw new Error("No exam specified.");
+                
+                const [users, fetchedTestData] = await Promise.all([
+                    fetch('../data/users.json').then(res => res.json()),
+                    fetch(`../data/${testFileName}.json`).then(res => res.json())
+                ]);
+
+                const tempUsers = JSON.parse(localStorage.getItem('tempUsers')) || [];
+                state.studentData = [...users, ...tempUsers].find(user => user.id === loggedInUserId);
+                if (!state.studentData) throw new Error("Could not find user data.");
+                
+                state.testData = fetchedTestData;
+                state.questions = state.testData.questions || [];
+                state.userAnswers = new Array(state.questions.length).fill(null);
+                ui.title.textContent = state.testData.testName || 'Exam Taking';
+                
+                setupUI();
+                generateQuestionNavPanel();
+                displayQuestion(0);
+
+            } catch (error) {
+                console.error("Initialization Failed:", error);
+                alert(`Error: ${error.message}. Redirecting...`);
+                window.location.href = 'exam-library.html';
+            }
+        };
+        
+        // --- SECTION 4: UI SETUP AND EVENT LISTENERS ---
+        const setupUI = () => {
+            ui.hamburger.addEventListener('click', () => ui.menu.classList.toggle('open'));
+            
+            if (state.studentData.profilePicture) {
+                ui.profileIcon.src = `../${state.studentData.profilePicture}`;
+            }
+            ui.profileIcon.addEventListener('click', () => window.location.href = 'profile.html');
+            
+            const redirectToRoleDashboard = () => {
+                const role = localStorage.getItem('loggedInUserRole');
+                let url = 'dashboard.html';
+                if(role) {
+                    const r = role.toLowerCase();
+                    if (r === 'admin') url = 'dashboard-admin.html';
+                    else if (r === 'teacher') url = 'dashboard-teacher.html';
+                    else if (r === 'student') url = 'dashboard-student.html';
+                    else if (r === 'parent') url = 'dashboard-parents.html';
+                }
+                window.location.href = url;
+            };
+            document.getElementById('dashboard-link').addEventListener('click', redirectToRoleDashboard);
+            document.getElementById('exam-library-link').addEventListener('click', () => window.location.href = 'exam-library.html');
+            document.getElementById('profile-link').addEventListener('click', () => window.location.href = 'profile.html');
+            
+            document.getElementById('logout-button').addEventListener('click', () => {
+                localStorage.clear();
+                window.location.href = '../login.html';
+            });
+            
+            ui.prevBtn.addEventListener('click', () => { if (state.currentIndex > 0) { displayQuestion(state.currentIndex - 1); } });
+            ui.nextBtn.addEventListener('click', () => {
+                if (state.currentIndex < state.questions.length - 1) {
+                    displayQuestion(state.currentIndex + 1);
+                } else {
+                    finishExam(); // The 'Next' button becomes the 'Finish' button
+                }
+            });
+            ui.finishBtn.addEventListener('click', finishExam); // The dedicated finish button
+        };
+
+        const displayQuestion = (index) => { /* ... same as before ... */ };
+        const generateQuestionNavPanel = () => { /* ... same as before ... */ };
+        const updateQuestionNavPanel = () => { /* ... same as before ... */ };
+        const updateNavButtons = () => {
+            ui.prevBtn.disabled = state.currentIndex === 0;
+            ui.nextBtn.textContent = (state.currentIndex === state.questions.length - 1) ? 'Finish' : 'Next';
+        };
+
+        // --- SECTION 5: EXAM WORKFLOW & RESULTS ---
+        const saveCurrentAnswer = () => {
+            const selected = ui.form.querySelector(`input[name="q${state.currentIndex}"]:checked`);
+            state.userAnswers[state.currentIndex] = selected ? selected.value : null;
+        };
+
+        const finishExam = () => {
+            saveCurrentAnswer();
+            ui.examWrapper.style.display = 'none';
+            ui.hamburger.style.display = 'block'; // SHOW the menu
+            ui.title.textContent = "Final Result";
+            calculateAndShowResults();
+        };
+
+        const calculateAndShowResults = () => {
+            state.score = state.userAnswers.reduce((acc, ans, i) => acc + (ans === state.questions[i].correctAnswer ? 1 : 0), 0);
+            const percentage = state.questions.length > 0 ? Math.round((state.score / state.questions.length) * 100) : 0;
+
+            const resultsHtml = `
+            <div class="detailed-results-preview">
+                <section class="header-section">
+                    <div><img src="../assets/images/logo.png" alt="School Logo" style="max-width:80px;"></div>
+                    <div><h2>St. Christopher School</h2><p style="font-weight: bold;">EXAMINATION RESULT</p></div>
+                </section>
+                <section><h2>Candidate Information</h2><div class="student-info"><div>
+                    <p><strong>Name:</strong> ${state.studentData.name || 'N/A'}</p>
+                    <p><strong>Class:</strong> ${state.studentData.class || 'N/A'}</p>
+                    <p><strong>Subject:</strong> ${state.testData.testName || 'N/A'}</p>
+                </div><div><img src="${state.studentData.profilePicture ? `../${state.studentData.profilePicture}` : '../assets/profile_pictures/default.jpeg'}" alt="Profile" class="profile-pic-preview"></div></div></section>
+                <section class="summary-section"><h2>Performance Summary</h2><p>Score: ${state.score} / ${state.questions.length}</p><p>Percentage: ${percentage}%</p></section>
+                <section class="action-buttons-container">
+                    <button id="download-pdf-button" class="download-pdf-button">Download PDF</button>
+                    <a id="dashboard-redirect-link" href="#" class="dashboard-link-button">Back to Dashboard</a>
+                </section>
+            </div>`;
+            
+            ui.resultsWrapper.innerHTML = resultsHtml;
+            ui.resultsWrapper.style.display = 'block';
+
+            document.getElementById('download-pdf-button').addEventListener('click', generateResultsPDF);
+            document.getElementById('dashboard-redirect-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                redirectToRoleDashboard(); // Use the smart redirect function
+            });
+        };
+        
+        const generateResultsPDF = () => {
+            try {
+                if (!window.jspdf) throw new Error('jsPDF not loaded.');
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                
+                // --- PDF Content ---
+                doc.setFontSize(18).text("St. Christopher School - Official Exam Result", 105, 15, { align: 'center' });
+                // ... (add more details like name, subject, score as needed) ...
+                
+                doc.save(`Result_${state.studentData.name}.pdf`);
+            } catch (error) {
+                console.error("PDF Generation Failed:", error);
+                alert("Could not generate PDF. " + error.message);
+            }
+        };
+
+        // --- START THE APPLICATION ---
+        initializeExam();
+    });
+    </script>
+</body>
+</html>
+
+
+
+

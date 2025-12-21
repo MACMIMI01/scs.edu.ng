@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Font Awesome Icons</title>
+  <link rel="stylesheet" href="../scripts/css/font-awesome.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .filters {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .filters button {
+      margin: 5px;
+      padding: 10px 20px;
+      border: none;
+      background: #ddd;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    .filters button.active {
+      background: #007bff;
+      color: white;
+    }
+    .count {
+      text-align: center;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .icon-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 15px;
+      padding: 20px;
+    }
+    .icon {
+      background: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .icon:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .icon i {
+      font-size: 32px;
+      color: #333;
+    }
+    .icon span {
+      display: block;
+      font-size: 11px;
+      margin-top: 8px;
+      color: #666;
+      word-break: break-word;
+    }
+    .icon .type {
+      font-size: 9px;
+      color: #999;
+      margin-top: 3px;
+    }
+    .loading {
+      text-align: center;
+      padding: 40px;
+      font-size: 18px;
+      color: #666;
+    }
+    .icon[data-type="brand"] i {
+      color: #1877f2;
+    }
+    .icon[data-type="solid"] i {
+      color: #333;
+    }
+    .icon[data-type="regular"] i {
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>Font Awesome Icons</h1>
+  <div class="filters" id="filters">
+    <button class="active" data-filter="all">All Icons</button>
+    <button data-filter="solid">Solid</button>
+    <button data-filter="regular">Regular</button>
+    <button data-filter="brand">Brands</button>
+    <button data-filter="light">Light</button>
+  </div>
+  <div class="count" id="count">Loading icons...</div>
+  <div class="icon-container" id="iconContainer">
+    <div class="loading">Loading Font Awesome icons...</div>
+  </div>
+  <script>
+    let allIcons = [];
+    let currentFilter = 'all';
+
+    // Get all the icon classes from the Font Awesome CSS file
+    fetch('../scripts/css/font-awesome.min.css')
+      .then(response => response.text())
+      .then(css => {
+        // Try to detect Font Awesome version and icon patterns
+        const iconPatterns = [
+          /\.fa-([a-z0-9-]+):before/g,  // FA 4/5 pattern
+          /\.fab\.fa-([a-z0-9-]+):before/g, // Brand icons
+          /\.fas\.fa-([a-z0-9-]+):before/g, // Solid icons
+          /\.far\.fa-([a-z0-9-]+):before/g, // Regular icons
+          /\.fal\.fa-([a-z0-9-]+):before/g  // Light icons
+        ];
+        
+        const icons = new Map();
+        
+        // Check for brands (fab)
+        const brandMatches = css.match(/\.fab\.fa-([a-z0-9-]+):before/g) || [];
+        brandMatches.forEach(match => {
+          const iconName = match.match(/fa-([a-z0-9-]+)/)[1];
+          icons.set(`fab-${iconName}`, { name: iconName, type: 'brand', prefix: 'fab' });
+        });
+        
+        // Check for solid (fas)
+        const solidMatches = css.match(/\.fas\.fa-([a-z0-9-]+):before/g) || [];
+        solidMatches.forEach(match => {
+          const iconName = match.match(/fa-([a-z0-9-]+)/)[1];
+          icons.set(`fas-${iconName}`, { name: iconName, type: 'solid', prefix: 'fas' });
+        });
+        
+        // Check for regular (far)
+        const regularMatches = css.match(/\.far\.fa-([a-z0-9-]+):before/g) || [];
+        regularMatches.forEach(match => {
+          const iconName = match.match(/fa-([a-z0-9-]+)/)[1];
+          icons.set(`far-${iconName}`, { name: iconName, type: 'regular', prefix: 'far' });
+        });
+        
+        // Check for light (fal)
+        const lightMatches = css.match(/\.fal\.fa-([a-z0-9-]+):before/g) || [];
+        lightMatches.forEach(match => {
+          const iconName = match.match(/fa-([a-z0-9-]+)/)[1];
+          icons.set(`fal-${iconName}`, { name: iconName, type: 'light', prefix: 'fal' });
+        });
+        
+        // If no specific prefix found, try general pattern (FA 4 style)
+        if (icons.size === 0) {
+          const generalMatches = css.match(/\.fa-([a-z0-9-]+):before/g) || [];
+          generalMatches.forEach(match => {
+            const iconName = match.match(/fa-([a-z0-9-]+)/)[1];
+            // Filter out utility classes
+            if (!iconName.match(/^(lg|2x|3x|4x|5x|fw|ul|li|border|pull-left|pull-right|spin|pulse|rotate-90|rotate-180|rotate-270|flip-horizontal|flip-vertical|stack|stack-1x|stack-2x|inverse)$/)) {
+              icons.set(`fa-${iconName}`, { name: iconName, type: 'solid', prefix: 'fa' });
+            }
+          });
+        }
+        
+        if (icons.size === 0) {
+          document.getElementById('iconContainer').innerHTML = 
+            '<div class="loading">No icons found. Please check the CSS file path.</div>';
+          return;
+        }
+        
+        allIcons = Array.from(icons.values()).sort((a, b) => a.name.localeCompare(b.name));
+        
+        renderIcons();
+        setupFilters();
+      })
+      .catch(error => {
+        document.getElementById('iconContainer').innerHTML = 
+          `<div class="loading">Error loading icons: ${error.message}<br>Make sure the path '../scripts/css/font-awesome.min.css' is correct.</div>`;
+      });
+
+    function renderIcons() {
+      const iconContainer = document.getElementById('iconContainer');
+      iconContainer.innerHTML = '';
+      
+      const filteredIcons = currentFilter === 'all' 
+        ? allIcons 
+        : allIcons.filter(icon => icon.type === currentFilter);
+      
+      document.getElementById('count').textContent = 
+        `Showing ${filteredIcons.length} of ${allIcons.length} icons`;
+      
+      filteredIcons.forEach(icon => {
+        const iconDiv = document.createElement('div');
+        iconDiv.className = 'icon';
+        iconDiv.setAttribute('data-type', icon.type);
+        iconDiv.innerHTML = `
+          <i class="${icon.prefix} fa-${icon.name}"></i>
+          <span>${icon.name}</span>
+          <div class="type">${icon.type}</div>
+        `;
+        iconContainer.appendChild(iconDiv);
+      });
+    }
+
+    function setupFilters() {
+      const buttons = document.querySelectorAll('.filters button');
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          buttons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+          currentFilter = button.getAttribute('data-filter');
+          renderIcons();
+        });
+      });
+    }
+  </script>
+</body>
+</html>

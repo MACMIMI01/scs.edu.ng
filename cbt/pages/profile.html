@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<!--http://localhost:8080/cbt/pages/profile.html-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - TestHall</title>
+    <!-- All HTML files are inside the /pages/ folder -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../scripts/css/font-awesome.min.css">
+    <!-- This script is the security guard for the page -->
+    <script src="../scripts/auth.js" defer></script>
+    <style>
+        :root { --primary-color: #020169; --accent-color: #FEC009; }
+        body { margin: 0; font-family: Arial, sans-serif; background-color: #f0f2f5; overflow-x: hidden; }
+        .hamburger-icon { position: fixed; top: 20px; left: 20px; font-size: 30px; color: var(--primary-color); cursor: pointer; z-index: 1000; background-color: var(--accent-color); padding: 5px 8px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .off-canvas-menu { position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background-color: var(--primary-color); color: #fff; padding-top: 80px; box-sizing: border-box; transition: left 0.3s ease-in-out; z-index: 999; box-shadow: 2px 0 5px rgba(0,0,0,0.5); }
+        .off-canvas-menu.open { left: 0; }
+        .menu-list { list-style: none; padding: 0; margin: 0; }
+        .menu-list .menu-item { display: flex; align-items: center; padding: 15px 20px; cursor: pointer; transition: background 0.3s ease; }
+        .menu-list .menu-item i { font-size: 20px; margin-right: 15px; min-width: 25px; }
+        .menu-list .menu-item span { white-space: nowrap; font-size: 1.1em; }
+        .menu-list .menu-item:hover { background-color: rgba(255, 255, 255, 0.2); }
+        main { padding: 20px; padding-top: 80px; transition: margin-left 0.3s ease-in-out; }
+        .off-canvas-menu.open + main { margin-left: 250px; }
+        .profile-container {  margin: auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .profile-header { display: flex; align-items: center; gap: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px; margin-bottom: 20px; }
+        
+        
+        .profile-picture { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--accent-color); }
+         /* --- THIS IS THE NEW RESPONSIVE LOGIC --- */
+        .profile-header .profile-picture {
+            /* Tell the image not to shrink */
+            flex-shrink: 0;
+        }
+
+        .profile-header div {
+            /* Allow the text container to shrink and wrap text */
+            min-width: 0;
+        }
+        
+        .profile-header h1 {
+            margin: 0;
+            color: var(--primary-color);
+            /* These properties prevent long text from breaking the layout */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        .profile-header p { margin: 5px 0 0; color: #666; }
+        .profile-details { display: grid; grid-template-columns: 1fr 2fr; gap: 15px; }
+        .profile-details dt { font-weight: bold; color: #555; }
+        .profile-details dd { margin: 0; }
+        footer { position: fixed; bottom: 0; width: 100%; text-align: center; padding: 10px; background-color: var(--primary-color); color: var(--accent-color); z-index: 1000; }
+        .profile-display-icon { position: fixed; top: 10px; right: 10px; width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; cursor: pointer; z-index: 999; }
+    </style>
+</head>
+<body>
+    <div class="hamburger-icon" id="hamburger-icon"><i class="fas fa-bars"></i></div>
+
+    <!-- CORRECTED: Menu items now have unique IDs -->
+    <nav class="off-canvas-menu" id="off-canvas-menu">
+        <ul class="menu-list">
+            <li class="menu-item" id="dashboard-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></li>
+            <li class="menu-item" id="test-library-link"><i class="fas fa-book"></i><span>Test Library</span></li>
+            <li class="menu-item" id="exam-library-link"><i class="fas fa-pencil-alt"></i><span>Exam Library</span></li>
+            <li class="menu-item" id="profile-link"><i class="fas fa-user-tie"></i><span>My Profile</span></li>
+            <li class="menu-item" id="classes-link"><i class="fas fa-users"></i><span>Classes</span></li>
+            <li class="menu-item" id="logout-button"><i class="fas fa-sign-out-alt"></i><span>Logout</span></li>          
+        </ul>
+    </nav>
+
+    <main id="main-content">
+        <div class="profile-container">
+            <div class="profile-header">
+                <img id="profile-pic-large" src="../assets/profile_pictures/default.jpeg" alt="User Profile Picture" class="profile-picture">
+                <div>
+                    <h1 id="profile-name">Loading...</h1>
+                    <p id="profile-role">User Role</p>
+                </div>
+            </div>
+            <h2>Personal Information</h2>
+            <dl class="profile-details">
+                <dt>Full Name:</dt><dd id="detail-name">...</dd>
+                <dt>Username:</dt><dd id="detail-username">...</dd>
+                <dt>User ID:</dt><dd id="detail-id">...</dd>
+                <dt>Class:</dt><dd id="detail-class">...</dd>
+            </dl>
+        </div>
+    </main>
+  
+    <img id="user-image-display" src="../assets/profile_pictures/default.jpeg" alt="User Profile" class="profile-display-icon">
+    <footer>&copy; 2024 TestHall</footer>
+
+    <!-- ======================================================= -->
+    <!--           SINGLE, CLEAN, AND CORRECTED SCRIPT           -->
+    <!-- ======================================================= -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- UI ELEMENTS ---
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const offCanvasMenu = document.getElementById('off-canvas-menu');
+        const profileDisplayIcon = document.getElementById('user-image-display');
+        const logoutButton = document.getElementById('logout-button');
+
+        // --- HAMBURGER MENU TOGGLE ---
+        hamburgerIcon.addEventListener('click', () => offCanvasMenu.classList.toggle('open'));
+
+        // --- SMART & REGULAR NAVIGATION LINKS ---
+        // Get all the link elements by their new IDs
+        const dashboardLink = document.getElementById('dashboard-link');
+        const testLibraryLink = document.getElementById('test-library-link');
+        const examLibraryLink = document.getElementById('exam-library-link');
+        const profileLink = document.getElementById('profile-link');
+        const classesLink = document.getElementById('classes-link');
+
+        const redirectToRoleDashboard = () => {
+            const userRole = localStorage.getItem('loggedInUserRole');
+            let url = 'dashboard.html'; // Fallback
+            if (userRole) {
+                const r = userRole.toLowerCase();
+                if (r === 'admin') url = 'dashboard-admin.html';
+                else if (r === 'teacher') url = 'dashboard-teacher.html';
+                else if (r === 'student') url = 'dashboard-student.html';
+                else if (r === 'parent') url = 'dashboard-parents.html';
+            }
+            window.location.href = url;
+        };
+        
+        // Attach all click events
+        dashboardLink.addEventListener('click', redirectToRoleDashboard);
+        testLibraryLink.addEventListener('click', () => window.location.href = 'test-library.html');
+        examLibraryLink.addEventListener('click', () => window.location.href = 'exam-library.html');
+        profileLink.addEventListener('click', () => window.location.href = 'profile.html');
+        classesLink.addEventListener('click', () => window.location.href = 'classes.html');
+
+        // --- LOGOUT ---
+        logoutButton.addEventListener('click', () => {
+            localStorage.clear();
+            // CORRECTED: all HTML file are in /pages/ to find login.html which is still in Pages folder
+            window.location.href = 'login.html';
+        });
+
+        // --- UNIFIED FETCH & DISPLAY PROFILE DATA LOGIC ---
+        // This is the one and only place we fetch user data
+        const loggedInUserId = localStorage.getItem('loggedInUserId');
+        
+        // The auth.js script already protects the page. This fetch is just for displaying data.
+        if (loggedInUserId) {
+
+fetch('../data/users.json')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(users => {
+        let tempUsers = JSON.parse(localStorage.getItem('tempUsers')) || [];
+        const allUsers = [...users, ...tempUsers];
+        const currentUser = allUsers.find(user => user.id == loggedInUserId);
+        
+        if (currentUser) {
+            // Populate all profile fields
+            document.getElementById('profile-name').textContent = currentUser.name || 'N/A';
+            document.getElementById('profile-role').textContent = currentUser.role || 'N/A';
+            document.getElementById('detail-name').textContent = currentUser.name || 'N/A';
+            document.getElementById('detail-username').textContent = currentUser.username || 'N/A';
+            document.getElementById('detail-id').textContent = currentUser.id || 'N/A';
+            document.getElementById('detail-class').textContent = currentUser.class || 'N/A';
+
+            // Set both profile pictures
+            const profilePicPath = currentUser.profilePicture ? currentUser.profilePicture : '../assets/profile_pictures/default.jpeg';
+            document.getElementById('profile-pic-large').src = profilePicPath;
+            profileDisplayIcon.src = profilePicPath;
+        } else {
+            console.log('User not found');
+            document.getElementById('profile-name').textContent = 'User Not Found';
+        }
+    })
+    .catch(error => {
+        console.error('Error loading profile data:', error);
+        document.getElementById('profile-name').textContent = 'Error Loading Data';
+            // ... (rest of the code)
+        });
+    }
+}); // Add this closing bracket
+   </script>
+</body>
+</html>
+
+
+
+  

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   
+    <title>Form Teacher Portal - SCS</title>
+    
+<!-- .html -->     
+    
+  <meta charset="UTF-8">  
+  <meta name="theme-color" content="#EFC009"
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="icon" type="image/png" href="favicon.ico">
+  <link rel="icon" type="image/png" href="../favicon.ico">
+  <link rel="icon" type="image/png" href="assets/images/favicon.ico">
+      
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  
+  <!-- Link to Font Awesome for icons -->
+  <link rel="stylesheet" href="../scripts/css/font-awesome.min.css">
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../scripts/css/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="scripts/css/font-awesome.min.css">   
+    
+    <link rel="stylesheet" href="cbt/scripts/css/font-awesome.min.css">
+     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+   
+    <style>
+        :root {
+            --primary: #020169;
+            --primary-light: #2d2b8d;
+            --accent: #FEC009;
+            --accent-dark: #e6b008;
+            --text-dark: #1a1a1a;
+            --text-light: #666;
+            --bg-light: #f0f2f5;
+            --card-bg: #ffffff;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --info: #17a2b8;
+            --border-radius: 12px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .header h1 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .teacher-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .teacher-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .student-photo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn-accent:hover {
+            background-color: var(--accent-dark);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-light);
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            text-align: center;
+            padding: 30px;
+            background-color: #ffecec;
+            color: var(--danger);
+            border-radius: var(--border-radius);
+            margin: 20px 0;
+        }
+
+        .class-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .teacher-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-chalkboard-teacher"></i> Form Teacher Portal</h1>
+            <div class="teacher-info">
+                <img id="teacher-photo" class="teacher-photo" src="../assets/profile_pictures/default.jpeg" alt="Teacher Photo">
+                <div>
+                    <h2 id="teacher-name" style="color: #FEC007;">Loading...</h2>
+                    <p id="teacher-class">Class: Loading...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="content-area">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Loading your class information...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Form Teacher Portal Application
+        document.addEventListener('DOMContentLoaded', () => {
+            // DOM Elements
+            const contentArea = document.getElementById('content-area');
+            const teacherName = document.getElementById('teacher-name');
+            const teacherClass = document.getElementById('teacher-class');
+            const teacherPhoto = document.getElementById('teacher-photo');
+            
+            // Application State
+            let currentUser = null;
+            let classStudents = [];
+            let allUsers = [];
+
+            /**
+             * Initializes the application
+             */
+            const initializeApp = async () => {
+                // Check authentication and authorization
+                if (!await checkAuthorization()) {
+                    return;
+                }
+                
+                // Load user data
+                await loadUserData();
+                
+                // Display class information
+                displayClassInfo();
+            };
+
+            /**
+             * Checks if user is authorized to access this page
+             * @returns {boolean} True if authorized, false otherwise
+             */
+            const checkAuthorization = async () => {
+                const loggedInUserId = localStorage.getItem('loggedInUserId');
+                
+                if (!loggedInUserId) {
+                    window.location.href = 'login.html';
+                    return false;
+                }
+                
+                // Load users data
+                try {
+                    const response = await fetch('../data/users.json');
+                    if (!response.ok) throw new Error('Failed to load user data');
+                    allUsers = await response.json();
+                    
+                    // Find current user
+                    currentUser = allUsers.find(user => user.id == loggedInUserId);
+                    
+                    if (!currentUser) {
+                        showError('User not found. Please log in again.');
+                        setTimeout(() => {
+                            window.location.href = 'login.html';
+                        }, 2000);
+                        return false;
+                    }
+                    
+                    // Check if user is a form teacher, Webmaster or admin
+                    const userRole = currentUser.role.toLowerCase();
+                    const isFormTeacher = userRole === 'teacher' && currentUser.classid;
+                    const isAdmin = userRole === 'admin';
+                    const isWebmaster = userRole === 'webmaster';
+                    
+                    if (!isFormTeacher && !isAdmin && isWebmaster) {
+                        showError('Access denied. This portal is for form teachers and administrators only.');
+                        setTimeout(() => {
+                            window.location.href = 'dashboard.html';
+                        }, 3000);
+                        return false;
+                    }
+                    
+                    return true;
+                } catch (error) {
+                    console.error('Authorization error:', error);
+                    showError('Error verifying your access rights. Please try again later.');
+                    return false;
+                }
+            };
+
+            /**
+             * Loads student data for the teacher's class
+             */
+            const loadUserData = async () => {
+                try {
+                    // If user is admin, show all students
+                    if (currentUser.role.toLowerCase() === 'admin') {
+                        classStudents = allUsers.filter(user => user.role.toLowerCase() === 'student');
+                    } else {
+                        // If user is form teacher, show only their class students
+                        classStudents = allUsers.filter(user => 
+                            user.role.toLowerCase() === 'student' && 
+                            user.classid === currentUser.classid
+                        );
+                    }
+                } catch (error) {
+                    console.error('Error loading student data:', error);
+                    showError('Failed to load student data. Please try again later.');
+                }
+            };
+
+            /**
+             * Displays class information and student list
+             */
+            const displayClassInfo = () => {
+                // Update teacher info
+                teacherName.textContent = currentUser.name;
+                teacherClass.textContent = `Class: ${currentUser.class || 'Not assigned'}`;
+                
+                if (currentUser.profilePicture) {
+                    teacherPhoto.src = currentUser.profilePicture;
+                }
+                
+                // Count male and female students
+                const maleCount = classStudents.filter(student => student.gender === 'Male').length;
+                const femaleCount = classStudents.filter(student => student.gender === 'Female').length;
+                
+                // Create content HTML
+                contentArea.innerHTML = `
+                    <div class="class-info">
+                        <h2>Student Management</h2>
+                        <div>
+                            <span class="btn btn-primary">Total Students: ${classStudents.length}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <i class="fas fa-male fa-2x"></i>
+                            <div class="stat-number">${maleCount}</div>
+                            <div class="stat-label">Male Students</div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-female fa-2x"></i>
+                            <div class="stat-number">${femaleCount}</div>
+                            <div class="stat-label">Female Students</div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-users fa-2x"></i>
+                            <div class="stat-number">${classStudents.length}</div>
+                            <div class="stat-label">Total Students</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3><i class="fas fa-list"></i> Student List</h3>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Photo</th>
+                                        <th>Name</th>
+                                        <th>Username</th>
+                                        <th>Gender</th>
+                                        <th>Date of Birth</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${classStudents.length > 0 ? 
+                                        classStudents.map(student => `
+                                            <tr>
+                                                <td>
+                                                    <img src="${student.profilePicture || '../assets/profile_pictures/default.jpeg'}" 
+                                                         alt="${student.name}" class="student-photo"
+                                                         onerror="this.src='../assets/profile_pictures/default.jpeg'">
+                                                </td>
+                                                <td>${student.name}</td>
+                                                <td>${student.username}</td>
+                                                <td>${student.gender || 'N/A'}</td>
+                                                <td>${student['date of birth'] || 'N/A'}</td>
+                                                <td class="actions">
+                                                    <button class="btn btn-primary" onclick="viewStudent(${student.id})">
+                                                        <i class="fas fa-eye"></i> View
+                                                    </button>
+                                                    <button class="btn btn-accent" onclick="editStudent(${student.id})">
+                                                        <i class="fas fa-edit"></i> Edit
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        `).join('') : 
+                                        `<tr>
+                                            <td colspan="6" style="text-align: center; padding: 20px;">
+                                                No students found in this class.
+                                            </td>
+                                        </tr>`
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            };
+
+            /**
+             * Displays an error message
+             * @param {string} message - The error message to display
+             */
+            const showError = (message) => {
+                contentArea.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-triangle fa-2x"></i>
+                        <h3>Access Error</h3>
+                        <p>${message}</p>
+                    </div>
+                `;
+            };
+
+            // Initialize the application
+            initializeApp();
+        });
+
+        // These functions would be implemented in a real application
+        function viewStudent(studentId) {
+            alert(`View student details for ID: ${studentId}\nThis feature would show detailed student information.`);
+        }
+
+        function editStudent(studentId) {
+            alert(`Edit student details for ID: ${studentId}\nThis feature would allow editing student information.`);
+        }
+    </script>
+</body>
+</html>
