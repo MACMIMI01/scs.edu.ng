@@ -1,51 +1,37 @@
 [
   {
-  "id": 1,
-  "iconClass": "fas fa-chalkboard-teacher",
-  "title": "JUNIOR SECONDARY ONE",
-  "subtitle": "2025/2026 Academic Section",
-  "link": "B7L.html"
+    "classId": "JS1",
+    "className": "Basic Seven Lavender",
+    "classCode": "JS1",
+    "classPhoto": "../assets/profile_pictures/BASIC_ONE.jpeg",
+    "academicYear": "2024/2025"
   },
   {
-  "id": 2,
-  "iconClass": "fas fa-seedling",
-  "title": "JUNIOR SECONDARY TWO",
-  "subtitle": "2025/2026 Academic Section",
-  "link": "B8T.html"
+    "classId": "JS2",
+    "className": "Basic Eight Tulip",
+    "classCode": "JS2",
+    "classPhoto": "../assets/profile_pictures/BASIC_EIGHT_TULIP.jpeg",
+    "academicYear": "2024/2025"
   },
   {
-  "id": 3,
-  "iconClass": "fas fa-graduation-cap",
-  "title": "JUNIOR SECONDARY THREE",
-  "subtitle": "2025/2026 Academic Section",
-  "link": "B9S.html"
+    "classId": "JS3",
+    "className": "Basic Nine Sunflower",
+    "classCode": "JS3",
+    "classPhoto": "../assets/profile_pictures/BASIC_NINE_SUNFLOWER.jpeg",
+    "academicYear": "2024/2025"
   },
   {
-  "id": 4,
-  "iconClass": "fas fa-atom",
-  "title": "SENIOR SECONDARY ONE",
-  "subtitle": "Science Department",
-  "link": "SS1-Science.html"
+    "classId": "SS1",
+    "className": "SS 1 Amethyst",
+    "classCode": "SS1",
+    "classPhoto": "../assets/profile_pictures/default-class.jpeg",
+    "academicYear": "2024/2025"
   },
-  {
-  "id": 5,
-  "iconClass": "fas fa-landmark",
-  "title": "SENIOR SECONDARY ONE",
-  "subtitle": "Arts Department",
-  "link": ""
-  },
-  {
-  "id": 6,
-  "iconClass": "fas fa-book-reader",
-  "title": "BASIC 5: RUBY",
-  "subtitle": "Primary Section",
-  "link": ""
-  },
-  {
-  "id": 7,
-  "iconClass": "fas fa-palette",
-  "title": "NURSERY ONE: TULIP",
-  "subtitle": "Pre-Primary Section",
-  "link": ""
+   {
+    "classId": "Senior Class Two",
+    "className": "SS 2 Amethyst",
+    "classCode": "SS2",
+    "classPhoto": "../assets/profile_pictures/default-class.jpeg",
+    "academicYear": "2024/2025"
   }
 ]
