@@ -1,0 +1,68 @@
+[
+  {
+    "id": 101,
+    "academicSession": "2025/2026",
+    "term": 1,
+    "subject": "COMPUTER SCIENCE",
+    "class": "BASIC SEVEN LAVENDER",
+    "week": 1,
+    "topic": "HISTORICAL DEVELOPMENT OF COMPUTER",
+    "filePath": "../assets/notes/Print_B7_ICT.pdf",
+    "author": "Sir Miracle Chukwujindu Nkadi"
+  },
+  {
+    "id": 102,
+    "academicSession": "2025/2026",
+    "term": 1,
+    "subject": "COMPUTER SCIENCE",
+    "class": "BASIC EIGHT TULIPS",
+    "week": 12,
+    "topic": "SOFTWARE",
+    "filePath": "../assets/notes/ASE25-26 BASIC SEVEN LAVENDER COMPUTER STUDIES LESSON NOTE.pdf",
+    "author": "Sir Miracle Chukwujindu Nkadi"
+  },
+  {
+    "id": 103,
+    "academicSession": "2025/2026",
+    "term": 1,
+    "subject": "COMPUTER SCIENCE",
+    "class": "BASIC NINE FLOWER",
+    "week": 12,
+    "topic": "COMPUTER PROCESSIONAL CAREERS",
+    "filePath": "../assets/notes/ASE25-26 BASIC SEVEN LAVENDER COMPUTER STUDIES LESSON NOTE.pdf",
+    "author": "Sir Miracle Chukwujindu Nkadi"
+  },
+  {
+    "id": 104,
+    "academicSession": "2025/2026",
+    "term": 1,
+    "subject": "DATA PROCESSING",
+    "class": "SENIOR CLASS ONE",
+    "week": 3,
+    "topic": "INTRODUCTION TO DATA PROCESSING",
+    "filePath": "../assets/notes/Digitalization-of-Data.pdf",
+    "author": "Sir Miracle Chukwujindu Nkadi"
+  },
+  {
+    "id": 105,
+    "academicSession": "2025/2026",
+    "term": 1,
+    "subject": "Data Processing",
+    "class": "SENIOR CLASS TWO",
+    "week": 2,
+    "topic": "Digitalization-of-Data",
+    "filePath": "../assets/notes/Digitalization-of-Data2.pdf",
+    "author": "Sir Miracle Chukwujindu Nkadi"
+  },
+  {
+    "id": 106,
+    "academicSession": "2024/2025",
+    "term": 1,
+    "subject": "Scheme Of Work",    
+    "class": "SENIOR CLASS THREE",
+    "week": 1,
+    "topic": "Senior Class Scheme of Work",
+    "filePath": "../data/NEW SCHEME OF WORK FOR SSS1-3_010008.pdf",
+    "author": "Sir Miracle Chukwujindu Nkadi"
+  }
+]

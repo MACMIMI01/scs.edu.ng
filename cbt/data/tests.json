@@ -1,55 +1,38 @@
-[
-  {
-    "id": "math101",
-    "title": "Basic Algebra",
-    "subject": "Mathematics",
-    "difficulty": "Easy",
-    "timeLimitMinutes": 5,
-    "questions": [
-      {
-        "question": "What is the value of 'x' in the equation: 2x + 5 = 15?",
-        "options": ["3", "5", "7", "10"],
-        "correctAnswerIndex": 1
-      },
-      {
-        "question": "What is 7 multiplied by 8?",
-        "options": ["49", "54", "56", "63"],
-        "correctAnswerIndex": 2
-      },
-      {
-        "question": "Simplify the expression: (3 + 2) * 4",
-        "options": ["20", "14", "23", "11"],
-        "correctAnswerIndex": 0
-      }
-    ]
-  },
-  {
-    "id": "geo202",
-    "title": "World Capitals",
-    "subject": "Geography",
-    "difficulty": "Medium",
-    "timeLimitMinutes": 3,
-    "questions": [
-      {
-        "question": "What is the capital of Japan?",
-        "options": ["Beijing", "Seoul", "Tokyo", "Bangkok"],
-        "correctAnswerIndex": 2
-      },
-      {
-        "question": "What is the capital of Canada?",
-        "options": ["Toronto", "Vancouver", "Ottawa", "Montreal"],
-        "correctAnswerIndex": 2
-      },
-      {
-        "question": "What is the capital of Australia?",
-        "options": ["Sydney", "Melbourne", "Perth", "Canberra"],
-        "correctAnswerIndex": 3
-      },
-      {
-        "question": "What is the capital of Brazil?",
-        "options": ["Rio de Janeiro", "São Paulo", "Brasília", "Salvador"],
-        "correctAnswerIndex": 2
-      }
-    ]
-  }
-]
+{
+  "JS1": [
+    {
+      "fileName": "2025-2026-JS1-ACS-1ST",
+      "displayName": "BASIC 7 1ST TERM AGRICULTURAL SCIENCE EXAM 2025-2026"
+    }
+  ],
+  "JS2": [
+    {
+      "fileName": "2025-2026-JS2-ACS-1ST",
+      "displayName": "BASIC 8 1ST TERM AGRICULTURAL SCIENCE EXAM 2025-2026"
+    }
+  ],
+  "JS3": [
+    {
+      "fileName": "2025-2026-JS3-ACS-1ST",
+      "displayName": "BASIC 9 1ST TERM AGRICULTURAL SCIENCE EXAM 2025-2026"
+    }
+  ],
+  "SS1": [
+    {
+      "fileName": "2025-2026-SS1-ACS-1ST",
+      "displayName": "SENIOR SECONDARY 1 1ST TERM AGRICULTURAL SCIENCE EXAM 2025-2026"
+    }
+  ],
+  "SS2": [
+    {
+      "fileName": "2025-2026-SS2-ACS-1ST",
+      "displayName": "SENIOR SECONDARY 2 1ST TERM AGRICULTURAL SCIENCE EXAM 2025-2026"
+    }
+  ],
+  "SS3": [
+    {
+      "fileName": "2025-2026-SS3-ACS-1ST",
+      "displayName": "SENIOR SECONDARY 3 1ST TERM AGRICULTURAL SCIENCE EXAM 2025-2026"
+    }
+  ]
+}
