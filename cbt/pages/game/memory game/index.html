@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Memory Match Game</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    </head>
+    <body>
+        <div class="memory-game">
+            <h1>Memory Match</h1>
+            <div class="game-info">
+            <div class="moves">Moves: <span id="moves-count">0</span>
+            </div>
+        <div class="timer">Time: <span id="timer-display">0s</span>
+        </div>
+     </div>
+ <div class="game-board"> <!-- Cards will be inserted here by JavaScript --> </div>
+ <div id="win-overlay" class="win-overlay" style="display: none;">
+ <div class="win-message"> <h2>You Won!</h2>
+ <p>Final Time: <span id="final-time"></span></p>
+ <p>Total Moves: <span id="final-moves"></span></p>
+        <button id="restart-btn">Play Again</button>
+         </div>
+       </div>
+     </div>
+   <script src="script.js"></script>
+  </body>
+</html> 

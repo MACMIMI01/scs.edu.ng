@@ -1,0 +1,16 @@
+{
+  "level1": {
+    "name": "The Classic Crossing",
+    "lanes": [
+      { "type": "safe", "color": "#2c3e50" },
+      { "type": "river", "color": "#3498db", "speed": 1.5, "direction": -1, "obstacles": [{ "width": 4 }, { "width": 2 }] },
+      { "type": "river", "color": "#3498db", "speed": -2, "direction": 1, "obstacles": [{ "width": 3 }] },
+      { "type": "river", "color": "#3498db", "speed": 1, "direction": -1, "obstacles": [{ "width": 2 }, { "width": 2 }] },
+      { "type": "safe", "color": "#2c3e50" },
+      { "type": "road", "color": "#7f8c8d", "speed": -1.2, "direction": 1, "obstacles": [{ "width": 2 }, { "width": 2 }] },
+      { "type": "road", "color": "#7f8c8d", "speed": 2, "direction": -1, "obstacles": [{ "width": 1 }, { "width": 1 }] },
+      { "type": "road", "color": "#7f8c8d", "speed": -2.5, "direction": 1, "obstacles": [{ "width": 3 }] },
+      { "type": "safe", "color": "#2c3e50" }
+    ]
+  }
+}  

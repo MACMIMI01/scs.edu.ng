@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tic-Tac-Toe</title>
+  
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #282c34;
+      color: #ffffff;
+      font-family: 'Arial', sans-serif;
+    }
+
+    /* --- Screens & Overlays --- */
+    .screen {
+      text-align: center;
+      background-color: #3a404b;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    }
+    
+    #game-area {
+      position: relative; /* For positioning overlays */
+    }
+
+    canvas {
+      background-color: #1a1a1a;
+      border: 2px solid #61dafb;
+      display: block;
+      margin: 0 auto 20px auto;
+      cursor: pointer;
+      transition: filter 0.3s ease; /* For blur effect */
+    }
+    canvas.blurred {
+        filter: blur(5px);
+    }
+
+    .game-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(40, 44, 52, 0.85);
+        display: none; /* Hidden by default */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+        border-radius: 8px; /* Match parent */
+    }
+    .game-overlay h2 {
+        color: #61dafb;
+        margin-bottom: 20px;
+    }
+
+    /* --- Text & Titles --- */
+    h1 {
+      color: #61dafb;
+      margin-bottom: 20px;
+    }
+    #game-status {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      color: #a0a8b4;
+      min-height: 1.2em; /* Prevent layout shift */
+    }
+    #current-player-display {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #ffd700;
+      margin-bottom: 20px;
+    }
+
+    /* --- Buttons --- */
+    .btn {
+      border: none;
+      color: white;
+      padding: 12px 24px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, transform 0.1s ease;
+      margin: 5px;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+    .btn:active {
+      transform: scale(0.95);
+    }
+    
+    .btn-red { background-color: #f44336; }
+    .btn-green { background-color: #4CAF50; }
+    .btn-blue { background-color: #008CBA; }
+
+    #grid-size-select {
+      padding: 10px;
+      font-size: 16px;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Initial Main Menu Screen -->
+  <div id="main-menu" class="screen">
+    <h1>Tic-Tac-Toe AI!</h1>
+    <div style="margin-bottom: 20px;">
+        <a href="../../dashboard.html" class="btn btn-blue">Dashboard</a>
+        <a href="../gamehall.html" class="btn btn-blue">Game Hall</a>
+    </div>
+    <select id="grid-size-select">
+      <option value="3">3x3</option>
+      <option value="4">4x4</option>
+      <option value="5">5x5</option>
+      <option value="6">6x6</option>
+    </select>
+    <button id="start-btn" class="btn btn-green">Start Game</button>
+  </div>
+
+  <!-- Main Game Area -->
+  <div id="game-area" class="screen" style="display: none;">
+    <h1>Tic-Tac-Toe AI!</h1>
+    <p id="current-player-display">Player X's Turn</p>
+    <canvas id="ticTacToeCanvas"></canvas>
+    <p id="game-status">Click a square to play!</p>
+    <button id="control-btn" class="btn btn-red">Pause</button>
+
+    <!-- Pause Menu Overlay -->
+    <div id="pause-menu" class="game-overlay">
+        <h2>Paused</h2>
+        <button id="resume-btn" class="btn btn-green">Resume</button>
+        <button id="main-menu-btn" class="btn btn-red">Main Menu</button>
+    </div>
+    
+    <!-- Win Modal Overlay -->
+    <div id="win-modal" class="game-overlay">
+        <h2 id="win-message"></h2>
+        <button id="new-game-btn" class="btn btn-green">New Game</button>
+        <button id="win-main-menu-btn" class="btn btn-red">Main Menu</button>
+    </div>
+
+    <!-- Draw Modal Overlay -->
+    <div id="draw-modal" class="game-overlay">
+        <h2>It's a Draw!</h2>
+        <button id="continue-btn" class="btn btn-green">Continue</button>
+        <button id="back-to-menu-btn" class="btn btn-red">Back to Menu</button>
+    </div>
+  </div>
+
+  <script>
+    // --- Get elements ---
+    const mainMenu = document.getElementById('main-menu');
+    const gridSizeSelect = document.getElementById('grid-size-select');
+    const startBtn = document.getElementById('start-btn');
+    const gameArea = document.getElementById('game-area');
+    const canvas = document.getElementById('ticTacToeCanvas');
+    const ctx = canvas.getContext('2d');
+    const statusDisplay = document.getElementById('game-status');
+    const currentPlayerDisplay = document.getElementById('current-player-display');
+    
+    // Control and Modal elements
+    const controlBtn = document.getElementById('control-btn');
+    const pauseMenu = document.getElementById('pause-menu');
+    const resumeBtn = document.getElementById('resume-btn');
+    const mainMenuBtn = document.getElementById('main-menu-btn');
+    const winModal = document.getElementById('win-modal');
+    const winMessage = document.getElementById('win-message');
+    const newGameBtn = document.getElementById('new-game-btn');
+    const winMainMenuBtn = document.getElementById('win-main-menu-btn');
+    const drawModal = document.getElementById('draw-modal');
+    const continueBtn = document.getElementById('continue-btn');
+    const backToMenuBtn = document.getElementById('back-to-menu-btn');
+
+    // --- Game State & Variables ---
+    let BOARD_SIZE;
+    let CELL_SIZE;
+    let board = [];
+    let currentPlayer = 'X';
+    let gameState = 'MENU'; // MENU, PLAYING, PAUSED, GAMEOVER
+    let winningLine = null;
+
+    const HUMAN_PLAYER = 'X';
+    const COMPUTER_PLAYER = 'O';
+
+    // --- Game Flow Functions ---
+    function showMainMenu() {
+        mainMenu.style.display = 'block';
+        gameArea.style.display = 'none';
+        gameState = 'MENU';
+    }
+
+    function startGame() {
+      BOARD_SIZE = parseInt(gridSizeSelect.value);
+      canvas.width = BOARD_SIZE * 80;
+      canvas.height = BOARD_SIZE * 80;
+      CELL_SIZE = canvas.width / BOARD_SIZE;
+
+      gameArea.style.display = 'block';
+      mainMenu.style.display = 'none';
+      initGame();
+    }
+
+    function initGame() {
+      board = Array(BOARD_SIZE).fill(0).map(() => Array(BOARD_SIZE).fill(''));
+      currentPlayer = HUMAN_PLAYER;
+      gameState = 'PLAYING';
+      winningLine = null;
+      
+      canvas.classList.remove('blurred');
+      drawModal.style.display = 'none';
+      winModal.style.display = 'none';
+      pauseMenu.style.display = 'none';
+
+      statusDisplay.textContent = "Click a square to play!";
+      currentPlayerDisplay.textContent = `Player ${currentPlayer}'s Turn`;
+      controlBtn.style.display = 'inline-block';
+      controlBtn.textContent = 'Pause';
+      drawGame();
+    }
+    
+    // --- Drawing Functions ---
+    function drawGame() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawBoardLines();
+      drawMarks();
+      if (winningLine) {
+        drawWinningLine(winningLine);
+      }
+    }
+
+    function drawBoardLines() {
+      ctx.strokeStyle = '#61dafb';
+      ctx.lineWidth = 4;
+      for (let i = 1; i < BOARD_SIZE; i++) {
+        ctx.beginPath();
+        ctx.moveTo(i * CELL_SIZE, 0);
+        ctx.lineTo(i * CELL_SIZE, canvas.height);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, i * CELL_SIZE);
+        ctx.lineTo(canvas.width, i * CELL_SIZE);
+        ctx.stroke();
+      }
+    }
+
+    function drawMarks() {
+      ctx.font = `bold ${CELL_SIZE * 0.7}px Arial`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      for (let row = 0; row < BOARD_SIZE; row++) {
+        for (let col = 0; col < BOARD_SIZE; col++) {
+          const cellValue = board[row][col];
+          const centerX = col * CELL_SIZE + CELL_SIZE / 2;
+          const centerY = row * CELL_SIZE + CELL_SIZE / 2;
+          if (cellValue === 'X') {
+            ctx.fillStyle = '#f44336';
+            ctx.fillText('X', centerX, centerY);
+          } else if (cellValue === 'O') {
+            ctx.fillStyle = '#4CAF50';
+            ctx.fillText('O', centerX, centerY);
+          }
+        }
+      }
+    }
+    
+    function drawWinningLine(line) {
+        const [startCell, endCell] = [line[0], line[line.length - 1]];
+        const startX = startCell[1] * CELL_SIZE + CELL_SIZE / 2;
+        const startY = startCell[0] * CELL_SIZE + CELL_SIZE / 2;
+        const endX = endCell[1] * CELL_SIZE + CELL_SIZE / 2;
+        const endY = endCell[0] * CELL_SIZE + CELL_SIZE / 2;
+        
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(endX, endY);
+        ctx.strokeStyle = '#ffd700';
+        ctx.lineWidth = 10;
+        ctx.stroke();
+    }
+
+    // --- Game Logic & AI ---
+    function handlePlayerMove(row, col) {
+      if (gameState !== 'PLAYING' || board[row][col] !== '') return;
+
+      board[row][col] = currentPlayer;
+      drawGame();
+
+      if (checkWin()) {
+        return;
+      }
+
+      currentPlayer = COMPUTER_PLAYER;
+      currentPlayerDisplay.textContent = `Player ${currentPlayer}'s Turn`;
+
+      if (gameState === 'PLAYING') {
+        statusDisplay.textContent = "Computer is thinking...";
+        setTimeout(makeComputerMove, 500);
+      }
+    }
+
+    function makeComputerMove() {
+      if (gameState !== 'PLAYING') return;
+      let bestMove = findBestMove();
+      if (bestMove) {
+        board[bestMove.row][bestMove.col] = COMPUTER_PLAYER;
+        drawGame();
+        if (!checkWin()) {
+            currentPlayer = HUMAN_PLAYER;
+            currentPlayerDisplay.textContent = `Player ${currentPlayer}'s Turn`;
+            statusDisplay.textContent = "Your turn!";
+        }
+      }
+    }
+
+    function findBestMove() {
+      // Logic for AI move (win, block, random)
+      for (let r = 0; r < BOARD_SIZE; r++) { for (let c = 0; c < BOARD_SIZE; c++) { if (board[r][c] === '') { board[r][c] = COMPUTER_PLAYER; if (checkWinHelper(board, COMPUTER_PLAYER)) { board[r][c] = ''; return { row: r, col: c }; } board[r][c] = ''; } } }
+      for (let r = 0; r < BOARD_SIZE; r++) { for (let c = 0; c < BOARD_SIZE; c++) { if (board[r][c] === '') { board[r][c] = HUMAN_PLAYER; if (checkWinHelper(board, HUMAN_PLAYER)) { board[r][c] = ''; return { row: r, col: c }; } board[r][c] = ''; } } }
+      const emptyCells = [];
+      for (let r = 0; r < BOARD_SIZE; r++) { for (let c = 0; c < BOARD_SIZE; c++) { if (board[r][c] === '') emptyCells.push({ row: r, col: c }); } }
+      if (emptyCells.length > 0) return emptyCells[Math.floor(Math.random() * emptyCells.length)];
+      return null;
+    }
+    
+    function getLines() {
+        const lines = [];
+        for (let i = 0; i < BOARD_SIZE; i++) { const row = [], col = []; for (let j = 0; j < BOARD_SIZE; j++) { row.push([i, j]); col.push([j, i]); } lines.push(row, col); }
+        const diag1 = [], diag2 = []; for (let i = 0; i < BOARD_SIZE; i++) { diag1.push([i, i]); diag2.push([i, BOARD_SIZE - 1 - i]); } lines.push(diag1, diag2);
+        return lines;
+    }
+
+    function checkWin() {
+        const lines = getLines();
+        const movesMade = board.flat().filter(cell => cell !== '').length;
+
+        for (const line of lines) {
+            const mark = board[line[0][0]][line[0][1]];
+            if (mark && line.every(([r, c]) => board[r][c] === mark)) {
+                gameState = 'GAMEOVER';
+                statusDisplay.textContent = `${mark} wins!`;
+                winningLine = line;
+                drawGame(); // Draw the line immediately
+                
+                controlBtn.style.display = 'none'; // Hide control button
+
+                // --- NEW: Delayed Win Modal ---
+                setTimeout(() => {
+                    winMessage.textContent = `${mark} is the Winner!`;
+                    canvas.classList.add('blurred');
+                    winModal.style.display = 'flex';
+                }, 3000); // 3-second delay
+                
+                return true;
+            }
+        }
+
+        if (movesMade === BOARD_SIZE * BOARD_SIZE) {
+            gameState = 'GAMEOVER';
+            statusDisplay.textContent = "It's a draw!";
+            canvas.classList.add('blurred');
+            drawModal.style.display = 'flex';
+            controlBtn.style.display = 'none'; // Hide control button
+            return true;
+        }
+        return false;
+    }
+
+    function checkWinHelper(currentBoard, playerMark) {
+      const lines = getLines();
+      for (const line of lines) { if (line.every(([r, c]) => currentBoard[r][c] === playerMark)) return true; }
+      return false;
+    }
+    
+    // --- Event Listeners ---
+    canvas.addEventListener('click', (event) => {
+      if (gameState !== 'PLAYING' || currentPlayer !== HUMAN_PLAYER) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      const col = Math.floor(x / CELL_SIZE);
+      const row = Math.floor(y / CELL_SIZE);
+      handlePlayerMove(row, col);
+    });
+
+    startBtn.addEventListener('click', startGame);
+    
+    controlBtn.addEventListener('click', () => {
+        if (gameState === 'PLAYING') {
+            gameState = 'PAUSED';
+            pauseMenu.style.display = 'flex';
+            controlBtn.textContent = 'Menu';
+        } else if (gameState === 'PAUSED') {
+            gameState = 'MENU';
+            controlBtn.textContent = 'Resume';
+        } else if (gameState === 'MENU') {
+            gameState = 'PLAYING';
+            pauseMenu.style.display = 'none';
+            controlBtn.textContent = 'Pause';
+        }
+    });
+    
+    resumeBtn.addEventListener('click', () => {
+        gameState = 'PLAYING';
+        pauseMenu.style.display = 'none';
+        controlBtn.textContent = 'Pause';
+    });
+
+    // New and existing modal button listeners
+    mainMenuBtn.addEventListener('click', showMainMenu);
+    backToMenuBtn.addEventListener('click', showMainMenu);
+    winMainMenuBtn.addEventListener('click', showMainMenu);
+    continueBtn.addEventListener('click', initGame);
+    newGameBtn.addEventListener('click', initGame);
+
+  </script>
+</body>
+</html>

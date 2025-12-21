@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spelling Game</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .hero-section {
+    background: linear-gradient(to right, #6dd5ed, #2193b0);
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto 50px auto;
+}
+
+.game-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.game-container {
+    display: none;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.emoji-container {
+    background-color: #f0f0f0;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.emoji-display {
+    font-size: 100px;
+}
+
+.input-container {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.input-container input[type="text"] {
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.input-container button {
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: #fff;
+    cursor: pointer;
+}
+    </style>
+</head>
+<body>
+    <div class="hero-section">
+        <h1>Spelling Game</h1>
+    </div>
+    <main class="games-grid">
+        <div class="game-card" id="easy-level">
+            <div class="icon">😊</div>
+            <h3>Easy</h3>
+            <p>Find the missing letters and spell as many words as you can!</p>
+            <button class="play-button" onclick="startGame('easy')">Play Now</button>
+        </div>
+
+        <div class="game-card" id="medium-level">
+            <div class="icon">🤔</div>
+            <h3>Medium</h3>
+            <p>Test your intellectual knowledge and agility.</p>
+            <button class="play-button" onclick="startGame('medium')">Play Now</button>
+        </div>
+
+        <div class="game-card" id="hard-level">
+            <div class="icon">😱</div>
+            <h3>Hard</h3>
+            <p>React quickly by spelling lots of words by identifying the picture!</p>
+            <button class="play-button" onclick="startGame('hard')">Play Now</button>
+        </div>
+    </main>
+
+    <div class="game-container" id="game-container">
+        <div class="emoji-container">
+            <div class="emoji-display" id="word-display"></div>
+        </div>
+        <div class="input-container">
+            <input type="text" id="answer" placeholder="Enter your answer">
+            <button id="submit">Submit</button>
+            <div id="result"></div>
+            <div id="time-display"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentDifficulty;
+let currentWord;
+let score = 0;
+let timeLeft;
+
+    const wordBank = [
+            { word: "box", emoji: "📦" },
+            { word: "hat", emoji: "🎩" },
+            { word: "dog", emoji: "🐶" },
+            { word: "box", emoji: "📦" },
+            { word: "hat", emoji: "🎩" },
+            { word: "dog", emoji: "🐶" },
+            { word: "cap", emoji: "🎓" },
+            { word: "pen", emoji: "🖊️" },
+            { word: "car", emoji: "🚗" },
+            { word: "key", emoji: "🔑" },
+            { word: "man", emoji: "👨" },
+            { word: "bed", emoji: "🛏️" },
+            { word: "boy", emoji: "👦" },
+            { word: "mug", emoji: "☕️" },
+            { word: "mat", emoji: "🏋️" },
+            { word: "fan", emoji: "💨" },
+            { word: "ink", emoji: "🖋️" },
+            { word: "jam", emoji: "🍞" },
+            { word: "eye", emoji: "👀" },
+            { word: "net", emoji: "🎣" },
+            { word: "ten", emoji: "🔟" },
+            { word: "cow", emoji: "🐮" },
+            { word: "fig", emoji: "🍊" },
+            { word: "log", emoji: "🌿" },
+            { word: "egg", emoji: "🥚" },
+            { word: "gem", emoji: "💎" },
+            { word: "pod", emoji: "🌱" },
+            { word: "cat", emoji: "🐱" },
+            { word: "orb", emoji: "⚽️" },
+            { word: "yak", emoji: "🐮" },
+            { word: "jar", emoji: "🍯" },
+            { word: "jug", emoji: "🥛" },
+            { word: "rib", emoji: "🍖️" },
+            { word: "ant", emoji: "🐜" },
+            { word: "bat", emoji: "🦇" },
+            { word: "bee", emoji: "🐝" },
+            { word: "eel", emoji: "🐍" },
+            { word: "fox", emoji: "🦊" },
+            { word: "owl", emoji: "🦉" },
+            { word: "rat", emoji: "🐀" },
+            { word: "pig", emoji: "🐖" },
+            { word: "ram", emoji: "🐑" },
+            { word: "hen", emoji: "🐓" },
+            { word: "pan", emoji: "🍳" },
+            { word: "pot", emoji: "🍲" },
+            { word: "lid", emoji: "🔒" },
+            { word: "rug", emoji: "🏠" },
+            { word: "ice", emoji: "❄️" },
+            { word: "tap", emoji: "💧" },
+            { word: "zip", emoji: "👖" },
+            { word: "wig", emoji: "💇" },
+            { word: "bow", emoji: "🏹" },
+            { word: "bin", emoji: "🚮" },
+            { word: "nut", emoji: "🌰" },
+            { word: "pea", emoji: "🌱" },
+            { word: "pie", emoji: "🥧" },
+            { word: "bun", emoji: "🍞" },
+            { word: "jam", emoji: "🍞" },
+            { word: "saw", emoji: "🛠️" },
+            { word: "axe", emoji: "🪓" },
+            { word: "hoe", emoji: "🌱" },
+            { word: "cup", emoji: "☕️" },
+            { word: "pin", emoji: "📌" },
+            { word: "toy", emoji: "🎸" },
+            { word: "bus", emoji: "🚌" },
+            { word: "van", emoji: "🚚" },
+            { word: "map", emoji: "🗺️" },
+            { word: "art", emoji: "🎨" },
+            { word: "gun", emoji: "🔫" },
+            { word: "rat", emoji: "🐀" },
+            { word: "cup", emoji: "☕️" },
+            { word: "leg", emoji: "🦵" },
+            { word: "box", emoji: "📦" }
+    // Add more words to the word bank...
+];
+
+function startGame(difficulty) {
+    currentDifficulty = difficulty;
+    document.querySelector('.games-grid').style.display = 'none';
+    document.querySelector('.hero-section').style.display = 'none';
+    document.getElementById('game-container').style.display = 'block';
+    generateWord(difficulty);
+    startTimer();
+}
+
+function generateWord(difficulty) {
+    const randomIndex = Math.floor(Math.random() * wordBank.length);
+    currentWord = wordBank[randomIndex];
+    let displayedWord = currentWord.word;
+    const numBlanks = difficulty === 'easy' ? 1 : difficulty === 'medium' ? 2 : currentWord.word.length;
+    const indices = getRandomIndices(currentWord.word.length, numBlanks);
+    indices.forEach(index => {
+        displayedWord = displayedWord.substring(0, index) + '_' + displayedWord.substring(index + 1);
+    });
+    document.getElementById('word-display').textContent = currentWord.emoji + '\n' + displayedWord;
+}
+
+function getRandomIndices(length, numIndices) {
+    const indices = [];
+    while (indices.length < numIndices) {
+        const index = Math.floor(Math.random() * length);
+        if (!indices.includes(index)) {
+            indices.push(index);
+        }
+    }
+    return indices;
+}
+
+function startTimer() {
+    timeLeft = 60; // 1 minute timer
+    const timerInterval = setInterval(() => {
+        timeLeft--;
+        document.getElementById('time-display').textContent = `Time left: ${timeLeft} seconds`;
+        if (timeLeft === 0) {
+            clearInterval(timerInterval);
+            endGame();
+        }
+    }, 1000);
+}
+
+function endGame() {
+    alert(`Game over! Your score is ${score}.`);
+}
+
+function checkAnswer() {
+    const userAnswer = document.getElementById('answer').value.toLowerCase();
+    if (userAnswer === currentWord.word) {
+        document.getElementById('result').textContent = 'Correct!';
+        document.getElementById('result').style.color = 'green';
+        score++;
+    } else {
+        document.getElementById('result').textContent = `Incorrect! The correct answer was ${currentWord.word}.`;
+        document.getElementById('result').style.color = 'red';
+    }
+    document.getElementById('answer').value = '';
+    generateWord(currentDifficulty);
+}
+
+document.getElementById('submit').addEventListener('click', checkAnswer);
+    </script>
+</body>
+</html>

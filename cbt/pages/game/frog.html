@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>JSON Frogger - Pixel Art Edition</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #34495e;
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        #game-container {
+            background-color: #2c3e50;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 5px solid #ecf0f1;
+            text-align: center;
+            position: relative;
+        }
+        h1 { color: #f1c40f; margin-top: 0; }
+        canvas { background-color: #000; display: block; border-radius: 5px; }
+        .instructions { color: #bdc3c7; margin-top: 15px; margin-bottom: 20px; }
+        #game-overlay {
+            position: absolute;
+            top: 67px; left: 20px; right: 20px; bottom: 125px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white; display: flex; justify-content: center; align-items: center;
+            font-size: 2em; font-weight: bold; text-shadow: 3px 3px 5px black;
+            border-radius: 5px; cursor: pointer;
+        }
+        #d-pad-controls {
+            display: grid;
+            grid-template-areas: ". up ." "left . right" ". down .";
+            gap: 10px; width: 180px; margin: 20px auto 0;
+        }
+        .d-pad-btn {
+            width: 50px; height: 50px; background-color: #ecf0f1;
+            color: #2c3e50; border: 2px solid #bdc3c7; border-radius: 10px;
+            font-size: 2em; font-weight: bold; cursor: pointer; user-select: none;
+        }
+        .d-pad-btn:active { background-color: #bdc3c7; transform: scale(0.95); }
+        #btn-up { grid-area: up; }
+        #btn-left { grid-area: left; }
+        #btn-right { grid-area: right; }
+        #btn-down { grid-area: down; }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1>JSON Frogger</h1>
+        <canvas id="gameCanvas"></canvas>
+        <div id="game-overlay">
+            <div id="game-message">Tap Here to Start</div>
+        </div>
+        <p class="instructions">Use Arrow Keys or D-Pad to Move</p>
+        <div id="d-pad-controls">
+            <button id="btn-up" class="d-pad-btn">↑</button>
+            <button id="btn-left" class="d-pad-btn">←</button>
+            <button id="btn-right" class="d-pad-btn">→</button>
+            <button id="btn-down" class="d-pad-btn">↓</button>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const messageEl = document.getElementById('game-message');
+        const overlayEl = document.getElementById('game-overlay');
+
+        const TILE_SIZE = 50;
+        canvas.width = 9 * TILE_SIZE;
+        canvas.height = 9 * TILE_SIZE;
+
+        let gameState = 'START';
+        let lanes = [];
+
+        // Player is now an object with a draw method
+        const player = {
+            x: 4 * TILE_SIZE,
+            y: 8 * TILE_SIZE,
+            speed: TILE_SIZE,
+            draw: function() {
+                const p = TILE_SIZE / 5; // pixel size
+                // Body
+                ctx.fillStyle = '#2ecc71'; // Green
+                ctx.fillRect(this.x + p, this.y, p * 3, p * 5);
+                ctx.fillRect(this.x, this.y + p, p, p * 3);
+                ctx.fillRect(this.x + p * 4, this.y + p, p, p * 3);
+                // Eyes
+                ctx.fillStyle = '#ecf0f1'; // White
+                ctx.fillRect(this.x + p, this.y, p, p);
+                ctx.fillRect(this.x + p * 3, this.y, p, p);
+            }
+        };
+
+        // --- EMBEDDED LEVEL DATA ---
+        const levelData = {
+            "level1": {
+                "lanes": [
+                    { "type": "safe", "color": "#16a085" },
+                    { "type": "river", "color": "#3498db", "speed": 1.5, "direction": -1, "obstacles": [{ "width": 3 }, { "width": 2 }] },
+                    { "type": "river", "color": "#2980b9", "speed": 2, "direction": 1, "obstacles": [{ "width": 4 }] },
+                    { "type": "road", "color": "#7f8c8d", "speed": 2.5, "direction": -1, "obstacles": [{ "width": 2 }, { "width": 2 }] },
+                    { "type": "safe", "color": "#1abc9c" },
+                    { "type": "road", "color": "#95a5a6", "speed": 2, "direction": 1, "obstacles": [{ "width": 2 }] },
+                    { "type": "road", "color": "#7f8c8d", "speed": 3, "direction": -1, "obstacles": [{ "width": 3 }] },
+                    { "type": "safe", "color": "#1abc9c" },
+                    { "type": "safe", "color": "#16a085" }
+                ]
+            }
+        };
+
+        function setupLevel() {
+            player.x = 4 * TILE_SIZE;
+            player.y = 8 * TILE_SIZE;
+            const currentLevel = levelData.level1;
+            lanes = currentLevel.lanes.map((laneConfig, index) => ({
+                ...laneConfig,
+                y: index * TILE_SIZE,
+                obstacles: spawnObstacles(laneConfig)
+            }));
+        }
+
+        // --- FIXED: Smart obstacle spawning ---
+        function spawnObstacles(laneConfig) {
+            if (laneConfig.type === 'safe') return [];
+            
+            const obstacles = [];
+            let currentX = (laneConfig.direction === 1) ? -200 : canvas.width + 200; // Start off-screen
+            
+            for (const obsConfig of laneConfig.obstacles) {
+                // Ensure a reasonable starting position for the first obstacle
+                if (obstacles.length === 0) {
+                     currentX = Math.random() * canvas.width;
+                } else {
+                    // Place subsequent obstacles with a consistent gap
+                    const lastObs = obstacles[obstacles.length - 1];
+                    const gap = (2 + Math.random() * 2) * TILE_SIZE;
+                    currentX = lastObs.x + (lastObs.width + gap) * laneConfig.direction;
+                }
+                obstacles.push({ x: currentX, width: obsConfig.width * TILE_SIZE });
+            }
+            return obstacles;
+        }
+
+        function drawPixelArtCar(x, y, width, height, direction) {
+            const pixelSize = height / 5;
+            ctx.fillStyle = '#c0392b';
+            ctx.fillRect(x, y, width, height);
+            ctx.fillStyle = '#3498db';
+            ctx.fillRect(x + pixelSize, y + pixelSize, width - (2 * pixelSize), height - (2 * pixelSize));
+            if (direction === 1) {
+                ctx.fillStyle = '#f1c40f';
+                ctx.fillRect(x + width - pixelSize, y, pixelSize, pixelSize);
+                ctx.fillRect(x + width - pixelSize, y + height - pixelSize, pixelSize, pixelSize);
+            } else {
+                ctx.fillStyle = '#e67e22';
+                ctx.fillRect(x, y, pixelSize, pixelSize);
+                ctx.fillRect(x, y + height - pixelSize, pixelSize, pixelSize);
+            }
+        }
+        
+        function drawLog(x, y, width, height) {
+            ctx.fillStyle = '#8e44ad'; // Purple for logs
+            ctx.fillRect(x, y + TILE_SIZE * 0.1, width, TILE_SIZE * 0.8);
+        }
+
+        function update() {
+            lanes.forEach(lane => {
+                if (lane.speed) {
+                    lane.obstacles.forEach(obs => {
+                        obs.x += lane.speed * lane.direction;
+                        if (lane.direction === 1 && obs.x > canvas.width + TILE_SIZE) obs.x = -obs.width;
+                        else if (lane.direction === -1 && obs.x < -obs.width - TILE_SIZE) obs.x = canvas.width;
+                    });
+                }
+            });
+            checkCollisions();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            lanes.forEach(lane => {
+                ctx.fillStyle = lane.color;
+                ctx.fillRect(0, lane.y, canvas.width, TILE_SIZE);
+                lane.obstacles.forEach(obs => {
+                    if (lane.type === 'road') {
+                        drawPixelArtCar(obs.x, lane.y + TILE_SIZE * 0.1, obs.width, TILE_SIZE * 0.8, lane.direction);
+                    } else if (lane.type === 'river') {
+                        drawLog(obs.x, lane.y, obs.width, TILE_SIZE);
+                    }
+                });
+            });
+            player.draw();
+        }
+
+        function gameLoop() {
+            if (gameState === 'PLAYING') {
+                update();
+                draw();
+            }
+            requestAnimationFrame(gameLoop);
+        }
+        
+        function checkCollisions() {
+            const laneIndex = Math.floor((player.y + TILE_SIZE / 2) / TILE_SIZE);
+            if (!lanes[laneIndex]) return;
+            const currentLane = lanes[laneIndex];
+
+            if (currentLane.type === 'road') {
+                for (const obs of currentLane.obstacles) {
+                    if (player.x < obs.x + obs.width && player.x + TILE_SIZE > obs.x) {
+                        resetGame("You got hit!"); return;
+                    }
+                }
+            } else if (currentLane.type === 'river') {
+                let onLog = false;
+                for (const obs of currentLane.obstacles) {
+                    if (player.x < obs.x + obs.width && player.x + TILE_SIZE > obs.x) {
+                        onLog = true;
+                        player.x += currentLane.speed * currentLane.direction;
+                        break;
+                    }
+                }
+                if (!onLog) { resetGame("You fell in the river!"); return; }
+            }
+            if (player.x < 0 || player.x > canvas.width - TILE_SIZE) {
+                resetGame("Swept away!"); return;
+            }
+            if (laneIndex === 0) { winGame(); }
+        }
+
+        function resetGame(message) {
+            gameState = 'LOSE';
+            messageEl.textContent = message;
+            overlayEl.style.display = 'flex';
+            setTimeout(() => { gameState = 'START'; messageEl.textContent = 'Tap to Restart'; }, 1500);
+        }
+
+        function winGame() {
+            gameState = 'WIN';
+            messageEl.textContent = 'You Made It!';
+            overlayEl.style.display = 'flex';
+            setTimeout(() => { gameState = 'START'; messageEl.textContent = 'Tap to Play Again'; }, 1500);
+        }
+
+        function movePlayer(direction) {
+            if (gameState !== 'PLAYING') return;
+            switch (direction) {
+                case 'UP': if (player.y > 0) player.y -= player.speed; break;
+                case 'DOWN': if (player.y < canvas.height - TILE_SIZE) player.y += player.speed; break;
+                case 'LEFT': if (player.x > 0) player.x -= player.speed; break;
+                case 'RIGHT': if (player.x < canvas.width - TILE_SIZE) player.x += player.speed; break;
+            }
+        }
+
+        function startGame() {
+            if (gameState === 'PLAYING') return;
+            if (gameState === 'START' || gameState === 'LOSE' || gameState === 'WIN') {
+                setupLevel();
+                gameState = 'PLAYING';
+                overlayEl.style.display = 'none';
+            }
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (gameState === 'START' || gameState === 'LOSE' || gameState === 'WIN') {
+                if(e.key === 'Enter' || e.key === ' ') startGame();
+            } else if (gameState === 'PLAYING') {
+                e.preventDefault();
+                const direction = e.key.replace('Arrow', '').toUpperCase();
+                movePlayer(direction);
+            }
+        });
+
+        document.getElementById('btn-up').addEventListener('click', () => movePlayer('UP'));
+        document.getElementById('btn-down').addEventListener('click', () => movePlayer('DOWN'));
+        document.getElementById('btn-left').addEventListener('click', () => movePlayer('LEFT'));
+        document.getElementById('btn-right').addEventListener('click', () => movePlayer('RIGHT'));
+        overlayEl.addEventListener('click', startGame);
+        
+        requestAnimationFrame(gameLoop);
+    });
+    </script>
+</body>
+</html>
+
+
+
+I observed it's not mobile friendly and no pause button or menu after game over.
+
+How do we implement that

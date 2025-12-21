@@ -1,0 +1,1652 @@
+{
+  "bones": [
+    {
+      "id": "bone_001",
+      "name": "Frontal Bone",
+      "region": "Skull",
+      "description": "Forms the forehead and the roof of the orbits.",
+      "commonName": "Forehead Bone",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_002",
+      "name": "Parietal Bone (Left)",
+      "region": "Skull",
+      "description": "One of two bones forming the sides and top of the cranium.",
+      "commonName": "Top-side Skull Bone (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_003",
+      "name": "Parietal Bone (Right)",
+      "region": "Skull",
+      "description": "One of two bones forming the sides and top of the cranium.",
+      "commonName": "Top-side Skull Bone (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_004",
+      "name": "Temporal Bone (Left)",
+      "region": "Skull",
+      "description": "Forms part of the sides and base of the skull, housing the ear.",
+      "commonName": "Temple Bone (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_005",
+      "name": "Temporal Bone (Right)",
+      "region": "Skull",
+      "description": "Forms part of the sides and base of the skull, housing the ear.",
+      "commonName": "Temple Bone (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_006",
+      "name": "Occipital Bone",
+      "region": "Skull",
+      "description": "Forms the back and base of the skull.",
+      "commonName": "Back of Head Bone",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_007",
+      "name": "Sphenoid Bone",
+      "region": "Skull",
+      "description": "A complex, butterfly-shaped bone forming part of the base of the skull.",
+      "commonName": "Butterfly Bone",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_008",
+      "name": "Ethmoid Bone",
+      "region": "Skull",
+      "description": "A delicate bone forming part of the nasal cavity and orbits.",
+      "commonName": "Sieve Bone",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_009",
+      "name": "Nasal Bone (Left)",
+      "region": "Face",
+      "description": "Forms the bridge of the nose.",
+      "commonName": "Nose Bone (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_010",
+      "name": "Nasal Bone (Right)",
+      "region": "Face",
+      "description": "Forms the bridge of the nose.",
+      "commonName": "Nose Bone (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_011",
+      "name": "Lacrimal Bone (Left)",
+      "region": "Face",
+      "description": "A small bone at the front of the medial wall of the orbit.",
+      "commonName": "Tear Bone (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_012",
+      "name": "Lacrimal Bone (Right)",
+      "region": "Face",
+      "description": "A small bone at the front of the medial wall of the orbit.",
+      "commonName": "Tear Bone (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_013",
+      "name": "Zygomatic Bone (Left)",
+      "region": "Face",
+      "description": "Forms the cheekbone and part of the orbit.",
+      "commonName": "Cheekbone (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_014",
+      "name": "Zygomatic Bone (Right)",
+      "region": "Face",
+      "description": "Forms the cheekbone and part of the orbit.",
+      "commonName": "Cheekbone (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_015",
+      "name": "Maxilla (Left)",
+      "region": "Face",
+      "description": "Forms the upper jaw and part of the hard palate.",
+      "commonName": "Upper Jaw (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_016",
+      "name": "Maxilla (Right)",
+      "region": "Face",
+      "description": "Forms the upper jaw and part of the hard palate.",
+      "commonName": "Upper Jaw (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_017",
+      "name": "Palatine Bone (Left)",
+      "region": "Face",
+      "description": "Forms part of the hard palate and nasal cavity.",
+      "commonName": "Roof of Mouth Bone (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_018",
+      "name": "Palatine Bone (Right)",
+      "region": "Face",
+      "description": "Forms part of the hard palate and nasal cavity.",
+      "commonName": "Roof of Mouth Bone (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_019",
+      "name": "Inferior Nasal Concha (Left)",
+      "region": "Face",
+      "description": "A scroll-shaped bone projecting into the nasal cavity.",
+      "commonName": "Nasal Turbinate (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_020",
+      "name": "Inferior Nasal Concha (Right)",
+      "region": "Face",
+      "description": "A scroll-shaped bone projecting into the nasal cavity.",
+      "commonName": "Nasal Turbinate (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_021",
+      "name": "Vomer",
+      "region": "Face",
+      "description": "Forms the inferior part of the nasal septum.",
+      "commonName": "Nasal Septum Bone",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_022",
+      "name": "Mandible",
+      "region": "Face",
+      "description": "The lower jaw bone, the only movable bone of the skull.",
+      "commonName": "Lower Jaw",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_023",
+      "name": "Hyoid Bone",
+      "region": "Neck",
+      "description": "A U-shaped bone in the neck that supports the tongue.",
+      "commonName": "Tongue Bone",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_024",
+      "name": "Malleus (Left)",
+      "region": "Middle Ear",
+      "description": "One of the three ossicles of the middle ear; the hammer.",
+      "commonName": "Hammer (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_025",
+      "name": "Malleus (Right)",
+      "region": "Middle Ear",
+      "description": "One of the three ossicles of the middle ear; the hammer.",
+      "commonName": "Hammer (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_026",
+      "name": "Incus (Left)",
+      "region": "Middle Ear",
+      "description": "One of the three ossicles of the middle ear; the anvil.",
+      "commonName": "Anvil (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_027",
+      "name": "Incus (Right)",
+      "region": "Middle Ear",
+      "description": "One of the three ossicles of the middle ear; the anvil.",
+      "commonName": "Anvil (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_028",
+      "name": "Stapes (Left)",
+      "region": "Middle Ear",
+      "description": "One of the three ossicles of the middle ear; the stirrup.",
+      "commonName": "Stirrup (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_029",
+      "name": "Stapes (Right)",
+      "region": "Middle Ear",
+      "description": "One of the three ossicles of the middle ear; the stirrup.",
+      "commonName": "Stirrup (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_030",
+      "name": "Cervical Vertebra 1 (Atlas)",
+      "region": "Vertebral Column",
+      "description": "The first cervical vertebra, supporting the skull.",
+      "commonName": "Atlas Vertebra",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_031",
+      "name": "Cervical Vertebra 2 (Axis)",
+      "region": "Vertebral Column",
+      "description": "The second cervical vertebra, allowing head rotation.",
+      "commonName": "Axis Vertebra",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_032",
+      "name": "Cervical Vertebra 3",
+      "region": "Vertebral Column",
+      "description": "One of the seven cervical vertebrae.",
+      "commonName": "Neck Vertebra 3",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_033",
+      "name": "Cervical Vertebra 4",
+      "region": "Vertebral Column",
+      "description": "One of the seven cervical vertebrae.",
+      "commonName": "Neck Vertebra 4",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_034",
+      "name": "Cervical Vertebra 5",
+      "region": "Vertebral Column",
+      "description": "One of the seven cervical vertebrae.",
+      "commonName": "Neck Vertebra 5",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_035",
+      "name": "Cervical Vertebra 6",
+      "region": "Vertebral Column",
+      "description": "One of the seven cervical vertebrae.",
+      "commonName": "Neck Vertebra 6",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_036",
+      "name": "Cervical Vertebra 7",
+      "region": "Vertebral Column",
+      "description": "One of the seven cervical vertebrae, also called vertebra prominens.",
+      "commonName": "Neck Vertebra 7",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_037",
+      "name": "Thoracic Vertebra 1",
+      "region": "Vertebral Column",
+      "description": "One of the twelve thoracic vertebrae, articulating with ribs.",
+      "commonName": "Upper Back Vertebra 1",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_038",
+      "name": "Thoracic Vertebra 2",
+      "region": "Vertebral Column",
+      "description": "One of the twelve thoracic vertebrae, articulating with ribs.",
+      "commonName": "Upper Back Vertebra 2",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_039",
+      "name": "Thoracic Vertebra 3",
+      "region": "Vertebral Column",
+      "description": "One of the twelve thoracic vertebrae, articulating with ribs.",
+      "commonName": "Upper Back Vertebra 3",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_040",
+      "name": "Thoracic Vertebra 4",
+      "region": "Vertebral Column",
+      "description": "One of the twelve thoracic vertebrae, articulating with ribs.",
+      "commonName": "Upper Back Vertebra 4",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_041",
+      "name": "Thoracic Vertebra 5",
+      "region": "Vertebral Column",
+      "description": "One of the twelve thoracic vertebrae, articulating with ribs.",
+      "commonName": "Upper Back Vertebra 5",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_042",
+      "name": "Thoracic Vertebra 6",
+      "region": "Vertebral Column",
+      "description": "One of the twelve thoracic vertebrae, articulating with ribs.",
+      "commonName": "Upper Back Vertebra 6",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_043",
+      "name": "Thoracic Vertebra 7",
+      "region": "Vertebral Column",
+      "description": "One of the twelve thoracic vertebrae, articulating with ribs.",
+      "commonName": "Upper Back Vertebra 7",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_044",
+      "name": "Thoracic Vertebra 8",
+      "region": "Vertebral Column",
+      "description": "One of the twelve thoracic vertebrae, articulating with ribs.",
+      "commonName": "Upper Back Vertebra 8",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_045",
+      "name": "Thoracic Vertebra 9",
+      "region": "Vertebral Column",
+      "description": "One of the twelve thoracic vertebrae, articulating with ribs.",
+      "commonName": "Upper Back Vertebra 9",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_046",
+      "name": "Thoracic Vertebra 10",
+      "region": "Vertebral Column",
+      "description": "One of the twelve thoracic vertebrae, articulating with ribs.",
+      "commonName": "Upper Back Vertebra 10",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_047",
+      "name": "Thoracic Vertebra 11",
+      "region": "Vertebral Column",
+      "description": "One of the twelve thoracic vertebrae, articulating with ribs.",
+      "commonName": "Upper Back Vertebra 11",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_048",
+      "name": "Thoracic Vertebra 12",
+      "region": "Vertebral Column",
+      "description": "One of the twelve thoracic vertebrae, articulating with ribs.",
+      "commonName": "Upper Back Vertebra 12",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_049",
+      "name": "Lumbar Vertebra 1",
+      "region": "Vertebral Column",
+      "description": "One of the five lumbar vertebrae in the lower back.",
+      "commonName": "Lower Back Vertebra 1",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_050",
+      "name": "Lumbar Vertebra 2",
+      "region": "Vertebral Column",
+      "description": "One of the five lumbar vertebrae in the lower back.",
+      "commonName": "Lower Back Vertebra 2",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_051",
+      "name": "Lumbar Vertebra 3",
+      "region": "Vertebral Column",
+      "description": "One of the five lumbar vertebrae in the lower back.",
+      "commonName": "Lower Back Vertebra 3",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_052",
+      "name": "Lumbar Vertebra 4",
+      "region": "Vertebral Column",
+      "description": "One of the five lumbar vertebrae in the lower back.",
+      "commonName": "Lower Back Vertebra 4",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_053",
+      "name": "Lumbar Vertebra 5",
+      "region": "Vertebral Column",
+      "description": "One of the five lumbar vertebrae in the lower back.",
+      "commonName": "Lower Back Vertebra 5",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_054",
+      "name": "Sacrum",
+      "region": "Pelvis",
+      "description": "A large, triangular bone at the base of the spine.",
+      "commonName": "Sacral Bone",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_055",
+      "name": "Coccyx",
+      "region": "Pelvis",
+      "description": "The tailbone, located at the end of the vertebral column.",
+      "commonName": "Tailbone",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_056",
+      "name": "Sternum",
+      "region": "Thorax",
+      "description": "The breastbone, located in the center of the chest.",
+      "commonName": "Breastbone",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_057",
+      "name": "Rib 1 (Left)",
+      "region": "Thorax",
+      "description": "The uppermost true rib, connecting to the sternum.",
+      "commonName": "First Rib (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_058",
+      "name": "Rib 1 (Right)",
+      "region": "Thorax",
+      "description": "The uppermost true rib, connecting to the sternum.",
+      "commonName": "First Rib (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_059",
+      "name": "Rib 2 (Left)",
+      "region": "Thorax",
+      "description": "A true rib, connecting to the sternum.",
+      "commonName": "Second Rib (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_060",
+      "name": "Rib 2 (Right)",
+      "region": "Thorax",
+      "description": "A true rib, connecting to the sternum.",
+      "commonName": "Second Rib (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_061",
+      "name": "Rib 3 (Left)",
+      "region": "Thorax",
+      "description": "A true rib, connecting to the sternum.",
+      "commonName": "Third Rib (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_062",
+      "name": "Rib 3 (Right)",
+      "region": "Thorax",
+      "description": "A true rib, connecting to the sternum.",
+      "commonName": "Third Rib (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_063",
+      "name": "Rib 4 (Left)",
+      "region": "Thorax",
+      "description": "A true rib, connecting to the sternum.",
+      "commonName": "Fourth Rib (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_064",
+      "name": "Rib 4 (Right)",
+      "region": "Thorax",
+      "description": "A true rib, connecting to the sternum.",
+      "commonName": "Fourth Rib (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_065",
+      "name": "Rib 5 (Left)",
+      "region": "Thorax",
+      "description": "A true rib, connecting to the sternum.",
+      "commonName": "Fifth Rib (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_066",
+      "name": "Rib 5 (Right)",
+      "region": "Thorax",
+      "description": "A true rib, connecting to the sternum.",
+      "commonName": "Fifth Rib (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_067",
+      "name": "Rib 6 (Left)",
+      "region": "Thorax",
+      "description": "A true rib, connecting to the sternum.",
+      "commonName": "Sixth Rib (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_068",
+      "name": "Rib 6 (Right)",
+      "region": "Thorax",
+      "description": "A true rib, connecting to the sternum.",
+      "commonName": "Sixth Rib (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_069",
+      "name": "Rib 7 (Left)",
+      "region": "Thorax",
+      "description": "A true rib, connecting to the sternum.",
+      "commonName": "Seventh Rib (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_070",
+      "name": "Rib 7 (Right)",
+      "region": "Thorax",
+      "description": "A true rib, connecting to the sternum.",
+      "commonName": "Seventh Rib (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_071",
+      "name": "Rib 8 (Left)",
+      "region": "Thorax",
+      "description": "A false rib, connecting indirectly to the sternum.",
+      "commonName": "Eighth Rib (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_072",
+      "name": "Rib 8 (Right)",
+      "region": "Thorax",
+      "description": "A false rib, connecting indirectly to the sternum.",
+      "commonName": "Eighth Rib (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_073",
+      "name": "Rib 9 (Left)",
+      "region": "Thorax",
+      "description": "A false rib, connecting indirectly to the sternum.",
+      "commonName": "Ninth Rib (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_074",
+      "name": "Rib 9 (Right)",
+      "region": "Thorax",
+      "description": "A false rib, connecting indirectly to the sternum.",
+      "commonName": "Ninth Rib (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_075",
+      "name": "Rib 10 (Left)",
+      "region": "Thorax",
+      "description": "A false rib, connecting indirectly to the sternum.",
+      "commonName": "Tenth Rib (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_076",
+      "name": "Rib 10 (Right)",
+      "region": "Thorax",
+      "description": "A false rib, connecting indirectly to the sternum.",
+      "commonName": "Tenth Rib (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_077",
+      "name": "Rib 11 (Left)",
+      "region": "Thorax",
+      "description": "A floating rib, not connecting to the sternum.",
+      "commonName": "Eleventh Rib (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_078",
+      "name": "Rib 11 (Right)",
+      "region": "Thorax",
+      "description": "A floating rib, not connecting to the sternum.",
+      "commonName": "Eleventh Rib (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_079",
+      "name": "Rib 12 (Left)",
+      "region": "Thorax",
+      "description": "A floating rib, not connecting to the sternum.",
+      "commonName": "Twelfth Rib (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_080",
+      "name": "Rib 12 (Right)",
+      "region": "Thorax",
+      "description": "A floating rib, not connecting to the sternum.",
+      "commonName": "Twelfth Rib (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_081",
+      "name": "Clavicle (Left)",
+      "region": "Pectoral Girdle",
+      "description": "The collarbone, connecting the scapula to the sternum.",
+      "commonName": "Collarbone (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_082",
+      "name": "Clavicle (Right)",
+      "region": "Pectoral Girdle",
+      "description": "The collarbone, connecting the scapula to the sternum.",
+      "commonName": "Collarbone (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_083",
+      "name": "Scapula (Left)",
+      "region": "Pectoral Girdle",
+      "description": "The shoulder blade, a triangular bone on the back.",
+      "commonName": "Shoulder Blade (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_084",
+      "name": "Scapula (Right)",
+      "region": "Pectoral Girdle",
+      "description": "The shoulder blade, a triangular bone on the back.",
+      "commonName": "Shoulder Blade (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_085",
+      "name": "Humerus (Left)",
+      "region": "Upper Limb",
+      "description": "The long bone of the upper arm.",
+      "commonName": "Upper Arm Bone (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_086",
+      "name": "Humerus (Right)",
+      "region": "Upper Limb",
+      "description": "The long bone of the upper arm.",
+      "commonName": "Upper Arm Bone (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_087",
+      "name": "Radius (Left)",
+      "region": "Upper Limb",
+      "description": "One of the two forearm bones, on the thumb side.",
+      "commonName": "Thumb-side Forearm Bone (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_088",
+      "name": "Radius (Right)",
+      "region": "Upper Limb",
+      "description": "One of the two forearm bones, on the thumb side.",
+      "commonName": "Thumb-side Forearm Bone (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_089",
+      "name": "Ulna (Left)",
+      "region": "Upper Limb",
+      "description": "One of the two forearm bones, on the little finger side.",
+      "commonName": "Pinky-side Forearm Bone (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_090",
+      "name": "Ulna (Right)",
+      "region": "Upper Limb",
+      "description": "One of the two forearm bones, on the little finger side.",
+      "commonName": "Pinky-side Forearm Bone (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_091",
+      "name": "Scaphoid (Left)",
+      "region": "Wrist (Carpals)",
+      "description": "One of the eight carpal bones, near the thumb.",
+      "commonName": "Wrist Bone (Scaphoid, Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_092",
+      "name": "Scaphoid (Right)",
+      "region": "Wrist (Carpals)",
+      "description": "One of the eight carpal bones, near the thumb.",
+      "commonName": "Wrist Bone (Scaphoid, Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_093",
+      "name": "Lunate (Left)",
+      "region": "Wrist (Carpals)",
+      "description": "One of the eight carpal bones, moon-shaped.",
+      "commonName": "Wrist Bone (Lunate, Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_094",
+      "name": "Lunate (Right)",
+      "region": "Wrist (Carpals)",
+      "description": "One of the eight carpal bones, moon-shaped.",
+      "commonName": "Wrist Bone (Lunate, Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_095",
+      "name": "Triquetrum (Left)",
+      "region": "Wrist (Carpals)",
+      "description": "One of the eight carpal bones, pyramid-shaped.",
+      "commonName": "Wrist Bone (Triquetrum, Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_096",
+      "name": "Triquetrum (Right)",
+      "region": "Wrist (Carpals)",
+      "description": "One of the eight carpal bones, pyramid-shaped.",
+      "commonName": "Wrist Bone (Triquetrum, Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_097",
+      "name": "Pisiform (Left)",
+      "region": "Wrist (Carpals)",
+      "description": "A small, pea-shaped carpal bone, sitting on the triquetrum.",
+      "commonName": "Wrist Bone (Pisiform, Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_098",
+      "name": "Pisiform (Right)",
+      "region": "Wrist (Carpals)",
+      "description": "A small, pea-shaped carpal bone, sitting on the triquetrum.",
+      "commonName": "Wrist Bone (Pisiform, Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_099",
+      "name": "Trapezium (Left)",
+      "region": "Wrist (Carpals)",
+      "description": "One of the eight carpal bones, at the base of the thumb.",
+      "commonName": "Wrist Bone (Trapezium, Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_100",
+      "name": "Trapezium (Right)",
+      "region": "Wrist (Carpals)",
+      "description": "One of the eight carpal bones, at the base of the thumb.",
+      "commonName": "Wrist Bone (Trapezium, Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_101",
+      "name": "Trapezoid (Left)",
+      "region": "Wrist (Carpals)",
+      "description": "One of the eight carpal bones, irregular-shaped.",
+      "commonName": "Wrist Bone (Trapezoid, Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_102",
+      "name": "Trapezoid (Right)",
+      "region": "Wrist (Carpals)",
+      "description": "One of the eight carpal bones, irregular-shaped.",
+      "commonName": "Wrist Bone (Trapezoid, Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_103",
+      "name": "Capitate (Left)",
+      "region": "Wrist (Carpals)",
+      "description": "The largest carpal bone, centrally located.",
+      "commonName": "Wrist Bone (Capitate, Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_104",
+      "name": "Capitate (Right)",
+      "region": "Wrist (Carpals)",
+      "description": "The largest carpal bone, centrally located.",
+      "commonName": "Wrist Bone (Capitate, Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_105",
+      "name": "Hamate (Left)",
+      "region": "Wrist (Carpals)",
+      "description": "One of the eight carpal bones, with a hook-like projection.",
+      "commonName": "Wrist Bone (Hamate, Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_106",
+      "name": "Hamate (Right)",
+      "region": "Wrist (Carpals)",
+      "description": "One of the eight carpal bones, with a hook-like projection.",
+      "commonName": "Wrist Bone (Hamate, Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_107",
+      "name": "Metacarpal 1 (Left)",
+      "region": "Hand",
+      "description": "The first metacarpal bone, supporting the thumb.",
+      "commonName": "Thumb Metacarpal (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_108",
+      "name": "Metacarpal 1 (Right)",
+      "region": "Hand",
+      "description": "The first metacarpal bone, supporting the thumb.",
+      "commonName": "Thumb Metacarpal (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_109",
+      "name": "Metacarpal 2 (Left)",
+      "region": "Hand",
+      "description": "The second metacarpal bone, supporting the index finger.",
+      "commonName": "Index Finger Metacarpal (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_110",
+      "name": "Metacarpal 2 (Right)",
+      "region": "Hand",
+      "description": "The second metacarpal bone, supporting the index finger.",
+      "commonName": "Index Finger Metacarpal (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_111",
+      "name": "Metacarpal 3 (Left)",
+      "region": "Hand",
+      "description": "The third metacarpal bone, supporting the middle finger.",
+      "commonName": "Middle Finger Metacarpal (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_112",
+      "name": "Metacarpal 3 (Right)",
+      "region": "Hand",
+      "description": "The third metacarpal bone, supporting the middle finger.",
+      "commonName": "Middle Finger Metacarpal (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_113",
+      "name": "Metacarpal 4 (Left)",
+      "region": "Hand",
+      "description": "The fourth metacarpal bone, supporting the ring finger.",
+      "commonName": "Ring Finger Metacarpal (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_114",
+      "name": "Metacarpal 4 (Right)",
+      "region": "Hand",
+      "description": "The fourth metacarpal bone, supporting the ring finger.",
+      "commonName": "Ring Finger Metacarpal (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_115",
+      "name": "Metacarpal 5 (Left)",
+      "region": "Hand",
+      "description": "The fifth metacarpal bone, supporting the little finger.",
+      "commonName": "Little Finger Metacarpal (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_116",
+      "name": "Metacarpal 5 (Right)",
+      "region": "Hand",
+      "description": "The fifth metacarpal bone, supporting the little finger.",
+      "commonName": "Little Finger Metacarpal (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_117",
+      "name": "Proximal Phalanx (Thumb Left)",
+      "region": "Hand (Phalanges)",
+      "description": "The first bone of the thumb, closest to the hand.",
+      "commonName": "Thumb Bone 1 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_118",
+      "name": "Proximal Phalanx (Thumb Right)",
+      "region": "Hand (Phalanges)",
+      "description": "The first bone of the thumb, closest to the hand.",
+      "commonName": "Thumb Bone 1 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_119",
+      "name": "Distal Phalanx (Thumb Left)",
+      "region": "Hand (Phalanges)",
+      "description": "The last bone of the thumb, at the tip.",
+      "commonName": "Thumb Bone 2 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_120",
+      "name": "Distal Phalanx (Thumb Right)",
+      "region": "Hand (Phalanges)",
+      "description": "The last bone of the thumb, at the tip.",
+      "commonName": "Thumb Bone 2 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_121",
+      "name": "Proximal Phalanx (Index Left)",
+      "region": "Hand (Phalanges)",
+      "description": "The first bone of the index finger.",
+      "commonName": "Index Finger Bone 1 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_122",
+      "name": "Proximal Phalanx (Index Right)",
+      "region": "Hand (Phalanges)",
+      "description": "The first bone of the index finger.",
+      "commonName": "Index Finger Bone 1 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_123",
+      "name": "Middle Phalanx (Index Left)",
+      "region": "Hand (Phalanges)",
+      "description": "The middle bone of the index finger.",
+      "commonName": "Index Finger Bone 2 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_124",
+      "name": "Middle Phalanx (Index Right)",
+      "region": "Hand (Phalanges)",
+      "description": "The middle bone of the index finger.",
+      "commonName": "Index Finger Bone 2 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_125",
+      "name": "Distal Phalanx (Index Left)",
+      "region": "Hand (Phalanges)",
+      "description": "The last bone of the index finger.",
+      "commonName": "Index Finger Bone 3 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_126",
+      "name": "Distal Phalanx (Index Right)",
+      "region": "Hand (Phalanges)",
+      "description": "The last bone of the index finger.",
+      "commonName": "Index Finger Bone 3 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_127",
+      "name": "Proximal Phalanx (Middle Left)",
+      "region": "Hand (Phalanges)",
+      "description": "The first bone of the middle finger.",
+      "commonName": "Middle Finger Bone 1 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_128",
+      "name": "Proximal Phalanx (Middle Right)",
+      "region": "Hand (Phalanges)",
+      "description": "The first bone of the middle finger.",
+      "commonName": "Middle Finger Bone 1 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_129",
+      "name": "Middle Phalanx (Middle Left)",
+      "region": "Hand (Phalanges)",
+      "description": "The middle bone of the middle finger.",
+      "commonName": "Middle Finger Bone 2 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_130",
+      "name": "Middle Phalanx (Middle Right)",
+      "region": "Hand (Phalanges)",
+      "description": "The middle bone of the middle finger.",
+      "commonName": "Middle Finger Bone 2 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_131",
+      "name": "Distal Phalanx (Middle Left)",
+      "region": "Hand (Phalanges)",
+      "description": "The last bone of the middle finger.",
+      "commonName": "Middle Finger Bone 3 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_132",
+      "name": "Distal Phalanx (Middle Right)",
+      "region": "Hand (Phalanges)",
+      "description": "The last bone of the middle finger.",
+      "commonName": "Middle Finger Bone 3 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_133",
+      "name": "Proximal Phalanx (Ring Left)",
+      "region": "Hand (Phalanges)",
+      "description": "The first bone of the ring finger.",
+      "commonName": "Ring Finger Bone 1 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_134",
+      "name": "Proximal Phalanx (Ring Right)",
+      "region": "Hand (Phalanges)",
+      "description": "The first bone of the ring finger.",
+      "commonName": "Ring Finger Bone 1 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_135",
+      "name": "Middle Phalanx (Ring Left)",
+      "region": "Hand (Phalanges)",
+      "description": "The middle bone of the ring finger.",
+      "commonName": "Ring Finger Bone 2 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_136",
+      "name": "Middle Phalanx (Ring Right)",
+      "region": "Hand (Phalanges)",
+      "description": "The middle bone of the ring finger.",
+      "commonName": "Ring Finger Bone 2 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_137",
+      "name": "Distal Phalanx (Ring Left)",
+      "region": "Hand (Phalanges)",
+      "description": "The last bone of the ring finger.",
+      "commonName": "Ring Finger Bone 3 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_138",
+      "name": "Distal Phalanx (Ring Right)",
+      "region": "Hand (Phalanges)",
+      "description": "The last bone of the ring finger.",
+      "commonName": "Ring Finger Bone 3 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_139",
+      "name": "Proximal Phalanx (Little Left)",
+      "region": "Hand (Phalanges)",
+      "description": "The first bone of the little finger.",
+      "commonName": "Little Finger Bone 1 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_140",
+      "name": "Proximal Phalanx (Little Right)",
+      "region": "Hand (Phalanges)",
+      "description": "The first bone of the little finger.",
+      "commonName": "Little Finger Bone 1 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_141",
+      "name": "Middle Phalanx (Little Left)",
+      "region": "Hand (Phalanges)",
+      "description": "The middle bone of the little finger.",
+      "commonName": "Little Finger Bone 2 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_142",
+      "name": "Middle Phalanx (Little Right)",
+      "region": "Hand (Phalanges)",
+      "description": "The middle bone of the little finger.",
+      "commonName": "Little Finger Bone 2 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_143",
+      "name": "Distal Phalanx (Little Left)",
+      "region": "Hand (Phalanges)",
+      "description": "The last bone of the little finger.",
+      "commonName": "Little Finger Bone 3 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_144",
+      "name": "Distal Phalanx (Little Right)",
+      "region": "Hand (Phalanges)",
+      "description": "The last bone of the little finger.",
+      "commonName": "Little Finger Bone 3 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_145",
+      "name": "Os Coxa / Pelvis (Left)",
+      "region": "Pelvic Girdle",
+      "description": "The hip bone, formed by the ilium, ischium, and pubis.",
+      "commonName": "Hip Bone (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_146",
+      "name": "Os Coxa / Pelvis (Right)",
+      "region": "Pelvic Girdle",
+      "description": "The hip bone, formed by the ilium, ischium, and pubis.",
+      "commonName": "Hip Bone (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_147",
+      "name": "Femur (Left)",
+      "region": "Lower Limb",
+      "description": "The thigh bone, the longest and strongest bone in the body.",
+      "commonName": "Thigh Bone (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_148",
+      "name": "Femur (Right)",
+      "region": "Lower Limb",
+      "description": "The thigh bone, the longest and strongest bone in the body.",
+      "commonName": "Thigh Bone (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_149",
+      "name": "Patella (Left)",
+      "region": "Lower Limb",
+      "description": "The kneecap, a triangular bone protecting the knee joint.",
+      "commonName": "Kneecap (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_150",
+      "name": "Patella (Right)",
+      "region": "Lower Limb",
+      "description": "The kneecap, a triangular bone protecting the knee joint.",
+      "commonName": "Kneecap (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_151",
+      "name": "Tibia (Left)",
+      "region": "Lower Limb",
+      "description": "The shin bone, the larger of the two lower leg bones.",
+      "commonName": "Shin Bone (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_152",
+      "name": "Tibia (Right)",
+      "region": "Lower Limb",
+      "description": "The shin bone, the larger of the two lower leg bones.",
+      "commonName": "Shin Bone (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_153",
+      "name": "Fibula (Left)",
+      "region": "Lower Limb",
+      "description": "The calf bone, the smaller of the two lower leg bones.",
+      "commonName": "Calf Bone (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_154",
+      "name": "Fibula (Right)",
+      "region": "Lower Limb",
+      "description": "The calf bone, the smaller of the two lower leg bones.",
+      "commonName": "Calf Bone (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_155",
+      "name": "Talus (Left)",
+      "region": "Ankle (Tarsals)",
+      "description": "One of the seven tarsal bones, forming part of the ankle joint.",
+      "commonName": "Ankle Bone (Talus, Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_156",
+      "name": "Talus (Right)",
+      "region": "Ankle (Tarsals)",
+      "description": "One of the seven tarsal bones, forming part of the ankle joint.",
+      "commonName": "Ankle Bone (Talus, Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_157",
+      "name": "Calcaneus (Left)",
+      "region": "Ankle (Tarsals)",
+      "description": "The heel bone, the largest tarsal bone.",
+      "commonName": "Heel Bone (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_158",
+      "name": "Calcaneus (Right)",
+      "region": "Ankle (Tarsals)",
+      "description": "The heel bone, the largest tarsal bone.",
+      "commonName": "Heel Bone (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_159",
+      "name": "Navicular (Left)",
+      "region": "Ankle (Tarsals)",
+      "description": "A boat-shaped tarsal bone.",
+      "commonName": "Ankle Bone (Navicular, Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_160",
+      "name": "Navicular (Right)",
+      "region": "Ankle (Tarsals)",
+      "description": "A boat-shaped tarsal bone.",
+      "commonName": "Ankle Bone (Navicular, Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_161",
+      "name": "Cuneiform Medial (Left)",
+      "region": "Ankle (Tarsals)",
+      "description": "One of the three cuneiform bones of the foot.",
+      "commonName": "Foot Bone (Medial Cuneiform, Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_162",
+      "name": "Cuneiform Medial (Right)",
+      "region": "Ankle (Tarsals)",
+      "description": "One of the three cuneiform bones of the foot.",
+      "commonName": "Foot Bone (Medial Cuneiform, Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_163",
+      "name": "Cuneiform Intermediate (Left)",
+      "region": "Ankle (Tarsals)",
+      "description": "One of the three cuneiform bones of the foot.",
+      "commonName": "Foot Bone (Intermediate Cuneiform, Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_164",
+      "name": "Cuneiform Intermediate (Right)",
+      "region": "Ankle (Tarsals)",
+      "description": "One of the three cuneiform bones of the foot.",
+      "commonName": "Foot Bone (Intermediate Cuneiform, Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_165",
+      "name": "Cuneiform Lateral (Left)",
+      "region": "Ankle (Tarsals)",
+      "description": "One of the three cuneiform bones of the foot.",
+      "commonName": "Foot Bone (Lateral Cuneiform, Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_166",
+      "name": "Cuneiform Lateral (Right)",
+      "region": "Ankle (Tarsals)",
+      "description": "One of the three cuneiform bones of the foot.",
+      "commonName": "Foot Bone (Lateral Cuneiform, Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_167",
+      "name": "Cuboid (Left)",
+      "region": "Ankle (Tarsals)",
+      "description": "A cube-shaped tarsal bone.",
+      "commonName": "Ankle Bone (Cuboid, Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_168",
+      "name": "Cuboid (Right)",
+      "region": "Ankle (Tarsals)",
+      "description": "A cube-shaped tarsal bone.",
+      "commonName": "Ankle Bone (Cuboid, Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_169",
+      "name": "Metatarsal 1 (Left)",
+      "region": "Foot",
+      "description": "The first metatarsal bone, supporting the big toe.",
+      "commonName": "Big Toe Metatarsal (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_170",
+      "name": "Metatarsal 1 (Right)",
+      "region": "Foot",
+      "description": "The first metatarsal bone, supporting the big toe.",
+      "commonName": "Big Toe Metatarsal (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_171",
+      "name": "Metatarsal 2 (Left)",
+      "region": "Foot",
+      "description": "The second metatarsal bone, supporting the second toe.",
+      "commonName": "Second Toe Metatarsal (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_172",
+      "name": "Metatarsal 2 (Right)",
+      "region": "Foot",
+      "description": "The second metatarsal bone, supporting the second toe.",
+      "commonName": "Second Toe Metatarsal (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_173",
+      "name": "Metatarsal 3 (Left)",
+      "region": "Foot",
+      "description": "The third metatarsal bone, supporting the third toe.",
+      "commonName": "Third Toe Metatarsal (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_174",
+      "name": "Metatarsal 3 (Right)",
+      "region": "Foot",
+      "description": "The third metatarsal bone, supporting the third toe.",
+      "commonName": "Third Toe Metatarsal (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_175",
+      "name": "Metatarsal 4 (Left)",
+      "region": "Foot",
+      "description": "The fourth metatarsal bone, supporting the fourth toe.",
+      "commonName": "Fourth Toe Metatarsal (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_176",
+      "name": "Metatarsal 4 (Right)",
+      "region": "Foot",
+      "description": "The fourth metatarsal bone, supporting the fourth toe.",
+      "commonName": "Fourth Toe Metatarsal (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_177",
+      "name": "Metatarsal 5 (Left)",
+      "region": "Foot",
+      "description": "The fifth metatarsal bone, supporting the little toe.",
+      "commonName": "Little Toe Metatarsal (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_178",
+      "name": "Metatarsal 5 (Right)",
+      "region": "Foot",
+      "description": "The fifth metatarsal bone, supporting the little toe.",
+      "commonName": "Little Toe Metatarsal (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_179",
+      "name": "Proximal Phalanx (Big Toe Left)",
+      "region": "Foot (Phalanges)",
+      "description": "The first bone of the big toe.",
+      "commonName": "Big Toe Bone 1 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_180",
+      "name": "Proximal Phalanx (Big Toe Right)",
+      "region": "Foot (Phalanges)",
+      "description": "The first bone of the big toe.",
+      "commonName": "Big Toe Bone 1 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_181",
+      "name": "Distal Phalanx (Big Toe Left)",
+      "region": "Foot (Phalanges)",
+      "description": "The last bone of the big toe.",
+      "commonName": "Big Toe Bone 2 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_182",
+      "name": "Distal Phalanx (Big Toe Right)",
+      "region": "Foot (Phalanges)",
+      "description": "The last bone of the big toe.",
+      "commonName": "Big Toe Bone 2 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_183",
+      "name": "Proximal Phalanx (2nd Toe Left)",
+      "region": "Foot (Phalanges)",
+      "description": "The first bone of the second toe.",
+      "commonName": "Second Toe Bone 1 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_184",
+      "name": "Proximal Phalanx (2nd Toe Right)",
+      "region": "Foot (Phalanges)",
+      "description": "The first bone of the second toe.",
+      "commonName": "Second Toe Bone 1 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_185",
+      "name": "Middle Phalanx (2nd Toe Left)",
+      "region": "Foot (Phalanges)",
+      "description": "The middle bone of the second toe.",
+      "commonName": "Second Toe Bone 2 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_186",
+      "name": "Middle Phalanx (2nd Toe Right)",
+      "region": "Foot (Phalanges)",
+      "description": "The middle bone of the second toe.",
+      "commonName": "Second Toe Bone 2 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_187",
+      "name": "Distal Phalanx (2nd Toe Left)",
+      "region": "Foot (Phalanges)",
+      "description": "The last bone of the second toe.",
+      "commonName": "Second Toe Bone 3 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_188",
+      "name": "Distal Phalanx (2nd Toe Right)",
+      "region": "Foot (Phalanges)",
+      "description": "The last bone of the second toe.",
+      "commonName": "Second Toe Bone 3 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_189",
+      "name": "Proximal Phalanx (3rd Toe Left)",
+      "region": "Foot (Phalanges)",
+      "description": "The first bone of the third toe.",
+      "commonName": "Third Toe Bone 1 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_190",
+      "name": "Proximal Phalanx (3rd Toe Right)",
+      "region": "Foot (Phalanges)",
+      "description": "The first bone of the third toe.",
+      "commonName": "Third Toe Bone 1 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_191",
+      "name": "Middle Phalanx (3rd Toe Left)",
+      "region": "Foot (Phalanges)",
+      "description": "The middle bone of the third toe.",
+      "commonName": "Third Toe Bone 2 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_192",
+      "name": "Middle Phalanx (3rd Toe Right)",
+      "region": "Foot (Phalanges)",
+      "description": "The middle bone of the third toe.",
+      "commonName": "Third Toe Bone 2 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_193",
+      "name": "Distal Phalanx (3rd Toe Left)",
+      "region": "Foot (Phalanges)",
+      "description": "The last bone of the third toe.",
+      "commonName": "Third Toe Bone 3 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_194",
+      "name": "Distal Phalanx (3rd Toe Right)",
+      "region": "Foot (Phalanges)",
+      "description": "The last bone of the third toe.",
+      "commonName": "Third Toe Bone 3 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_195",
+      "name": "Proximal Phalanx (4th Toe Left)",
+      "region": "Foot (Phalanges)",
+      "description": "The first bone of the fourth toe.",
+      "commonName": "Fourth Toe Bone 1 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_196",
+      "name": "Proximal Phalanx (4th Toe Right)",
+      "region": "Foot (Phalanges)",
+      "description": "The first bone of the fourth toe.",
+      "commonName": "Fourth Toe Bone 1 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_197",
+      "name": "Middle Phalanx (4th Toe Left)",
+      "region": "Foot (Phalanges)",
+      "description": "The middle bone of the fourth toe.",
+      "commonName": "Fourth Toe Bone 2 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_198",
+      "name": "Middle Phalanx (4th Toe Right)",
+      "region": "Foot (Phalanges)",
+      "description": "The middle bone of the fourth toe.",
+      "commonName": "Fourth Toe Bone 2 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_199",
+      "name": "Distal Phalanx (4th Toe Left)",
+      "region": "Foot (Phalanges)",
+      "description": "The last bone of the fourth toe.",
+      "commonName": "Fourth Toe Bone 3 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_200",
+      "name": "Distal Phalanx (4th Toe Right)",
+      "region": "Foot (Phalanges)",
+      "description": "The last bone of the fourth toe.",
+      "commonName": "Fourth Toe Bone 3 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_201",
+      "name": "Proximal Phalanx (5th Toe Left)",
+      "region": "Foot (Phalanges)",
+      "description": "The first bone of the fifth toe.",
+      "commonName": "Fifth Toe Bone 1 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_202",
+      "name": "Proximal Phalanx (5th Toe Right)",
+      "region": "Foot (Phalanges)",
+      "description": "The first bone of the fifth toe.",
+      "commonName": "Fifth Toe Bone 1 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_203",
+      "name": "Middle Phalanx (5th Toe Left)",
+      "region": "Foot (Phalanges)",
+      "description": "The middle bone of the fifth toe.",
+      "commonName": "Fifth Toe Bone 2 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_204",
+      "name": "Middle Phalanx (5th Toe Right)",
+      "region": "Foot (Phalanges)",
+      "description": "The middle bone of the fifth toe.",
+      "commonName": "Fifth Toe Bone 2 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_205",
+      "name": "Distal Phalanx (5th Toe Left)",
+      "region": "Foot (Phalanges)",
+      "description": "The last bone of the fifth toe.",
+      "commonName": "Fifth Toe Bone 3 (Left)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    },
+    {
+      "id": "bone_206",
+      "name": "Distal Phalanx (5th Toe Right)",
+      "region": "Foot (Phalanges)",
+      "description": "The last bone of the fifth toe.",
+      "commonName": "Fifth Toe Bone 3 (Right)",
+      "x": 0, "y": 0, "width": 10, "height": 10
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>JSON Frogger - Pixel Art Edition</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #34495e;
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        #game-container {
+            background-color: #2c3e50;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 5px solid #ecf0f1;
+            text-align: center;
+            position: relative;
+        }
+        h1 { color: #f1c40f; margin-top: 0; }
+        canvas { background-color: #000; display: block; border-radius: 5px; }
+        .instructions { color: #bdc3c7; margin-top: 15px; margin-bottom: 20px; }
+        #game-overlay {
+            position: absolute;
+            top: 67px; left: 20px; right: 20px; bottom: 125px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white; display: flex; justify-content: center; align-items: center;
+            font-size: 2em; font-weight: bold; text-shadow: 3px 3px 5px black;
+            border-radius: 5px; cursor: pointer;
+        }
+        #d-pad-controls {
+            display: grid;
+            grid-template-areas: ". up ." "left . right" ". down .";
+            gap: 10px; width: 180px; margin: 20px auto 0;
+        }
+        .d-pad-btn {
+            width: 50px; height: 50px; background-color: #ecf0f1;
+            color: #2c3e50; border: 2px solid #bdc3c7; border-radius: 10px;
+            font-size: 2em; font-weight: bold; cursor: pointer; user-select: none;
+        }
+        .d-pad-btn:active { background-color: #bdc3c7; transform: scale(0.95); }
+        #btn-up { grid-area: up; }
+        #btn-left { grid-area: left; }
+        #btn-right { grid-area: right; }
+        #btn-down { grid-area: down; }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1>JSON Frogger</h1>
+        <canvas id="gameCanvas"></canvas>
+        <div id="game-overlay">
+            <div id="game-message">Tap Here to Start</div>
+        </div>
+        <p class="instructions">Use Arrow Keys or D-Pad to Move</p>
+        <div id="d-pad-controls">
+            <button id="btn-up" class="d-pad-btn">↑</button>
+            <button id="btn-left" class="d-pad-btn">←</button>
+            <button id="btn-right" class="d-pad-btn">→</button>
+            <button id="btn-down" class="d-pad-btn">↓</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+            const messageEl = document.getElementById('game-message');
+            const overlayEl = document.getElementById('game-overlay');
+
+            const TILE_SIZE = 50;
+            canvas.width = 9 * TILE_SIZE;
+            canvas.height = 9 * TILE_SIZE;
+
+            let gameState = 'START';
+            let levelData = null;
+            let lanes = [];
+
+            const player = { x: 4 * TILE_SIZE, y: 8 * TILE_SIZE, size: TILE_SIZE * 0.8, speed: TILE_SIZE, color: '#2ecc71' };
+
+            async function loadLevelData() {
+                try {
+                    const response = await fetch('levels.json');
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    levelData = await response.json();
+                } catch (error) {
+                    console.error("Could not load level data:", error);
+                    messageEl.textContent = "Error Loading Level!";
+                }
+            }
+
+            function setupLevel() {
+                player.x = 4 * TILE_SIZE;
+                player.y = 8 * TILE_SIZE;
+                const currentLevel = levelData.level1;
+                lanes = currentLevel.lanes.map((laneConfig, index) => ({
+                    ...laneConfig,
+                    y: index * TILE_SIZE,
+                    obstacles: spawnObstacles(laneConfig)
+                }));
+            }
+
+            function spawnObstacles(laneConfig) {
+                if (laneConfig.type === 'safe') return [];
+                const obstacles = [];
+                let currentX = Math.random() * canvas.width;
+                for (const obsConfig of laneConfig.obstacles) {
+                    // --- MODIFIED: We no longer need a color property here ---
+                    obstacles.push({ x: currentX, width: obsConfig.width * TILE_SIZE });
+                    currentX += obsConfig.width * TILE_SIZE + (2 + Math.random() * 3) * TILE_SIZE;
+                }
+                return obstacles;
+            }
+
+            // --- NEW: Function to draw a pixel art car ---
+            function drawPixelArtCar(x, y, width, height, direction) {
+                const pixelSize = height / 5; // Car is 5 "pixels" tall
+
+                // Main body
+                ctx.fillStyle = '#c0392b'; // Red
+                ctx.fillRect(x, y, width, height);
+
+                // Roof/windows
+                ctx.fillStyle = '#3498db'; // Blue
+                ctx.fillRect(x + pixelSize, y + pixelSize, width - (2 * pixelSize), height - (2 * pixelSize));
+                
+                if (direction === 1) { // Moving right
+                    // Headlights (front)
+                    ctx.fillStyle = '#f1c40f'; // Yellow
+                    ctx.fillRect(x + width - pixelSize, y, pixelSize, pixelSize);
+                    ctx.fillRect(x + width - pixelSize, y + height - pixelSize, pixelSize, pixelSize);
+                } else { // Moving left
+                    // Taillights (front)
+                    ctx.fillStyle = '#e67e22'; // Orange
+                    ctx.fillRect(x, y, pixelSize, pixelSize);
+                    ctx.fillRect(x, y + height - pixelSize, pixelSize, pixelSize);
+                }
+            }
+
+            function update() {
+                lanes.forEach(lane => {
+                    if (lane.speed) {
+                        lane.obstacles.forEach(obs => {
+                            obs.x += lane.speed * lane.direction;
+                            if (lane.direction === 1 && obs.x > canvas.width) obs.x = -obs.width;
+                            else if (lane.direction === -1 && obs.x < -obs.width) obs.x = canvas.width;
+                        });
+                    }
+                });
+                checkCollisions();
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                lanes.forEach(lane => {
+                    ctx.fillStyle = lane.color;
+                    ctx.fillRect(0, lane.y, canvas.width, TILE_SIZE);
+
+                    // --- MODIFIED: Custom drawing logic ---
+                    lane.obstacles.forEach(obs => {
+                        if (lane.type === 'road') {
+                            // Use our new pixel art function for cars
+                            drawPixelArtCar(obs.x, lane.y + TILE_SIZE * 0.1, obs.width, TILE_SIZE * 0.8, lane.direction);
+                        } else {
+                            // Draw simple rectangles for logs
+                            ctx.fillStyle = '#8e44ad';
+                            ctx.fillRect(obs.x, lane.y + TILE_SIZE * 0.1, obs.width, TILE_SIZE * 0.8);
+                        }
+                    });
+                });
+                ctx.fillStyle = player.color;
+                const playerMargin = (TILE_SIZE - player.size) / 2;
+                ctx.fillRect(player.x + playerMargin, player.y + playerMargin, player.size, player.size);
+            }
+            
+            // --- The rest of the JS is unchanged ---
+            function gameLoop() { if (gameState === 'PLAYING') { update(); draw(); } requestAnimationFrame(gameLoop); }
+            function checkCollisions() {
+                const laneIndex = Math.floor(player.y / TILE_SIZE); const currentLane = lanes[laneIndex]; if (!currentLane) return;
+                if (currentLane.type === 'road') { for (const obs of currentLane.obstacles) { if (player.x < obs.x + obs.width && player.x + TILE_SIZE > obs.x) { resetGame("You got hit!"); return; } } }
+                else if (currentLane.type === 'river') { let onLog = false; for (const obs of currentLane.obstacles) { if (player.x < obs.x + obs.width && player.x + TILE_SIZE > obs.x) { onLog = true; player.x += currentLane.speed * currentLane.direction; break; } } if (!onLog) { resetGame("You fell in!"); return; } }
+                if (laneIndex === 0) { winGame(); }
+            }
+            function resetGame(message) { gameState = 'LOSE'; messageEl.textContent = message; overlayEl.style.display = 'flex'; setTimeout(() => { gameState = 'START'; messageEl.textContent = 'Tap to Restart'; }, 1500); }
+            function winGame() { gameState = 'WIN'; messageEl.textContent = 'You Made It!'; overlayEl.style.display = 'flex'; setTimeout(() => { gameState = 'START'; messageEl.textContent = 'Tap to Play Again'; }, 1500); }
+            function movePlayer(direction) { if (gameState !== 'PLAYING') return; switch (direction) { case 'UP': if (player.y > 0) player.y -= player.speed; break; case 'DOWN': if (player.y < canvas.height - TILE_SIZE) player.y += player.speed; break; case 'LEFT': if (player.x > 0) player.x -= player.speed; break; case 'RIGHT': if (player.x < canvas.width - TILE_SIZE) player.x += player.speed; break; } }
+            function startGame() { if (gameState !== 'START') return; setupLevel(); gameState = 'PLAYING'; overlayEl.style.display = 'none'; }
+            window.addEventListener('keydown', (e) => { e.preventDefault(); if (e.key === 'Enter') { startGame(); } else { const direction = e.key.replace('Arrow', '').toUpperCase(); movePlayer(direction); } });
+            document.getElementById('btn-up').addEventListener('click', () => movePlayer('UP')); document.getElementById('btn-down').addEventListener('click', () => movePlayer('DOWN')); document.getElementById('btn-left').addEventListener('click', () => movePlayer('LEFT')); document.getElementById('btn-right').addEventListener('click', () => movePlayer('RIGHT'));
+            overlayEl.addEventListener('click', startGame);
+            loadLevelData().then(() => { requestAnimationFrame(gameLoop); });
+        });
+    </script>
+</body>
+</html>

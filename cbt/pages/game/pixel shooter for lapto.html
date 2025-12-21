@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Pixel Invaders</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #000;
+            --font-color: #FFF;
+            --player-color: #2ecc71;
+            --enemy-color: #e74c3c;
+            --bullet-color: #f1c40f;
+            --bunker-color: #3498db;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--font-color);
+            font-family: 'Press Start 2P', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        #game-container {
+            border: 3px solid var(--font-color);
+            box-shadow: 0 0 20px var(--player-color);
+            position: relative;
+        }
+        canvas {
+            background-color: var(--bg-color);
+            display: block;
+            /* Enforce sharp pixels, no blurring */
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+        #game-hud {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+        }
+        #game-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        #game-overlay p {
+            font-size: 14px;
+            margin-top: 20px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="game-hud">
+            <div id="score">SCORE: 0</div>
+            <div id="lives">LIVES: 3</div>
+        </div>
+        <canvas id="gameCanvas"></canvas>
+        <div id="game-overlay">
+            <div id="message">PIXEL INVADERS</div>
+            <p>Use [A] & [D] or Arrow Keys to Move<br>Press [SPACE] to Shoot<br><br>Click to Start</p>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreEl = document.getElementById('score');
+        const livesEl = document.getElementById('lives');
+        const overlay = document.getElementById('game-overlay');
+        const messageEl = document.getElementById('message');
+
+        canvas.width = 600;
+        canvas.height = 600;
+
+        let score = 0;
+        let lives = 3;
+        let gameActive = false;
+        const keys = {};
+
+        // --- Classes for Game Objects ---
+        class Player {
+            constructor() {
+                this.width = 50;
+                this.height = 20;
+                this.x = (canvas.width / 2) - (this.width / 2);
+                this.y = canvas.height - this.height - 20;
+                this.speed = 5;
+                this.color = getCssVar('--player-color');
+                this.bullets = [];
+                this.canShoot = true;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+                this.bullets.forEach(b => b.draw());
+            }
+            update() {
+                if (keys['a'] || keys['ArrowLeft']) this.x -= this.speed;
+                if (keys['d'] || keys['ArrowRight']) this.x += this.speed;
+
+                // Keep player within bounds
+                if (this.x < 0) this.x = 0;
+                if (this.x + this.width > canvas.width) this.x = canvas.width - this.width;
+                
+                // Shooting logic
+                if (keys[' '] && this.canShoot) this.shoot();
+                
+                this.bullets.forEach((b, i) => {
+                    b.update();
+                    if (b.y < 0) this.bullets.splice(i, 1);
+                });
+            }
+            shoot() {
+                this.bullets.push(new Bullet(this.x + this.width / 2 - 2.5, this.y, 5, 10, -8));
+                this.canShoot = false;
+                setTimeout(() => this.canShoot = true, 400); // Cooldown
+            }
+        }
+
+        class Bullet {
+            constructor(x, y, width, height, velocity) {
+                this.x = x; this.y = y;
+                this.width = width; this.height = height;
+                this.velocity = velocity;
+                this.color = getCssVar('--bullet-color');
+            }
+            draw() { ctx.fillStyle = this.color; ctx.fillRect(this.x, this.y, this.width, this.height); }
+            update() { this.y += this.velocity; }
+        }
+        
+        class Enemy {
+            constructor(x, y, width, height, color) {
+                this.x = x; this.y = y;
+                this.width = width; this.height = height;
+                this.color = color;
+            }
+            draw() { ctx.fillStyle = this.color; ctx.fillRect(this.x, this.y, this.width, this.height); }
+        }
+
+        class EnemySwarm {
+            constructor() {
+                this.x = 0; this.y = 50;
+                this.width = 0; this.height = 0;
+                this.columns = 10;
+                this.rows = 5;
+                this.enemyWidth = 30;
+                this.enemyHeight = 20;
+                this.gap = 15;
+                this.speed = 0.5;
+                this.direction = 1;
+                this.enemies = [];
+                this.bullets = [];
+                this.shootInterval = 1000;
+                
+                // Create the grid of enemies
+                for (let r = 0; r < this.rows; r++) {
+                    for (let c = 0; c < this.columns; c++) {
+                        const enemyX = c * (this.enemyWidth + this.gap);
+                        const enemyY = r * (this.enemyHeight + this.gap);
+                        this.enemies.push(new Enemy(enemyX, enemyY, this.enemyWidth, this.enemyHeight, getCssVar('--enemy-color')));
+                    }
+                }
+                this.width = this.columns * (this.enemyWidth + this.gap) - this.gap;
+                setInterval(() => this.shoot(), this.shootInterval);
+            }
+            draw() {
+                this.enemies.forEach(enemy => enemy.draw(this.x, this.y));
+                this.bullets.forEach(b => b.draw());
+            }
+            update() {
+                this.x += this.speed * this.direction;
+                if (this.x + this.width > canvas.width || this.x < 0) {
+                    this.direction *= -1;
+                    this.y += 30; // Move down
+                }
+
+                this.enemies.forEach(enemy => {
+                    enemy.x += this.speed * this.direction;
+                    // Game over if invaders reach bunkers
+                    if (enemy.y + this.y + enemy.height > bunkers[0].y) {
+                        gameOver("Invaders reached the bunkers!");
+                    }
+                });
+                
+                this.bullets.forEach((b, i) => {
+                    b.update();
+                    if (b.y > canvas.height) this.bullets.splice(i, 1);
+                });
+            }
+            shoot() {
+                if (gameActive && this.enemies.length > 0) {
+                    const randomEnemy = this.enemies[Math.floor(Math.random() * this.enemies.length)];
+                    this.bullets.push(new Bullet(randomEnemy.x + randomEnemy.width / 2, randomEnemy.y + this.y, 5, 10, 5));
+                }
+            }
+        }
+
+        class Bunker {
+            constructor(x, y) {
+                this.x = x; this.y = y;
+                this.size = 5; // pixel size
+                this.grid = [];
+                // Create a 12x10 grid of "pixels"
+                for (let r = 0; r < 10; r++) {
+                    const row = [];
+                    for (let c = 0; c < 12; c++) {
+                         // Shape the bunker (like an arch)
+                        if (r > 2 && c > 1 && c < 10) {
+                            if (r > 6 && c > 3 && c < 8) row.push(0);
+                            else row.push(1);
+                        } else {
+                            row.push(0);
+                        }
+                    }
+                    this.grid.push(row);
+                }
+            }
+            draw() {
+                ctx.fillStyle = getCssVar('--bunker-color');
+                for (let r = 0; r < this.grid.length; r++) {
+                    for (let c = 0; c < this.grid[r].length; c++) {
+                        if (this.grid[r][c] === 1) {
+                            ctx.fillRect(this.x + c * this.size, this.y + r * this.size, this.size, this.size);
+                        }
+                    }
+                }
+            }
+        }
+        
+        let player = new Player();
+        let swarm = new EnemySwarm();
+        let bunkers = [];
+
+        // --- Game Logic Functions ---
+        function init() {
+            score = 0;
+            lives = 3;
+            updateHUD();
+            player = new Player();
+            swarm = new EnemySwarm();
+            bunkers = [];
+            for(let i = 0; i < 4; i++) {
+                bunkers.push(new Bunker(canvas.width / 4 * (i) + 50, 450));
+            }
+            gameActive = true;
+            overlay.style.display = 'none';
+        }
+        
+        function update() {
+            if (!gameActive) return;
+            player.update();
+            swarm.update();
+            checkCollisions();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            player.draw();
+            swarm.draw();
+            bunkers.forEach(b => b.draw());
+        }
+
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        function checkCollisions() {
+            // Player bullets vs enemies
+            player.bullets.forEach((bullet, bIndex) => {
+                swarm.enemies.forEach((enemy, eIndex) => {
+                    if (isColliding(bullet, {x: enemy.x, y: enemy.y + swarm.y, width: enemy.width, height: enemy.height})) {
+                        player.bullets.splice(bIndex, 1);
+                        swarm.enemies.splice(eIndex, 1);
+                        score += 10;
+                        updateHUD();
+                    }
+                });
+            });
+
+            // Enemy bullets vs player
+            swarm.bullets.forEach((bullet, bIndex) => {
+                if (isColliding(bullet, player)) {
+                    swarm.bullets.splice(bIndex, 1);
+                    playerHit();
+                }
+            });
+
+            // All bullets vs bunkers
+            const allBullets = [...player.bullets, ...swarm.bullets];
+            allBullets.forEach((bullet, bIndex) => {
+                bunkers.forEach(bunker => {
+                    for (let r = 0; r < bunker.grid.length; r++) {
+                        for (let c = 0; c < bunker.grid[r].length; c++) {
+                            if (bunker.grid[r][c] === 1) {
+                                const pixel = {
+                                    x: bunker.x + c * bunker.size,
+                                    y: bunker.y + r * bunker.size,
+                                    width: bunker.size, height: bunker.size
+                                };
+                                if (isColliding(bullet, pixel)) {
+                                    bunker.grid[r][c] = 0; // Destroy pixel
+                                    // Remove the correct bullet
+                                    if(bullet.velocity < 0) player.bullets.splice(player.bullets.indexOf(bullet), 1);
+                                    else swarm.bullets.splice(swarm.bullets.indexOf(bullet), 1);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+            
+            // Win condition
+            if(swarm.enemies.length === 0) {
+                gameOver("YOU WIN!");
+            }
+        }
+        
+        function playerHit() {
+            lives--;
+            updateHUD();
+            if (lives <= 0) {
+                gameOver("GAME OVER");
+            } else {
+                // Brief invincibility/reset TBD
+            }
+        }
+        
+        function gameOver(message) {
+            gameActive = false;
+            messageEl.textContent = message;
+            overlay.querySelector('p').innerHTML = `Final Score: ${score}<br><br>Click to Play Again`;
+            overlay.style.display = 'flex';
+        }
+
+        function updateHUD() {
+            scoreEl.textContent = `SCORE: ${score}`;
+            livesEl.textContent = `LIVES: ${'❤️'.repeat(lives)}`;
+        }
+
+        function isColliding(a, b) {
+            return a.x < b.x + b.width && a.x + a.width > b.x &&
+                   a.y < b.y + b.height && a.y + a.height > b.y;
+        }
+
+        function getCssVar(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
+        // --- Event Listeners ---
+        window.addEventListener('keydown', (e) => keys[e.key] = true);
+        window.addEventListener('keyup', (e) => keys[e.key] = false);
+        overlay.addEventListener('click', init);
+
+        // Initial paint
+        updateHUD();
+        gameLoop();
+    });
+    </script>
+</body>
+</html>

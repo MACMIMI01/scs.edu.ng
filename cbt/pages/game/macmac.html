@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>👻 PAC-MAN | MacTutor Game Hall</title>
+  <style>
+    /* === CONSOLE STYLING === */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #333;
+      margin: 0;
+      font-family: 'Courier New', monospace;
+      overflow: hidden;
+    }
+    
+    .console {
+      position: relative;
+      width: 360px;
+      height: 723px;
+      background: linear-gradient(135deg, #f0f0f0 0%, #a0a0a0 100%);
+      border-radius: 40px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+      border: 5px solid #222;
+    }
+
+    .screen {
+      position: absolute;
+      top: 60px;
+      left: 30px;
+      right: 30px;
+      height: 420px;
+      background: #000;
+      border: 5px solid #333;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #pacman-container {
+        position: relative;
+        /* This will contain the canvas and overlays */
+    }
+
+    canvas#pacman-canvas {
+      background-color: #000;
+    }
+
+    /* --- Overlays (Messages and Menu) --- */
+    .screen-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: yellow;
+        text-align: center;
+        z-index: 10;
+        display: none; /* Hidden by default */
+    }
+
+    #game-message {
+        font-size: 24px;
+        text-shadow: 2px 2px 4px red;
+        font-weight: bold;
+    }
+
+    #menu-overlay a {
+        color: white;
+        background-color: #d32f2f;
+        padding: 15px 30px;
+        margin: 10px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: bold;
+        border: 2px solid white;
+        transition: background-color 0.2s;
+    }
+     #menu-overlay a:hover {
+        background-color: #f44336;
+     }
+
+    /* === CONTROLS === */
+    .controls {
+      position: absolute;
+      bottom: 60px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 35px;
+    }
+
+    .d-pad {
+      display: grid;
+      grid-template-areas:
+        ". up ."
+        "left . right"
+        ". down .";
+      gap: 5px;
+    }
+
+    #btn-up    { grid-area: up; }
+    #btn-left  { grid-area: left; }
+    #btn-right { grid-area: right; }
+    #btn-down  { grid-area: down; }
+
+    .d-pad button {
+      width: 55px;
+      height: 55px;
+      background: #d32f2f;
+      color: white;
+      border: 2px solid #222;
+      border-radius: 50%;
+      font-size: 24px;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    #btn-start, #btn-control {
+      width: 80px;
+      height: 45px;
+      background: #333;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .brand {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #555;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    button { cursor: pointer; user-select: none; }
+    button:active {
+      transform: scale(0.95);
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="console">
+    <div class="screen">
+      <div id="pacman-container">
+        <!-- Canvas inserted by script -->
+        <div id="message-overlay" class="screen-overlay" style="display: flex;">
+             <div id="game-message">PRESS START</div>
+        </div>
+        <div id="menu-overlay" class="screen-overlay">
+             <a href="../../dashboard.html">Dashboard</a>
+             <a href="../gamehall.html">Game Hall</a>
+        </div>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="d-pad">
+        <button id="btn-up">↑</button>
+        <button id="btn-left">←</button>
+        <button id="btn-right">→</button>
+        <button id="btn-down">↓</button>
+      </div>
+      <div class="action-buttons">
+        <button id="btn-start">Start</button>
+        <button id="btn-control">Pause</button>
+      </div>
+    </div>
+    <div class="brand">MacTutor Game Hall</div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // --- GAME ELEMENTS ---
+        const container = document.getElementById('pacman-container');
+        const messageOverlay = document.getElementById('message-overlay');
+        const menuOverlay = document.getElementById('menu-overlay');
+        const gameMessage = document.getElementById('game-message');
+        const controlBtn = document.getElementById('btn-control');
+
+        const canvas = document.createElement("canvas");
+        canvas.id = 'pacman-canvas';
+        container.appendChild(canvas);
+        const ctx = canvas.getContext('2d');
+
+        // --- GAME STATE & CONSTANTS ---
+        const TILE_SIZE = 15;
+        const PAC_SPEED = 1;
+
+        canvas.width = 19 * TILE_SIZE;
+        canvas.height = 22 * TILE_SIZE;
+
+        let gameState = 'WAITING'; // WAITING, PLAYING, PAUSED, MENU, GAME_OVER
+
+        const mapLayout = [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1],
+            [1, 2, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 2, 1],
+            [1, 3, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 3, 1],
+            [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
+            [1, 2, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 2, 1],
+            [1, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 1],
+            [1, 1, 1, 1, 2, 1, 1, 1, 0, 1, 0, 1, 1, 1, 2, 1, 1, 1, 1],
+            [0, 0, 0, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 0, 0],
+            [1, 1, 1, 1, 2, 1, 0, 1, 1, 0, 1, 1, 0, 1, 2, 1, 1, 1, 1],
+            [2, 2, 2, 2, 2, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2, 2, 2, 2, 2],
+            [1, 1, 1, 1, 2, 1, 0, 1, 1, 1, 1, 1, 0, 1, 2, 1, 1, 1, 1],
+            [0, 0, 0, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 0, 0],
+            [1, 1, 1, 1, 2, 1, 0, 1, 1, 1, 1, 1, 0, 1, 2, 1, 1, 1, 1],
+            [1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1],
+            [1, 2, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 2, 1],
+            [1, 3, 2, 1, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 1, 2, 3, 1],
+            [1, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 1, 1],
+            [1, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 1],
+            [1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1],
+            [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        ];
+
+        let pacman;
+
+        function resetPacman() {
+            pacman = {
+                x: 9 * TILE_SIZE + TILE_SIZE / 2,
+                y: 16 * TILE_SIZE + TILE_SIZE / 2,
+                radius: TILE_SIZE / 2 - 2,
+                speed: PAC_SPEED,
+                mouthOpen: 0,
+                direction: 'RIGHT',
+                nextDirection: 'RIGHT'
+            };
+        }
+
+        function drawPacman() {
+            let angle = 0;
+            if (pacman.direction === 'RIGHT') angle = 0;
+            if (pacman.direction === 'DOWN') angle = Math.PI / 2;
+            if (pacman.direction === 'LEFT') angle = Math.PI;
+            if (pacman.direction === 'UP') angle = -Math.PI / 2;
+            ctx.save();
+            ctx.translate(pacman.x, pacman.y);
+            ctx.rotate(angle);
+            ctx.fillStyle = 'yellow';
+            ctx.beginPath();
+            ctx.arc(0, 0, pacman.radius, pacman.mouthOpen, Math.PI * 2 - pacman.mouthOpen);
+            ctx.lineTo(0, 0);
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function updatePacman() {
+            pacman.mouthOpen = Math.abs(Math.sin(Date.now() * 0.02)) * (Math.PI / 4);
+            move(pacman.direction);
+        }
+        
+        // --- MOVEMENT LOGIC (FIXED) ---
+        function attemptToChangeDirection(newDir) {
+            const currentTileX = Math.floor(pacman.x / TILE_SIZE);
+            const currentTileY = Math.floor(pacman.y / TILE_SIZE);
+            
+            // Check if the new direction is the opposite of the current one
+            if ((newDir === 'LEFT' && pacman.direction === 'RIGHT') ||
+                (newDir === 'RIGHT' && pacman.direction === 'LEFT') ||
+                (newDir === 'UP' && pacman.direction === 'DOWN') ||
+                (newDir === 'DOWN' && pacman.direction === 'UP')) {
+                pacman.direction = newDir;
+                return;
+            }
+
+            // Check for valid turn at an intersection
+            const isCenteredX = Math.abs(pacman.x - (currentTileX * TILE_SIZE + TILE_SIZE / 2)) < pacman.speed;
+            const isCenteredY = Math.abs(pacman.y - (currentTileY * TILE_SIZE + TILE_SIZE / 2)) < pacman.speed;
+            
+            if (isCenteredX && isCenteredY) {
+                if (!isWallAhead(newDir, currentTileX, currentTileY)) {
+                    // Snap to grid for a clean turn
+                    pacman.x = currentTileX * TILE_SIZE + TILE_SIZE / 2;
+                    pacman.y = currentTileY * TILE_SIZE + TILE_SIZE / 2;
+                    pacman.direction = newDir;
+                }
+            }
+        }
+
+        function isWallAhead(dir, col, row) {
+            if (dir === 'UP' && mapLayout[row - 1][col] === 1) return true;
+            if (dir === 'DOWN' && mapLayout[row + 1][col] === 1) return true;
+            if (dir === 'LEFT' && mapLayout[row][col - 1] === 1) return true;
+            if (dir === 'RIGHT' && mapLayout[row][col + 1] === 1) return true;
+            return false;
+        }
+
+        function move() {
+            const currentTileX = Math.floor(pacman.x / TILE_SIZE);
+            const currentTileY = Math.floor(pacman.y / TILE_SIZE);
+
+            if (isWallAhead(pacman.direction, currentTileX, currentTileY)) {
+                // If moving into a wall, stop by snapping to the grid center.
+                if (Math.abs(pacman.x - (currentTileX * TILE_SIZE + TILE_SIZE / 2)) < pacman.speed * 2 &&
+                    Math.abs(pacman.y - (currentTileY * TILE_SIZE + TILE_SIZE / 2)) < pacman.speed * 2) {
+                     pacman.x = currentTileX * TILE_SIZE + TILE_SIZE / 2;
+                     pacman.y = currentTileY * TILE_SIZE + TILE_SIZE / 2;
+                     return;
+                }
+            }
+
+            if (pacman.direction === 'UP') pacman.y -= pacman.speed;
+            if (pacman.direction === 'DOWN') pacman.y += pacman.speed;
+            if (pacman.direction === 'LEFT') pacman.x -= pacman.speed;
+            if (pacman.direction === 'RIGHT') pacman.x += pacman.speed;
+
+            // Tunnel logic
+            if (pacman.x < 0) pacman.x = canvas.width;
+            if (pacman.x > canvas.width) pacman.x = 0;
+        }
+
+        function drawMap() {
+            for (let row = 0; row < mapLayout.length; row++) {
+                for (let col = 0; col < mapLayout[row].length; col++) {
+                    const tile = mapLayout[row][col];
+                    if (tile === 1) { // Wall
+                        ctx.fillStyle = '#020169';
+                        ctx.fillRect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                    } else if (tile === 2) { // Dot
+                        ctx.fillStyle = '#FEC009';
+                        ctx.beginPath();
+                        ctx.arc(col * TILE_SIZE + TILE_SIZE / 2, row * TILE_SIZE + TILE_SIZE / 2, 2, 0, Math.PI * 2);
+                        ctx.fill();
+                    } else if (tile === 3) { // Power Pellet
+                        ctx.fillStyle = '#FEC009';
+                        ctx.beginPath();
+                        ctx.arc(col * TILE_SIZE + TILE_SIZE / 2, row * TILE_SIZE + TILE_SIZE / 2, 5, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            }
+        }
+
+        // --- GAME LOOP ---
+        function gameLoop() {
+            if (gameState === 'PLAYING') {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawMap();
+                updatePacman();
+                drawPacman();
+            }
+            requestAnimationFrame(gameLoop);
+        }
+
+        // --- CONTROL FUNCTIONS ---
+        function startGame() {
+            if (gameState === 'PLAYING') return;
+            resetPacman();
+            gameState = 'PLAYING';
+            messageOverlay.style.display = 'none';
+            menuOverlay.style.display = 'none';
+            controlBtn.textContent = 'Pause';
+        }
+
+        function handleControlClick() {
+            if (gameState === 'PLAYING') {
+                gameState = 'PAUSED';
+                gameMessage.textContent = 'PAUSED';
+                messageOverlay.style.display = 'flex';
+                controlBtn.textContent = 'Menu';
+            } else if (gameState === 'PAUSED') {
+                gameState = 'MENU';
+                messageOverlay.style.display = 'none';
+                menuOverlay.style.display = 'flex';
+                controlBtn.textContent = 'Resume';
+            } else if (gameState === 'MENU') {
+                gameState = 'PLAYING';
+                menuOverlay.style.display = 'none';
+                controlBtn.textContent = 'Pause';
+            }
+        }
+        
+        function handleKeyDown(e) {
+             if (gameState !== 'PLAYING') return;
+             const key = e.keyCode;
+             if (key === 37) attemptToChangeDirection('LEFT');
+             if (key === 38) attemptToChangeDirection('UP');
+             if (key === 39) attemptToChangeDirection('RIGHT');
+             if (key === 40) attemptToChangeDirection('DOWN');
+        }
+
+        // --- INITIALIZE CONTROLS ---
+        resetPacman(); // Initialize pacman object
+        document.getElementById('btn-start').onclick = startGame;
+        controlBtn.onclick = handleControlClick;
+        
+        document.getElementById('btn-up').onclick = () => handleKeyDown({keyCode: 38});
+        document.getElementById('btn-down').onclick = () => handleKeyDown({keyCode: 40});
+        document.getElementById('btn-left').onclick = () => handleKeyDown({keyCode: 37});
+        document.getElementById('btn-right').onclick = () => handleKeyDown({keyCode: 39});
+        
+        document.addEventListener('keydown', handleKeyDown);
+
+        // --- START THE GAME DRAWING ---
+        drawMap(); // Draw initial map
+        requestAnimationFrame(gameLoop);
+    });
+  </script>
+</body>
+</html>

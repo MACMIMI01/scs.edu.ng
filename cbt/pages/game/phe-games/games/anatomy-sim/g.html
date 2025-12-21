@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Skeleton Explorer</title>
+    <style>
+        /* Inline CSS */
+        body {
+            font-family: 'Press Start 2P', cursive, Arial, sans-serif; /* Try to use a pixel font if loaded, fallback to Arial */
+            margin: 0;
+            padding: 0;
+            background-color: #282c34; /* Dark background for contrast */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #e0e0e0;
+            flex-direction: column;
+            overflow-x: hidden; /* Prevent horizontal scroll from transform */
+        }
+
+        /* Optional: Link to a pixel font for aesthetic */
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+
+        #game-container {
+            background-color: #1a1c20;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            padding: 25px;
+            text-align: center;
+            width: 95%;
+            max-width: 1000px; /* Slightly smaller max-width */
+            box-sizing: border-box;
+            border: 2px solid #5a5f6e; /* Pixelated border effect */
+            resize: horizontal; /* Allow resizing for testing responsiveness */
+            overflow: hidden; /* Contain elements */
+        }
+
+        h1 {
+            color: #4CAF50; /* Green pixel art color */
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            text-shadow: 2px 2px #000;
+        }
+
+        .search-section {
+            margin-bottom: 20px;
+            position: relative;
+            width: 100%;
+            max-width: 350px; /* Adjusted max-width */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #bone-search-input {
+            width: calc(100% - 22px); /* Adjusted for border */
+            padding: 10px;
+            font-size: 14px;
+            border: 2px solid #5a5f6e;
+            border-radius: 3px; /* Slightly sharper corners for pixel feel */
+            box-sizing: border-box;
+            background-color: #2e323b;
+            color: #e0e0e0;
+            text-shadow: 1px 1px #000;
+        }
+
+        #search-results {
+            list-style: none;
+            padding: 0;
+            margin: 5px 0 0 0;
+            border: 2px solid #5a5f6e;
+            border-radius: 3px;
+            max-height: 180px;
+            overflow-y: auto;
+            background-color: #2e323b;
+            position: absolute;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            display: none;
+        }
+
+        #search-results.show {
+            display: block;
+        }
+
+        #search-results li {
+            padding: 10px;
+            text-align: left;
+            cursor: pointer;
+            border-bottom: 1px solid #3c4048; /* Lighter border for list items */
+            font-size: 0.9em;
+        }
+
+        #search-results li:last-child {
+            border-bottom: none;
+        }
+
+        #search-results li:hover {
+            background-color: #4c525c;
+        }
+
+        .anatomy-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px; /* Increased gap */
+            margin-top: 25px;
+        }
+
+        .skeleton-display {
+            position: relative;
+            flex: 2;
+            min-width: 320px; /* Slightly larger min-width */
+            max-width: 500px; /* Control max width for the pixel skeleton */
+            aspect-ratio: 1 / 1.6; /* Approximate human proportion */
+            margin: auto;
+            border: 2px solid #5a5f6e;
+            background-color: #3b404a; /* Background for the skeleton area */
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- Pixel Skeleton Styles --- */
+        #pixel-skeleton-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1); /* Initial scale */
+            transform-origin: center center;
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            width: 100%;
+            height: 100%;
+            display: flex; /* Use flex to easily center blocky skeleton */
+            justify-content: center;
+            align-items: center;
+        }
+
+        #pixel-skeleton-container.morphed-out {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5); /* Shrink for morph out */
+            pointer-events: none; /* Make original skeleton unclickable */
+        }
+
+        /* Basic "Pixel" Bone styles */
+        .pixel-bone {
+            position: absolute;
+            background-color: #8D8D8D; /* Bone color */
+            border: 1px solid #5a5f6e; /* Pixel outline */
+            box-shadow: 1px 1px 0 #000; /* Simple pixelated shadow */
+        }
+
+        .pixel-bone.active {
+            background-color: #4CAF50; /* Active bone highlight */
+            border-color: #2E8B57;
+            box-shadow: 1px 1px 0 #000, 0 0 8px rgba(76, 175, 80, 0.6); /* Glow for active */
+            z-index: 20; /* Bring active bone to front */
+        }
+
+        /* Styles for the individual pixel bones (adjust values as needed for your specific design) */
+        #skull { width: 50px; height: 60px; top: 10px; }
+        #neck { width: 10px; height: 20px; top: 70px; }
+        #rib-cage { width: 60px; height: 80px; top: 90px; }
+        #pelvis { width: 70px; height: 30px; top: 170px; }
+        #spine { width: 10px; height: 100px; top: 90px; } /* behind rib-cage */
+
+        #left-humerus, #right-humerus { width: 20px; height: 60px; top: 90px; }
+        #left-humerus { left: -30px; }
+        #right-humerus { left: 50px; }
+
+        #left-forearm, #right-forearm { width: 20px; height: 60px; top: 150px; }
+        #left-forearm { left: -30px; }
+        #right-forearm { left: 50px; }
+
+        #left-femur, #right-femur { width: 25px; height: 80px; top: 200px; }
+        #left-femur { left: -30px; }
+        #right-femur { left: 5px; } /* Adjusted relative to pelvis */
+
+        #left-tibia, #right-tibia { width: 20px; height: 80px; top: 280px; }
+        #left-tibia { left: -30px; }
+        #right-tibia { left: 5px; }
+
+        /* Positioning the skeleton parts within a relative container for easier management */
+        .skeleton-part-group {
+            position: relative;
+            width: 100px; /* Max width for the core skeleton */
+            height: 380px; /* Total height for core skeleton */
+            transform-origin: center top; /* For scaling/positioning */
+            margin-top: 10px; /* Offset from top of skeleton-display */
+        }
+
+        /* New: Pixelated Bone Display Panel */
+        #pixel-bone-display-panel {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.2); /* Start very small */
+            opacity: 0;
+            width: 150px; /* Size of the magnified pixel bone */
+            height: 150px;
+            background-color: #3b404a; /* Background for the magnified panel */
+            border: 2px solid #4CAF50;
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+            transition: opacity 0.5s ease-in, transform 0.5s ease-in;
+            z-index: 100; /* Ensure it's on top */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden; /* Important for containing overflow from scaled content */
+            pointer-events: none; /* Make panel not block clicks initially */
+        }
+        #pixel-bone-display-panel.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1); /* Grow to full size */
+            pointer-events: auto; /* Enable clicks */
+        }
+        #pixel-bone-display-panel .pixel-visual-content {
+            transform: scale(2); /* Magnify the bone visual within the panel */
+            transform-origin: center center;
+            padding: 10px;
+        }
+
+
+        .info-panel {
+            flex: 1;
+            min-width: 280px;
+            background-color: #2e323b;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+            border: 2px solid #5a5f6e;
+        }
+
+        .info-panel h2 {
+            color: #4CAF50;
+            margin-top: 0;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        #bone-details p {
+            margin-bottom: 10px;
+            line-height: 1.4;
+            font-size: 0.95em;
+        }
+
+        #bone-details strong {
+            color: #66BB6A; /* Lighter green for strong text */
+        }
+
+        #feedback-message {
+            font-style: italic;
+            color: #B0B0B0;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        #clear-selection-btn {
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #D32F2F; /* Red for clear button */
+            color: white;
+            border: 2px solid #A12121;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            text-shadow: 1px 1px #000;
+        }
+
+        #clear-selection-btn:hover {
+            background-color: #E53935;
+            border-color: #D32F2F;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .anatomy-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .skeleton-display, .info-panel {
+                max-width: 100%;
+            }
+        }
+
+        /* Pixel grid background for the display panel to enhance pixel feel */
+        .pixel-grid-bg {
+            background-image:
+                linear-gradient(to right, #4a505c 1px, transparent 1px),
+                linear-gradient(to bottom, #4a505c 1px, transparent 1px);
+            background-size: 10px 10px; /* Adjust grid size */
+        }
+
+    </style>
+</head>
+<body>
+    <div id="game-container" class="pixel-grid-bg">
+        <h1>Pixel Anatomy Explorer</h1>
+
+        <div class="search-section">
+            <input type="text" id="bone-search-input" placeholder="Search bone (e.g., Skull, Ribs, Femur)">
+            <ul id="search-results">
+                </ul>
+        </div>
+
+        <div class="anatomy-content">
+            <div class="skeleton-display pixel-grid-bg">
+                <div id="pixel-skeleton-container">
+                    <div class="skeleton-part-group">
+                        <div id="skull" class="pixel-bone" data-bone-id="bone_1"></div>
+                        <div id="neck" class="pixel-bone" data-bone-id="bone_2"></div>
+                        <div id="rib-cage" class="pixel-bone" data-bone-id="bone_3"></div>
+                        <div id="spine" class="pixel-bone" data-bone-id="bone_4"></div>
+                        <div id="pelvis" class="pixel-bone" data-bone-id="bone_5"></div>
+
+                        <div id="left-humerus" class="pixel-bone" data-bone-id="bone_6"></div>
+                        <div id="right-humerus" class="pixel-bone" data-bone-id="bone_7"></div>
+                        <div id="left-forearm" class="pixel-bone" data-bone-id="bone_8"></div>
+                        <div id="right-forearm" class="pixel-bone" data-bone-id="bone_9"></div>
+
+                        <div id="left-femur" class="pixel-bone" data-bone-id="bone_10"></div>
+                        <div id="right-femur" class="pixel-bone" data-bone-id="bone_11"></div>
+                        <div id="left-tibia" class="pixel-bone" data-bone-id="bone_12"></div>
+                        <div id="right-tibia" class="pixel-bone" data-bone-id="bone_13"></div>
+                    </div>
+                </div>
+
+                <div id="pixel-bone-display-panel" class="pixel-grid-bg">
+                    <div id="pixel-visual-content" class="pixel-visual-content"></div>
+                </div>
+            </div>
+
+            <div class="info-panel">
+                <h2>Bone Information</h2>
+                <p id="feedback-message">Click a bone or search!</p>
+                <div id="bone-details">
+                    <p><strong>Name:</strong> <span id="bone-name">N/A</span></p>
+                    <p><strong>Common Name:</strong> <span id="bone-common-name">N/A</span></p>
+                    <p><strong>Region:</strong> <span id="bone-region">N/A</span></p>
+                    <p><strong>Description:</strong> <span id="bone-description">N/A</span></p>
+                </div>
+                <button id="clear-selection-btn" style="display: none;">Clear Selection</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inline JavaScript
+        document.addEventListener('DOMContentLoaded', async () => {
+            const pixelSkeletonContainer = document.getElementById('pixel-skeleton-container');
+            const pixelBoneDisplayPanel = document.getElementById('pixel-bone-display-panel');
+            const pixelVisualContent = document.getElementById('pixel-visual-content');
+
+            const boneNameSpan = document.getElementById('bone-name');
+            const boneCommonNameSpan = document.getElementById('bone-common-name');
+            const boneRegionSpan = document.getElementById('bone-region');
+            const boneDescriptionSpan = document.getElementById('bone-description');
+            const feedbackMessage = document.getElementById('feedback-message');
+            const boneSearchInput = document.getElementById('bone-search-input');
+            const searchResultsUl = document.getElementById('search-results');
+            const clearSelectionBtn = document.getElementById('clear-selection-btn');
+
+            let allBonesData = []; // Will store the conceptual bone data
+            let activeBoneId = null; // To track currently active bone
+
+            // --- CONCEPTUAL BONE DATA (NO EXTERNAL JSON) ---
+            // This data represents your "pixel bones" defined in HTML
+            // 'pixelVisualShape' is a conceptual representation for magnifying
+            const conceptualBones = [
+                { id: 'bone_1', name: 'Skull', commonName: 'Head', region: 'Cranium', description: 'The bony framework of the head.', pixelVisualShape: 'rect-large' },
+                { id: 'bone_2', name: 'Neck Vertebrae', commonName: 'Neck', region: 'Cervical Spine', description: 'Connects the skull to the torso.', pixelVisualShape: 'rect-small' },
+                { id: 'bone_3', name: 'Rib Cage', commonName: 'Ribs', region: 'Thorax', description: 'Protects the heart and lungs.', pixelVisualShape: 'rect-medium' },
+                { id: 'bone_4', name: 'Spine (Thoracic/Lumbar)', commonName: 'Backbone', region: 'Vertebral Column', description: 'Supports the body and protects the spinal cord.', pixelVisualShape: 'rect-long' },
+                { id: 'bone_5', name: 'Pelvis', commonName: 'Hip Bone', region: 'Pelvic Girdle', description: 'Connects the spine to the legs.', pixelVisualShape: 'rect-wide' },
+                { id: 'bone_6', name: 'Left Humerus', commonName: 'Left Upper Arm Bone', region: 'Upper Arm', description: 'The bone of the upper left arm.', pixelVisualShape: 'rect-long' },
+                { id: 'bone_7', name: 'Right Humerus', commonName: 'Right Upper Arm Bone', region: 'Upper Arm', description: 'The bone of the upper right arm.', pixelVisualShape: 'rect-long' },
+                { id: 'bone_8', name: 'Left Forearm (Radius/Ulna)', commonName: 'Left Lower Arm', region: 'Forearm', description: 'Bones of the lower left arm.', pixelVisualShape: 'rect-long' },
+                { id: 'bone_9', name: 'Right Forearm (Radius/Ulna)', commonName: 'Right Lower Arm', region: 'Forearm', description: 'Bones of the lower right arm.', pixelVisualShape: 'rect-long' },
+                { id: 'bone_10', name: 'Left Femur', commonName: 'Left Thigh Bone', region: 'Thigh', description: 'The longest and strongest bone in the left leg.', pixelVisualShape: 'rect-xlong' },
+                { id: 'bone_11', name: 'Right Femur', commonName: 'Right Thigh Bone', region: 'Thigh', description: 'The longest and strongest bone in the right leg.', pixelVisualShape: 'rect-xlong' },
+                { id: 'bone_12', name: 'Left Tibia/Fibula', commonName: 'Left Shin Bone', region: 'Lower Leg', description: 'Bones of the lower left leg.', pixelVisualShape: 'rect-xlong' },
+                { id: 'bone_13', name: 'Right Tibia/Fibula', commonName: 'Right Shin Bone', region: 'Lower Leg', description: 'Bones of the lower right leg.', pixelVisualShape: 'rect-xlong' }
+            ];
+            // --- END CONCEPTUAL BONE DATA ---
+
+            // Simulate loading data since it's inline
+            allBonesData = conceptualBones;
+            feedbackMessage.textContent = `Loaded ${allBonesData.length} conceptual bone entries. Click a block or use the search bar!`;
+
+            // Function to display bone details in the info panel
+            function displayBoneDetails(bone) {
+                boneNameSpan.textContent = bone.name || 'N/A';
+                boneCommonNameSpan.textContent = bone.commonName || 'N/A';
+                boneRegionSpan.textContent = bone.region || 'N/A';
+                boneDescriptionSpan.textContent = bone.description || 'No description available.';
+            }
+
+            // Function to generate the pixelated visual for the display panel
+            // This is a highly simplified representation based on 'pixelVisualShape'
+            function generatePixelVisual(shapeType) {
+                pixelVisualContent.innerHTML = ''; // Clear previous content
+                let visualDiv = document.createElement('div');
+                visualDiv.style.backgroundColor = '#8D8D8D';
+                visualDiv.style.border = '1px solid #5a5f6e';
+                visualDiv.style.boxShadow = '1px 1px 0 #000';
+                visualDiv.style.display = 'flex';
+                visualDiv.style.justifyContent = 'center';
+                visualDiv.style.alignItems = 'center';
+                visualDiv.style.fontSize = '0.7em';
+                visualDiv.style.color = '#fff';
+
+                switch (shapeType) {
+                    case 'rect-large':
+                        visualDiv.style.width = '60px';
+                        visualDiv.style.height = '70px';
+                        visualDiv.textContent = 'HEAD';
+                        break;
+                    case 'rect-medium':
+                        visualDiv.style.width = '70px';
+                        visualDiv.style.height = '80px';
+                        visualDiv.textContent = 'TORSO';
+                        break;
+                    case 'rect-small':
+                        visualDiv.style.width = '20px';
+                        visualDiv.style.height = '30px';
+                        visualDiv.textContent = 'NECK';
+                        break;
+                    case 'rect-long':
+                        visualDiv.style.width = '25px';
+                        visualDiv.style.height = '90px';
+                        visualDiv.textContent = 'ARM';
+                        break;
+                    case 'rect-xlong':
+                        visualDiv.style.width = '30px';
+                        visualDiv.style.height = '110px';
+                        visualDiv.textContent = 'LEG';
+                        break;
+                    case 'rect-wide':
+                        visualDiv.style.width = '80px';
+                        visualDiv.style.height = '40px';
+                        visualDiv.textContent = 'PELVIS';
+                        break;
+                    default:
+                        visualDiv.style.width = '50px';
+                        visualDiv.style.height = '50px';
+                        visualDiv.textContent = 'BONE';
+                        break;
+                }
+                pixelVisualContent.appendChild(visualDiv);
+            }
+
+
+            // Function to select a bone (from click or search) and trigger visual effects
+            function selectBone(boneId) {
+                // Remove 'active' class from previous active bone
+                if (activeBoneId) {
+                    const prevActive = document.getElementById(activeBoneId.replace('bone_', ''));
+                    if (prevActive) prevActive.classList.remove('active');
+                }
+
+                const selectedBone = allBonesData.find(bone => bone.id === boneId);
+                const currentBoneElement = document.getElementById(boneId.replace('bone_', ''));
+
+                if (selectedBone && currentBoneElement) {
+                    currentBoneElement.classList.add('active');
+                    activeBoneId = boneId; // Update active bone
+
+                    displayBoneDetails(selectedBone);
+
+                    // --- Morphing/Pixel Visual Logic ---
+                    pixelSkeletonContainer.classList.add('morphed-out'); // Hide original pixel skeleton
+                    
+                    if (selectedBone.pixelVisualShape) {
+                        generatePixelVisual(selectedBone.pixelVisualShape); // Generate the pixel visual content
+                        pixelBoneDisplayPanel.classList.add('show'); // Show the panel
+                    } else {
+                        pixelBoneDisplayPanel.classList.remove('show');
+                        pixelVisualContent.innerHTML = ''; // Clear content
+                    }
+                    clearSelectionBtn.style.display = 'block'; // Show clear button
+
+                } else {
+                    console.warn(`Bone with ID ${boneId} not found or element missing.`);
+                    clearBoneSelection(); // Clear if selection is invalid
+                }
+
+                // Clear search input and hide results after selection
+                boneSearchInput.value = '';
+                searchResultsUl.classList.remove('show');
+            }
+
+            // Function to clear bone selection and reset display
+            function clearBoneSelection() {
+                if (activeBoneId) {
+                    const prevActive = document.getElementById(activeBoneId.replace('bone_', ''));
+                    if (prevActive) prevActive.classList.remove('active');
+                    activeBoneId = null;
+                }
+
+                initializeDisplay(); // Reset info panel
+
+                // --- Reset Morphing/Pixel Visual Logic ---
+                pixelSkeletonContainer.classList.remove('morphed-out'); // Show original pixel skeleton
+                pixelBoneDisplayPanel.classList.remove('show');
+                pixelVisualContent.innerHTML = ''; // Clear content
+                clearSelectionBtn.style.display = 'none'; // Hide clear button
+            }
+
+
+            // Initialize display with default message
+            function initializeDisplay() {
+                boneNameSpan.textContent = 'Select a bone';
+                boneCommonNameSpan.textContent = '';
+                boneRegionSpan.textContent = '';
+                boneDescriptionSpan.textContent = 'Click on a pixel block or use the search bar!';
+            }
+
+            // --- Event Listeners for Pixel Bones (Initial Setup) ---
+            document.querySelectorAll('.pixel-bone').forEach(boneElement => {
+                boneElement.addEventListener('click', () => {
+                    selectBone(boneElement.dataset.boneId);
+                });
+            });
+            // --- End Pixel Bone Event Listeners ---
+
+
+            // --- Search functionality ---
+            boneSearchInput.addEventListener('input', () => {
+                const searchTerm = boneSearchInput.value.toLowerCase().trim();
+                searchResultsUl.innerHTML = ''; // Clear previous results
+
+                // If search term is empty, clear selection and hide results
+                if (searchTerm.length === 0) {
+                    searchResultsUl.classList.remove('show');
+                    clearBoneSelection(); // Clear any existing selection
+                    return;
+                }
+                // Only search if at least 2 characters are typed (or adjust threshold)
+                if (searchTerm.length < 2) {
+                    searchResultsUl.classList.remove('show');
+                    return;
+                }
+
+                const filteredBones = allBonesData.filter(bone =>
+                    bone.name.toLowerCase().includes(searchTerm) ||
+                    (bone.commonName && bone.commonName.toLowerCase().includes(searchTerm)) ||
+                    bone.region.toLowerCase().includes(searchTerm)
+                );
+
+                if (filteredBones.length > 0) {
+                    filteredBones.forEach(bone => {
+                        const li = document.createElement('li');
+                        li.textContent = bone.name;
+                        if (bone.commonName && bone.commonName.toLowerCase() !== bone.name.toLowerCase()) {
+                            li.textContent += ` (${bone.commonName})`;
+                        }
+                        li.dataset.boneId = bone.id;
+                        li.addEventListener('click', () => {
+                            selectBone(bone.id);
+                        });
+                        searchResultsUl.appendChild(li);
+                    });
+                    searchResultsUl.classList.add('show');
+                } else {
+                    const li = document.createElement('li');
+                    li.textContent = 'No bones found.';
+                    li.style.cursor = 'default';
+                    searchResultsUl.appendChild(li);
+                    searchResultsUl.classList.add('show');
+                }
+            });
+
+            // Hide search results when clicking outside
+            document.addEventListener('click', (event) => {
+                if (!event.target.closest('.search-section')) {
+                    searchResultsUl.classList.remove('show');
+                }
+            });
+            // --- End Search functionality ---
+
+            // Add event listener for the clear selection button
+            clearSelectionBtn.addEventListener('click', clearBoneSelection);
+
+            // Initial display setup
+            initializeDisplay();
+        });
+    </script>
+</body>
+</html>
