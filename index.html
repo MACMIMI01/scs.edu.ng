@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>St. Christopher School - Excellence in Education</title>
+    <title>St. Christopher School - Best is Our Only Option</title>
     <link rel="icon" type="image/png" href="cbt/assets/images/favicon.ico">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+    <link rel="stylesheet" href="cbt/scripts/css/font-awesome.min.css">
+    <script src="../scripts/auth.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -12,20 +15,20 @@
             --primary-color: #020169;
             --accent-color: #FEC009;
             --text-color: #333;
-            --light-bg: #f0f2f5;
+            --light-bg: #2ea9f0;
             --white: #ffffff;
             --card-bg: rgba(255, 255, 255, 0.95);
             --transition: all 0.3s ease;
             --box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
             --border-radius: 8px;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             color: var(--text-color);
@@ -33,26 +36,26 @@
             background-color: var(--light-bg);
             overflow-x: hidden;
         }
-        
+
         h1, h2, h3, h4 {
             font-family: 'Playfair Display', serif;
             font-weight: 700;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        
+
         .section-padding {
             padding: 80px 0;
         }
-        
+
         .text-center {
             text-align: center;
         }
-        
+
         /* Header & Navigation */
         header {
             background-color: var(--primary-color);
@@ -64,30 +67,30 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             transition: var(--transition);
         }
-        
+
         .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
         }
-        
+
         .logo img {
             height: 55px;
             margin-right: 12px;
         }
-        
+
         .logo-text {
             color: var(--white);
             font-size: 1.6rem;
             font-weight: 700;
             line-height: 1.2;
         }
-        
+
         .logo-text span {
             color: var(--accent-color);
             display: block;
@@ -95,17 +98,17 @@
             font-weight: 400;
             letter-spacing: 1.5px;
         }
-        
+
         .nav-menu {
             display: flex;
             list-style: none;
         }
-        
+
         .nav-menu li {
             margin-left: 1.8rem;
             position: relative;
         }
-        
+
         .nav-menu a {
             color: var(--white);
             text-decoration: none;
@@ -115,7 +118,7 @@
             position: relative;
             font-size: 1rem;
         }
-        
+
         .nav-menu a:after {
             content: '';
             position: absolute;
@@ -126,19 +129,19 @@
             background-color: var(--accent-color);
             transition: var(--transition);
         }
-        
+
         .nav-menu a:hover:after {
             width: 100%;
         }
-        
+
         .nav-menu a:hover {
             color: var(--accent-color);
         }
-        
+
         .nav-menu .dropdown {
             position: relative;
         }
-        
+
         .nav-menu .dropdown-content {
             display: none;
             position: absolute;
@@ -152,7 +155,7 @@
             left: 0;
             margin-top: 10px;
         }
-        
+
         .nav-menu .dropdown-content a {
             color: var(--primary-color);
             padding: 12px 16px;
@@ -160,16 +163,16 @@
             display: block;
             font-size: 0.9rem;
         }
-        
+
         .nav-menu .dropdown-content a:hover {
             background-color: rgba(254, 192, 9, 0.1);
             color: var(--primary-color);
         }
-        
+
         .nav-menu .dropdown:hover .dropdown-content {
             display: block;
         }
-        
+
         .cta-button {
             background-color: var(--accent-color);
             color: var(--primary-color);
@@ -179,13 +182,13 @@
             transition: var(--transition);
             display: inline-block;
         }
-        
+
         .cta-button:hover {
             background-color: var(--white);
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
         }
-        
+
         .mobile-menu-btn {
             display: none;
             color: var(--white);
@@ -195,7 +198,7 @@
             cursor: pointer;
             z-index: 1001;
         }
-        
+
         /* Hero Section */
         .hero {
             padding: 10rem 0 6rem;
@@ -208,21 +211,21 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .hero-content {
             max-width: 850px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
         }
-        
+
         .hero h1 {
             font-size: 3.2rem;
             margin-bottom: 1.5rem;
             line-height: 1.2;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
-        
+
         .hero p {
             font-size: 1.3rem;
             margin-bottom: 2.5rem;
@@ -231,14 +234,14 @@
             margin-left: auto;
             margin-right: auto;
         }
-        
+
         .hero-buttons {
             display: flex;
             justify-content: center;
             gap: 1.2rem;
             margin-top: 2.5rem;
         }
-        
+
         .btn {
             padding: 1rem 2.2rem;
             border-radius: 30px;
@@ -248,76 +251,76 @@
             display: inline-block;
             font-size: 1.05rem;
         }
-        
+
         .btn-primary {
             background-color: var(--accent-color);
             color: var(--primary-color);
             box-shadow: 0 4px 15px rgba(254, 192, 9, 0.35);
         }
-        
+
         .btn-primary:hover {
             background-color: var(--white);
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(254, 192, 9, 0.5);
         }
-        
+
         .btn-secondary {
             background-color: transparent;
             color: var(--white);
             border: 2px solid var(--white);
             box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
         }
-        
+
         .btn-secondary:hover {
             background-color: var(--white);
             color: var(--primary-color);
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(255, 255, 255, 0.25);
         }
-        
+
         .stats-bar {
             background-color: var(--white);
             padding: 1.5rem 0;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             margin-top: 3rem;
         }
-        
+
         .stats-container {
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
         }
-        
+
         .stat-item {
             text-align: center;
             padding: 0 1.5rem;
         }
-        
+
         .stat-number {
             font-size: 2.2rem;
             font-weight: 700;
             color: var(--primary-color);
             margin-bottom: 0.5rem;
         }
-        
+
         .stat-label {
             font-size: 0.9rem;
             color: #666;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        
+
         /* Features Section */
         .features {
             padding: 5rem 0;
             background-color: var(--white);
         }
-        
+
         .section-title {
             text-align: center;
             margin-bottom: 4rem;
         }
-        
+
         .section-title h2 {
             font-size: 2.6rem;
             color: var(--primary-color);
@@ -325,7 +328,7 @@
             position: relative;
             display: inline-block;
         }
-        
+
         .section-title h2:after {
             content: '';
             position: absolute;
@@ -336,7 +339,7 @@
             left: 50%;
             transform: translateX(-50%);
         }
-        
+
         .section-title p {
             max-width: 700px;
             margin: 1.5rem auto 0;
@@ -344,13 +347,13 @@
             color: #666;
             line-height: 1.7;
         }
-        
+
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2.5rem;
         }
-        
+
         .feature-card {
             background-color: var(--card-bg);
             border-radius: var(--border-radius);
@@ -360,12 +363,12 @@
             transition: var(--transition);
             border-top: 4px solid var(--accent-color);
         }
-        
+
         .feature-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
-        
+
         .feature-icon {
             font-size: 3.2rem;
             color: var(--primary-color);
@@ -377,31 +380,31 @@
             background: rgba(2, 1, 105, 0.05);
             border-radius: 50%;
         }
-        
+
         .feature-card h3 {
             font-size: 1.6rem;
             margin-bottom: 1.2rem;
             color: var(--primary-color);
         }
-        
+
         .feature-card p {
             color: #666;
             line-height: 1.7;
         }
-        
+
         /* Testimonials */
         .testimonials {
             padding: 5rem 0;
             background-color: var(--light-bg);
             position: relative;
         }
-        
+
         .testimonial-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2.5rem;
         }
-        
+
         .testimonial-card {
             background-color: var(--white);
             border-radius: var(--border-radius);
@@ -410,12 +413,12 @@
             position: relative;
             transition: var(--transition);
         }
-        
+
         .testimonial-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
-        
+
         .testimonial-text {
             font-style: italic;
             margin-bottom: 1.8rem;
@@ -424,9 +427,8 @@
             line-height: 1.8;
             color: #555;
         }
-        
+
         .testimonial-text:before {
-            content: """;
             font-size: 5rem;
             color: var(--accent-color);
             position: absolute;
@@ -436,12 +438,12 @@
             font-family: sans-serif;
             line-height: 1;
         }
-        
+
         .testimonial-author {
             display: flex;
             align-items: center;
         }
-        
+
         .testimonial-author img {
             width: 60px;
             height: 60px;
@@ -450,18 +452,18 @@
             margin-right: 1.2rem;
             border: 3px solid var(--accent-color);
         }
-        
+
         .author-details h4 {
             color: var(--primary-color);
             margin-bottom: 0.3rem;
             font-size: 1.1rem;
         }
-        
+
         .author-details p {
             color: #777;
             font-size: 0.9rem;
         }
-        
+
         /* Call to Action */
         .cta-section {
             padding: 6rem 0;
@@ -471,7 +473,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .cta-section:before {
             content: '';
             position: absolute;
@@ -482,20 +484,20 @@
             background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.03)"/></svg>');
             background-size: 100% 100%;
         }
-        
+
         .cta-content {
             max-width: 800px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
         }
-        
+
         .cta-content h2 {
             font-size: 2.8rem;
             margin-bottom: 1.5rem;
             line-height: 1.2;
         }
-        
+
         .cta-content p {
             margin-bottom: 2.5rem;
             font-size: 1.2rem;
@@ -504,20 +506,20 @@
             margin-left: auto;
             margin-right: auto;
         }
-        
+
         /* News Section */
         .news {
             padding: 5rem 0;
             background-color: var(--white);
         }
-        
+
         .news-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
-        
+
         .news-card {
             background: var(--white);
             border-radius: var(--border-radius);
@@ -525,32 +527,32 @@
             box-shadow: var(--box-shadow);
             transition: var(--transition);
         }
-        
+
         .news-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
-        
+
         .news-image {
             height: 200px;
             overflow: hidden;
         }
-        
+
         .news-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
         }
-        
+
         .news-card:hover .news-image img {
             transform: scale(1.05);
         }
-        
+
         .news-content {
             padding: 1.5rem;
         }
-        
+
         .news-date {
             color: var(--accent-color);
             font-size: 0.85rem;
@@ -558,19 +560,19 @@
             margin-bottom: 0.8rem;
             display: block;
         }
-        
+
         .news-title {
             font-size: 1.3rem;
             margin-bottom: 1rem;
             color: var(--primary-color);
         }
-        
+
         .news-excerpt {
             color: #666;
             margin-bottom: 1.2rem;
             line-height: 1.6;
         }
-        
+
         .news-link {
             color: var(--primary-color);
             font-weight: 600;
@@ -579,20 +581,20 @@
             align-items: center;
             transition: var(--transition);
         }
-        
+
         .news-link:hover {
             color: var(--accent-color);
         }
-        
+
         .news-link i {
             margin-left: 5px;
             transition: var(--transition);
         }
-        
+
         .news-link:hover i {
             transform: translateX(5px);
         }
-        
+
         /* Footer */
         footer {
             background-color: var(--primary-color);
@@ -600,28 +602,28 @@
             padding: 5rem 0 2rem;
             position: relative;
         }
-        
+
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 3rem;
         }
-        
+
         .footer-logo {
             margin-bottom: 1.5rem;
         }
-        
+
         .footer-about p {
             margin-bottom: 1.8rem;
             opacity: 0.8;
             line-height: 1.7;
         }
-        
+
         .social-links {
             display: flex;
             gap: 1rem;
         }
-        
+
         .social-links a {
             display: inline-flex;
             align-items: center;
@@ -634,20 +636,20 @@
             text-decoration: none;
             transition: var(--transition);
         }
-        
+
         .social-links a:hover {
             background: var(--accent-color);
             color: var(--primary-color);
             transform: translateY(-3px);
         }
-        
+
         .footer-heading {
             font-size: 1.3rem;
             margin-bottom: 1.5rem;
             position: relative;
             padding-bottom: 0.8rem;
         }
-        
+
         .footer-heading:after {
             content: '';
             position: absolute;
@@ -657,15 +659,15 @@
             height: 2px;
             background-color: var(--accent-color);
         }
-        
+
         .footer-links {
             list-style: none;
         }
-        
+
         .footer-links li {
             margin-bottom: 0.9rem;
         }
-        
+
         .footer-links a {
             color: var(--white);
             text-decoration: none;
@@ -673,30 +675,30 @@
             transition: var(--transition);
             display: inline-block;
         }
-        
+
         .footer-links a:hover {
             opacity: 1;
             color: var(--accent-color);
             padding-left: 8px;
         }
-        
+
         .contact-info {
             list-style: none;
         }
-        
+
         .contact-info li {
             margin-bottom: 1.2rem;
             display: flex;
             align-items: flex-start;
         }
-        
+
         .contact-info i {
             margin-right: 1rem;
             color: var(--accent-color);
             font-size: 1.2rem;
             margin-top: 3px;
         }
-        
+
         .copyright {
             text-align: center;
             padding-top: 3rem;
@@ -705,19 +707,19 @@
             opacity: 0.7;
             font-size: 0.9rem;
         }
-        
+
         /* Responsive Styles */
         @media (max-width: 1200px) {
             .container {
                 padding: 0 30px;
             }
         }
-        
+
         @media (max-width: 992px) {
             .hero h1 {
                 font-size: 2.8rem;
             }
-            
+
             .nav-menu {
                 display: none;
                 position: fixed;
@@ -732,24 +734,24 @@
                 transition: right 0.3s ease;
                 z-index: 999;
             }
-            
+
             .nav-menu.active {
                 right: 0;
                 display: flex;
             }
-            
+
             .nav-menu li {
                 margin: 0;
                 width: 100%;
                 margin-bottom: 1.2rem;
             }
-            
+
             .nav-menu a {
                 display: block;
                 padding: 0.8rem 0;
                 font-size: 1.1rem;
             }
-            
+
             .nav-menu .dropdown-content {
                 position: static;
                 display: none;
@@ -758,108 +760,108 @@
                 margin-top: 0.5rem;
                 margin-left: 1rem;
             }
-            
+
             .nav-menu .dropdown-content a {
                 color: var(--white);
                 padding: 0.7rem 0;
                 font-size: 1rem;
             }
-            
+
             .nav-menu .dropdown:hover .dropdown-content {
                 display: block;
             }
-            
+
             .mobile-menu-btn {
                 display: block;
             }
-            
+
             .hero-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .btn {
                 width: 100%;
                 max-width: 300px;
                 margin-bottom: 1rem;
                 text-align: center;
             }
-            
+
             .stats-container {
                 justify-content: center;
                 gap: 2rem;
             }
-            
+
             .stat-item {
                 flex: 0 0 calc(50% - 2rem);
                 margin-bottom: 1.5rem;
             }
         }
-        
+
         @media (max-width: 768px) {
             .hero {
                 padding: 8rem 0 4rem;
             }
-            
+
             .hero h1 {
                 font-size: 2.3rem;
             }
-            
+
             .hero p {
                 font-size: 1.1rem;
             }
-            
+
             .section-title h2 {
                 font-size: 2.2rem;
             }
-            
+
             .features, .testimonials, .news, .cta-section {
                 padding: 4rem 0;
             }
-            
+
             .feature-card, .testimonial-card, .news-card {
                 padding: 2rem 1.5rem;
             }
-            
+
             .footer-content {
                 grid-template-columns: 1fr;
                 gap: 2.5rem;
             }
-            
+
             .stat-item {
                 flex: 0 0 100%;
             }
         }
-        
+
         @media (max-width: 480px) {
             .header-container {
                 padding: 0 15px;
             }
-            
+
             .logo-text {
                 font-size: 1.4rem;
             }
-            
+
             .logo-text span {
                 font-size: 0.8rem;
             }
-            
+
             .hero {
                 padding: 7rem 0 3rem;
             }
-            
+
             .hero h1 {
                 font-size: 2rem;
             }
-            
+
             .section-title h2 {
                 font-size: 1.9rem;
             }
-            
+
             .btn {
                 padding: 0.9rem 1.8rem;
             }
-            
+
             .feature-icon {
                 font-size: 2.5rem;
                 height: 70px;
@@ -874,14 +876,14 @@
     <header>
         <div class="container header-container">
             <div class="logo">
-                <img src="./cbt/assets/images/stamp_black_white.png" alt="St. Christopher School Logo">
+                <img src="cbt/assets/images/logo.png" alt="St. Christopher School Logo">
                 <div class="logo-text">St. Christopher <span>School</span></div>
             </div>
-            
+
             <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <i class="fas fa-bars"></i>
             </button>
-            
+
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#">Home</a></li>
                 <li class="dropdown">
@@ -889,6 +891,7 @@
                     <div class="dropdown-content">
                         <a href="#">Our Story</a>
                         <a href="#">Leadership</a>
+
                         <a href="#">Mission & Values</a>
                         <a href="#">Accreditations</a>
                     </div>
@@ -897,8 +900,8 @@
                     <a href="#">Academics <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 5px;"></i></a>
                     <div class="dropdown-content">
                         <a href="#">Curriculum</a>
-                        <a href="#">Departments</a>
-                        <a href="#">Faculty</a>
+                        <a href="#">Section</a>
+                        <a href="#">Subject offered</a>
                         <a href="#">Academic Calendar</a>
                     </div>
                 </li>
@@ -913,7 +916,7 @@
                 </li>
                 <li><a href="#">Campus Life</a></li>
                 <li><a href="#">News</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="cbt/pages/contact.html">Contact</a></li>
                 <li><a href="cbt/pages/login.html" class="cta-button">Portal Login</a></li>
             </ul>
         </div>
@@ -922,18 +925,20 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container hero-content">
-            <h1>Best Our Only Option Since 2021</h1>
+            <h1>Best Our Only Option Since 2022</h1>
+            <h2>Founded by Chief Dr. Ikechukwu Ibude JP in 2022. Our school is dedicated to providing quality education and fostering a nurturing environment for students to grow and thrive. We strive for excellence in academics, character development, and extracurricular activities.</h2>
+            
             <p>St. Christopher School provides a nurturing environment where students discover their potential, develop critical thinking skills, and grow into responsible global citizens.</p>
             <div class="hero-buttons">
                 <a href="#" class="btn btn-primary">Explore Our Programs</a>
                 <a href="#" class="btn btn-secondary">Schedule a Visit</a>
             </div>
         </div>
-        
+
         <div class="stats-bar">
             <div class="container stats-container">
                 <div class="stat-item">
-                    <div class="stat-number">98%</div>
+                    <div class="stat-number">68%</div>
                     <div class="stat-label">University Acceptance</div>
                 </div>
                 <div class="stat-item">
@@ -959,16 +964,16 @@
                 <h2>Why Choose St. Christopher?</h2>
                 <p>We are committed to providing a holistic education that balances academic excellence with character development.</p>
             </div>
-            
+
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
                     <h3>Academic Excellence</h3>
-                    <p>Our curriculum is designed to challenge students and foster a love for learning, with a 98% university acceptance rate.</p>
+                    <p>Our curriculum is designed to challenge students and foster a love for learning, with a 68% university acceptance rate.</p>
                 </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-users"></i>
@@ -976,7 +981,7 @@
                     <h3>Dedicated Faculty</h3>
                     <p>Our teachers are experienced educators who are passionate about guiding students toward their full potential.</p>
                 </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-microscope"></i>
@@ -984,7 +989,7 @@
                     <h3>Modern Facilities</h3>
                     <p>State-of-the-art laboratories, libraries, and sports facilities provide an ideal environment for learning and growth.</p>
                 </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-globe"></i>
@@ -992,7 +997,7 @@
                     <h3>Global Perspective</h3>
                     <p>We prepare students to thrive in an interconnected world through diverse programs and international exchanges.</p>
                 </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-heart"></i>
@@ -1000,7 +1005,7 @@
                     <h3>Character Development</h3>
                     <p>We emphasize values, ethics, and social responsibility to develop well-rounded individuals.</p>
                 </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-basketball-ball"></i>
@@ -1019,19 +1024,19 @@
                 <h2>What Parents & Students Say</h2>
                 <p>Hear from our community about their experiences at St. Christopher School.</p>
             </div>
-            
+
             <div class="testimonial-grid">
                 <div class="testimonial-card">
                     <p class="testimonial-text">St. Christopher School provided our daughter with not just education, but a foundation for life. The teachers are exceptional and truly care about each student's success.</p>
                     <div class="testimonial-author">
                         <img src="cbt/assets/profile_pictures/female.jpeg" alt="Parent">
                         <div class="author-details">
-                            <h4>Mrs Uche Ikbure</h4>
-                            <p>Parent of Sharon Ikbure</p>
+                            <h4>PRINCE CHUKWUKA ODOZI</h4>
+                            <p>Parent of Graduate (2022)</p>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="testimonial-card">
                     <p class="testimonial-text">The opportunities we get at St. Christopher especially the academic challenges and extracurricular activities are perfectly preparing me for every day life.</p>
                     <div class="testimonial-author">
@@ -1042,7 +1047,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="testimonial-card">
                     <p class="testimonial-text">As an international student, I was welcomed with open arms. The diverse community and supportive teachers made my transition smooth and enjoyable.</p>
                     <div class="testimonial-author">
@@ -1064,8 +1069,9 @@
                 <h2>Latest News & Events</h2>
                 <p>Stay updated with the latest happenings at St. Christopher School</p>
             </div>
-            
-            
+
+             </div>
+
 <div class="news-card">
 <div class="news-image">
 <img src="api/graduation1.jpg" alt="Graduation Ceremony">
@@ -1126,6 +1132,7 @@
 </div>
 </div>
 
+
 <div class="news-card">
 <div class="news-image">
 <img src="api/cultural2.jpg" alt="Cultural Event 2">
@@ -1139,6 +1146,8 @@
 </div>
 
 
+
+
 <div class="news-card">
 <div class="news-image">
 <img src="api/graduation2.jpg" alt="Graduation Ceremony 2">
@@ -1150,6 +1159,7 @@
 <a href="#" class="news-link">Read More <i class="fas fa-arrow-right"></i></a>
 </div>
 </div>
+
 
 
 <div class="news-card">
@@ -1176,7 +1186,7 @@
 <a href="#" class="news-link">Read More <i class="fas fa-arrow-right"></i></a>
 </div>
 </div>
-                
+                </div>
             </div>
         </div>
     </section>
@@ -1184,8 +1194,7 @@
     <!-- Call to Action Section -->
     <section class="cta-section">
         <div class="container cta-content">
-            <h2>Begin Your Journey With Us</h2>
-            <p>Applications for the 2025-2026 academic year are now being accepted. Limited spaces available.</p>
+            <h2>Begin Your Journey With Us</h2>    <p>Applications for the 2025-2026 academic year are now being accepted. Limited spaces available.</p>
             <a href="#" class="btn btn-primary">Apply Now</a>
         </div>
     </section>
@@ -1196,8 +1205,9 @@
             <div class="footer-content">
                 <div class="footer-about">
                     <div class="footer-logo">
-                        <img src="./cbt/assets/images/stamp_black_white.png" alt="St. Christopher School Logo" height="45">
+                        <img src="cbt/assets/images/stamp_black_white.png" alt="St. Christopher School Logo" height="45">
                     </div>
+                    
                     <p>St. Christopher School is committed to providing a world-class education that prepares students for success in university and beyond.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -1207,7 +1217,7 @@
                         <a href="#"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
-                
+
                 <div class="footer-links">
                     <h3 class="footer-heading">Quick Links</h3>
                     <ul>
@@ -1218,18 +1228,18 @@
                         <li><a href="#">School Calendar</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="footer-links">
                     <h3 class="footer-heading">Resources</h3>
                     <ul>
                         <li><a href="cbt/pages/login.html">Student Portal</a></li>
                         <li><a href="#">Parent Resources</a></li>
-                        <li><a href="#">Library</a></li>
+                        <li><a href="#">E-Library</a></li>
                         <li><a href="#">Careers</a></li>
                         <li><a href="#">Contact Us</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="footer-contact">
                     <h3 class="footer-heading">Contact Us</h3>
                     <ul class="contact-info">
@@ -1252,7 +1262,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="copyright">
                 <p>&copy; 2023 St. Christopher School. All Rights Reserved. | <a href="#" style="color: rgba(255,255,255,0.7);">Privacy Policy</a> | <a href="#" style="color: rgba(255,255,255,0.7);">Terms of Use</a></p>
             </div>
@@ -1263,11 +1273,11 @@
         // Mobile menu toggle
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navMenu = document.getElementById('navMenu');
-        
+
         mobileMenuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             navMenu.classList.toggle('active');
-            
+
             // Change icon based on menu state
             const icon = mobileMenuBtn.querySelector('i');
             if (navMenu.classList.contains('active')) {
@@ -1278,7 +1288,7 @@
                 icon.classList.add('fa-bars');
             }
         });
-        
+
         // Close menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!navMenu.contains(e.target) && e.target !== mobileMenuBtn) {
@@ -1288,7 +1298,7 @@
                 icon.classList.add('fa-bars');
             }
         });
-        
+
         // Close menu when clicking on a link
         document.querySelectorAll('.nav-menu a').forEach(link => {
             link.addEventListener('click', () => {
@@ -1298,15 +1308,15 @@
                 icon.classList.add('fa-bars');
             });
         });
-        
+
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                
+
                 const targetId = this.getAttribute('href');
                 if (targetId === '#') return;
-                
+
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
                     window.scrollTo({
@@ -1316,7 +1326,7 @@
                 }
             });
         });
-        
+
         // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
