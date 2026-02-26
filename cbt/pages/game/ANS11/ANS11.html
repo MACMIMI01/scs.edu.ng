@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ANS11 SNES Classic</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f0f0f0;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .console {
+      position: relative;
+      width: 360px;
+      height: 723px;
+      background: linear-gradient(135deg, #555 0%, #222 100%);
+      border-radius: 40px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+    }
+
+    .console::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 1.5px, transparent 1.5px),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 1.5px, transparent 1.5px);
+      background-size: 30px 30px;
+    }
+
+    .screen {
+      position: absolute;
+      top: 40px;
+      left: 30px;
+      right: 30px;
+      height: 420px;
+      background: #111;
+      border: 5px solid #000;
+      border-radius: 10px;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .game {
+      width: 100%;
+      padding-top: 70%;
+      background: #333 url("https://via.placeholder.com/100x70?text=Game") center/cover;
+      border: 2px solid #666;
+      border-radius: 6px;
+      position: relative;
+      transition: transform 0.2s ease;
+    }
+
+    .game:hover {
+      transform: scale(1.05);
+      border-color: #fff600;
+    }
+
+    .game-title {
+      position: absolute;
+      bottom: 2px;
+      left: 0;
+      right: 0;
+      font-size: 10px;
+      text-align: center;
+      color: white;
+      background: rgba(0,0,0,0.6);
+      padding: 2px;
+      border-radius: 0 0 5px 5px;
+    }
+
+    .controls {
+      position: absolute;
+      bottom: 40px;
+      left: 0;
+      right: 0;
+      height: 200px;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 30px;
+    }
+
+    .d-pad {
+      width: 100px;
+      height: 100px;
+      background: #111;
+      border-radius: 50%;
+      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
+    }
+
+    .action-buttons {
+      width: 120px;
+      height: 100px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .action-btn {
+      width: 50px;
+      height: 50px;
+      background: #111;
+      border-radius: 50%;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .shoulder-btn {
+      position: absolute;
+      top: 20px;
+      width: 120px;
+      height: 30px;
+      background: #111;
+      border-radius: 8px;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .shoulder-left {
+      left: 50px;
+    }
+
+    .shoulder-right {
+      right: 50px;
+    }
+
+    .brand {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #999;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+    .d-pad:active,
+    .action-btn:active,
+    .shoulder-btn:active {
+    transform: scale(0.9);
+    background-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="console">
+    <!-- Shoulder Buttons -->
+    <div class="shoulder-btn shoulder-left"></div>
+    <div class="shoulder-btn shoulder-right"></div>
+
+    <!-- Screen Area -->
+    <div class="screen">
+      <div class="game-grid" id="gameGrid">
+        <!-- Games dynamically loaded -->
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <div class="d-pad"></div>
+      <div class="action-buttons">
+        <div class="action-btn"></div>
+        <div class="action-btn"></div>
+        <div class="action-btn"></div>
+        <div class="action-btn"></div>
+      </div>
+    </div>
+
+    <!-- Brand -->
+    <div class="brand">ANS11 SNES Classic</div>
+  </div>
+
+  <script>
+    const games = [
+      "Contra III", "Donkey Kong Country", "Kirby Super Star", "Kirby's Dream Course",
+      "Secret of Mana", "Street Fighter II Turbo", "Super Mario Kart", "Super Mario World",
+      "Final Fantasy III", "Super Castlevania IV", "EarthBound", "F-ZERO",
+      "Mega Man X", "Star Fox", "Star Fox 2", "Super Ghouls 'n Ghosts",
+      "Super Mario RPG", "Super Metroid", "Super Punch-Out!!",
+      "Zelda: A Link to the Past", "Yoshi's Island"
+    ];
+
+    const grid = document.getElementById("gameGrid");
+
+    games.forEach(title => {
+      const gameDiv = document.createElement("div");
+      gameDiv.className = "game";
+
+      const label = document.createElement("div");
+      label.className = "game-title";
+      label.innerText = title;
+
+      gameDiv.appendChild(label);
+      grid.appendChild(gameDiv);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Light Game</title>
+    <link rel="stylesheet" href="../../global.css">
+    <link rel="stylesheet" href="traffic.css">
+</head>
+<body>
+
+    <header>
+        <h1 class="main-title">PHE Learning Games</h1>
+        <nav class="main-nav">
+            <a href="../../index.html" class="nav-link">Home</a>
+            <a href="../maze/maze.html" class="nav-link">Healthy Food Maze</a>
+            <a href="../obstacle-course/obstacle.html" class="nav-link">Obstacle Course</a>
+            <a href="../anatomy-sim/anatomy.html" class="nav-link">Anatomy Simulation</a>
+        </nav>
+    </header>
+
+    <main id="game-container" class="game-container">
+        <h2 class="game-title">Traffic Light Challenge!</h2>
+        <p class="game-info">React quickly! Press the 'React' button only when the light is green, and hold still for red. Yellow is prepare!</p>
+
+        <div class="traffic-light-body">
+            <div id="red-light" class="light red"></div>
+            <div id="yellow-light" class="light yellow"></div>
+            <div id="green-light" class="light green"></div>
+        </div>
+
+        <p id="instruction-text" class="instruction-text">Press Start to Play!</p>
+        <p id="feedback-text" class="feedback-text"></p>
+
+        <div class="controls">
+            <button id="start-game-btn" class="game-button">Start Game</button>
+            <button id="react-button" class="game-button react-button" style="display: none;">REACT!</button>
+            <button id="next-round-btn" class="game-button" style="display: none;">Next Round</button>
+            <button id="restart-game-btn" class="game-button" style="display: none;">Restart Game</button>
+        </div>
+        
+        <p id="score-display" class="score-display">Rounds: 0 / 0 | Mistakes: 0</p>
+    </main>
+
+    <footer class="game-footer">
+        &copy; 2025 PHE Learning. All rights reserved.
+    </footer>
+
+    <script src="traffic.js"></script>
+</body>
+</html>

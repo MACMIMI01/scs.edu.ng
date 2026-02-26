@@ -1,0 +1,145 @@
+<!-- Test Taking Page HTML -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Head content -->
+</head>
+<body>
+  <!-- Sidebar and main content -->
+  <div class="sidebar">
+    <!-- Sidebar menu items -->
+  </div>
+  <main>
+    <h1>Test Taking</h1>
+    <form id="test-form"></form>
+    <div class="navigation-buttons">
+        <button id="prev-question-button" disabled>Previous</button>
+        <button id="next-question-button">Next</button>
+    </div>
+    <button id="finish-test-center-button">Finish Test</button>
+    <div id="result-summary"></div>
+  </main>
+
+  <script>
+    // JavaScript code for test taking page
+    document.addEventListener('DOMContentLoaded', () => {
+      // Get references to DOM elements
+      const testForm = document.getElementById('test-form');
+      const prevButton = document.getElementById('prev-question-button');
+      const nextButton = document.getElementById('next-question-button');
+      const finishTestCenterButton = document.getElementById('finish-test-center-button');
+      const resultSummaryElement = document.getElementById('result-summary');
+
+      // Load test questions and user data
+      let testQuestions = [];
+      let userAnswers = [];
+      let score = 0;
+
+      // Function to display questions and handle user input
+      function displayQuestion(index) {
+        // Display question and options
+        testForm.innerHTML = '';
+        const question = testQuestions[index];
+        const questionElement = document.createElement('div');
+        questionElement.classList.add('question-container', 'active');
+        questionElement.innerHTML = `
+          <p><strong>Question ${index + 1} of ${testQuestions.length}:</strong> ${question.question}</p>
+          <ul>
+            ${question.options.map((option, i) => `
+              <li>
+                <label>
+                  <input type="radio" name="question-${index}" value="${option}" ${userAnswers[index] === option ? 'checked' : ''}> 
+                  ${String.fromCharCode(65 + i)}. ${option}
+                </label>
+              </li>
+            `).join('')}
+          </ul>
+        `;
+        testForm.appendChild(questionElement);
+
+        // Update navigation buttons
+        prevButton.disabled = index === 0;
+        nextButton.textContent = index === testQuestions.length - 1 ? 'Finish Test' : 'Next';
+      }
+
+      // Function to save user answer
+      function saveCurrentAnswer() {
+        const selectedOption = document.querySelector(`input[name="question-${currentQuestionIndex}"]:checked`);
+        userAnswers[currentQuestionIndex] = selectedOption ? selectedOption.value : null;
+      }
+
+      // Function to calculate score and display result summary
+      function calculateResults() {
+        score = 0;
+        let questionsAnswered = 0;
+        let questionsNotAnswered = 0;
+
+        testQuestions.forEach((question, index) => {
+          if (userAnswers[index] === question.correctAnswer) {
+            score++;
+          }
+          if (userAnswers[index] !== null) {
+            questionsAnswered++;
+          } else {
+            questionsNotAnswered++;
+          }
+        });
+
+        resultSummaryElement.innerHTML = `
+          <h2>Result Summary</h2>
+          <p>Score: ${score} out of ${testQuestions.length}</p>
+          <p>Questions Answered: ${questionsAnswered}</p>
+          <p>Questions Not Answered: ${questionsNotAnswered}</p>
+        `;
+      }
+
+      // Function to generate PDF result
+      function generatePdfResults() {
+        // Generate PDF using jsPDF library
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.text(`Test Results`, 105, 20, null, null, 'center');
+        doc.text(`Score: ${score} out of ${testQuestions.length}`, 20, 40);
+        doc.text(`Questions Answered: ${questionsAnswered}`, 20, 50);
+        doc.text(`Questions Not Answered: ${questionsNotAnswered}`, 20, 60);
+        doc.save('test-results.pdf');
+      }
+
+      // Event listeners for navigation buttons
+      prevButton.addEventListener('click', () => {
+        saveCurrentAnswer();
+        currentQuestionIndex--;
+        displayQuestion(currentQuestionIndex);
+      });
+
+      nextButton.addEventListener('click', () => {
+        saveCurrentAnswer();
+        if (currentQuestionIndex < testQuestions.length - 1) {
+          currentQuestionIndex++;
+          displayQuestion(currentQuestionIndex);
+        } else {
+          calculateResults();
+          generatePdfResults();
+          window.location.href = 'dashboard.html';
+        }
+      });
+
+      finishTestCenterButton.addEventListener('click', () => {
+        calculateResults();
+        generatePdfResults();
+        window.location.href = 'dashboard.html';
+      });
+
+      // Load test questions and display first question
+      fetch('../data/test-questions.json')
+        .then(response => response.json())
+        .then(data => {
+          testQuestions = data.questions;
+          userAnswers = new Array(testQuestions.length).fill(null);
+          displayQuestion(0);
+        })
+        .catch(error => console.error('Error loading test questions:', error));
+    });
+  </script>
+</body>
+</html>

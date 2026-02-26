@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Advanced Tactical | SCS Game Hall</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #020169;
+            --accent-gold: #FEC009;
+            --freeze-cyan: #00d2ff;
+            --missile-orange: #ff7f50;
+            --space-black: #050505;
+        }
+
+        body {
+            background-color: var(--space-black);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        #game-wrapper {
+            position: relative;
+            border: 4px solid var(--primary-blue);
+            box-shadow: 0 0 30px rgba(2, 1, 105, 0.5);
+            background: black;
+        }
+
+        canvas { display: block; image-rendering: pixelated; }
+
+        #ui-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            color: var(--accent-gold);
+        }
+
+        .powerup-status {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 9px;
+        }
+
+        #overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 1, 105, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .btn-start {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: var(--accent-gold);
+            color: var(--primary-blue);
+            font-weight: bold;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-wrapper">
+        <canvas id="ctx"></canvas>
+        <div id="ui-layer">
+            <div class="stats-bar">
+                <div id="score">INTEL: 0</div>
+                <div id="lives">SHIELD: 100%</div>
+            </div>
+            <div class="powerup-status" id="pw-status">WEAPON: STANDARD</div>
+        </div>
+        <div id="overlay" onclick="init()">
+            <h1 style="font-family: 'Press Start 2P'; color: var(--accent-gold);">SCS COMBAT V3</h1>
+            <p>[WASD / ARROWS] Move 8-Directions<br>[SPACE] Fire Weapon</p>
+            <p style="font-size: 12px; color: var(--freeze-cyan);">BLUE = FREEZE | ORANGE = MISSILES</p>
+            <div class="btn-start">BOOT SYSTEM</div>
+        </div>
+    </div>
+
+<script>
+const canvas = document.getElementById('ctx');
+const ctx = canvas.getContext('2d');
+canvas.width = 600;
+canvas.height = 750;
+
+let gameActive = false;
+let score = 0;
+let health = 100;
+let freezeTimer = 0;
+const keys = {};
+
+// --- Classes ---
+
+class Player {
+    constructor() {
+        this.w = 35;
+        this.h = 35;
+        this.x = canvas.width / 2;
+        this.y = canvas.height - 100;
+        this.speed = 6;
+        this.bullets = [];
+        this.weaponMode = 'standard'; // 'standard', 'missile'
+        this.weaponTimer = 0;
+        this.cooldown = 0;
+    }
+
+    draw() {
+        ctx.fillStyle = this.weaponMode === 'missile' ? '#ff7f50' : '#FEC009';
+        ctx.fillRect(this.x, this.y, this.w, this.h);
+        // Detail
+        ctx.fillStyle = '#020169';
+        ctx.fillRect(this.x + 10, this.y + 5, 15, 10);
+        
+        this.bullets.forEach(b => b.draw());
+    }
+
+    update() {
+        // 8-Way Movement Logic
+        if (keys['w'] || keys['ArrowUp']) this.y -= this.speed;
+        if (keys['s'] || keys['ArrowDown']) this.y += this.speed;
+        if (keys['a'] || keys['ArrowLeft']) this.x -= this.speed;
+        if (keys['d'] || keys['ArrowRight']) this.x += this.speed;
+
+        // Bounds
+        this.x = Math.max(0, Math.min(canvas.width - this.w, this.x));
+        this.y = Math.max(0, Math.min(canvas.height - this.h, this.y));
+
+        // Powerup Decay
+        if (this.weaponTimer > 0) {
+            this.weaponTimer--;
+            if (this.weaponTimer <= 0) this.weaponMode = 'standard';
+        }
+
+        // Firing Logic
+        if (keys[' '] && this.cooldown <= 0) {
+            if (this.weaponMode === 'standard') {
+                this.bullets.push(new Bullet(this.x + this.w/2 - 2, this.y, -10, '#FEC009', 4));
+                this.cooldown = 12;
+            } else if (this.weaponMode === 'missile') {
+                // Triple Spread Missile
+                this.bullets.push(new Bullet(this.x + this.w/2 - 4, this.y, -12, '#ff7f50', 8, -2));
+                this.bullets.push(new Bullet(this.x + this.w/2 - 4, this.y, -12, '#ff7f50', 8, 0));
+                this.bullets.push(new Bullet(this.x + this.w/2 - 4, this.y, -12, '#ff7f50', 8, 2));
+                this.cooldown = 8;
+            }
+        }
+        if (this.cooldown > 0) this.cooldown--;
+
+        this.bullets.forEach((b, i) => {
+            b.x += (b.vx || 0);
+            b.y += b.v;
+            if (b.y < -20 || b.x < -20 || b.x > canvas.width) this.bullets.splice(i, 1);
+        });
+    }
+}
+
+class Bullet {
+    constructor(x, y, v, color, size, vx = 0) {
+        this.x = x; this.y = y; this.v = v; this.vx = vx;
+        this.w = size; this.h = size * 3;
+        this.color = color;
+    }
+    draw() {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, this.w, this.h);
+    }
+}
+
+class Enemy {
+    constructor() {
+        this.w = 30;
+        this.h = 30;
+        this.x = Math.random() * (canvas.width - this.w);
+        this.y = -50;
+        this.speed = 2 + Math.random() * 2;
+    }
+    draw() {
+        ctx.fillStyle = freezeTimer > 0 ? '#00d2ff' : '#ff4757';
+        ctx.beginPath();
+        ctx.moveTo(this.x + this.w/2, this.y + this.h);
+        ctx.lineTo(this.x, this.y);
+        ctx.lineTo(this.x + this.w, this.y);
+        ctx.fill();
+    }
+    update() {
+        if (freezeTimer <= 0) {
+            this.y += this.speed;
+        }
+    }
+}
+
+class PowerUp {
+    constructor(x, y, type) {
+        this.x = x; this.y = y; this.type = type; // 'missile' or 'freeze'
+        this.w = 25; this.h = 25;
+        this.v = 2;
+    }
+    draw() {
+        ctx.fillStyle = this.type === 'freeze' ? '#00d2ff' : '#ff7f50';
+        ctx.fillRect(this.x, this.y, this.w, this.h);
+        ctx.fillStyle = 'white';
+        ctx.font = 'bold 12px Arial';
+        ctx.fillText(this.type === 'freeze' ? 'F' : 'M', this.x + 7, this.y + 18);
+    }
+    update() { this.y += this.v; }
+}
+
+// --- Managers ---
+
+let player = new Player();
+let enemies = [];
+let powerups = [];
+let particles = [];
+
+function spawn() {
+    if (!gameActive) return;
+    enemies.push(new Enemy());
+    setTimeout(spawn, Math.max(300, 1200 - (score/10)));
+}
+
+function checkCollisions() {
+    // Enemy interactions
+    enemies.forEach((e, ei) => {
+        if (isColliding(e, player)) {
+            health -= 25;
+            enemies.splice(ei, 1);
+            if (health <= 0) gameOver();
+        }
+
+        player.bullets.forEach((b, bi) => {
+            if (isColliding(b, e)) {
+                // Chance to drop powerup
+                if (Math.random() < 0.15) {
+                    powerups.push(new PowerUp(e.x, e.y, Math.random() > 0.5 ? 'freeze' : 'missile'));
+                }
+                enemies.splice(ei, 1);
+                player.bullets.splice(bi, 1);
+                score += 100;
+            }
+        });
+
+        if (e.y > canvas.height) {
+            enemies.splice(ei, 1);
+            health -= 5;
+        }
+    });
+
+    // Powerup collection
+    powerups.forEach((p, pi) => {
+        if (isColliding(p, player)) {
+            if (p.type === 'freeze') freezeTimer = 180; // ~3 seconds
+            if (p.type === 'missile') {
+                player.weaponMode = 'missile';
+                player.weaponTimer = 300; // ~5 seconds
+            }
+            powerups.splice(pi, 1);
+        }
+        if (p.y > canvas.height) powerups.splice(pi, 1);
+    });
+}
+
+function isColliding(a, b) {
+    return a.x < b.x + (b.w || 4) && a.x + (a.w || 4) > b.x &&
+           a.y < b.y + (b.h || 10) && a.y + (a.h || 10) > b.y;
+}
+
+// --- Core Loops ---
+
+function loop() {
+    if (!gameActive) return;
+
+    // Background
+    ctx.fillStyle = '#050505';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    if (freezeTimer > 0) {
+        freezeTimer--;
+        ctx.fillStyle = 'rgba(0, 210, 255, 0.1)';
+        ctx.fillRect(0,0, canvas.width, canvas.height);
+    }
+
+    player.update();
+    player.draw();
+
+    enemies.forEach(e => { e.update(); e.draw(); });
+    powerups.forEach(p => { p.update(); p.draw(); });
+
+    checkCollisions();
+
+    // UI
+    document.getElementById('score').textContent = `INTEL: ${score}`;
+    document.getElementById('lives').textContent = `SHIELD: ${Math.max(0, health)}%`;
+    document.getElementById('pw-status').textContent = `WEAPON: ${player.weaponMode.toUpperCase()} ${player.weaponTimer > 0 ? '('+Math.ceil(player.weaponTimer/60)+'s)' : ''}`;
+    document.getElementById('pw-status').style.color = player.weaponMode === 'missile' ? 'var(--missile-orange)' : 'white';
+
+    requestAnimationFrame(loop);
+}
+
+function gameOver() {
+    gameActive = false;
+    document.getElementById('overlay').style.display = 'flex';
+    document.querySelector('#overlay h1').textContent = "SYSTEM FAILURE";
+}
+
+function init() {
+    score = 0; health = 100; freezeTimer = 0;
+    enemies = []; powerups = [];
+    player = new Player();
+    gameActive = true;
+    document.getElementById('overlay').style.display = 'none';
+    spawn();
+    loop();
+}
+
+window.addEventListener('keydown', e => keys[e.key.toLowerCase()] = true);
+window.addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
+</script>
+</body>
+</html>

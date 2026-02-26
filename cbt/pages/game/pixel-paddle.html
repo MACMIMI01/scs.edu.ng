@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Pixel Paddle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0d1b2a;
+            --font-color: #e0e1dd;
+            --border-color: #778da9;
+            --paddle-color: #415a77;
+            --ball-color: #e0e1dd;
+            --brick-colors: #e74c3c, #f1c40f, #2ecc71, #3498db, #8e44ad;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--font-color);
+            font-family: 'Press Start 2P', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 10px;
+            overflow: hidden;
+        }
+        #game-container {
+            border: 3px solid var(--border-color);
+            box-shadow: 0 0 20px rgba(119, 141, 169, 0.5);
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            /* Maintain aspect ratio for gameplay consistency */
+            aspect-ratio: 10 / 12;
+        }
+        canvas {
+            display: block;
+            background-color: #1b263b;
+            width: 100%;
+            height: 100%;
+        }
+        #game-hud {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+        }
+        #pause-btn {
+            position: absolute; top: 10px; right: 10px;
+            background: none; border: none; color: var(--font-color);
+            font-size: 1.5em; cursor: pointer; z-index: 50;
+        }
+
+        /* Overlays & Buttons */
+        .overlay {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.75);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center; z-index: 100;
+        }
+        .overlay h2 { font-size: 1.5em; }
+        .overlay p { font-size: 0.8em; margin-top: 20px; line-height: 1.5; }
+        .hidden { display: none; }
+        .btn {
+            background-color: var(--paddle-color); color: var(--font-color);
+            border: 2px solid var(--border-color); padding: 15px 25px;
+            font-family: 'Press Start 2P', cursive; font-size: 1em;
+            cursor: pointer; margin: 10px;
+        }
+
+        @media (max-width: 600px) {
+            #game-hud { font-size: 12px; }
+            .overlay h2 { font-size: 1.2em; }
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="game-hud">
+            <div id="score">SCORE: 0</div>
+            <div id="lives">LIVES: ❤️❤️❤️</div>
+        </div>
+        <button id="pause-btn" class="hidden"><i class="fas fa-pause"></i></button>
+        <canvas id="gameCanvas"></canvas>
+        <div id="start-overlay" class="overlay">
+            <h2>PIXEL PADDLE</h2>
+            <p>Click or Tap to Start</p>
+        </div>
+        <div id="pause-overlay" class="overlay hidden">
+            <div id="pause-box">
+                <h2>PAUSED</h2>
+                <button id="resume-btn" class="btn">Resume</button>
+                <button id="menu-btn" class="btn">Menu</button>
+            </div>
+            <div id="menu-box" class="hidden">
+                 <h2>MENU</h2>
+                <a href="../gamehall.html" class="btn">Game Hall</a>
+                <a href="../dashboard.html" class="btn">Dashboard</a>
+                <button id="back-to-pause-btn" class="btn">Back</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // --- DOM Elements ---
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const scoreEl = document.getElementById('score');
+    const livesEl = document.getElementById('lives');
+    const startOverlay = document.getElementById('start-overlay');
+    const pauseBtn = document.getElementById('pause-btn');
+    const pauseOverlay = document.getElementById('pause-overlay');
+    const resumeBtn = document.getElementById('resume-btn');
+    const menuBtn = document.getElementById('menu-btn');
+    const backToPauseBtn = document.getElementById('back-to-pause-btn');
+    const pauseBox = document.getElementById('pause-box');
+    const menuBox = document.getElementById('menu-box');
+
+    // --- Game Constants & Sizing ---
+    const PADDLE_HEIGHT = 20, BALL_RADIUS = 10;
+    canvas.width = 500;
+    canvas.height = 600;
+
+    // --- Level Data ---
+    const levels = [
+        [ // Level 1
+            "  RRRR  ",
+            " YYYYYY ",
+            "GGGGGGGG",
+            "BBBBBBBB"
+        ],
+        [ // Level 2
+            "PBYPBYPB",
+            "PBYPBYPB",
+            "GRGRGRGR",
+            "GRGRGRGR"
+        ],
+        [ // Level 3
+            "PPPPPPPP",
+            "P      P",
+            "P RRRR P",
+            "P YYYY P",
+            "P      P",
+            "GGGGGGGG"
+        ]
+    ];
+    const brickColors = { R: '#e74c3c', Y: '#f1c40f', G: '#2ecc71', B: '#3498db', P: '#8e44ad' };
+
+    // --- Game State ---
+    let score, lives, level, bricks, paddleWidth;
+    let gameActive = false, gamePaused = false;
+    const keys = {};
+
+    const paddle = { x: 0, width: 100 };
+    const ball = { x: 0, y: 0, dx: 0, dy: 0, speed: 5 };
+
+    // --- Game Initialization ---
+    function init() {
+        score = 0;
+        lives = 3;
+        level = 0;
+        paddleWidth = 100;
+        resetPaddleAndBall();
+        buildBricks();
+        updateHUD();
+
+        gameActive = true;
+        gamePaused = false;
+        startOverlay.classList.add('hidden');
+        pauseOverlay.classList.add('hidden');
+        pauseBtn.classList.remove('hidden');
+
+        gameLoop();
+    }
+    
+    function resetPaddleAndBall() {
+        paddle.width = paddleWidth;
+        paddle.x = (canvas.width - paddle.width) / 2;
+        
+        ball.x = canvas.width / 2;
+        ball.y = canvas.height - PADDLE_HEIGHT - BALL_RADIUS - 5;
+        ball.dx = ball.speed * (Math.random() < 0.5 ? 1 : -1);
+        ball.dy = -ball.speed;
+    }
+    
+    function buildBricks() {
+        bricks = [];
+        const levelLayout = levels[level % levels.length];
+        const brickRowCount = levelLayout.length;
+        const brickColCount = levelLayout[0].length;
+        const brickWidth = canvas.width / brickColCount;
+        const brickHeight = 30;
+
+        for(let r = 0; r < brickRowCount; r++) {
+            for(let c = 0; c < brickColCount; c++) {
+                const char = levelLayout[r][c];
+                if (char !== ' ') {
+                    bricks.push({
+                        x: c * brickWidth,
+                        y: r * brickHeight + 50, // Offset from top
+                        width: brickWidth,
+                        height: brickHeight,
+                        color: brickColors[char],
+                        visible: true
+                    });
+                }
+            }
+        }
+    }
+
+    // --- Game Loop & Drawing ---
+    let animationFrameId;
+    function gameLoop() {
+        animationFrameId = requestAnimationFrame(gameLoop);
+        if (!gameActive || gamePaused) return;
+
+        update();
+        draw();
+    }
+    
+    function update() {
+        // Paddle movement
+        if (keys.ArrowLeft && paddle.x > 0) paddle.x -= 8;
+        if (keys.ArrowRight && paddle.x < canvas.width - paddle.width) paddle.x += 8;
+        
+        // Ball movement
+        ball.x += ball.dx;
+        ball.y += ball.dy;
+
+        // Collision detection
+        handleWallCollisions();
+        handlePaddleCollision();
+        handleBrickCollisions();
+        
+        // Check win/loss
+        if (bricks.every(b => !b.visible)) {
+            levelUp();
+        }
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Draw Paddle
+        ctx.fillStyle = '#415a77';
+        ctx.fillRect(paddle.x, canvas.height - PADDLE_HEIGHT, paddle.width, PADDLE_HEIGHT);
+        // Draw Ball
+        ctx.beginPath();
+        ctx.arc(ball.x, ball.y, BALL_RADIUS, 0, Math.PI * 2);
+        ctx.fillStyle = '#e0e1dd';
+        ctx.fill();
+        ctx.closePath();
+        // Draw Bricks
+        bricks.forEach(brick => {
+            if (brick.visible) {
+                ctx.fillStyle = brick.color;
+                ctx.fillRect(brick.x, brick.y, brick.width - 2, brick.height - 2);
+            }
+        });
+    }
+
+    // --- Collision Logic ---
+    function handleWallCollisions() {
+        if (ball.x + BALL_RADIUS > canvas.width || ball.x - BALL_RADIUS < 0) {
+            ball.dx *= -1;
+        }
+        if (ball.y - BALL_RADIUS < 0) {
+            ball.dy *= -1;
+        }
+        if (ball.y + BALL_RADIUS > canvas.height) {
+            loseLife();
+        }
+    }
+
+    function handlePaddleCollision() {
+        if (ball.y + BALL_RADIUS > canvas.height - PADDLE_HEIGHT &&
+            ball.x > paddle.x && ball.x < paddle.x + paddle.width) {
+            
+            // Reverse ball direction
+            ball.dy *= -1;
+            
+            // Add spin/angle based on where it hit the paddle
+            let collidePoint = ball.x - (paddle.x + paddle.width / 2);
+            collidePoint = collidePoint / (paddle.width / 2); // Normalize to -1 to 1
+            ball.dx = collidePoint * ball.speed * 1.2; // Angle influence
+            
+            // Prevent ball getting stuck in paddle
+            ball.y = canvas.height - PADDLE_HEIGHT - BALL_RADIUS;
+        }
+    }
+    
+    function handleBrickCollisions() {
+        bricks.forEach(brick => {
+            if (brick.visible) {
+                if (ball.x > brick.x && ball.x < brick.x + brick.width &&
+                    ball.y > brick.y && ball.y < brick.y + brick.height) {
+                    
+                    ball.dy *= -1;
+                    brick.visible = false;
+                    score += 10;
+                    updateHUD();
+                }
+            }
+        });
+    }
+
+    // --- Game State Control ---
+    function loseLife() {
+        lives--;
+        updateHUD();
+        if (lives <= 0) {
+            gameOver("GAME OVER");
+        } else {
+            resetPaddleAndBall();
+        }
+    }
+
+    function levelUp() {
+        level++;
+        score += 100;
+        updateHUD();
+        if (level >= levels.length) {
+            gameOver("YOU WIN!");
+        } else {
+            resetPaddleAndBall();
+            buildBricks();
+        }
+    }
+
+    function gameOver(message) {
+        gameActive = false;
+        cancelAnimationFrame(animationFrameId);
+        startOverlay.classList.remove('hidden');
+        startOverlay.querySelector('h2').textContent = message;
+        startOverlay.querySelector('p').innerHTML = `Final Score: ${score}<br>Click to Play Again`;
+        pauseBtn.classList.add('hidden');
+    }
+
+    function updateHUD() {
+        scoreEl.textContent = `SCORE: ${score}`;
+        livesEl.textContent = `LIVES: ${'❤️'.repeat(lives)}`;
+    }
+    
+    function togglePause() {
+        if (!gameActive) return;
+        gamePaused = !gamePaused;
+        pauseOverlay.classList.toggle('hidden', !gamePaused);
+        if (gamePaused) {
+            pauseBox.classList.remove('hidden');
+            menuBox.classList.add('hidden');
+        }
+    }
+
+    // --- Event Listeners ---
+    document.addEventListener('keydown', e => { keys[e.key] = true; });
+    document.addEventListener('keyup', e => { keys[e.key] = false; });
+    
+    // Mouse/Touch controls
+    function handleMove(e) {
+        const relativeX = (e.clientX || e.touches[0].clientX) - canvas.getBoundingClientRect().left;
+        if(relativeX > 0 && relativeX < canvas.width) {
+            paddle.x = relativeX - paddle.width / 2;
+            if(paddle.x < 0) paddle.x = 0;
+            if(paddle.x + paddle.width > canvas.width) paddle.x = canvas.width - paddle.width;
+        }
+    }
+    canvas.addEventListener('mousemove', handleMove);
+    canvas.addEventListener('touchmove', e => { e.preventDefault(); handleMove(e); }, { passive: false });
+
+    startOverlay.addEventListener('click', init);
+    pauseBtn.addEventListener('click', togglePause);
+    resumeBtn.addEventListener('click', togglePause);
+    menuBtn.addEventListener('click', () => { pauseBox.classList.add('hidden'); menuBox.classList.remove('hidden'); });
+    backToPauseBtn.addEventListener('click', () => { menuBox.classList.add('hidden'); pauseBox.classList.remove('hidden'); });
+
+});
+</script>
+</body>
+</html>

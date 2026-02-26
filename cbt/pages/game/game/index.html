@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Community Cruiser: Pet Rescue - A pleasant game about helping lost animals!">
+    <meta name="keywords" content="game, HTML5, JavaScript, pet rescue, community, police, friendly">
+    <meta name="author" content="Your Name">
+
+    <title>Community Cruiser: Pet Rescue - Help Animals!</title>
+
+    <!-- Favicon (You'd still need this external file) -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts (Still external, but linked here) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- INLINE CSS START -->
+    <style>
+        /* General Body and HTML Setup */
+        body {
+            margin: 0;
+            overflow: hidden; /* Prevent scrolling when game is active */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Full viewport height */
+            background-color: #2c3e50; /* Dark blue background for the overall page */
+            color: #ecf0f1; /* Light text color */
+            font-family: 'Roboto', sans-serif; /* Default font */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Game Container - Wraps all game elements */
+        #gameContainer {
+            position: relative; /* Allows absolute positioning of screens inside */
+            width: 800px; /* Match canvas width */
+            height: 700px; /* Slightly taller than canvas for UI below it */
+            background-color: #34495e; /* Slightly lighter dark background */
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            overflow: hidden; /* Hide anything that goes outside */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px; /* Space for header */
+        }
+
+        /* Header Styling */
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #f1c40f; /* Yellow for attention */
+        }
+
+        header h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2.2em;
+            margin: 0;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+        }
+
+        header .tagline {
+            font-size: 0.9em;
+            font-style: italic;
+            color: #bdc3c7;
+            margin-top: 5px;
+        }
+
+        /* Screen Management */
+        .game-screen, .modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%; /* Take full height of gameContainer */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.85); /* Semi-transparent dark overlay for screens */
+            color: #ecf0f1;
+            z-index: 10; /* Ensure screens are above canvas initially */
+            box-sizing: border-box; /* Include padding in height/width */
+            padding: 20px;
+        }
+
+        .hidden {
+            display: none !important; /* Force hide */
+        }
+
+        /* Main Menu Specific Styles */
+        #mainMenu {
+            background-color: #2c3e50; /* A distinct background for the main menu */
+        }
+
+        #mainMenu .game-button {
+            margin: 15px; /* More spacing for main menu buttons */
+        }
+
+        /* Game Screen Specific Styles */
+        #gameScreen {
+            background-color: transparent; /* Game screen will show the canvas */
+            justify-content: flex-start; /* Align content to the top */
+            padding-top: 0; /* No top padding, canvas starts at top */
+        }
+
+        #gameCanvas {
+            background-color: #aaddaa; /* Green grass/park, as drawn in JS */
+            border: 3px solid #7f8c8d; /* Subtle border for the canvas */
+            display: block; /* Remove extra space below canvas */
+            margin-top: 20px; /* Space from top of gameScreen */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        #gameUI {
+            display: flex;
+            justify-content: center;
+            gap: 30px; /* Space between UI elements */
+            width: 100%;
+            margin-top: 20px;
+            padding: 10px 0;
+            background-color: #34495e; /* Background for UI bar */
+            border-radius: 0 0 10px 10px; /* Rounded bottom corners */
+            box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #gameUI p {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.1em;
+            margin: 0;
+        }
+
+        #gameUI span {
+            color: #f1c40f; /* Highlight scores/timers */
+        }
+
+        /* Game Buttons */
+        .game-button {
+            padding: 12px 25px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1em;
+            background-color: #27ae60; /* Green button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 8px;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            box-shadow: 0 4px 0 #229a50; /* 3D effect */
+            text-transform: uppercase;
+        }
+
+        .game-button:hover {
+            background-color: #2ecc71; /* Lighter green on hover */
+            transform: translateY(-2px); /* Lift effect */
+            box-shadow: 0 6px 0 #229a50;
+        }
+
+        .game-button:active {
+            transform: translateY(2px); /* Press effect */
+            box-shadow: 0 2px 0 #229a50;
+        }
+
+
+        /* Modal Specific Styles */
+        .modal {
+            background-color: rgba(0, 0, 0, 0.9); /* More opaque background for modals */
+            z-index: 100; /* Ensure modals are on top of other screens */
+        }
+
+        .modal-content {
+            background-color: #34495e; /* Modal background */
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 70%;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            border: 2px solid #f1c40f; /* Yellow border */
+        }
+
+        .modal-content h2 {
+            font-family: 'Press Start 2P', cursive;
+            color: #f1c40f;
+            margin-top: 0;
+            font-size: 1.8em;
+        }
+
+        .modal-content h3 {
+            color: #2ecc71;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+
+        .modal-content p, .modal-content li {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            color: #bdc3c7;
+        }
+
+        .modal-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .modal-content ul li {
+            background-color: #2c3e50;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+
+        .close-modal-button {
+            margin-top: 25px;
+        }
+
+        /* Loading Screen Styles */
+        #loadingScreen {
+            background-color: #1a252f; /* Even darker for loading */
+            color: #f1c40f;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.8em;
+            z-index: 200; /* Highest z-index */
+        }
+
+        #loadingScreen p {
+            animation: pulse 1.5s infinite alternate; /* Simple loading animation */
+        }
+
+        /* Keyframe Animation for Loading Screen */
+        @keyframes pulse {
+            from {
+                opacity: 0.6;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+        }
+    </style>
+    <!-- INLINE CSS END -->
+</head>
+<body>
+    <div id="gameContainer">
+        <header>
+            <h1>Community Cruiser: Pet Rescue</h1>
+            <p class="tagline">Making the neighborhood a safer, happier place, one wagging tail at a time!</p>
+        </header>
+
+        <!-- Main Menu Screen -->
+        <div id="mainMenu" class="game-screen">
+            <button id="startButton" class="game-button">Start Game</button>
+            <button id="howToPlayButton" class="game-button">How to Play</button>
+            <button id="aboutButton" class="game-button">About</button>
+        </div>
+
+        <!-- Game Canvas Screen -->
+        <div id="gameScreen" class="game-screen hidden">
+            <canvas id="gameCanvas" width="800" height="600"></canvas>
+            <div id="gameUI">
+                <p>Pets Rescued: <span id="score">0</span></p>
+                <p>Time Left: <span id="timer">0</span>s</p>
+                <button id="restartGameButton" class="game-button hidden">Restart Level</button>
+                <button id="backToMenuButton" class="game-button">Main Menu</button>
+            </div>
+        </div>
+
+        <!-- How To Play Modal -->
+        <div id="howToPlayModal" class="modal hidden">
+            <div class="modal-content">
+                <h2>How to Play</h2>
+                <p>Welcome, Community Cruiser! Your mission is to gently guide lost pets back to safety.</p>
+                <h3>Controls:</h3>
+                <ul>
+                    <li><strong>Arrow Keys</strong> or <strong>WASD</strong>: Drive your cruiser.</li>
+                </ul>
+                <h3>Objective:</h3>
+                <p>Drive near lost pets to "rescue" them. Rescue all the required pets before time runs out!</p>
+                <button class="close-modal-button game-button">Got It!</button>
+            </div>
+        </div>
+
+        <!-- About Modal -->
+        <div id="aboutModal" class="modal hidden">
+            <div class="modal-content">
+                <h2>About Community Cruiser</h2>
+                <p>This game was created as a demonstration of a "pleasant police chasing game" using HTML, CSS, JavaScript, and JSON.</p>
+                <p>The goal is to provide a fun, non-violent experience focused on community service and animal welfare.</p>
+                <p>Developed by [Your Name/Team Name]</p>
+                <button class="close-modal-button game-button">Close</button>
+            </div>
+        </div>
+
+        <!-- Loading Screen -->
+        <div id="loadingScreen">
+            <p>Loading game data...</p>
+        </div>
+
+    </div>
+
+    <!-- INLINE JAVASCRIPT START -->
+    <script>
+        // --- HTML Element References ---
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreDisplay = document.getElementById('score');
+        const timerDisplay = document.getElementById('timer');
+
+        const mainMenu = document.getElementById('mainMenu');
+        const gameScreen = document.getElementById('gameScreen');
+        const howToPlayModal = document.getElementById('howToPlayModal');
+        const aboutModal = document.getElementById('aboutModal');
+        const loadingScreen = document.getElementById('loadingScreen');
+
+        const startButton = document.getElementById('startButton');
+        const howToPlayButton = document.getElementById('howToPlayButton');
+        const aboutButton = document.getElementById('aboutButton');
+        const restartGameButton = document.getElementById('restartGameButton');
+        const backToMenuButton = document.getElementById('backToMenuButton');
+        const closeModalButtons = document.querySelectorAll('.close-modal-button');
+
+
+        // --- Game Variables ---
+        let gameData = {}; // Will load from JSON
+        let player = {
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            size: 40, // Adjusted size to better fit an image
+            speed: 3,
+            image: null // To hold the loaded player image
+        };
+        let pets = [];
+        let score = 0;
+        let timeLeft = 0;
+        let gameInterval;
+        let petSpawnInterval;
+        let countdownInterval;
+        let currentLevelData;
+
+        // --- Asset Storage ---
+        const assetCache = {
+            images: {},
+            sounds: {}
+        };
+        let backgroundMusic; // Global variable for background music
+
+        // --- JSON Data (Replaces pets.json file) ---
+        const inlineGameJsonData = {
+          "petTypes": [
+            {
+              "id": "dog",
+              "name": "Doggo",
+              "speed": 1.5,
+              "color": "brown",
+              "size": 20,
+              "behavior": "wandering"
+            },
+            {
+              "id": "cat",
+              "name": "Mitten",
+              "speed": 2.0,
+              "color": "orange",
+              "size": 15,
+              "behavior": "skittish"
+            },
+            {
+              "id": "rabbit",
+              "name": "Bugs",
+              "speed": 1.8,
+              "color": "white",
+              "size": 10,
+              "behavior": "hopping"
+            }
+          ],
+          "levels": [
+            {
+              "levelId": 1,
+              "timeLimit": 120,
+              "petsToRescue": 5,
+              "petSpawnRates": {
+                "dog": 0.6,
+                "cat": 0.3,
+                "rabbit": 0.1
+              },
+              "obstacles": [
+                {"x": 100, "y": 100, "width": 50, "height": 50, "type": "bush"},
+                {"x": 300, "y": 250, "width": 80, "height": 30, "type": "pond"}
+              ]
+            }
+          ]
+        };
+
+
+        // --- UI and Screen Management Functions ---
+        function showScreen(screenElement) {
+            document.querySelectorAll('.game-screen, .modal').forEach(el => el.classList.add('hidden'));
+            screenElement.classList.remove('hidden');
+        }
+
+        function showMainMenu() {
+            showScreen(mainMenu);
+            clearInterval(gameInterval);
+            clearInterval(petSpawnInterval);
+            clearInterval(countdownInterval);
+            if (backgroundMusic) {
+                backgroundMusic.pause();
+                backgroundMusic.currentTime = 0;
+            }
+        }
+
+        function startGame() {
+            showScreen(gameScreen);
+            initGame();
+            restartGameButton.classList.add('hidden');
+            if (backgroundMusic) {
+                backgroundMusic.play().catch(e => console.log("Background music autoplay prevented:", e));
+            }
+        }
+
+        function showHowToPlay() {
+            showScreen(howToPlayModal);
+        }
+
+        function showAbout() {
+            showScreen(aboutModal);
+        }
+
+
+        // --- Game Initialization ---
+        async function loadGameData() {
+            showScreen(loadingScreen);
+
+            try {
+                // Load JSON Game Data from inline variable
+                gameData = inlineGameJsonData; // DIRECTLY ASSIGN JSON DATA
+                console.log("Game Data Loaded:", gameData);
+
+                // --- Load All Images ---
+                const imagePromises = [];
+
+                // Player image
+                const playerImg = new Image();
+                playerImg.src = 'assets/images/police-cruiser.png';
+                imagePromises.push(playerImg.decode().then(() => player.image = playerImg));
+
+                // Pet images
+                for (const petType of gameData.petTypes) {
+                    const img = new Image();
+                    img.src = `assets/images/${petType.id}.png`;
+                    imagePromises.push(img.decode().then(() => assetCache.images[petType.id] = img));
+                }
+
+                await Promise.all(imagePromises); // Wait for all images to load
+                console.log("Images Loaded:", assetCache.images);
+
+                // --- Load Sounds ---
+                assetCache.sounds.rescueChime = new Audio('assets/sounds/rescue-chime.mp3');
+                backgroundMusic = new Audio('assets/sounds/background-music.mp3');
+                backgroundMusic.loop = true;
+                backgroundMusic.volume = 0.3;
+
+                console.log("Sounds Loaded:", assetCache.sounds);
+
+                // Assets and data loaded, now show the main menu
+                showMainMenu();
+
+            } catch (error) {
+                console.error("Failed to load game data or assets:", error);
+                alert("Failed to load game. Please check the console for errors.");
+            } finally {
+                loadingScreen.classList.add('hidden');
+            }
+        }
+
+        function initGame(levelId = 1) {
+            currentLevelData = gameData.levels.find(level => level.levelId === levelId);
+            if (!currentLevelData) {
+                console.error("Level data not found!");
+                showMainMenu();
+                return;
+            }
+
+            score = 0;
+            timeLeft = currentLevelData.timeLimit;
+            pets = [];
+            player.x = canvas.width / 2;
+            player.y = canvas.height / 2;
+
+            scoreDisplay.textContent = score;
+            timerDisplay.textContent = timeLeft;
+
+            clearInterval(gameInterval);
+            clearInterval(petSpawnInterval);
+            clearInterval(countdownInterval);
+
+            startGameLoop();
+        }
+
+        // --- Game Loop ---
+        function startGameLoop() {
+            gameInterval = setInterval(gameLoop, 1000 / 60); // 60 FPS
+            petSpawnInterval = setInterval(spawnPet, 2000); // Spawn a pet every 2 seconds
+            countdownInterval = setInterval(updateTimer, 1000);
+        }
+
+        function gameLoop() {
+            updateGame();
+            drawGame();
+        }
+
+        function updateGame() {
+            pets.forEach(pet => {
+                pet.x += (Math.random() - 0.5) * pet.speed * 2;
+                pet.y += (Math.random() - 0.5) * pet.speed * 2;
+
+                pet.x = Math.max(pet.size / 2, Math.min(canvas.width - pet.size / 2, pet.x));
+                pet.y = Math.max(pet.size / 2, Math.min(canvas.height - pet.size / 2, pet.y));
+
+                if (checkCollision(player, pet)) {
+                    rescuePet(pet);
+                }
+            });
+        }
+
+        function drawGame() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#aaddaa'; // Green grass/park background
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            currentLevelData.obstacles.forEach(obstacle => {
+                if (obstacle.type === 'bush') {
+                    ctx.fillStyle = '#228B22';
+                } else if (obstacle.type === 'pond') {
+                    ctx.fillStyle = '#87CEEB';
+                }
+                ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+            });
+
+            if (player.image) {
+                ctx.drawImage(player.image, player.x - player.size / 2, player.y - player.size / 2, player.size, player.size);
+            } else {
+                ctx.fillStyle = 'blue';
+                ctx.beginPath();
+                ctx.arc(player.x, player.y, player.size / 2, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            pets.forEach(pet => {
+                const petImg = assetCache.images[pet.id];
+                if (petImg) {
+                    ctx.drawImage(petImg, pet.x - pet.size / 2, pet.y - pet.size / 2, pet.size, pet.size);
+                } else {
+                    ctx.fillStyle = pet.color;
+                    ctx.beginPath();
+                    ctx.arc(pet.x, pet.y, pet.size / 2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.fillStyle = 'black';
+                ctx.font = '10px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(pet.name, pet.x, pet.y + pet.size / 2 + 10);
+            });
+        }
+
+        // --- Player Input ---
+        let keys = {};
+        window.addEventListener('keydown', (e) => {
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'a', 's', 'd'].includes(e.key)) {
+                e.preventDefault();
+            }
+            keys[e.key] = true;
+            updatePlayerPosition();
+        });
+        window.addEventListener('keyup', (e) => {
+            keys[e.key] = false;
+        });
+
+        function updatePlayerPosition() {
+            if (gameScreen.classList.contains('hidden')) return;
+
+            if (keys['ArrowUp'] || keys['w']) player.y -= player.speed;
+            if (keys['ArrowDown'] || keys['s']) player.y += player.speed;
+            if (keys['ArrowLeft'] || keys['a']) player.x -= player.speed;
+            if (keys['ArrowRight'] || keys['d']) player.x += player.speed;
+
+            player.x = Math.max(player.size / 2, Math.min(canvas.width - player.size / 2, player.x));
+            player.y = Math.max(player.size / 2, Math.min(canvas.height - player.size / 2, player.y));
+        }
+
+        // --- Game Mechanics ---
+        function spawnPet() {
+            if (gameScreen.classList.contains('hidden') || pets.length >= currentLevelData.petsToRescue * 2) return;
+
+            const randomPetType = getRandomPetType();
+            if (!randomPetType) return;
+
+            const petData = gameData.petTypes.find(type => type.id === randomPetType);
+            if (!petData) return;
+
+            pets.push({
+                ...petData,
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                isRescued: false
+            });
+        }
+
+        function getRandomPetType() {
+            const rand = Math.random();
+            let cumulativeProbability = 0;
+            for (const petId in currentLevelData.petSpawnRates) {
+                cumulativeProbability += currentLevelData.petSpawnRates[petId];
+                if (rand <= cumulativeProbability) {
+                    return petId;
+                }
+            }
+            return null;
+        }
+
+        function checkCollision(obj1, obj2) {
+            const distanceX = obj1.x - obj2.x;
+            const distanceY = obj1.y - obj2.y;
+            const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+            return distance < (obj1.size / 2 + obj2.size / 2);
+        }
+
+        function rescuePet(pet) {
+            if (pet.isRescued) return;
+            pet.isRescued = true;
+            score++;
+            scoreDisplay.textContent = score;
+
+            if (assetCache.sounds.rescueChime) {
+                assetCache.sounds.rescueChime.play().catch(e => console.log("Rescue sound autoplay prevented:", e));
+            }
+
+            setTimeout(() => {
+                pets = pets.filter(p => p !== pet);
+                checkGameOver();
+            }, 200);
+
+            console.log(`Rescued ${pet.name}!`);
+        }
+
+        function updateTimer() {
+            if (gameScreen.classList.contains('hidden')) return;
+            timeLeft--;
+            timerDisplay.textContent = timeLeft;
+            if (timeLeft <= 0) {
+                gameOver();
+            }
+        }
+
+        function checkGameOver() {
+            if (score >= currentLevelData.petsToRescue) {
+                clearInterval(gameInterval);
+                clearInterval(petSpawnInterval);
+                clearInterval(countdownInterval);
+                alert(`Level Complete! You rescued all ${currentLevelData.petsToRescue} pets!`);
+                restartGameButton.textContent = "Play Again";
+                restartGameButton.classList.remove('hidden');
+                if (backgroundMusic) backgroundMusic.pause();
+            }
+        }
+
+        function gameOver() {
+            clearInterval(gameInterval);
+            clearInterval(petSpawnInterval);
+            clearInterval(countdownInterval);
+            alert(`Game Over! You rescued ${score} pets out of ${currentLevelData.petsToRescue}.`);
+            restartGameButton.textContent = "Try Again";
+            restartGameButton.classList.remove('hidden');
+            if (backgroundMusic) backgroundMusic.pause();
+        }
+
+        // --- Event Listeners for UI ---
+        startButton.addEventListener('click', startGame);
+        howToPlayButton.addEventListener('click', showHowToPlay);
+        aboutButton.addEventListener('click', showAbout);
+        backToMenuButton.addEventListener('click', showMainMenu);
+        restartGameButton.addEventListener('click', () => {
+            initGame();
+            restartGameButton.classList.add('hidden');
+        });
+
+        closeModalButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.closest('.modal').classList.add('hidden');
+                showMainMenu();
+            });
+        });
+
+        // --- Initial Load ---
+        loadGameData();
+    </script>
+    <!-- INLINE JAVASCRIPT END -->
+</body>
+</html>

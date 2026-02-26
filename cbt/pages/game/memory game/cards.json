@@ -1,0 +1,10 @@
+[ 
+{ "name": "diamond", "icon": "fa-diamond" },
+{ "name": "plane", "icon": "fa-paper-plane" },
+{ "name": "anchor", "icon": "fa-anchor" },
+{ "name": "bolt", "icon": "fa-bolt" },
+{ "name": "cube", "icon": "fa-cube" },
+{ "name": "leaf", "icon": "fa-leaf" },
+{ "name": "bicycle", "icon": "fa-bicycle" },
+{ "name": "bomb", "icon": "fa-bomb" }
+]

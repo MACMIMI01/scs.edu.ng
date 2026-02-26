@@ -1,0 +1,509 @@
+Great! Let's get the Traffic Light Game set up. This game is all about quick reactions and following instructions based on a changing traffic light.
+1. phe-games/games/traffic-light/trafficData.json (Optional, but good for custom messages)
+For a simple traffic light game, you might not strictly need a JSON file for "levels" like the maze. However, if you want to customize the instructions, timings, or feedback messages per round or difficulty, a JSON file is perfect. I'll include a simple one here for illustrative purposes, containing messages for each light state.
+{
+  "messages": {
+    "ready": "Get Ready to Move!",
+    "red": "STOP! Hold Still!",
+    "yellow": "GET READY! Prepare to Move!",
+    "green": "GO! Move in Place!",
+    "tooSlow": "Too slow! You reacted late.",
+    "wrongAction": "Wrong action! You moved on STOP.",
+    "perfect": "Perfect reaction!",
+    "roundComplete": "Round Complete!",
+    "gameOver": "Game Over! You made too many mistakes."
+  },
+  "gameSettings": {
+    "numRounds": 5,
+    "minLightDuration": 2000,
+    "maxLightDuration": 4000,
+    "reactionTimeLimit": 1500
+  }
+}
+
+2. phe-games/games/traffic-light/traffic.html
+This HTML file will contain the visual elements for the traffic light, instruction text, and buttons.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Light Game</title>
+    <link rel="stylesheet" href="../../global.css">
+    <link rel="stylesheet" href="traffic.css">
+</head>
+<body>
+
+    <header>
+        <h1 class="main-title">PHE Learning Games</h1>
+        <nav class="main-nav">
+            <a href="../../index.html" class="nav-link">Home</a>
+            <a href="../maze/maze.html" class="nav-link">Healthy Food Maze</a>
+            <a href="../obstacle-course/obstacle.html" class="nav-link">Obstacle Course</a>
+            <a href="../anatomy-sim/anatomy.html" class="nav-link">Anatomy Simulation</a>
+        </nav>
+    </header>
+
+    <main id="game-container" class="game-container">
+        <h2 class="game-title">Traffic Light Challenge!</h2>
+        <p class="game-info">React quickly! Press the 'React' button only when the light is green, and hold still for red. Yellow is prepare!</p>
+
+        <div class="traffic-light-body">
+            <div id="red-light" class="light red"></div>
+            <div id="yellow-light" class="light yellow"></div>
+            <div id="green-light" class="light green"></div>
+        </div>
+
+        <p id="instruction-text" class="instruction-text">Press Start to Play!</p>
+        <p id="feedback-text" class="feedback-text"></p>
+
+        <div class="controls">
+            <button id="start-game-btn" class="game-button">Start Game</button>
+            <button id="react-button" class="game-button react-button" style="display: none;">REACT!</button>
+            <button id="next-round-btn" class="game-button" style="display: none;">Next Round</button>
+            <button id="restart-game-btn" class="game-button" style="display: none;">Restart Game</button>
+        </div>
+        
+        <p id="score-display" class="score-display">Rounds: 0 / 0 | Mistakes: 0</p>
+    </main>
+
+    <footer class="game-footer">
+        &copy; 2025 PHE Learning. All rights reserved.
+    </footer>
+
+    <script src="traffic.js"></script>
+</body>
+</html>
+
+3. phe-games/games/traffic-light/traffic.css
+This CSS will style your traffic light, instructions, and buttons to give it a clean and functional look.
+/* Traffic Light Game Specific Styles */
+
+.game-container {
+    padding: 30px;
+    max-width: 600px;
+    margin: 30px auto;
+    background-color: #fcfdfe; /* Very light blue-grey */
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.game-title {
+    color: #4a148c; /* Deep purple */
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 10px;
+    font-size: 2.5em;
+    font-weight: 700;
+}
+
+.game-info {
+    color: #6a1b9a; /* Medium purple */
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.1em;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+/* Traffic Light Body */
+.traffic-light-body {
+    width: 140px;
+    height: 380px;
+    background-color: #333; /* Dark grey */
+    border-radius: 20px;
+    margin: 0 auto 40px auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+/* Individual Lights */
+.light {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 5px solid rgba(255,255,255,0.2); /* Subtle white border */
+    opacity: 0.2; /* Initially dim */
+    transition: opacity 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.light.red {
+    background-color: #b71c1c; /* Dark red */
+    box-shadow: 0 0 15px #b71c1c; /* Soft glow */
+}
+
+.light.yellow {
+    background-color: #fbc02d; /* Amber yellow */
+    box-shadow: 0 0 15px #fbc02d;
+}
+
+.light.green {
+    background-color: #388e3c; /* Dark green */
+    box-shadow: 0 0 15px #388e3c;
+}
+
+/* Active Light State */
+.light.active {
+    opacity: 1; /* Fully bright when active */
+    box-shadow: 0 0 30px rgba(255,255,0,0.8), 0 0 60px rgba(255,255,0,0.5); /* Stronger glow for active light */
+    /* Adjust color of box-shadow based on light for distinct glow */
+}
+.light.red.active { box-shadow: 0 0 30px #e53935, 0 0 60px rgba(229, 57, 53, 0.7); }
+.light.yellow.active { box-shadow: 0 0 30px #ffeb3b, 0 0 60px rgba(255, 235, 59, 0.7); }
+.light.green.active { box-shadow: 0 0 30px #4caf50, 0 0 60px rgba(76, 175, 80, 0.7); }
+
+
+/* Text Displays */
+.instruction-text {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #424242; /* Dark grey */
+    margin-bottom: 15px;
+    min-height: 1.5em; /* Prevent layout shift when text changes */
+}
+
+.feedback-text {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #e53935; /* Red for errors, JS will change for success */
+    margin-bottom: 30px;
+    min-height: 1.2em; /* Prevent layout shift */
+}
+
+/* Buttons */
+.controls {
+    margin-top: 20px;
+}
+
+.game-button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    background-color: #007bff; /* Primary blue */
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    margin: 0 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.game-button:hover {
+    background-color: #0056b3; /* Darker blue */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+.game-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.game-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+    opacity: 0.7;
+}
+
+.react-button {
+    background-color: #28a745; /* Green for react button */
+    font-weight: bold;
+    padding: 20px 40px; /* Larger size */
+    font-size: 1.8em;
+}
+
+.react-button:hover {
+    background-color: #218838;
+}
+
+/* Score Display */
+.score-display {
+    margin-top: 25px;
+    font-size: 1.2em;
+    color: #555;
+    font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 2em;
+    }
+    .game-info {
+        font-size: 1em;
+    }
+    .traffic-light-body {
+        width: 120px;
+        height: 320px;
+    }
+    .light {
+        width: 80px;
+        height: 80px;
+    }
+    .instruction-text {
+        font-size: 1.5em;
+    }
+    .feedback-text {
+        font-size: 1.2em;
+    }
+    .game-button {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+    .react-button {
+        padding: 15px 30px;
+        font-size: 1.4em;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-title {
+        font-size: 1.8em;
+    }
+    .game-info {
+        font-size: 0.9em;
+    }
+    .traffic-light-body {
+        width: 100px;
+        height: 280px;
+    }
+    .light {
+        width: 70px;
+        height: 70px;
+    }
+    .instruction-text {
+        font-size: 1.3em;
+    }
+    .feedback-text {
+        font-size: 1em;
+    }
+    .game-button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+        margin: 5px; /* Adjust margin for smaller screens */
+    }
+    .react-button {
+        padding: 12px 25px;
+        font-size: 1.2em;
+    }
+}
+
+4. phe-games/games/traffic-light/traffic.js
+This JavaScript will control the game logic, light changes, user reactions, and scoring.
+document.addEventListener('DOMContentLoaded', () => {
+    const redLight = document.getElementById('red-light');
+    const yellowLight = document.getElementById('yellow-light');
+    const greenLight = document.getElementById('green-light');
+    const instructionText = document.getElementById('instruction-text');
+    const feedbackText = document.getElementById('feedback-text');
+    const startGameBtn = document.getElementById('start-game-btn');
+    const reactButton = document.getElementById('react-button');
+    const nextRoundBtn = document.getElementById('next-round-btn');
+    const restartGameBtn = document.getElementById('restart-game-btn');
+    const scoreDisplay = document.getElementById('score-display');
+
+    let currentLightState = null; // 'red', 'yellow', 'green'
+    let timerId = null;
+    let reactionTimer = null; // To measure user reaction time
+    let gameMessages = {}; // To store messages from JSON
+    let gameSettings = {}; // To store settings from JSON
+
+    let currentRound = 0;
+    let mistakes = 0;
+    let gameActive = false; // Flag to control game flow
+
+    // --- Sound Effects ---
+    const correctSound = new Audio('../../assets/sounds/correct.mp3');
+    const wrongSound = new Audio('../../assets/sounds/wrong.mp3');
+    const winSound = new Audio('../../assets/sounds/win.mp3'); // For game win/level complete
+    const whistleSound = new Audio('../../assets/sounds/whistle.mp3'); // For start/stop cues
+
+    function playSound(sound) {
+        if (sound) {
+            sound.currentTime = 0; // Rewind to start
+            sound.play().catch(e => console.error("Sound play failed:", e));
+        }
+    }
+
+    // --- Game Initialization ---
+    async function initGame() {
+        try {
+            const response = await fetch('trafficData.json');
+            const data = await response.json();
+            gameMessages = data.messages;
+            gameSettings = data.gameSettings;
+            
+            resetGame();
+            instructionText.textContent = gameMessages.ready;
+            feedbackText.textContent = '';
+            startGameBtn.style.display = 'inline-block';
+            reactButton.style.display = 'none';
+            nextRoundBtn.style.display = 'none';
+            restartGameBtn.style.display = 'none';
+        } catch (error) {
+            console.error('Error loading traffic data:', error);
+            instructionText.textContent = 'Failed to load game data. Please try again.';
+            startGameBtn.disabled = true;
+        }
+    }
+
+    function resetGame() {
+        currentRound = 0;
+        mistakes = 0;
+        gameActive = false;
+        clearLights();
+        updateScoreDisplay();
+    }
+
+    function updateScoreDisplay() {
+        scoreDisplay.textContent = `Rounds: ${currentRound} / ${gameSettings.numRounds} | Mistakes: ${mistakes}`;
+    }
+
+    // --- Light Management ---
+    function clearLights() {
+        redLight.classList.remove('active');
+        yellowLight.classList.remove('active');
+        greenLight.classList.remove('active');
+    }
+
+    function setLight(color) {
+        clearLights();
+        if (color === 'red') {
+            redLight.classList.add('active');
+            instructionText.textContent = gameMessages.red;
+            playSound(whistleSound); // Whistle for stop
+        } else if (color === 'yellow') {
+            yellowLight.classList.add('active');
+            instructionText.textContent = gameMessages.yellow;
+        } else if (color === 'green') {
+            greenLight.classList.add('active');
+            instructionText.textContent = gameMessages.green;
+            playSound(whistleSound); // Whistle for go
+        }
+        currentLightState = color;
+    }
+
+    // --- Game Flow ---
+    function startRound() {
+        feedbackText.textContent = ''; // Clear previous feedback
+        reactButton.disabled = false;
+        reactButton.style.display = 'inline-block';
+        nextRoundBtn.style.display = 'none';
+        restartGameBtn.style.display = 'none';
+
+        // Randomize initial light (red or yellow for a short period before green)
+        const initialDelay = Math.random() * (gameSettings.maxLightDuration - gameSettings.minLightDuration) + gameSettings.minLightDuration;
+
+        setLight('red'); // Start with red
+        timerId = setTimeout(() => {
+            setLight('yellow'); // Then yellow
+            timerId = setTimeout(() => {
+                setLight('green'); // Finally green
+                reactionTimer = Date.now(); // Start measuring reaction time
+            }, initialDelay / 2); // Yellow for half the initial delay
+        }, initialDelay); // Red for a random duration
+    }
+
+    function endRound(reason) {
+        clearTimeout(timerId);
+        clearLights();
+        reactButton.disabled = true;
+        reactButton.style.display = 'none';
+        gameActive = false; // Pause game until next round or restart
+
+        if (mistakes >= 3) { // Game Over condition
+            feedbackText.textContent = gameMessages.gameOver;
+            feedbackText.style.color = '#dc3545'; // Red for game over
+            instructionText.textContent = 'Better luck next time!';
+            restartGameBtn.style.display = 'inline-block';
+            playSound(wrongSound); // Play a final wrong sound
+            return;
+        }
+
+        if (currentRound < gameSettings.numRounds) {
+            feedbackText.textContent = reason;
+            instructionText.textContent = gameMessages.roundComplete;
+            nextRoundBtn.style.display = 'inline-block';
+        } else {
+            // All rounds completed successfully
+            feedbackText.textContent = 'Amazing! All rounds completed perfectly!';
+            feedbackText.style.color = '#28a745'; // Green for success
+            instructionText.textContent = 'You are a Traffic Light Master!';
+            restartGameBtn.style.display = 'inline-block';
+            playSound(winSound);
+        }
+    }
+
+    // --- User Reaction Handling ---
+    reactButton.addEventListener('click', () => {
+        if (!gameActive) return;
+
+        const reactionTime = Date.now() - reactionTimer; // Calculate reaction time
+
+        if (currentLightState === 'green') {
+            // Correct reaction
+            if (reactionTime <= gameSettings.reactionTimeLimit) {
+                feedbackText.textContent = `${gameMessages.perfect} (Reaction: ${reactionTime}ms)`;
+                feedbackText.style.color = '#28a745'; // Green
+                playSound(correctSound);
+            } else {
+                feedbackText.textContent = `${gameMessages.tooSlow} (Reaction: ${reactionTime}ms)`;
+                feedbackText.style.color = '#ffc107'; // Yellow/Orange
+                mistakes++;
+                playSound(wrongSound);
+            }
+            currentRound++;
+            updateScoreDisplay();
+            endRound(feedbackText.textContent); // End the current round
+        } else if (currentLightState === 'red') {
+            // Incorrect reaction: moved on red
+            feedbackText.textContent = gameMessages.wrongAction;
+            feedbackText.style.color = '#dc3545'; // Red
+            mistakes++;
+            playSound(wrongSound);
+            currentRound++; // Still counts as a round for mistake tracking
+            updateScoreDisplay();
+            endRound(feedbackText.textContent);
+        } else if (currentLightState === 'yellow') {
+             // Incorrect reaction: moved on yellow (optional: depends on game rules)
+            feedbackText.textContent = 'Oops! You reacted on yellow. Wait for green!';
+            feedbackText.style.color = '#ffc107'; // Yellow/Orange
+            mistakes++;
+            playSound(wrongSound);
+            currentRound++; // Still counts as a round for mistake tracking
+            updateScoreDisplay();
+            endRound(feedbackText.textContent);
+        }
+    });
+
+    // --- Button Event Listeners ---
+    startGameBtn.addEventListener('click', () => {
+        resetGame();
+        gameActive = true;
+        startGameBtn.style.display = 'none';
+        startRound();
+    });
+
+    nextRoundBtn.addEventListener('click', () => {
+        gameActive = true;
+        startRound();
+    });
+
+    restartGameBtn.addEventListener('click', () => {
+        initGame(); // Re-initialize to load data and reset everything fully
+    });
+
+    // Initialize the game when the page loads
+    initGame();
+});
+
+To get this Traffic Light Game running:
+ * Save all the provided code into their respective files within phe-games/games/traffic-light/.
+ * Ensure you have correct.mp3, wrong.mp3, win.mp3, and whistle.mp3 in phe-games/assets/sounds/. The whistle.mp3 is used for the "stop" and "go" cues. If you don't have them, you can use silent MP3s, but the Audio constructor expects actual audio.
+ * Open phe-games/games/traffic-light/traffic.html in your web browser or navigate to it from your index.html.
+You should now see the traffic light, and when you click "Start Game," it will begin changing. Your task is to click "REACT!" when the light turns green, and avoid clicking when it's red or yellow.

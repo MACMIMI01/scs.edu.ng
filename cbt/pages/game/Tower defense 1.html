@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Pixel Siege</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #2a3d45;
+            --path-color: #c1a57b;
+            --plot-color: #88a0a8;
+            --ui-bg: #1e2d33;
+            --font-color: #f0f0f0;
+            --gold-color: #f1c40f;
+            --lives-color: #e74c3c;
+        }
+        body {
+            background-color: #111;
+            color: var(--font-color);
+            font-family: 'Press Start 2P', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        #game-layout {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+        #game-container {
+            border: 3px solid var(--font-color);
+            position: relative;
+        }
+        canvas {
+            display: block;
+            background-color: #3a506b;
+        }
+        #ui-panel {
+            background-color: var(--ui-bg);
+            border: 3px solid var(--font-color);
+            padding: 15px;
+            width: 200px;
+            text-align: center;
+        }
+        .ui-box { margin-bottom: 20px; }
+        .ui-box h2 { font-size: 1em; margin: 0 0 10px 0; }
+        #gold-display, #lives-display, #wave-display { font-size: 1.2em; }
+        #gold-display { color: var(--gold-color); }
+        #lives-display { color: var(--lives-color); }
+
+        #tower-selection .tower-btn {
+            background-color: var(--plot-color);
+            border: 2px solid var(--font-color);
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            text-align: left;
+            color: var(--font-color);
+            font-family: inherit;
+            font-size: 0.7em;
+        }
+        #tower-selection .tower-btn.selected {
+            background-color: var(--gold-color);
+            color: #000;
+        }
+        #tower-selection .tower-btn span {
+            display: block;
+            font-size: 0.8em;
+            opacity: 0.8;
+        }
+
+        .overlay {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.75);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center; z-index: 100;
+            color: var(--font-color);
+        }
+        .overlay h2 { font-size: 2em; }
+        .overlay button { font-size: 1em; padding: 15px 30px; margin-top: 20px; cursor: pointer; }
+        .hidden { display: none; }
+        
+        @media (max-width: 900px) {
+            body { padding: 5px; }
+            #game-layout { flex-direction: column; align-items: center; }
+            #ui-panel { width: 100%; max-width: 600px; display: flex; justify-content: space-around; flex-wrap: wrap; }
+            .ui-box { margin-bottom: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="game-layout">
+        <div id="game-container">
+            <canvas id="gameCanvas"></canvas>
+            <div id="game-overlay" class="overlay">
+                <h2>PIXEL SIEGE</h2>
+                <button id="start-btn">Start Game</button>
+            </div>
+        </div>
+        <div id="ui-panel">
+            <div class="ui-box">
+                <h2>GOLD</h2>
+                <div id="gold-display">100</div>
+            </div>
+            <div class="ui-box">
+                <h2>LIVES</h2>
+                <div id="lives-display">20</div>
+            </div>
+            <div class="ui-box">
+                <h2>WAVE</h2>
+                <div id="wave-display">0</div>
+            </div>
+            <div id="tower-selection" class="ui-box">
+                <h2>BUILD</h2>
+                <button class="tower-btn" data-tower-type="basic">
+                    Basic Turret <span>Cost: 100G</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // --- DOM Elements & Setup ---
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const goldEl = document.getElementById('gold-display');
+    const livesEl = document.getElementById('lives-display');
+    const waveEl = document.getElementById('wave-display');
+    const overlay = document.getElementById('game-overlay');
+    const startBtn = document.getElementById('start-btn');
+    const towerButtons = document.querySelectorAll('.tower-btn');
+
+    const TILE_SIZE = 50;
+    canvas.width = 12 * TILE_SIZE;
+    canvas.height = 10 * TILE_SIZE;
+
+    // --- Game Map & Path ---
+    const mapLayout = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0],
+        [0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0],
+        [0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0],
+        [0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0],
+        [0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ]; // 0 = buildable, 1 = path
+
+    const path = [
+        {x: 0, y: 1}, {x: 5, y: 1}, {x: 5, y: 3}, {x: 3, y: 3}, {x: 3, y: 5}, 
+        {x: 10, y: 5}, {x: 10, y: 7}, {x: 1, y: 7}, {x: 1, y: 10}
+    ];
+
+    // --- Game State ---
+    let gold, lives, wave, gameActive = false;
+    let enemies = [], towers = [], projectiles = [];
+    let selectedTowerType = null;
+
+    // --- Classes ---
+    class Enemy {
+        constructor(x, y) {
+            this.x = x; this.y = y;
+            this.radius = 15;
+            this.speed = 2;
+            this.color = '#e74c3c';
+            this.pathIndex = 0;
+            this.health = 100;
+        }
+        update() {
+            const target = path[this.pathIndex];
+            if (!target) {
+                this.destroy(true); // Reached the end
+                return;
+            }
+            const dx = target.x * TILE_SIZE + TILE_SIZE / 2 - this.x;
+            const dy = target.y * TILE_SIZE + TILE_SIZE / 2 - this.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            
+            if (dist < this.speed) {
+                this.pathIndex++;
+            } else {
+                this.x += (dx / dist) * this.speed;
+                this.y += (dy / dist) * this.speed;
+            }
+        }
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        destroy(reachedEnd = false) {
+            if (reachedEnd) {
+                lives--;
+                updateHUD();
+            } else {
+                gold += 10;
+                updateHUD();
+            }
+            enemies = enemies.filter(e => e !== this);
+        }
+    }
+
+    class Tower {
+        constructor(x, y) {
+            this.x = x; this.y = y;
+            this.radius = TILE_SIZE * 1.5;
+            this.color = '#3498db';
+            this.fireRate = 1000; // ms
+            this.lastFire = 0;
+            this.target = null;
+        }
+        update(time) {
+            // Find a target if we don't have one
+            if (!this.target || this.target.health <= 0) {
+                this.findTarget();
+            }
+            if (this.target && time - this.lastFire > this.fireRate) {
+                this.fire();
+                this.lastFire = time;
+            }
+        }
+        findTarget() {
+            let closestEnemy = null, closestDist = this.radius;
+            enemies.forEach(enemy => {
+                const dx = enemy.x - this.x;
+                const dy = enemy.y - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < closestDist) {
+                    closestDist = dist;
+                    closestEnemy = enemy;
+                }
+            });
+            this.target = closestEnemy;
+        }
+        fire() {
+            projectiles.push(new Projectile(this.x, this.y, this.target));
+        }
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x - TILE_SIZE / 2, this.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
+            // Draw range for debugging/selection
+            if (selectedTowerType === null) {
+                ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+        }
+    }
+
+    class Projectile {
+        constructor(x, y, target) {
+            this.x = x; this.y = y;
+            this.target = target;
+            this.radius = 5;
+            this.speed = 5;
+            this.color = '#f1c40f';
+        }
+        update() {
+            if (!this.target || this.target.health <= 0) {
+                this.destroy(); return;
+            }
+            const dx = this.target.x - this.x;
+            const dy = this.target.y - this.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < this.speed) {
+                this.target.health -= 25; // Damage
+                if (this.target.health <= 0) this.target.destroy();
+                this.destroy();
+            } else {
+                this.x += (dx / dist) * this.speed;
+                this.y += (dy / dist) * this.speed;
+            }
+        }
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        destroy() { projectiles = projectiles.filter(p => p !== this); }
+    }
+
+    // --- Game Logic ---
+    function init() {
+        gold = 150; lives = 20; wave = 0;
+        enemies = []; towers = []; projectiles = [];
+        gameActive = true;
+        overlay.classList.add('hidden');
+        updateHUD();
+        spawnWave();
+        gameLoop();
+    }
+    
+    function spawnWave() {
+        wave++;
+        updateHUD();
+        for (let i = 0; i < wave * 5; i++) {
+            setTimeout(() => {
+                enemies.push(new Enemy(-TILE_SIZE / 2, TILE_SIZE + TILE_SIZE / 2));
+            }, i * 500);
+        }
+    }
+
+    function update(time) {
+        enemies.forEach(e => e.update());
+        towers.forEach(t => t.update(time));
+        projectiles.forEach(p => p.update());
+
+        // Check for next wave
+        if (enemies.length === 0 && gameActive) {
+            spawnWave();
+        }
+        // Check for game over
+        if (lives <= 0) {
+            gameOver();
+        }
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Draw map
+        for(let r=0; r<mapLayout.length; r++) {
+            for(let c=0; c<mapLayout[r].length; c++) {
+                ctx.fillStyle = mapLayout[r][c] === 1 ? '#c1a57b' : '#2a3d45';
+                ctx.fillRect(c * TILE_SIZE, r * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                if (mapLayout[r][c] === 0) { // Buildable plot
+                    ctx.strokeStyle = '#88a0a8';
+                    ctx.strokeRect(c*TILE_SIZE+1, r*TILE_SIZE+1, TILE_SIZE-2, TILE_SIZE-2);
+                }
+            }
+        }
+        
+        enemies.forEach(e => e.draw());
+        towers.forEach(t => t.draw());
+        projectiles.forEach(p => p.draw());
+    }
+
+    let lastTime = 0;
+    function gameLoop(time = 0) {
+        if (!gameActive) return;
+        update(time);
+        draw();
+        requestAnimationFrame(gameLoop);
+    }
+    
+    function gameOver() {
+        gameActive = false;
+        overlay.classList.remove('hidden');
+        overlay.querySelector('h2').textContent = "GAME OVER";
+        overlay.querySelector('button').textContent = "Play Again";
+    }
+
+    function updateHUD() {
+        goldEl.textContent = gold;
+        livesEl.textContent = '❤️'.repeat(lives);
+        waveEl.textContent = wave;
+    }
+
+    // --- Event Listeners ---
+    startBtn.addEventListener('click', init);
+    
+    towerButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            towerButtons.forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedTowerType = btn.dataset.towerType;
+        });
+    });
+
+    canvas.addEventListener('click', (e) => {
+        if (!selectedTowerType) return;
+        const rect = canvas.getBoundingClientRect();
+        const x = Math.floor((e.clientX - rect.left) / TILE_SIZE);
+        const y = Math.floor((e.clientY - rect.top) / TILE_SIZE);
+
+        if (mapLayout[y]?.[x] === 0 && gold >= 100) {
+            gold -= 100;
+            towers.push(new Tower(x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2));
+            mapLayout[y][x] = 2; // Mark as occupied
+            updateHUD();
+        }
+        
+        selectedTowerType = null;
+        towerButtons.forEach(b => b.classList.remove('selected'));
+    });
+
+});
+</script>
+</body>
+</html>

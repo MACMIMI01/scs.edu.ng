@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCS Memory Logic | Training Module</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="memory-game-container">
+        <h1><i class="fas fa-brain"></i> Memory Logic</h1>
+
+        <div class="game-controls">
+            <div class="stat-box">
+                <span class="stat-label">Timer</span>
+                <span id="timer-display" class="stat-value">00:00</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">Moves</span>
+                <span id="moves-count" class="stat-value">0</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">Difficulty</span>
+                <select id="difficulty-select">
+                    <option value="8">Beginner (8 Pairs)</option>
+                    <option value="12">Advanced (12 Pairs)</option>
+                    <option value="18">Expert (18 Pairs)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="game-board" id="game-board">
+            <!-- Dynamic Cards -->
+        </div>
+    </div>
+
+    <!-- Win Modal -->
+    <div id="win-overlay" class="overlay">
+        <div class="modal">
+            <i class="fas fa-trophy" style="font-size: 4rem; color: var(--accent); margin-bottom: 20px;"></i>
+            <h2>Excellent!</h2>
+            <p>Module completed in <span id="final-time"></span> with <span id="final-moves"></span> moves.</p>
+            <p><strong>High Score: </strong> <span id="high-score-val">--</span></p>
+            <button class="btn-primary" onclick="resetGame()">Initialize Next Session</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
