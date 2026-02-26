@@ -1,0 +1,76 @@
+[
+    {
+        "id": "invaders",
+        "title": "Pixel Invaders",
+        "icon": "fa-space-shuttle",
+        "url": "game/pixel-invaders.html",
+        "category": "action",
+        "description": "Space-based tactical defense simulation against extra-terrestrial threats. Enhance reflex response times."
+    },
+    {
+        "id": "stacker",
+        "title": "Brick Stacker",
+        "icon": "fa-cubes",
+        "url": "game/brick-stacker.html",
+        "category": "puzzle",
+        "description": "Structural integrity training. Balance physical components to reach maximum altitude and stability."
+    },
+    {
+        "id": "paddle",
+        "title": "Pixel Paddle",
+        "icon": "fa-table-tennis-paddle-ball",
+        "url": "game/pixel-paddle.html",
+        "category": "arcade",
+        "description": "High-speed reflex and trajectory calculation exercise utilizing kinetic energy physics."
+    },
+    {
+        "id": "quiz",
+        "title": "Trivia Challenge",
+        "icon": "fa-brain",
+        "url": "game/trivia-challenge.html",
+        "category": "educational",
+        "description": "Multi-disciplinary knowledge assessment module across the SCS international curriculum."
+    },
+    {
+        "id": "anatomy",
+        "title": "Anatomy Sim",
+        "icon": "fa-lungs",
+        "url": "game/phe-games/games/anatomy-sim/anatomy.html",
+        "category": "educational",
+        "description": "Biological structural analysis and physiological mapping for health education sectors."
+    },
+    {
+        "id": "frogger",
+        "title": "Tactical Crossing",
+        "icon": "fa-frog",
+        "url": "game/frogger-game/index.html",
+        "category": "arcade",
+        "description": "Environmental navigation and threat avoidance simulator for spatial awareness training."
+    },
+    {
+        "id": "snake",
+        "title": "Neural Snake",
+        "icon": "fa-snake",
+        "url": "game/Snake.html",
+        "category": "arcade",
+        "description": "Linear resource accumulation and spatial management algorithm training."
+    },
+    {
+        "id": "traffic",
+        "title": "Traffic Master",
+        "icon": "fa-traffic-light",
+        "url": "game/phe-games/games/traffic-light/traffic.html",
+        "category": "arcade",
+        "description": "Urban infrastructure and logical flow management under varying density parameters."
+    },
+    {
+    "id": "tetris",
+    "title": "Pixel Tetris",
+    "icon": "fa-square",
+    "url": "game/pixel-tetris.html",
+    "category": "puzzle",
+    "description": "Spatial reasoning and pattern recognition exercise through geometric block manipulation."
+    }
+]
+
+

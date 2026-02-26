@@ -1,0 +1,873 @@
+[
+    {
+        "id": "invaders",
+        "title": "Pixel Invaders",
+        "icon": "fa-space-shuttle",
+        "url": "game/pixel-invaders.html",
+        "category": "action",
+        "description": "Space-based tactical defense simulation against extra-terrestrial threats. Enhance reflex response times."
+    },
+    {
+        "id": "stacker",
+        "title": "Brick Stacker",
+        "icon": "fa-cubes",
+        "url": "game/brick-stacker.html",
+        "category": "puzzle",
+        "description": "Structural integrity training. Balance physical components to reach maximum altitude and stability."
+    },
+    {
+        "id": "paddle",
+        "title": "Pixel Paddle",
+        "icon": "fa-table-tennis-paddle-ball",
+        "url": "game/pixel-paddle.html",
+        "category": "arcade",
+        "description": "High-speed reflex and trajectory calculation exercise utilizing kinetic energy physics."
+    },
+    {
+        "id": "quiz",
+        "title": "Trivia Challenge",
+        "icon": "fa-brain",
+        "url": "game/trivia-challenge.html",
+        "category": "educational",
+        "description": "Multi-disciplinary knowledge assessment module across the SCS international curriculum."
+    },
+    {
+        "id": "anatomy",
+        "title": "Anatomy Sim",
+        "icon": "fa-lungs",
+        "url": "game/phe-games/games/anatomy-sim/anatomy.html",
+        "category": "educational",
+        "description": "Biological structural analysis and physiological mapping for health education sectors."
+    },
+    {
+        "id": "frogger",
+        "title": "Tactical Crossing",
+        "icon": "fa-frog",
+        "url": "game/frogger-game/index.html",
+        "category": "arcade",
+        "description": "Environmental navigation and threat avoidance simulator for spatial awareness training."
+    },
+    {
+        "id": "snake",
+        "title": "Neural Snake",
+        "icon": "fa-snake",
+        "url": "game/Snake.html",
+        "category": "arcade",
+        "description": "Linear resource accumulation and spatial management algorithm training."
+    },
+    {
+        "id": "traffic",
+        "title": "Traffic Master",
+        "icon": "fa-traffic-light",
+        "url": "game/phe-games/games/traffic-light/traffic.html",
+        "category": "arcade",
+        "description": "Urban infrastructure and logical flow management under varying density parameters."
+    },
+    {
+    "id": "tetris",
+    "title": "Pixel Tetris",
+    "icon": "fa-square",
+    "url": "game/pixel-tetris.html",
+    "category": "puzzle",
+    "description": "Spatial reasoning and pattern recognition exercise through geometric block manipulation."
+    },
+              {
+                    id: 'invaders',
+                    title: 'Pixel Invaders',
+                    icon: 'fa-gamepad',
+                    url: 'game/pixel-invaders.html',
+                    scoreKey: 'invaders_high_score',
+                    lastScoreKey: 'invaders_last_score',
+                    description: 'Defend Earth from alien invaders in this classic arcade shooter!',
+                    category: 'action'
+                },
+                {
+                    id: 'stacker',
+                    title: 'Brick Stacker',
+                    icon: 'fa-cubes',
+                    url: 'game/brick-stacker.html',
+                    scoreKey: 'stacker_high_score',
+                    lastScoreKey: 'stacker_last_score',
+                    description: 'Stack bricks as high as you can without them toppling over!',
+                    category: 'puzzle'
+                },
+                {
+                    id: 'paddle',
+                    title: 'Pixel Paddle',
+                    icon: 'fa-table-tennis',
+                    url: 'game/pixel-paddle.html',
+                    scoreKey: 'paddle_high_score',
+                    lastScoreKey: 'paddle_last_score',
+                    description: 'Classic paddle ball action with a modern twist!',
+                    category: 'arcade'
+                },
+                {
+                    id: 'quiz',
+                    title: 'Trivia Challenge',
+                    icon: 'fa-brain',
+                    url: 'game/trivia-challenge.html',
+                    scoreKey: 'quiz_high_score',
+                    lastScoreKey: 'quiz_last_score',
+                    description: 'Test your knowledge across various subjects and topics!',
+                    category: 'educational'
+                },
+                {
+                    id: 'memory',
+                    title: 'Memory Cards',
+                    icon: 'fa-layer-group',
+                    url: 'game/memory-cards.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'memory_last_score',
+                    description: 'Match all pairs in this challenging memory game!',
+                    category: 'puzzle'
+                },
+                {
+                    id: 'spelling',
+                    title: 'Spelling Games',
+                    icon: 'fa-spell-check',
+                    url: 'game/eng-games/index.html',
+                    scoreKey: 'spelling_high_score',
+                    lastScoreKey: 'spelling_last_score',
+                    description: 'Improve your spelling skills with fun challenges!',
+                    category: 'educational'
+                },
+                {
+                    id: 'football',
+                    title: 'American Football',
+                    icon: 'fa-football',
+                    url: 'game/football.html',
+                    scoreKey: 'football_high_score',
+                    lastScoreKey: 'football_last_score',
+                    description: 'Experience the thrill of American football!',
+                    category: 'sports'
+                },
+                {
+                    id: 'basketball',
+                    title: 'Basketball',
+                    icon: 'fa-basketball',
+                    url: 'game/basketball.html',
+                    scoreKey: 'basketball_high_score',
+                    lastScoreKey: 'basketball_last_score',
+                    description: 'Shoot hoops and score points in this fast-paced game!',
+                    category: 'sports'
+                },
+                {
+                    id: 'chess',
+                    title: 'Chess',
+                    icon: 'fa-chess',
+                    url: 'game/chess.html',
+                    scoreKey: 'chess_wins',
+                    lastScoreKey: 'chess_last_score',
+                    description: 'Test your strategy in the classic game of kings!',
+                    category: 'puzzle'
+                },
+                {
+                    id: 'racing',
+                    title: 'Racing',
+                    icon: 'fa-flag-checkered',
+                    url: 'game/racing.html',
+                    scoreKey: 'racing_high_score',
+                    lastScoreKey: 'racing_last_score',
+                    description: 'Speed to victory in this exciting racing game!',
+                    category: 'action'
+                },
+                {
+                    id: 'anatomy',
+                    title: 'Anatomy',
+                    icon: 'fa-lungs',
+                    url: 'game/phe-game/game/anatomy-sim/anatomy.html',
+                    scoreKey: 'anatomy_high_score',
+                    lastScoreKey: 'anatomy_last_score',
+                    description: 'Learn about human anatomy through interactive simulation!',
+                    category: 'educational'
+                },
+                {
+                    id: 'frogger',
+                    title: 'Frogger',
+                    icon: 'fa-frog',
+                    url: 'game/frogger-game/index.html',
+                    scoreKey: 'frogger_high_score',
+                    lastScoreKey: 'frogger_last_score',
+                    description: 'Help the frog cross the busy road and river!',
+                    category: 'arcade'
+                },
+                {
+                    id: 'invaders',
+                    title: 'Pixel Invaders',
+                    icon: 'fa-space-shuttle',
+                    url: 'game/pixel-invaders.html', // Updated pa
+                    scoreKey: 'invaders_high_score',
+                    lastScoreKey: 'invaders_last_score',
+                    description: 'Defend Earth from alien invaders!',
+                    category: 'sports'
+                },
+                {
+                    id: 'stacker',
+                    title: 'Brick Stacker',
+                    icon: 'fa-cubes',
+                    url: 'game/brick-stacker.html',
+                    scoreKey: 'stacker_high_score',
+                    lastScoreKey: 'stacker_last_score',
+                    description: 'Stack bricks as high as you can!',
+                    category: 'sports'
+                },
+                {
+                    id: 'paddle',
+                    title: 'Pixel Paddle',
+                    icon: 'fa-table-tennis-paddle-ball',
+                    url: 'game/pixel-paddle.html',
+                    scoreKey: 'paddle_high_score',
+                    lastScoreKey: 'paddle_last_score',
+                    description: 'Classic paddle ball action!',
+                    category: 'sports'
+                },
+                {                    
+                    id: 'quiz',
+                    title: 'Trivia Challenge',
+                    icon: 'fa-question',
+                    url: 'game/trivia-challenge.html',
+                    scoreKey: 'quiz_high_score',
+                    lastScoreKey: 'quiz_last_score',
+                    description: 'Test your knowledge!',
+                    category: 'sports'
+                },
+                {
+                    id: 'memory',
+                    title: 'Memory Cards',
+                    icon: 'fa-brain',
+                    url: 'game/memory-cards.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'memory_last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                                {
+                    id: '📚',
+                    title: 'SPELLING GAMES',
+                    icon: 'fa-brain',
+                    url: 'game/eng-game/index.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: 'memory',
+                    title: 'pixel pop',
+                    icon: 'fa-brain',
+                    url: 'game/pixel-paddle.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: '🟩',
+                    title: 'Brick Stacker',
+                    icon: 'fa-brain',
+                    url: 'game/brick-stacker.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: '🧱',
+                    title: 'Brick Breaker',
+                    icon: 'fa-brain',
+                    url: 'game/Brick Breaker.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: 'memory',
+                    title: 'Pixel Invaders',
+                    icon: 'fa-brain',
+                    url: 'game/pixel-invaders.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: '🥱',
+                    title: 'Nutrition',
+                    icon: 'fa-puzzle-piece',
+                    url: 'game/phe-game/game/maze/maze.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: '🦴',
+                    title: 'Anatomy',
+                    icon: 'fa-brain',
+                    url: 'game/phe-game/game/anatomy-sim/anatomy.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: '🧗',
+                    title: 'Obstacle Run',
+                    icon: 'fa-trophy',
+                    url: 'game/phe-game/game/obstacle-course/obstacle.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: '🐸',
+                    title: 'Frogger Style',
+                    icon: 'fa-running',
+                    url: 'game/frogger-game/index.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: '🏃',
+                    title: 'Maze runner Style',
+                    icon: 'fa-trophy',
+                    url: 'game/bonr.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: '🚦',
+                    title: 'Beat Traffic',
+                    icon: 'fa-running',
+                    url: 'game/phe-game/game/traffic-light/traffic.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: '⭕❌',
+                    title: 'TIC-TAC-TOE',
+                    icon: 'fa-lock',
+                    url: 'game/tic tac toe Gemini.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: '🚀',
+                    title: 'Space Shooter',
+                    icon: 'fa-brain',
+                    url: 'game/Space Shooter.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },              
+                {
+                    id: '🐍',
+                    title: 'Snake',
+                    icon: 'fa-bolt',
+                    url: 'game/Snake.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: '🎖️',
+                    title: 'General',
+                    icon: 'fa-running',
+                    url: 'game/cow-401page.html',
+                    scoreKey: 'quiz_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'action'
+                },
+                {
+                    id: '🏉',
+                    title: 'Platformer',
+                    icon: 'fa-brain',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: '🏈',
+                    title: 'American Football Cards',
+                    icon: 'fa-football-ball',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: '🏐',
+                    title: 'Volleyball Cards',
+                    icon: 'fa-volleyball-ball',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: '🏀',
+                    title: 'Basketball Cards',
+                    icon: 'fa-basketball-ball',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: '🥎',
+                    title: 'Lawn Tennis',
+                    icon: 'fa-table-tennis',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: '🎨🖌️',
+                    title: 'Artist',
+                    icon: 'fa-palette',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },                                
+                {
+                    id: '🤿',
+                    title: 'Olympic Swimmer',
+                    icon: 'fa-swimmer',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: '🪄',
+                    title: 'Magician',
+                    icon: 'fa-magic',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: '🃏',
+                    title: 'joker Cards',
+                    icon: 'fa-cards',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!',
+                    category: 'sports'
+                },
+                {
+                    id: '🀄',
+                    title: 'Japan Card',
+                    icon: 'fa-dragon',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🎴',
+                    title: 'Korean Card',
+                    icon: 'fa-id-card',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🎰',
+                    title: 'Jackpot',
+                    icon: 'fa-dice-six',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🎲',
+                    title: 'Dice',
+                    icon: 'fa-dice',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🔫',
+                    title: 'Terminator',
+                    icon: 'fa-robot',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '👾',
+                    title: 'Catch the Bug',
+                    icon: 'fa-bugs',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🥋 ',
+                    title: 'Taekwondo',
+                    icon: 'fa-fist-raised',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🎣',
+                    title: 'Fishing',
+                    icon: 'fa-fish',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🪁',
+                    title: 'Kite Sky High',
+                    icon: 'fa-paper-plane',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🪃',
+                    title: 'Boomerang',
+                    icon: 'fa-undo',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🏹',
+                    title: 'Wild Hunting',
+                    icon: 'fa-hiking',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '⛳',
+                    title: 'Golf',
+                    icon: 'fa-golf-ball',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🛹',
+                    title: 'Skate',
+                    icon: 'fa-skiing',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🩰',
+                    title: 'Ballerina',
+                    icon: 'fa-music',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🛼',
+                    title: 'Roller Skating',
+                    icon: 'fa-wheelchair',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '⛸️',
+                    title: 'Ice Skating',
+                    icon: 'fa-snowflake',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '👾',
+                    title: 'Pixel Paddle',
+                    icon: 'fa-rocket',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🏒',
+                    title: 'Ice Hockey',
+                    icon: 'fa-hockey-puck',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🥌',
+                    title: 'House Keeping',
+                    icon: 'fa-broom',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },                
+                {
+                    id: '🛷',
+                    title: 'Snow Boarding',
+                    icon: 'fa-skiing-nordic',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🏑',
+                    title: 'Board Hockey',
+                    icon: 'fa-hockey-puck',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🏏',
+                    title: 'Cricket',
+                    icon: 'fa-baseball-ball',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🥍',
+                    title: 'Something like Handball?',
+                    icon: 'fa-handball',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🏸',
+                    title: 'Badminton',
+                    icon: 'fa-table-tennis',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🎾',
+                    title: 'Tennis',
+                    icon: 'fa-tennis-ball',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🚕',
+                    title: 'Taxi',
+                    icon: 'fa-taxi',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🧩',
+                    title: 'Puzzle',
+                    icon: 'fa-puzzle-piece',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🪀',
+                    title: 'YoYo',
+                    icon: 'fa-dice-d20',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '♟️',
+                    title: 'Chess',
+                    icon: 'fa-chess',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🎳',
+                    title: 'Bowling',
+                    icon: 'fa-bowling-ball',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🏓',
+                    title: 'Table Tennis',
+                    icon: 'fa-table-tennis',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🎱',
+                    title: 'Pool Snookers',
+                    icon: 'fa-billiard-ball',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🥊',
+                    title: 'Boxing',
+                    icon: 'fa-boxing-glove',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },                
+                {
+                    id: '🚔',
+                    title: 'Police Chase',
+                    icon: 'fa-car-crash',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🚚',
+                    title: 'Transport',
+                    icon: 'fa-truck',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🏍️',
+                    title: 'Bikers World',
+                    icon: 'fa-motorcycle',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🚦',
+                    title: 'Beat this Traffic',
+                    icon: 'fa-traffic-light',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🍕',
+                    title: 'Pizza Express',
+                    icon: 'fa-pizza-slice',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '🍜',
+                    title: 'Noodles Stall',
+                    icon: 'fa-utensils',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: '⚽',
+                    title: 'Soccer',
+                    icon: 'fa-futbol',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {
+                    id: 'memory',
+                    title: 'Memory Cards',
+                    icon: 'fa-brain',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },
+                {                
+                    id: 'memory',
+                    title: 'Memory Cards',
+                    icon: 'fa-brain',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                },                
+                {
+                    id: 'memory',
+                    title: 'Memory Cards',
+                    icon: 'fa-brain',
+                    url: 'error/cow-401page.html',
+                    scoreKey: 'memory_high_score',
+                    lastScoreKey: 'last_score',
+                    description: 'Match all the pairs!'
+                }
+]
+
+

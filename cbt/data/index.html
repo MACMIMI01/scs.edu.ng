@@ -3,54 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome | St. Christopher School</title>
-    <!-- Assumes this file is in the ROOT project folder -->
-    <link rel="icon" type="image/png" href="./assets/images/favicon.ico">
+      <title>Loading | St. Christopher School</title>
+    <!-- Favicon -->
+    <link rel="icon" href="../assets/images/favicon.ico">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        :root { --primary-color: #020169; --accent-color: #FEC009; }
+        /* Modern Gradient Background */
         body {
-            margin: 0; padding: 0; font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, var(--primary-color) 0%, #1a237e 50%, #303f9f 100%);
-            height: 100vh; display: flex; justify-content: center; align-items: center;
-            color: white; overflow: hidden;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #020169 0%, #1a237e 50%, #303f9f 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            overflow: hidden;
         }
+
+        /* Loading Container */
         .loading-container {
-            text-align: center; max-width: 600px; padding: 40px;
+            text-align: center;
+            max-width: 600px;
+            padding: 40px;
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            border-radius: 20px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
+        /* Animated Logo */
         .school-logo {
-            font-size: 4rem; margin-bottom: 20px;
-            animation: pulse 2s infinite; color: var(--accent-color);
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+            color: #FEC009;
         }
+
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
+
+        /* Progress Bar */
         .progress-container {
-            width: 100%; height: 10px; background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px; margin: 30px 0; overflow: hidden;
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin: 30px 0;
+            overflow: hidden;
         }
+
         .progress-bar {
-            height: 100%; width: 0; background: linear-gradient(90deg, var(--accent-color) 0%, #FFD700 100%);
-            border-radius: 10px; animation: load 3s forwards;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #FEC009 0%, #FFD700 100%);
+            border-radius: 10px;
+            animation: load 3s forwards;
         }
+
         @keyframes load {
-            from { width: 0; }
-            to { width: 100%; }
+            0% { width: 0; }
+            100% { width: 100%; }
         }
-        .loading-text { font-size: 1.2rem; margin-top: 20px; position: relative; }
+
+        /* Loading Text Animation */
+        .loading-text {
+            font-size: 1.2rem;
+            margin-top: 20px;
+            position: relative;
+        }
+
         .loading-text::after {
-            content: '...'; position: absolute; animation: dots 1.5s infinite;
+            content: '...';
+            position: absolute;
+            animation: dots 1.5s infinite;
         }
+
         @keyframes dots {
             0%, 20% { content: '.'; }
             40% { content: '..'; }
             60%, 100% { content: '...'; }
+        }
+
+        /* Hidden Links (for random selection) */
+        .hidden-links {
+            display: none;
         }
     </style>
 </head>
@@ -60,7 +104,7 @@
             <i class="fas fa-graduation-cap"></i>
         </div>
         <h1>Welcome to St. Christopher School</h1>
-        <p>Initializing your learning environment...</p>
+        <p>Preparing your personalized experience...</p>
         
         <div class="progress-container">
             <div class="progress-bar"></div>
@@ -69,39 +113,33 @@
         <div class="loading-text">Loading</div>
     </div>
 
+    <!-- Hidden links for random redirection -->
+    <div class="hidden-links">
+        <a href="profile.html" id="link1"></a>
+        <a href="dashboard.html" id="link2"></a>
+        <a href="about.html" id="link3"></a>
+        <a href="contact.html" id="link4"></a>
+        <a href="admission.html" id="link5"></a>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // --- The Intelligent Redirect Logic ---
-            const decideNextPage = () => {
-                const loggedInUserId = localStorage.getItem('loggedInUserId');
-                const userRole = localStorage.getItem('loggedInUserRole');
+            // Array of possible redirect URLs
+            const redirectUrls = [
+                '../pages/profile.html',
+                '../pages/dashboard.html',
+                '../pages/about.html',
+                '../pages/contact.html',
+                '../pages/admission.html'
+            ];
 
-                if (loggedInUserId) {
-                    // USER IS LOGGED IN
-                    // Use our smart redirect logic to send them to their dashboard
-                    let url = '../pages/dashboard.html'; // Fallback
-                    if (userRole) {
-                        const r = userRole.toLowerCase();
-                        if (r === 'admin') url = './pages/dashboard.html';
-                        else if (r === 'teacher') url = '../pages/dashboard.html';
-                        else if (r === 'student') url = '../pages/dashboard.html';
-                        else if (r === 'parent') url = '../pages/dashboard.html';
-                    }
-                    return url;
-                } else {
-                    // USER IS NOT LOGGED IN
-                    // Send them to the login page
-                    return 'login.html';
-                }
-            };
+            // Randomly select one URL
+            const randomIndex = Math.floor(Math.random() * redirectUrls.length);
+            const redirectUrl = redirectUrls[randomIndex];
 
-            // Determine the destination URL immediately
-            const destinationUrl = decideNextPage();
-
-            // Redirect after 3 seconds to allow the animation to complete
+            // Redirect after 3 seconds (matches CSS animation)
             setTimeout(() => {
-                window.location.href = destinationUrl;
+                window.location.href = redirectUrl;
             }, 3000);
         });
     </script>

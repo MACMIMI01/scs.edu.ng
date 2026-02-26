@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "title": "Class of 2024 Graduates",
+        "date": "September 17, 2024",
+        "excerpt": "Congratulations to our graduating class! We are proud of their achievements and wish them all the best.",
+        "image": "api/graduation1.jpg",
+        "category": "Ceremony"
+    },
+    {
+        "id": 2,
+        "title": "Vibrant Parade Event",
+        "date": "September 15, 2024",
+        "excerpt": "The colorful parade showcased the community's spirit and creativity through the streets of Agbor.",
+        "image": "api/parade1.jpg",
+        "category": "Community"
+    },
+    {
+        "id": 3,
+        "title": "Cultural Festival Success",
+        "date": "September 12, 2024",
+        "excerpt": "A successful celebration of diversity featuring traditional music, dance, and international cuisine.",
+        "image": "api/cultural1.jpg",
+        "category": "Culture"
+    },
+    {
+        "id": 4,
+        "title": "Distinguished Guest Visit",
+        "date": "September 10, 2024",
+        "excerpt": "We were honored to host experts sharing valuable insights on global technology trends with students.",
+        "image": "api/guest.jpg",
+        "category": "Academics"
+    }
+]

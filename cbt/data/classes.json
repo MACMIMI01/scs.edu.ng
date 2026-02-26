@@ -1,0 +1,37 @@
+[
+  {
+    "classId": "JS1",
+    "className": "Basic Seven Lavender",
+    "classCode": "JS1",
+    "classPhoto": "../assets/profile_pictures/BASIC_ONE.jpeg",
+    "academicYear": "2024/2025"
+  },
+  {
+    "classId": "JS2",
+    "className": "Basic Eight Tulip",
+    "classCode": "JS2",
+    "classPhoto": "../assets/profile_pictures/BASIC_EIGHT_TULIP.jpeg",
+    "academicYear": "2024/2025"
+  },
+  {
+    "classId": "JS3",
+    "className": "Basic Nine Sunflower",
+    "classCode": "JS3",
+    "classPhoto": "../assets/profile_pictures/BASIC_NINE_SUNFLOWER.jpeg",
+    "academicYear": "2024/2025"
+  },
+  {
+    "classId": "SS1",
+    "className": "SS 1 Amethyst",
+    "classCode": "SS1",
+    "classPhoto": "../assets/profile_pictures/default-class.jpeg",
+    "academicYear": "2024/2025"
+  },
+   {
+    "classId": "Senior Class Two",
+    "className": "SS 2 Amethyst",
+    "classCode": "SS2",
+    "classPhoto": "../assets/profile_pictures/default-class.jpeg",
+    "academicYear": "2024/2025"
+  }
+]
