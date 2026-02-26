@@ -1,0 +1,419 @@
+<!-- user-profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <!-- Font Awesome -->
+    <!-- Project Assets & Libraries -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Local Font Awesome Fallback -->
+    <link rel="stylesheet" href="../scripts/css/font-awesome.min.css" />
+    <style>
+/* Reset and base */
+
+:root {
+  --primary: #2d2b8d;
+  --primary-light: #4f4db8;
+  --accent: #fec009;
+  --text-dark: #1a1a1a;
+  --text-light: #666;
+  --bg-light: #f0f2f5;
+  --card-bg: #ffffff;
+  --success: #28a745;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --info: #17a2b8;
+  --border-radius: 12px;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+}
+ /* Reset and base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg-light);
+  color: var(--text-dark);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 20px;
+}
+
+.container {
+  background-color: var(--card-bg);
+  color: var(--text-dark);
+  width: 100%;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 30px 40px;
+}
+
+h2 {
+  font-size: 2.4rem;
+  margin-bottom: 25px;
+  text-align: center;
+  color: var(--primary);
+  letter-spacing: 1.2px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* User details panel */
+.user-details {
+  margin-top: 40px;
+  background: rgba(254, 192, 9, 0.1);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 30px 35px;
+  box-shadow: 0 8px 30px rgba(254, 192, 9, 0.3);
+  display: none;
+  color: #020690;
+  font-weight: 600;
+}
+
+.user-details h2 {
+  color: #020690;
+  text-align: center;
+  margin-bottom: 25px;
+  text-shadow: 0 0 5px #fec009;
+}
+
+#back-button {
+  background-color: #020690;
+  color: #fec009;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 25px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 12px rgba(2, 6, 144, 0.4);
+}
+
+#back-button:hover {
+  background-color: #fec009;
+  color: #020690;
+  box-shadow: 0 6px 18px rgba(254, 192, 9, 0.7);
+}
+
+.profile-picture {
+  display: block;
+  margin: 0 auto 25px auto;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #fec009;
+  box-shadow: 0 0 15px #fec009;
+}
+
+.user-details p {
+  font-size: 1.1rem;
+  margin-bottom: 14px;
+  text-align: center;
+  letter-spacing: 0.03em;
+}
+
+#password {
+  letter-spacing: 0.3em;
+  font-weight: 700;
+  text-align: center;
+  user-select: none;
+}
+
+#show-password-checkbox {
+  margin-left: 10px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+label[for="show-password-checkbox"] {
+  cursor: pointer;
+  font-weight: 600;
+  color: #020690;
+  user-select: none;
+}
+
+#hint-button {
+  background-color: #020690;
+  color: #fec009;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 20px auto 10px auto;
+  display: block;
+  box-shadow: 0 4px 12px rgba(2, 6, 144, 0.4);
+}
+
+#hint-button:hover {
+  background-color: #fec009;
+  color: #020690;
+  box-shadow: 0 6px 18px rgba(254, 192, 9, 0.7);
+}
+
+#hint {
+  text-align: center;
+  font-style: italic;
+  font-size: 1rem;
+  color: #020690;
+  margin-top: 10px;
+  user-select: text;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .container {
+    padding: 20px 25px;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  th, td {
+    padding: 12px 10px;
+    font-size: 0.9rem;
+  }
+
+  .profile-picture {
+    width: 90px;
+    height: 90px;
+  }
+
+  #back-button, #hint-button {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 12px;
+  background-color: var(--bg-light);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+thead tr {
+  background-color: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+}
+
+th, td {
+  padding: 14px 20px;
+  text-align: left;
+  vertical-align: middle;
+  border: none;
+}
+
+tbody tr {
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+tbody tr:hover {
+  background-color: var(--primary-light);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Search bar styling */
+.search-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#search-input {
+  width: 80%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+#search-button {
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-left: 10px;
+}
+
+#search-button:hover {
+  background-color: var(--primary-light);
+}
+
+    </style>
+</head>
+<body>
+    <!-- Add a search bar to the container -->
+<div class="container">
+    <h2 style="color: #020169;">Registered Users</h2>
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search users...">
+        <button id="search-button"><i class="fas fa-search"></i></button>
+    </div>
+    <table id="users-table">
+        <!-- Table content -->        
+            
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody id="users-tbody"></tbody>
+        </table>
+        <div id="user-details" class="user-details">
+            <h2 style="color: #020169;">User Details</h2>
+            <div>
+            <button id="back-button">Back to Table</button>   
+            </div>
+            <img id="profile-picture" class="profile-picture" src="" alt="Profile Picture">
+            <p id="name"></p>
+            <p id="username"></p>
+            <p id="date-of-birth"></p>
+            <p id="email"></p>
+            <p id="role"></p>
+            <p id="class"></p>
+            <p id="password">*********</p>
+            <input type="checkbox" id="show-password-checkbox"><label for="show-password-checkbox">Show Password</label>
+            <div>
+                <button id="hint-button" style="background-color: #1877f2; color: #FFFFFF; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Show Hint</button>                            
+            <p id="hint" style="display: none;"></p>
+            </div>            
+        </div>
+    </div>
+
+    <script>
+        // Fetch users data from users.json file
+        fetch('../data/users.json')
+            .then(response => response.json())
+            .then(users => {
+                const usersTbody = document.getElementById('users-tbody');
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${user.id}</td>
+                        <td>${user.name}</td>
+                        <td>${user.role}</td>
+                    `;
+                    row.addEventListener('click', () => {
+                        document.getElementById('users-table').style.display = 'none';
+                        document.getElementById('user-details').style.display = 'block';
+                        showUserDetails(user);
+                    });
+                    usersTbody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching users:', error));
+
+        function showUserDetails(user) {
+            document.getElementById('profile-picture').src = user.profilePicture;
+            document.getElementById('name').textContent = `Name: ${user.name}`;
+            document.getElementById('username').textContent = `Username: ${user.username}`;
+            document.getElementById('date-of-birth').textContent = `Date of Birth: ${user['date of birth']}`;
+            document.getElementById('email').textContent = `Email: ${user.email}`;
+            document.getElementById('role').textContent = `Role: ${user.role}`;
+            document.getElementById('class').textContent = `Class: ${user.class}`;
+
+            document.getElementById('show-password-checkbox').addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    const passcode = prompt('(Use Hint To Reset The passcode):');
+                    if (passcode === getCurrentDate()) {
+                        document.getElementById('password').textContent = `Password: ${user.password}`;
+                    } else {
+                        alert('Invalid passcode');
+                        document.getElementById('show-password-checkbox').checked = false;
+                    }
+                } else {
+                    document.getElementById('password').textContent = '*********';
+                }
+            });
+
+            document.getElementById('hint-button').addEventListener('click', () => {
+                const hints = [
+                    'What has keys but can\'t open locks?',
+                    'What starts with an E, ends with an E, but only contains one letter?',
+                    'What is always coming but never arrives?'
+                ];
+                const randomHint = hints[Math.floor(Math.random() * hints.length)];
+                const hintElement = document.getElementById('hint');
+                if (hintElement.style.display === 'none') {
+                    hintElement.style.display = 'block';
+                    hintElement.textContent = randomHint;
+                    document.getElementById('hint-button').textContent = 'Hide Hint';
+                } else {
+                    hintElement.style.display = 'none';
+                    document.getElementById('hint-button').textContent = 'Show Hint';
+                }
+            });
+
+            document.getElementById('back-button').addEventListener('click', () => {
+                document.getElementById('users-table').style.display = 'block';
+                document.getElementById('user-details').style.display = 'none';
+            });
+        }
+
+        function getCurrentDate() {
+            const date = new Date();
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}${month}${year}`;
+        }
+        // Add event listener to the search button
+document.getElementById('search-button').addEventListener('click', () => {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    const users = document.querySelectorAll('#users-tbody tr');
+    users.forEach(user => {
+        const userName = user.querySelector('td:nth-child(2)').textContent.toLowerCase();
+        const userRole = user.querySelector('td:nth-child(3)').textContent.toLowerCase();
+        if (userName.includes(searchInput) || userRole.includes(searchInput)) {
+            user.style.display = '';
+        } else {
+            user.style.display = 'none';
+        }
+    });
+});
+
+// Add event listener to the search input field to search on keyup
+document.getElementById('search-input').addEventListener('keyup', () => {
+    document.getElementById('search-button').click();
+});
+    </script>
+</body>
+</html>

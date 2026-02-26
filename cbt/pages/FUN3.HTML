@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Class Manager</title>
+    <style>
+        /* --- CSS STYLES --- */
+        :root { --primary: #2563eb; --secondary: #64748b; --bg: #f8fafc; --card-bg: #ffffff; }
+        body { font-family: 'Inter', system-ui, sans-serif; background-color: var(--bg); margin: 0; padding: 20px; color: #1e293b; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 40px; }
+        
+        /* Grid Layout */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .card { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); cursor: pointer; text-align: center; transition: all 0.2s ease; border: 1px solid #e2e8f0; }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-color: var(--primary); }
+        
+        /* Elements */
+        .avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); margin-bottom: 12px; background: #eee; }
+        .btn-back { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px; }
+        .hidden { display: none !important; }
+        .loader { text-align: center; padding: 50px; font-size: 1.2rem; font-weight: 500; }
+
+        /* Modal Styles */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.75); display: none; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(4px); }
+        .modal-content { background: white; padding: 32px; border-radius: 20px; width: 90%; max-width: 400px; position: relative; text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #94a3b8; }
+        .detail-list { margin-top: 20px; text-align: left; }
+        .detail-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.95rem; }
+        .detail-label { font-weight: 600; color: var(--secondary); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1 id="page-title">Class Directory</h1>
+            <p id="page-subtitle">Fetching school records...</p>
+        </header>
+
+        <div id="loader" class="loader">Loading data from JSON...</div>
+
+        <button id="btn-back" class="btn-back hidden" onclick="showClassList()">← Back to Classes</button>
+
+        <div id="class-grid" class="grid"></div>
+        <div id="student-grid" class="grid hidden"></div>
+    </div>
+
+    <div id="student-modal" class="modal-overlay" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <img id="modal-img" src="" class="avatar" style="width: 110px; height: 110px;">
+            <h2 id="modal-name" style="margin: 10px 0 5px 0; text-transform: capitalize;"></h2>
+            <div id="modal-details" class="detail-list"></div>
+        </div>
+    </div>
+
+    <script>
+        /* --- JAVASCRIPT LOGIC --- */
+        let usersData = [];
+        const classMap = new Map();
+
+        // 1. Fetching logic
+        async function init() {
+            try {
+                // Change 'data/users.json' to your exact file path
+                const response = await fetch('../data/users.json');
+                if (!response.ok) throw new Error("Could not find users.json");
+                
+                usersData = await response.json();
+                
+                // Identify unique classes
+                usersData.forEach(u => {
+                    if (u.classid && isStudent(u)) {
+                        classMap.set(u.classid, u.class);
+                    }
+                });
+
+                document.getElementById('loader').classList.add('hidden');
+                document.getElementById('page-subtitle').innerText = "Select a class to manage students";
+                renderClasses();
+            } catch (err) {
+                document.getElementById('loader').innerHTML = `<p style="color:red">Error: ${err.message}<br><small>Make sure you are using a Local Server (Live Server).</small></p>`;
+            }
+        }
+
+        function isStudent(u) {
+            const role = u.role ? u.role.toLowerCase() : "";
+            return !role.includes('teacher') && !role.includes('webmaster') && !role.includes('parent');
+        }
+
+        // 2. Render Class Cards
+        function renderClasses() {
+            const grid = document.getElementById('class-grid');
+            grid.innerHTML = '';
+            
+            // Sort classes by name/ID
+            const sorted = Array.from(classMap.entries()).sort();
+
+            sorted.forEach(([id, name]) => {
+                const count = usersData.filter(u => u.classid === id && isStudent(u)).length;
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => showStudents(id, name);
+                card.innerHTML = `
+                    <div style="font-size: 40px; margin-bottom:10px;">🏫</div>
+                    <div style="font-weight:700; font-size:1.1rem">${name}</div>
+                    <div style="color:var(--secondary); font-size:0.85rem; margin-top:5px;">${count} Students</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // 3. Render Student List
+        function showStudents(classId, className) {
+            const students = usersData.filter(u => u.classid === classId && isStudent(u));
+            
+            document.getElementById('class-grid').classList.add('hidden');
+            document.getElementById('student-grid').classList.remove('hidden');
+            document.getElementById('btn-back').classList.remove('hidden');
+            
+            document.getElementById('page-title').innerText = className;
+            document.getElementById('page-subtitle').innerText = `Roster for ID: ${classId}`;
+
+            const grid = document.getElementById('student-grid');
+            grid.innerHTML = '';
+
+            students.forEach(student => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => openModal(student);
+                
+                const img = student.profilePicture || 'https://via.placeholder.com/150?text=No+Image';
+
+                card.innerHTML = `
+                    <img src="${img}" class="avatar" onerror="this.src='https://via.placeholder.com/150?text=User'">
+                    <div style="font-weight:600; text-transform:capitalize;">${student.name.toLowerCase()}</div>
+                    <div style="color:#64748b; font-size:0.8rem">${student.username}</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // 4. Modal Functions (Details)
+        function openModal(student) {
+            const modal = document.getElementById('student-modal');
+            document.getElementById('modal-img').src = student.profilePicture || 'https://via.placeholder.com/150';
+            document.getElementById('modal-name').innerText = student.name.toLowerCase();
+
+            document.getElementById('modal-details').innerHTML = `
+                <div class="detail-item"><span class="detail-label">Username:</span> <span>${student.username}</span></div>
+                <div class="detail-item"><span class="detail-label">Role:</span> <span>${student.role}</span></div>
+                <div class="detail-item"><span class="detail-label">Class ID:</span> <span>${student.classid}</span></div>
+                <div class="detail-item"><span class="detail-label">Full Profile:</span> <span>Active</span></div>
+            `;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('student-modal').style.display = 'none';
+        }
+
+        function showClassList() {
+            document.getElementById('student-grid').classList.add('hidden');
+            document.getElementById('btn-back').classList.add('hidden');
+            document.getElementById('class-grid').classList.remove('hidden');
+            document.getElementById('page-title').innerText = "Class Directory";
+            document.getElementById('page-subtitle').innerText = "Select a class to manage students";
+        }
+
+        // Start
+        init();
+    </script>
+</body>
+</html>

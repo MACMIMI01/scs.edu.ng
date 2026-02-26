@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Portal | SCS</title>
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Local Font Awesome Fallback -->
+    <link rel="stylesheet" href="../scripts/css/font-awesome.min.css" />
+    <!-- This CSS is the same as your B8T.html, but with the responsive sidebar added -->
+    <style>
+        :root {
+            --primary: #020169; --accent: #FEC009; --text-dark: #1a1a1a; --text-light: #666;
+            --bg-light: #f0f2f5; --card-bg: rgba(255, 255, 255, 0.85); --glass-bg: rgba(255, 255, 255, 0.7);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08); --transition: all 0.3s ease;
+            --primary-blue: #020169; /* Deep Tech Blue */
+            --accent-gold: #FEC009; /* Bright Gold/Amber */
+            --background-light: #f0f2f5;
+            --white: #ffffff;
+            --dark-text: #333;
+            --muted-text: #666;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg-light); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; }
+
+         /*
+        ===================================================================
+            1. RESPONSIVE NAVIGATION SYSTEM
+        ===================================================================
+        */
+
+        /* --- 1.1 Mobile/Tablet Navigation --- */
+        .hamburger-icon { 
+            display: block; 
+            position: fixed; 
+            top: 20px; 
+            left: 20px; 
+            font-size: 30px; 
+            color: var(--primary-blue); 
+            cursor: pointer; 
+            z-index: 1100; 
+            background-color: var(--accent-gold); 
+            padding: 6px 10px; 
+            border-radius: 6px; 
+            box-shadow: var(--shadow); 
+            border: none;
+            transition: var(--transition);
+        }
+        .sidebar { 
+            position: fixed; 
+            top: 0; 
+            left: -260px; /* Hidden by default (Mobile) */
+            width: 260px; 
+            height: 100%; 
+            background-color: var(--primary-blue); 
+            color: var(--white); 
+            padding-top: 90px; 
+            box-sizing: border-box; 
+            transition: left 0.3s ease-in-out; 
+            z-index: 1050; 
+            box-shadow: 3px 0 8px rgba(0,0,0,0.4); 
+        }
+        .sidebar.open { left: 0; } /* JS class for mobile view */
+        main { padding: 30px; padding-top: 90px; width: 100%; flex-grow: 1; } /* Main content on mobile */
+
+        /* --- 1.2 Menu Item Styles (Shared) --- */
+        .menu-item { 
+            display: flex; 
+            align-items: center; 
+            padding: 16px 24px; 
+            cursor: pointer; 
+            transition: background-color 0.25s ease, border-left 0.25s ease; 
+            font-size: 1.1rem; 
+            border-left: 4px solid transparent; 
+        }
+        .menu-item i { font-size: 20px; margin-right: 18px; min-width: 28px; text-align: center; }
+        .menu-item span { white-space: nowrap; }
+        .menu-item:hover, .menu-item:focus { 
+            background-color: rgba(254, 192, 9, 0.2); 
+            border-left-color: var(--accent-gold); 
+            outline: none;
+        }
+
+        /* --- 1.3 Profile Icon --- */
+        .profile-display-icon { 
+            position: fixed; 
+            top: 15px; 
+            right: 15px; 
+            width: 52px; 
+            height: 52px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            border: 2.5px solid var(--accent-gold); /* Highlight border */
+            cursor: pointer; 
+            z-index: 1100; 
+            box-shadow: var(--shadow); 
+            transition: transform 0.25s ease, border-color 0.25s ease; 
+        }
+        .profile-display-icon:hover { transform: scale(1.1); border-color: var(--primary-blue); }
+
+        /*
+        ===================================================================
+            2. DESKTOP OPTIMIZATION (min-width: 1024px)
+        ===================================================================
+        */
+        @media (min-width: 1024px) {
+            .hamburger-icon { display: none; }
+            /* Sidebar: Collapsed by default, visible */
+            .sidebar { left: 0; width: 80px; padding-top: 20px; transition: width 0.3s ease; }
+            /* Sidebar: Expanded on hover */
+            .sidebar:hover { width: 260px; }
+            
+            /* Main Content: Adjust margin for sidebar */
+            main { 
+                margin-left: 80px; 
+                width: calc(100% - 80px); 
+                transition: margin-left 0.3s ease, width 0.3s ease; 
+            }
+            /* Main Content: Push over when sidebar expands */
+            .sidebar:hover ~ main { 
+                margin-left: 260px; 
+                width: calc(100% - 260px);
+            }
+
+            /* Menu Text: Hide when collapsed, show on hover */
+            .menu-item span { opacity: 0; transition: opacity 0.2s ease; }
+            .sidebar:hover .menu-item span { opacity: 1; }
+        }
+
+
+        h1, h2 { color: var(--primary); margin-bottom: 15px; }
+        h1 { font-size: 2.2rem; text-align: center; margin-bottom: 25px; }
+        .glass-card-container { width: 100%; overflow: hidden; margin: 30px 0; }
+        .glass-card-slider { display: flex; width: max-content; gap: 20px; animation: scroll 40s linear infinite; }
+        .glass-card { width: 160px; height: 200px; background: var(--glass-bg); border-radius: 15px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: var(--shadow); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px; }
+        .glass-card img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; border: 3px solid var(--primary); }
+        .student-name { font-weight: 700; color: var(--primary); font-size: 14px; }
+        .student-details { font-size: 12px; color: var(--text-light); }
+        .class-photo-section { margin: 40px auto; max-width: 800px; text-align: center; background: var(--card-bg); padding: 25px; border-radius: 15px; box-shadow: var(--shadow); }
+        .class-photo-section img { width: 100%; border-radius: 12px; }
+        .photo-caption { margin-top: 20px; font-size: 1.3rem; font-weight: 700; color: var(--primary); }
+        .photo-subcaption { margin-top: 8px; color: var(--text-light); }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .glass-card-container:hover .glass-card-slider { animation-play-state: paused; }
+    </style>
+</head>
+<body>
+    
+    <button class="hamburger-icon" id="hamburger-icon"><i class="fas fa-bars"></i></button>
+    
+    <div class="sidebar" id="sidebar">
+        <div class="menu-item" onclick="window.location.href='dashboard.html'"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></div>
+        <div class="menu-item" onclick="window.location.href='class-list.html'"><i class="fas fa-users"></i><span>All Classes</span></div>
+        <div class="menu-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i><span>My Profile</span></div>
+        <div class="menu-item" id="logout-button"><i class="fas fa-sign-out-alt"></i><span>Logout</span></div>
+    </div>
+  
+    <main id="mainContent">
+        <h1 id="class-title">Loading Class...</h1>
+        <h2>Class Members</h2>
+        <div class="glass-card-container">
+            <div class="glass-card-slider" id="studentSlider"></div>
+        </div>
+        <div class="class-photo-section">
+            <img src="../assets/images/default-class.jpeg" alt="Class Photo" id="class-photo">
+            <p class="photo-caption" id="photo-caption">Academic Year</p>
+            <p class="photo-subcaption" id="teacher-caption">Form Teacher</p>
+        </div>
+    </main>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const classIdFromUrl = urlParams.get('class'); // e.g., "B8T"
+
+        if (!classIdFromUrl) {
+            document.body.innerHTML = '<h1>Error: No class specified. Please go back to the <a href="class-list.html">class list</a>.</h1>';
+            return;
+        }
+
+        const sidebar = document.getElementById('sidebar');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const logoutButton = document.getElementById('logout-button');
+        hamburgerIcon.addEventListener('click', () => sidebar.classList.toggle('open'));
+        logoutButton.addEventListener('click', () => { localStorage.clear(); window.location.href = 'login.html'; });
+
+        const studentSlider = document.getElementById('studentSlider');
+        const classTitle = document.getElementById('class-title');
+        const classPhoto = document.getElementById('class-photo');
+        const photoCaption = document.getElementById('photo-caption');
+        const teacherCaption = document.getElementById('teacher-caption');
+
+        async function initializePage() {
+            try {
+                const [usersResponse, classesResponse] = await Promise.all([
+                    fetch('../data/users.json'),
+                    fetch('../data/classes.json')
+                ]);
+
+                if (!usersResponse.ok || !classesResponse.ok) throw new Error('Failed to fetch data files.');
+
+                const allUsers = await usersResponse.json();
+                const allClasses = await classesResponse.json();
+
+                const currentClass = allClasses.find(c => c.classId === classIdFromUrl);
+                if (!currentClass) throw new Error(`Class with ID "${classIdFromUrl}" was not found in classes.json.`);
+                
+                const classCodeToFilterBy = currentClass.classCode;
+                
+                document.title = `${currentClass.className} | SCS Portal`;
+                classTitle.textContent = `Welcome to ${currentClass.className}`;
+                classPhoto.src = currentClass.classPhoto;
+                classPhoto.alt = `${currentClass.className} Class Photo`;
+                photoCaption.textContent = `${currentClass.className} - ${currentClass.academicYear}`;
+                
+                const classStudents = allUsers.filter(user => user.role && user.role.toLowerCase() === 'student' && user.classid === classCodeToFilterBy);
+                const formTeacher = allUsers.find(user => user.role && user.role.toLowerCase() === 'teacher' && user.classid === classCodeToFilterBy);
+
+                renderStudentCards(classStudents);
+
+                if (formTeacher) {
+                    teacherCaption.textContent = `Form Teacher: ${formTeacher.name}`;
+                } else {
+                    teacherCaption.textContent = 'Form Teacher not assigned.';
+                }
+
+            } catch (error) {
+                document.body.innerHTML = `<div style="padding: 40px; text-align: center;"><h1>Error Loading Page</h1><p style="color: #721c24; background: #f8d7da; padding: 15px;">${error.message}</p></div>`;
+                console.error(error);
+            }
+        }
+        
+        function renderStudentCards(students) {
+            studentSlider.innerHTML = '';
+            if (students.length === 0) {
+                studentSlider.innerHTML = '<p style="padding: 20px; text-align: center; width: 100%;">No students found with the correct class code.</p>';
+                return;
+            }
+            const duplicatedStudents = [...students, ...students];
+            duplicatedStudents.forEach(student => {
+                const card = document.createElement('div');
+                card.className = 'glass-card';
+                card.innerHTML = `
+                    <img src="${student.profilePicture || '../assets/profile_pictures/default.jpeg'}" alt="${student.name}" onerror="this.src='../assets/profile_pictures/default.jpeg'">
+                    <div class="student-info">
+                        <div class="student-name">${student.name || 'Unknown Student'}</div>
+                        <div class="student-details">${student.details || student.classid || 'Student'}</div>
+                    </div>
+                `;
+                studentSlider.appendChild(card);
+            });
+        }
+        
+        if (!localStorage.getItem('loggedInUserId')) {
+             window.location.href = 'login.html';
+        } else {
+             initializeApp();
+        }
+    });
+    </script>
+</body>
+</html>

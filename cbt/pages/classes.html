@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Directory | SCS CBT System</title>
+    <!-- Project Assets -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Local Fallback -->
+    <link rel="stylesheet" href="../scripts/css/font-awesome.min.css" />
+    <script src="../scripts/auth.js" defer></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary-blue: #020169;
+            --accent-gold: #FEC009;
+            --bg-gray: #f0f2f5;
+            --white: #ffffff;
+            --sidebar-narrow: 80px;
+            --sidebar-wide: 260px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--bg-gray); 
+            color: #333;
+            overflow-x: hidden;
+            display: flex;
+        }
+
+        /* --- SIDEBAR (Standard System Design) --- */
+        .sidebar {
+            width: var(--sidebar-narrow);
+            height: 100vh;
+            background: var(--primary-blue);
+            color: var(--white);
+            position: fixed;
+            left: 0; top: 0;
+            transition: var(--transition);
+            z-index: 1050;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        @media (min-width: 1024px) { .sidebar:hover { width: var(--sidebar-wide); } }
+
+        .menu-list { list-style: none; margin-top: 80px; flex-grow: 1; }
+        .menu-item {
+            padding: 18px 25px;
+            display: flex; align-items: center;
+            cursor: pointer; transition: var(--transition);
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            border-left: 4px solid transparent;
+            white-space: nowrap;
+        }
+        .menu-item i { min-width: 30px; font-size: 1.2rem; text-align: center; }
+        .menu-item span { margin-left: 20px; opacity: 0; transition: opacity 0.2s; }
+        .sidebar:hover .menu-item span { opacity: 1; }
+        .menu-item:hover, .menu-item.active {
+            background: rgba(255,255,255,0.1);
+            color: var(--accent-gold);
+            border-left-color: var(--accent-gold);
+        }
+
+        /* --- MAIN CONTENT --- */
+        main {
+            flex-grow: 1;
+            margin-left: var(--sidebar-narrow);
+            padding: 40px;
+            transition: var(--transition);
+            min-height: 100vh;
+        }
+        @media (min-width: 1024px) { .sidebar:hover + main { margin-left: var(--sidebar-wide); } }
+
+        header { margin-bottom: 40px; }
+        header h1 { font-size: 2.2rem; color: var(--primary-blue); font-weight: 700; }
+        header p { color: #666; font-size: 1.1rem; border-bottom: 3px solid var(--accent-gold); display: inline-block; padding-bottom: 5px; }
+
+        /* --- GRIDS & CARDS --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        .card { 
+            background: var(--white); 
+            border-radius: 15px; 
+            padding: 30px 20px; 
+            box-shadow: var(--shadow); 
+            cursor: pointer; 
+            text-align: center; 
+            transition: var(--transition);
+            border-top: 5px solid var(--primary-blue);
+            position: relative;
+        }
+        .card:hover { transform: translateY(-8px); border-top-color: var(--accent-gold); }
+        .hidden { display: none; }
+
+        .class-icon-wrapper {
+            width: 70px; height: 70px;
+            background: #f0f4ff;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.8rem;
+            color: var(--primary-blue);
+            transition: 0.3s;
+        }
+        .card:hover .class-icon-wrapper { background: var(--accent-gold); color: var(--primary-blue); }
+        
+        .class-title { font-weight: 700; font-size: 1.3rem; color: var(--primary-blue); margin-bottom: 5px; }
+        .class-meta { color: #777; font-size: 0.9rem; font-weight: 500; }
+
+        /* Student View */
+        .student-card { cursor: default; }
+        .avatar-container { position: relative; width: 100px; height: 100px; margin: 0 auto 15px; }
+        .avatar { 
+            width: 100%; height: 100%; 
+            border-radius: 20%; 
+            object-fit: cover; 
+            border: 4px solid #eee;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .student-name { font-weight: 700; color: var(--primary-blue); font-size: 1.1rem; margin-bottom: 5px; }
+        .student-role-badge {
+            background: var(--primary-blue); color: white;
+            font-size: 0.7rem; padding: 4px 10px; border-radius: 20px;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        /* Utility */
+        .btn-back { 
+            background: var(--primary-blue); color: white; border: none; 
+            padding: 12px 25px; border-radius: 8px; cursor: pointer; 
+            margin-bottom: 30px; font-weight: 600; transition: 0.3s;
+        }
+        .btn-back:hover { background: #0402a3; box-shadow: var(--shadow); }
+        .loader { text-align: center; padding: 100px; color: var(--primary-blue); }
+
+        /* Mobile Adjustments */
+        @media (max-width: 992px) {
+            .sidebar { left: -100%; width: var(--sidebar-wide); }
+            .sidebar.open { left: 0; }
+            main { margin-left: 0; padding: 80px 20px; }
+            .mobile-bar { 
+                display: flex; position: fixed; top: 0; left: 0; right: 0; 
+                height: 60px; background: var(--primary-blue); z-index: 1100;
+                align-items: center; padding: 0 20px; color: white;
+            }
+        }
+        .mobile-bar { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-bar">
+        <i class="fas fa-bars fa-lg" id="menu-toggle" style="cursor:pointer"></i>
+        <span style="margin-left: 20px; font-weight:700;">SCS CBT</span>
+    </div>
+
+    <!-- Navigation Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="menu-list">
+            <a href="dashboard.html" class="menu-item"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+            <a href="test-library.html" class="menu-item"><i class="fas fa-vial"></i><span>Tests</span></a>
+            <a href="notes.html" class="menu-item"><i class="fas fa-book-open"></i><span>Notes</span></a>
+            <a href="profile.html" class="menu-item"><i class="fas fa-user-circle"></i><span>Profile</span></a>
+            <a href="classes.html" class="menu-item active"><i class="fas fa-school"></i><span>Classes</span></a>
+            <div class="menu-item" onclick="localStorage.clear(); window.location.href='login.html'" style="margin-top:auto">
+                <i class="fas fa-sign-out-alt"></i><span>Logout</span>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <header>
+            <h1 id="page-title"><i class="fas fa-folder-open"></i> Class Directory</h1>
+            <p id="page-subtitle">SCS Academic Portal</p>
+        </header>
+
+        <div id="loader" class="loader">
+            <i class="fas fa-spinner fa-spin fa-3x"></i>
+            <p style="margin-top:15px">Synchronizing student records...</p>
+        </div>
+
+        <button id="btn-back" class="btn-back hidden" onclick="showClassList()">
+            <i class="fas fa-chevron-left"></i> Back to Classes
+        </button>
+
+        <div id="class-grid" class="grid"></div>
+        <div id="student-grid" class="grid hidden"></div>
+    </main>
+
+    <script>
+        let dbData = []; 
+        const classMap = new Map();
+
+        const sidebar = document.getElementById('sidebar');
+        const menuToggle = document.getElementById('menu-toggle');
+        const classGrid = document.getElementById('class-grid');
+        const studentGrid = document.getElementById('student-grid');
+        const backBtn = document.getElementById('btn-back');
+        const title = document.getElementById('page-title');
+        const subtitle = document.getElementById('page-subtitle');
+        const loader = document.getElementById('loader');
+
+        // Mobile Toggle
+        if(menuToggle) menuToggle.onclick = () => sidebar.classList.toggle('open');
+
+        async function loadData() {
+            try {
+                const response = await fetch('../data/users.json');
+                if (!response.ok) throw new Error("Database link failed");
+                dbData = await response.json();
+                processData();
+            } catch (error) {
+                console.error(error);
+                loader.innerHTML = `<i class="fas fa-exclamation-triangle fa-3x" style="color:red"></i><p>Connection Error. Check your local server.</p>`;
+            }
+        }
+
+        function isStudent(user) {
+            const r = (user.role || "").toLowerCase();
+            return !r.includes('teacher') && !r.includes('webmaster') && !r.includes('parent') && !r.includes('admin');
+        }
+
+        function processData() {
+            dbData.forEach(user => {
+                if (isStudent(user) && user.classid) {
+                    if (!classMap.has(user.classid)) {
+                        classMap.set(user.classid, user.class); 
+                    }
+                }
+            });
+            loader.classList.add('hidden');
+            renderClasses();
+        }
+
+        function renderClasses() {
+            classGrid.innerHTML = '';
+            const sortedClasses = Array.from(classMap.entries()).sort();
+
+            sortedClasses.forEach(([id, name]) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => showStudents(id, name);
+
+                const count = dbData.filter(u => u.classid === id && isStudent(u)).length;
+
+                card.innerHTML = `
+                    <div class="class-icon-wrapper"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="class-title">${name}</div>
+                    <div class="class-meta"><i class="fas fa-users"></i> ${count} Students</div>
+                    <div class="class-meta" style="font-size:0.7rem; margin-top:5px"><i class="fas fa-id-card"></i> ${id}</div>
+                `;
+                classGrid.appendChild(card);
+            });
+        }
+
+        function showStudents(classId, className) {
+            const students = dbData.filter(u => u.classid === classId && isStudent(u));
+            
+            classGrid.classList.add('hidden');
+            studentGrid.classList.remove('hidden');
+            backBtn.classList.remove('hidden');
+            
+            title.innerHTML = `<i class="fas fa-users"></i> ${className}`;
+            subtitle.innerText = `${students.length} Registered Students`;
+
+            studentGrid.innerHTML = '';
+            students.forEach(student => {
+                const sCard = document.createElement('div');
+                sCard.className = 'card student-card';
+                const imgSrc = student.profilePicture || '../assets/profile_pictures/default.jpeg';
+
+                sCard.innerHTML = `
+                    <div class="avatar-container">
+                        <img src="${imgSrc}" class="avatar" onerror="this.src='../assets/profile_pictures/default.jpeg'">
+                    </div>
+                    <div class="student-name">${student.name.toLowerCase()}</div>
+                    <div style="margin-bottom:10px">
+                        <span class="student-role-badge"><i class="fas fa-user-tag"></i> ${student.role}</span>
+                    </div>
+                    <div class="class-meta"><i class="fas fa-fingerprint"></i> ID: ${student.id}</div>
+                `;
+                studentGrid.appendChild(sCard);
+            });
+            window.scrollTo(0,0);
+        }
+
+        function showClassList() {
+            studentGrid.classList.add('hidden');
+            backBtn.classList.add('hidden');
+            classGrid.classList.remove('hidden');
+            title.innerHTML = `<i class="fas fa-folder-open"></i> Class Directory`;
+            subtitle.innerText = "Select a class to view records";
+        }
+
+        loadData();
+    </script>
+</body>
+</html>

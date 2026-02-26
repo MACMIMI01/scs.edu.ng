@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform Documentation | SCS CBT System</title>
+    <!-- Favicon & Fonts -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../scripts/css/font-awesome.min.css">
+    
+    <script src="../scripts/auth.js" defer></script>
+
+    <style>
+        :root {
+            --primary-blue: #020169;
+            --accent-gold: #FEC009;
+            --bg-light: #f4f7fe;
+            --white: #ffffff;
+            --text-dark: #2d3436;
+            --text-muted: #636e72;
+            --sidebar-narrow: 80px;
+            --sidebar-wide: 260px;
+            --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { box-sizing: border-box; }
+        body { 
+            margin: 0; 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--bg-light); 
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 
+        ===================================================================
+            1. NAVIGATION SYSTEM (SIDEBAR)
+        ===================================================================
+        */
+        .hamburger-icon { 
+            display: block; position: fixed; top: 20px; left: 20px; 
+            font-size: 24px; color: var(--primary-blue); cursor: pointer; 
+            z-index: 1200; background-color: var(--accent-gold); 
+            padding: 8px 12px; border-radius: 6px; box-shadow: var(--shadow-sm); border: none;
+        }
+
+        .sidebar { 
+            position: fixed; top: 0; left: -260px; 
+            width: var(--sidebar-wide); height: 100%; 
+            background-color: var(--primary-blue); color: var(--white); 
+            padding-top: 80px; transition: var(--transition); 
+            z-index: 1100; box-shadow: 3px 0 15px rgba(0,0,0,0.2); 
+        }
+
+        .sidebar.open { left: 0; }
+
+        .menu-item { 
+            display: flex; align-items: center; padding: 16px 24px; 
+            cursor: pointer; transition: var(--transition); 
+            border-left: 4px solid transparent; text-decoration: none; color: rgba(255,255,255,0.8);
+        }
+
+        .menu-item i { font-size: 1.2rem; margin-right: 18px; min-width: 25px; text-align: center; }
+        .menu-item:hover { background: rgba(255,255,255,0.1); color: var(--accent-gold); border-left-color: var(--accent-gold); }
+        .menu-item.active { background: rgba(255,255,255,0.1); color: var(--accent-gold); border-left-color: var(--accent-gold); }
+
+        @media (min-width: 1024px) {
+            .hamburger-icon { display: none; }
+            .sidebar { left: 0; width: var(--sidebar-narrow); overflow: hidden; }
+            .sidebar:hover { width: var(--sidebar-wide); }
+            .sidebar .menu-item span { opacity: 0; transition: opacity 0.2s; white-space: nowrap; }
+            .sidebar:hover .menu-item span { opacity: 1; }
+            
+            main, footer { 
+                margin-left: var(--sidebar-narrow); 
+                width: calc(100% - var(--sidebar-narrow)) !important; 
+            }
+            .sidebar:hover ~ main, .sidebar:hover ~ footer { 
+                margin-left: var(--sidebar-wide); 
+                width: calc(100% - var(--sidebar-wide)) !important;
+            }
+        }
+
+        /* 
+        ===================================================================
+            2. MAIN CONTENT AREA
+        ===================================================================
+        */
+        main { padding: 40px; padding-top: 100px; flex-grow: 1; transition: var(--transition); }
+        .content-container { max-width: 900px; margin: auto; }
+
+        .hero-section { text-align: center; margin-bottom: 50px; }
+        .hero-section h1 { font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 10px; }
+        .hero-section p { color: var(--text-muted); font-size: 1.1rem; }
+
+        /* FAQ Accordion */
+        .section-header { 
+            display: flex; align-items: center; gap: 15px; 
+            color: var(--primary-blue); margin-bottom: 25px; 
+            border-bottom: 2px solid var(--accent-gold); padding-bottom: 10px;
+        }
+
+        .faq-accordion details {
+            background: var(--white); border-radius: 12px;
+            margin-bottom: 15px; box-shadow: var(--shadow-sm);
+            transition: var(--transition); border: 1px solid #edf2f7;
+        }
+
+        .faq-accordion details[open] { box-shadow: var(--shadow-lg); border-color: var(--primary-blue); }
+
+        .faq-accordion summary {
+            padding: 20px; font-weight: 600; cursor: pointer; list-style: none;
+            display: flex; justify-content: space-between; align-items: center; outline: none;
+        }
+
+        .faq-accordion summary::-webkit-details-marker { display: none; }
+
+        .faq-accordion summary::after {
+            content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            transition: var(--transition); color: var(--primary-blue);
+        }
+
+        .faq-accordion details[open] summary::after { transform: rotate(180deg); color: var(--accent-gold); }
+
+        .faq-answer { padding: 0 20px 20px; line-height: 1.8; color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Guide Steps */
+        .guide-grid { display: grid; gap: 20px; margin-top: 30px; }
+        .guide-card {
+            background: var(--white); padding: 25px; border-radius: 15px;
+            display: flex; gap: 20px; box-shadow: var(--shadow-sm);
+            border-left: 5px solid var(--primary-blue);
+        }
+
+        .step-number {
+            background: var(--primary-blue); color: var(--accent-gold);
+            min-width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 1.2rem;
+        }
+
+        .guide-card h3 { margin: 0 0 8px 0; font-size: 1.1rem; color: var(--primary-blue); }
+        .guide-card p { margin: 0; font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+
+        /* 
+        ===================================================================
+            3. GLOBAL ELEMENTS
+        ===================================================================
+        */
+        .profile-display-icon { 
+            position: fixed; top: 15px; right: 15px; width: 50px; height: 50px; 
+            border-radius: 50%; object-fit: cover; border: 2.5px solid var(--accent-gold); 
+            cursor: pointer; z-index: 1200; box-shadow: var(--shadow-sm); transition: var(--transition);
+        }
+        .profile-display-icon:hover { transform: scale(1.1); border-color: var(--white); }
+
+        footer { 
+            background-color: var(--primary-blue); color: var(--white); 
+            padding: 20px; text-align: center; font-size: 0.85rem; 
+            border-top: 3px solid var(--accent-gold); transition: var(--transition);
+        }
+
+        @media (max-width: 768px) {
+            main { padding: 20px; padding-top: 80px; }
+            .hero-section h1 { font-size: 1.8rem; }
+            .guide-card { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="hamburger-icon" id="hamburger-icon"><i class="fas fa-bars"></i></button>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="menu-list">
+            <div class="menu-item" id="dashboard-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></div>
+            <div class="menu-item" id="test-library-link"><i class="fas fa-flask"></i><span>Test Library</span></div>
+            <div class="menu-item" id="exam-library-link"><i class="fas fa-file-invoice"></i><span>Exam Library</span></div>
+            <div class="menu-item" id="profile-link"><i class="fas fa-user-shield"></i><span>Security Profile</span></div>
+            <div class="menu-item" id="classes-link"><i class="fas fa-network-wired"></i><span>Class Network</span></div>
+            <div class="menu-item active" id="guide-faq-link"><i class="fas fa-info-circle"></i><span>Documentation</span></div>
+            <div class="menu-item" id="logout-button" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1);">
+                <i class="fas fa-power-off"></i><span>System Logout</span>
+            </div>
+        </div>
+    </nav>
+
+    <img id="user-image-display" src="../assets/profile_pictures/default.jpeg" alt="User" class="profile-display-icon">
+
+    <main id="main-content">
+        <div class="content-container">
+            <section class="hero-section">
+                <h1>Support Center</h1>
+                <p>Comprehensive guide to navigating the SCS CBT Ecosystem.</p>
+            </section>
+            
+            <div class="section-header">
+                <i class="fas fa-comments-question fa-lg"></i>
+                <h2>Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-accordion">
+                <details>
+                    <summary>How do I initiate an assessment?</summary>
+                    <div class="faq-answer">
+                        Navigate to the <strong>Test Library</strong> (for practice) or <strong>Exam Library</strong> (for formal finals). Select your registered module to begin the secure assessment interface.
+                    </div>
+                </details>
+                <details>
+                    <summary>Where are my digital result slips located?</summary>
+                    <div class="faq-answer">
+                        Instant performance metrics are displayed upon submission. Official PDF result slips are archived and accessible via your personal <strong>Dashboard</strong> under the "Results" section.
+                    </div>
+                </details>
+                <details>
+                    <summary>Can I modify inputs mid-examination?</summary>
+                    <div class="faq-answer">
+                        The system allows real-time modifications. You may use the <strong>Navigation Matrix</strong> (number panel) to revisit any question before final encryption and submission.
+                    </div>
+                </details>
+                 <details>
+                    <summary>Technical error occurred. What is the protocol?</summary>
+                    <div class="faq-answer">
+                        The SCS CBT system features <strong>Auto-Save Progress</strong>. If a connection is lost, simply refresh or log back in; your previous inputs remain cached on the central server.
+                    </div>
+                </details>
+            </div>
+
+            <div class="section-header" style="margin-top: 50px;">
+                <i class="fas fa-map-signs fa-lg"></i>
+                <h2>System Deployment Guide</h2>
+            </div>
+
+            <div class="guide-grid">
+                <div class="guide-card">
+                    <div class="step-number">1</div>
+                    <div>
+                        <h3>Authentication</h3>
+                        <p>Establish a secure session using your institutional credentials. Multi-role detection will automatically configure your unique workspace.</p>
+                    </div>
+                </div>
+                <div class="guide-card">
+                    <div class="step-number">2</div>
+                    <div>
+                        <h3>Module Selection</h3>
+                        <p>Browse the synchronized library to find your active assessment. Use the search filters to isolate specific academic sessions or terms.</p>
+                    </div>
+                </div>
+                <div class="guide-card">
+                    <div class="step-number">3</div>
+                    <div>
+                        <h3>Execution</h3>
+                        <p>Proceed through the digitized questions. The system monitors activity and timing parameters to ensure academic integrity.</p>
+                    </div>
+                </div>
+                <div class="guide-card">
+                    <div class="step-number">4</div>
+                    <div>
+                        <h3>Data Submission</h3>
+                        <p>Upon completion, initiate the submission sequence. Results are calculated using our proprietary grading algorithm and stored in the central database.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+  
+    <footer>
+        &copy; 2024 St. Christopher School | CBT Infrastructure v2.4.0
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const sidebar = document.getElementById('sidebar');
+        const profileDisplayIcon = document.getElementById('user-image-display');
+
+        // Toggle Sidebar
+        hamburgerIcon.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+        // Handle Role-Based Dashboard Redirection
+        const redirectToRoleDashboard = () => {
+            const userRole = localStorage.getItem('loggedInUserRole') || 'student';
+            window.location.href = 'dashboard.html';
+        };
+        
+        // Navigation Logic
+        const navMap = {
+            'dashboard-link': redirectToRoleDashboard,
+            'test-library-link': () => window.location.href = 'test-library.html',
+            'exam-library-link': () => window.location.href = 'exam-library.html',
+            'profile-link': () => window.location.href = 'profile.html',
+            'classes-link': () => window.location.href = 'classes.html',
+            'guide-faq-link': () => window.location.href = 'guide-FAQ.html',
+            'logout-button': () => {
+                if(confirm("Terminate current session?")) {
+                    localStorage.clear();
+                    window.location.href = 'login.html';
+                }
+            }
+        };
+
+        Object.keys(navMap).forEach(id => {
+            const el = document.getElementById(id);
+            if(el) el.addEventListener('click', navMap[id]);
+        });
+
+        // Profile Management
+        const loggedInUserId = localStorage.getItem('loggedInUserId');
+        if (loggedInUserId) {
+            fetch('../data/users.json')
+                .then(res => res.ok ? res.json() : Promise.reject())
+                .then(users => {
+                    const tempUsers = JSON.parse(localStorage.getItem('tempUsers')) || [];
+                    const user = [...users, ...tempUsers].find(u => u.id == loggedInUserId);
+                    if (user && user.profilePicture) {
+                        profileDisplayIcon.src = user.profilePicture;
+                    }
+                }).catch(() => console.warn("Profile sync offline"));
+        }
+        profileDisplayIcon.addEventListener('click', () => window.location.href = 'profile.html');
+    });
+    </script>
+</body>
+</html>

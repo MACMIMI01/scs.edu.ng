@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Link Scanner - Sitemap Strategy</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+    header {
+      background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+    .content {
+      padding: 30px;
+    }
+    .input-section {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    .url-input {
+      flex: 1;
+      padding: 15px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+    .url-input:focus {
+      outline: none;
+      border-color: #3498db;
+    }
+    .btn {
+      background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+    }
+    .btn:active {
+      transform: translateY(0);
+    }
+    .btn-secondary {
+      background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+    }
+    .results-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 20px;
+    }
+    .panel {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    h2 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #3498db;
+    }
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .stat-card {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      flex: 1;
+      min-width: 120px;
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #3498db;
+    }
+    .stat-label {
+      font-size: 0.9rem;
+      color: #7f8c8d;
+    }
+    .link-list {
+      max-height: 400px;
+      overflow-y: auto;
+      border: 1px solid #e1e8ed;
+      border-radius: 8px;
+      background: white;
+    }
+    .link-item {
+      padding: 12px 15px;
+      border-bottom: 1px solid #e1e8ed;
+      display: flex;
+      align-items: center;
+    }
+    .link-item:last-child {
+      border-bottom: none;
+    }
+    .link-item:hover {
+      background: #f1f8ff;
+    }
+    .link-icon {
+      margin-right: 10px;
+      color: #3498db;
+    }
+    .link-url {
+      flex: 1;
+      word-break: break-all;
+    }
+    .link-type {
+      background: #e1e8ed;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      margin-left: 10px;
+    }
+    .link-type.page {
+      background: #d5f5e3;
+      color: #27ae60;
+    }
+    .link-type.image {
+      background: #e8f4fd;
+      color: #3498db;
+    }
+    .link-type.other {
+      background: #fdebd0;
+      color: #f39c12;
+    }
+    .sitemap-info {
+      background: #e8f4fd;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+    .spinner {
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-radius: 50%;
+      border-top: 4px solid #3498db;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .error {
+      background: #fadbd8;
+      color: #c0392b;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .success {
+      background: #d5f5e3;
+      color: #27ae60;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .export-options {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .export-btn {
+      flex: 1;
+      background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+    }
+    @media (max-width: 768px) {
+      .results-container {
+        grid-template-columns: 1fr;
+      }
+      .input-section {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🔗 Website Link Scanner</h1>
+      <p class="subtitle">Discover all links on any website using sitemap strategy</p>
+    </header>
+    
+    <div class="content">
+      <div class="input-section">
+        <input type="url" class="url-input" id="websiteUrl" placeholder="Enter website URL (e.g., https://example.com)" value="https://">
+        <button class="btn" id="scanBtn">Scan Website</button>
+      </div>
+      
+      <div class="loading" id="loadingIndicator">
+        <div class="spinner"></div>
+        <p>Scanning website for links...</p>
+      </div>
+      
+      <div id="messageContainer"></div>
+      
+      <div class="results-container" id="resultsContainer" style="display: none;">
+        <div class="panel">
+          <h2>📊 Scan Results</h2>
+          
+          <div class="stats">
+            <div class="stat-card">
+              <div class="stat-number" id="totalLinks">0</div>
+              <div class="stat-label">Total Links</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="pageLinks">0</div>
+              <div class="stat-label">Page Links</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="imageLinks">0</div>
+              <div class="stat-label">Image Links</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="otherLinks">0</div>
+              <div class="stat-label">Other Links</div>
+            </div>
+          </div>
+          
+          <div class="sitemap-info" id="sitemapInfo">
+            <h3>📋 Sitemap Information</h3>
+            <p id="sitemapDetails">Scanning for sitemaps...</p>
+          </div>
+          
+          <div class="export-options">
+            <button class="btn export-btn" id="exportJsonBtn">Export as JSON</button>
+            <button class="btn export-btn" id="exportCsvBtn">Export as CSV</button>
+          </div>
+        </div>
+        
+        <div class="panel">
+          <h2>🔍 Discovered Links</h2>
+          <div class="link-list" id="linkList">
+            <!-- Links will be populated here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const websiteUrlInput = document.getElementById('websiteUrl');
+      const scanBtn = document.getElementById('scanBtn');
+      const loadingIndicator = document.getElementById('loadingIndicator');
+      const messageContainer = document.getElementById('messageContainer');
+      const resultsContainer = document.getElementById('resultsContainer');
+      const linkList = document.getElementById('linkList');
+      const totalLinks = document.getElementById('totalLinks');
+      const pageLinks = document.getElementById('pageLinks');
+      const imageLinks = document.getElementById('imageLinks');
+      const otherLinks = document.getElementById('otherLinks');
+      const sitemapInfo = document.getElementById('sitemapInfo');
+      const sitemapDetails = document.getElementById('sitemapDetails');
+      const exportJsonBtn = document.getElementById('exportJsonBtn');
+      const exportCsvBtn = document.getElementById('exportCsvBtn');
+      
+      let scanResults = [];
+      
+      // Event listeners
+      scanBtn.addEventListener('click', startScan);
+      exportJsonBtn.addEventListener('click', exportAsJson);
+      exportCsvBtn.addEventListener('click', exportAsCsv);
+      
+      // Start the website scan
+      async function startScan() {
+        const websiteUrl = websiteUrlInput.value.trim();
+        
+        if (!websiteUrl) {
+          showMessage('Please enter a valid website URL', 'error');
+          return;
+        }
+        
+        // Validate URL format
+        try {
+          new URL(websiteUrl);
+        } catch (e) {
+          showMessage('Please enter a valid URL (e.g., https://example.com)', 'error');
+          return;
+        }
+        
+        // Show loading indicator
+        loadingIndicator.style.display = 'block';
+        messageContainer.innerHTML = '';
+        resultsContainer.style.display = 'none';
+        
+        try {
+          // Clear previous results
+          scanResults = [];
+          linkList.innerHTML = '';
+          
+          // Start scanning
+          await scanWebsite(websiteUrl);
+        } catch (error) {
+          console.error('Scan error:', error);
+          showMessage('An error occurred while scanning the website: ' + error.message, 'error');
+        } finally {
+          loadingIndicator.style.display = 'none';
+        }
+      }
+      
+      // Main scanning function
+      async function scanWebsite(websiteUrl) {
+        showMessage('Starting website scan...', 'success');
+        
+        // Try to find and parse sitemaps
+        const sitemapUrls = [
+          `${websiteUrl}/sitemap.xml`,
+          `${websiteUrl}/sitemap_index.xml`,
+          `${websiteUrl}/sitemap/sitemap.xml`,
+          `${websiteUrl}/sitemap/sitemap_index.xml`,
+          `${websiteUrl}/sitemap.txt`,
+          `${websiteUrl}/sitemap/sitemap.txt`
+        ];
+        
+        let foundSitemap = false;
+        
+        for (const sitemapUrl of sitemapUrls) {
+          try {
+            showMessage(`Trying to fetch sitemap: ${sitemapUrl}`, 'success');
+            const response = await fetchWithTimeout(sitemapUrl, { timeout: 10000 });
+            
+            if (response.ok) {
+              const contentType = response.headers.get('content-type') || '';
+              const text = await response.text();
+              
+              if (contentType.includes('xml') || sitemapUrl.endsWith('.xml')) {
+                // Parse XML sitemap
+                await parseXmlSitemap(text, websiteUrl);
+                foundSitemap = true;
+                sitemapDetails.innerHTML = `<strong>Sitemap found:</strong> ${sitemapUrl}<br>
+                                           <strong>Type:</strong> XML Sitemap<br>
+                                           <strong>Links found:</strong> ${scanResults.length}`;
+                break;
+              } else if (contentType.includes('text/plain') || sitemapUrl.endsWith('.txt')) {
+                // Parse text sitemap
+                await parseTextSitemap(text, websiteUrl);
+                foundSitemap = true;
+                sitemapDetails.innerHTML = `<strong>Sitemap found:</strong> ${sitemapUrl}<br>
+                                           <strong>Type:</strong> Text Sitemap<br>
+                                           <strong>Links found:</strong> ${scanResults.length}`;
+                break;
+              }
+            }
+          } catch (error) {
+            console.log(`Failed to fetch ${sitemapUrl}:`, error.message);
+          }
+        }
+        
+        if (!foundSitemap) {
+          sitemapDetails.innerHTML = `<strong>No standard sitemap found.</strong><br>
+                                     The scanner tried common sitemap locations but couldn't find a valid sitemap file.`;
+          showMessage('No standard sitemap found. Trying to extract links from the homepage...', 'error');
+          
+          // Fallback: Try to extract links from the homepage
+          try {
+            const response = await fetchWithTimeout(websiteUrl, { timeout: 10000 });
+            if (response.ok) {
+              const html = await response.text();
+              await extractLinksFromHtml(html, websiteUrl);
+              showMessage(`Found ${scanResults.length} links from homepage`, 'success');
+            }
+          } catch (error) {
+            showMessage('Failed to extract links from homepage: ' + error.message, 'error');
+          }
+        }
+        
+        // Update UI with results
+        updateResultsUI();
+      }
+      
+      // Parse XML sitemap
+      async function parseXmlSitemap(xmlContent, baseUrl) {
+        try {
+          const parser = new DOMParser();
+          const xmlDoc = parser.parseFromString(xmlContent, 'text/xml');
+          
+          // Check for sitemap index
+          const sitemapTags = xmlDoc.getElementsByTagName('sitemap');
+          if (sitemapTags.length > 0) {
+            // This is a sitemap index, parse each sitemap
+            for (let i = 0; i < sitemapTags.length; i++) {
+              const loc = sitemapTags[i].getElementsByTagName('loc')[0];
+              if (loc) {
+                const sitemapUrl = loc.textContent;
+                try {
+                  const response = await fetchWithTimeout(sitemapUrl, { timeout: 10000 });
+                  if (response.ok) {
+                    const sitemapText = await response.text();
+                    await parseXmlSitemap(sitemapText, baseUrl);
+                  }
+                } catch (error) {
+                  console.log(`Failed to fetch nested sitemap: ${sitemapUrl}`, error);
+                }
+              }
+            }
+            return;
+          }
+          
+          // Parse regular sitemap
+          const urlTags = xmlDoc.getElementsByTagName('url');
+          for (let i = 0; i < urlTags.length; i++) {
+            const loc = urlTags[i].getElementsByTagName('loc')[0];
+            if (loc) {
+              const url = loc.textContent;
+              addLinkToResults(url, baseUrl);
+            }
+          }
+        } catch (error) {
+          console.error('Error parsing XML sitemap:', error);
+          throw new Error('Failed to parse XML sitemap');
+        }
+      }
+      
+      // Parse text sitemap (one URL per line)
+      async function parseTextSitemap(textContent, baseUrl) {
+        const lines = textContent.split('\n');
+        for (const line of lines) {
+          const url = line.trim();
+          if (url && isValidUrl(url)) {
+            addLinkToResults(url, baseUrl);
+          }
+        }
+      }
+      
+      // Extract links from HTML content
+      async function extractLinksFromHtml(htmlContent, baseUrl) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlContent, 'text/html');
+        const links = doc.getElementsByTagName('a');
+        
+        for (let i = 0; i < links.length; i++) {
+          const href = links[i].getAttribute('href');
+          if (href) {
+            let fullUrl;
+            if (href.startsWith('http')) {
+              fullUrl = href;
+            } else if (href.startsWith('/')) {
+              fullUrl = baseUrl + href;
+            } else {
+              fullUrl = baseUrl + '/' + href;
+            }
+            
+            addLinkToResults(fullUrl, baseUrl);
+          }
+        }
+      }
+      
+      // Add a link to results with categorization
+      function addLinkToResults(url, baseUrl) {
+        // Normalize URL
+        let normalizedUrl = url;
+        try {
+          const urlObj = new URL(url);
+          normalizedUrl = urlObj.href;
+        } catch (e) {
+          // If URL is relative, make it absolute
+          if (url.startsWith('/')) {
+            normalizedUrl = baseUrl + url;
+          } else {
+            normalizedUrl = baseUrl + '/' + url;
+          }
+        }
+        
+        // Avoid duplicates
+        if (scanResults.some(link => link.url === normalizedUrl)) {
+          return;
+        }
+        
+        // Categorize the link
+        let type = 'other';
+        let icon = '🔗';
+        
+        if (normalizedUrl.match(/\.(jpg|jpeg|png|gif|svg|webp|bmp)(\?.*)?$/i)) {
+          type = 'image';
+          icon = '🖼️';
+        } else if (normalizedUrl.match(/\.(pdf|doc|docx|xls|xlsx)(\?.*)?$/i)) {
+          type = 'document';
+          icon = '📄';
+        } else if (normalizedUrl.startsWith(baseUrl) && 
+                  !normalizedUrl.match(/\.(css|js|json|xml|txt)(\?.*)?$/i)) {
+          type = 'page';
+          icon = '📄';
+        }
+        
+        scanResults.push({
+          url: normalizedUrl,
+          type: type,
+          icon: icon
+        });
+      }
+      
+      // Update the UI with scan results
+      function updateResultsUI() {
+        // Update statistics
+        totalLinks.textContent = scanResults.length;
+        
+        const pageCount = scanResults.filter(link => link.type === 'page').length;
+        const imageCount = scanResults.filter(link => link.type === 'image').length;
+        const otherCount = scanResults.filter(link => link.type === 'other').length;
+        
+        pageLinks.textContent = pageCount;
+        imageLinks.textContent = imageCount;
+        otherLinks.textContent = otherCount;
+        
+        // Populate link list
+        linkList.innerHTML = '';
+        
+        if (scanResults.length === 0) {
+          linkList.innerHTML = '<div class="link-item">No links found</div>';
+        } else {
+          scanResults.forEach(link => {
+            const linkItem = document.createElement('div');
+            linkItem.className = 'link-item';
+            
+            linkItem.innerHTML = `
+              <span class="link-icon">${link.icon}</span>
+              <span class="link-url">${link.url}</span>
+              <span class="link-type ${link.type}">${link.type}</span>
+            `;
+            
+            linkList.appendChild(linkItem);
+          });
+        }
+        
+        // Show results container
+        resultsContainer.style.display = 'grid';
+        showMessage(`Scan completed! Found ${scanResults.length} links.`, 'success');
+      }
+      
+      // Export results as JSON
+      function exportAsJson() {
+        const dataStr = JSON.stringify(scanResults, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'website-links.json';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }
+      
+      // Export results as CSV
+      function exportAsCsv() {
+        let csvContent = 'URL,Type\n';
+        
+        scanResults.forEach(link => {
+          csvContent += `"${link.url}",${link.type}\n`;
+        });
+        
+        const dataBlob = new Blob([csvContent], { type: 'text/csv' });
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'website-links.csv';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }
+      
+      // Helper function to show messages
+      function showMessage(message, type) {
+        messageContainer.innerHTML = `<div class="${type}">${message}</div>`;
+      }
+      
+      // Helper function to fetch with timeout
+      function fetchWithTimeout(url, options = {}) {
+        const { timeout = 8000 } = options;
+        
+        return new Promise((resolve, reject) => {
+          const controller = new AbortController();
+          const signal = controller.signal;
+          
+          const timeoutId = setTimeout(() => {
+            controller.abort();
+            reject(new Error(`Request timeout for ${url}`));
+          }, timeout);
+          
+          fetch(url, { ...options, signal })
+            .then(response => {
+              clearTimeout(timeoutId);
+              resolve(response);
+            })
+            .catch(error => {
+              clearTimeout(timeoutId);
+              reject(error);
+            });
+        });
+      }
+      
+      // Helper function to validate URL
+      function isValidUrl(string) {
+        try {
+          new URL(string);
+          return true;
+        } catch (_) {
+          return false;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

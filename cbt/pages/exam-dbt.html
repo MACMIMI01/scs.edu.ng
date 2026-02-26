@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Provisioning Studio | SCS CBT</title>
+    <!-- Project Assets -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Local Fallback Library -->
+    <link rel="stylesheet" href="../scripts/css/font-awesome.min.css" />
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+        :root {
+            --primary-blue: #020169;
+            --accent-gold: #FEC009;
+            --bg-light: #f4f7fe;
+            --white: #ffffff;
+            --sidebar-narrow: 80px;
+            --sidebar-wide: 260px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --terminal-bg: #1e1e1e;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--bg-light); 
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+        }
+
+        /* 
+        ===================================================================
+            1. NAVIGATION (SIDEBAR)
+        ===================================================================
+        */
+        .sidebar { 
+            position: fixed; top: 0; left: 0; width: var(--sidebar-narrow); 
+            height: 100%; background-color: var(--primary-blue); color: var(--white); 
+            padding-top: 20px; transition: var(--transition); z-index: 1050; 
+            box-shadow: 3px 0 8px rgba(0,0,0,0.3); overflow: hidden;
+        }
+
+        .sidebar:hover { width: var(--sidebar-wide); }
+
+        .menu-item { 
+            display: flex; align-items: center; padding: 16px 24px; cursor: pointer; 
+            transition: var(--transition); font-size: 1rem; border-left: 4px solid transparent;
+            white-space: nowrap; color: rgba(255,255,255,0.8); text-decoration: none;
+        }
+
+        .menu-item i { font-size: 20px; margin-right: 25px; min-width: 25px; text-align: center; }
+        .menu-item span { opacity: 0; transition: opacity 0.2s; }
+        .sidebar:hover .menu-item span { opacity: 1; }
+
+        .menu-item:hover { 
+            background-color: rgba(255, 255, 255, 0.1); 
+            color: var(--accent-gold); border-left-color: var(--accent-gold);
+        }
+
+        /* 
+        ===================================================================
+            2. MAIN WORKSPACE
+        ===================================================================
+        */
+        main { 
+            margin-left: var(--sidebar-narrow); 
+            flex-grow: 1; 
+            padding: 40px; 
+            transition: var(--transition); 
+            display: grid;
+            grid-template-columns: 1fr 450px;
+            gap: 30px;
+        }
+
+        .sidebar:hover ~ main { margin-left: var(--sidebar-wide); }
+
+        .header-section { grid-column: 1 / -1; margin-bottom: 20px; }
+        .header-section h1 { font-size: 2rem; font-weight: 800; color: var(--primary-blue); text-transform: uppercase; letter-spacing: -1px; }
+        .header-section p { color: #666; border-bottom: 3px solid var(--accent-gold); display: inline-block; padding-bottom: 5px; }
+
+        /* Configuration Cards */
+        .card { background: var(--white); border-radius: 15px; padding: 25px; box-shadow: var(--shadow); margin-bottom: 25px; border-top: 5px solid var(--primary-blue); }
+        .card-title { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; color: var(--primary-blue); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+
+        /* Form Controls */
+        .input-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 700; font-size: 0.8rem; margin-bottom: 8px; color: #555; text-transform: uppercase; }
+        input[type="number"], input[type="text"] { width: 100%; padding: 12px; border: 2px solid #eee; border-radius: 8px; font-family: inherit; transition: 0.3s; }
+        input:focus { border-color: var(--primary-blue); outline: none; }
+
+        /* Chips / Selection Grid */
+        .selection-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+        .chip { 
+            padding: 8px 15px; background: #f0f0f0; border-radius: 6px; font-size: 0.8rem; 
+            font-weight: 600; cursor: pointer; transition: 0.2s; border: 1px solid transparent;
+        }
+        .chip.selected { background: var(--primary-blue); color: white; }
+        .chip:hover:not(.selected) { background: #e0e0e0; }
+
+        .term-group { display: flex; gap: 15px; }
+        .term-item { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.85rem; cursor: pointer; }
+
+        /* Preview Panel */
+        .preview-panel { position: sticky; top: 40px; height: calc(100vh - 80px); display: flex; flex-direction: column; }
+        .terminal { 
+            flex-grow: 1; background: var(--terminal-bg); color: #a6e22e; 
+            padding: 20px; border-radius: 12px; font-family: 'Fira Code', monospace; 
+            font-size: 0.8rem; overflow: auto; line-height: 1.5; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        .terminal-header { background: #333; padding: 10px 15px; border-radius: 12px 12px 0 0; color: #eee; font-size: 0.7rem; font-weight: 700; display: flex; justify-content: space-between; }
+
+        .btn { 
+            padding: 12px 20px; border-radius: 8px; border: none; font-weight: 700; 
+            cursor: pointer; transition: 0.3s; display: inline-flex; align-items: center; gap: 10px; justify-content: center;
+        }
+        .btn-generate { background: var(--primary-blue); color: white; width: 100%; margin-top: 20px; font-size: 1rem; }
+        .btn-generate:hover { background: #0402a3; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(2,1,105,0.3); }
+        .btn-action { background: var(--accent-gold); color: var(--primary-blue); font-size: 0.8rem; flex: 1; }
+
+        /* Mobile Styles */
+        @media (max-width: 1024px) {
+            main { grid-template-columns: 1fr; margin-left: 0; padding: 20px; padding-top: 80px; }
+            .sidebar { left: -100%; width: 260px; }
+            .sidebar.open { left: 0; }
+            .preview-panel { height: 500px; position: static; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="menu-list">
+            <a href="dashboard.html" class="menu-item"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+            <a href="exam-library.html" class="menu-item"><i class="fas fa-book"></i><span>Exam Library</span></a>
+            <a href="admin_user_manager.html" class="menu-item"><i class="fas fa-users-cog"></i><span>User Manager</span></a>
+            <a href="exam-dbt.html" class="menu-item"><i class="fas fa-database" style="color: var(--accent-gold);"></i><span>DB Generator</span></a>
+            <a href="#" class="menu-item" onclick="localStorage.clear(); location.href='login.html'" style="margin-top: auto;">
+                <i class="fas fa-sign-out-alt"></i><span>Secure Logout</span>
+            </a>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <header class="header-section">
+            <h1>Exam Provisioning Studio</h1>
+            <p>Automated Database Generator & File Structure Provisioning</p>
+        </header>
+
+        <!-- Configuration Pane -->
+        <section>
+            <div class="card">
+                <div class="card-title"><i class="fas fa-calendar-alt"></i> Temporal Scope</div>
+                <div class="input-group">
+                    <label>Start Year of Session</label>
+                    <input type="number" id="startYear" placeholder="e.g., 2025" value="2025">
+                </div>
+                <label>Target Academic Terms</label>
+                <div class="term-group">
+                    <label class="term-item"><input type="checkbox" class="term-cb" value="1ST" checked> 1st Term</label>
+                    <label class="term-item"><input type="checkbox" class="term-cb" value="2ND" checked> 2nd Term</label>
+                    <label class="term-item"><input type="checkbox" class="term-cb" value="3RD" checked> 3rd Term</label>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><i class="fas fa-layer-group"></i> Target Cohorts (Classes)</div>
+                <div id="classList" class="selection-grid"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><i class="fas fa-book-open"></i> Subject Repository</div>
+                <div class="input-group">
+                    <input type="text" id="subjectSearch" placeholder="Search subject registry...">
+                </div>
+                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                    <button class="btn btn-action" onclick="filterSet('all')">Universal</button>
+                    <button class="btn btn-action" onclick="filterSet('junior')">Junior (B7-9)</button>
+                    <button class="btn btn-action" onclick="filterSet('senior')">Senior (S1-3)</button>
+                </div>
+                <div id="subjectList" class="selection-grid"></div>
+            </div>
+
+            <button class="btn btn-generate" onclick="generateJSON()">
+                <i class="fas fa-microchip"></i> EXECUTE DATABASE GENERATION
+            </button>
+        </section>
+
+        <!-- Preview Pane -->
+        <section class="preview-panel">
+            <div class="terminal-header">
+                <span>PREVIEW_OUTPUT.JSON</span>
+                <i class="fas fa-circle" style="color: #ff5f56; font-size: 8px;"></i>
+            </div>
+            <pre id="output" class="terminal">// Waiting for generation sequence...</pre>
+            
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button class="btn btn-action" onclick="copyJSON()"><i class="fas fa-copy"></i> Copy Raw</button>
+                <button class="btn btn-action" onclick="downloadJSON()"><i class="fas fa-download"></i> Export JSON</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // --- Static Data ---
+        const classLabels = {
+            JS1: "BASIC 7", JS2: "BASIC 8", JS3: "BASIC 9",
+            SS1: "SENIOR SECONDARY 1", SS2: "SENIOR SECONDARY 2", SS3: "SENIOR SECONDARY 3"
+        };
+
+        const subjectCodes = {
+            "Agricultural Science": "ACS", "Basic Science": "BSCI", "Basic Technology": "BTEC",
+            "Business Studies": "BUS", "Christian Religious Studies": "CRS", "Civic Education": "CIV",
+            "Computer Studies": "CST", "Cultural and Creative Art": "CCA", "Dictation": "DICT",
+            "Junior Diction": "JDIC", "English Studies": "ENG", "French": "FRN",
+            "Historical Studies": "HIST", "Home Economics": "HEC", "Mathematics": "MATH",
+            "Music": "MUS", "Physical and Health Education": "PHE", "Security Education": "SEC",
+            "Social Studies": "SOC", "Animal Husbandry": "AHB", "Biology": "BIO",
+            "Chemistry": "CHEM", "Commerce": "COM", "Economics": "ECO",
+            "English Literature": "LIT", "Further Mathematics": "FMATH", "Geography": "GEO",
+            "Government": "GOV", "Physics": "PHY"
+        };
+
+        const juniorSubjects = [
+            "Agricultural Science", "Basic Science", "Basic Technology", "Business Studies",
+            "Christian Religious Studies", "Civic Education", "Computer Studies", "Cultural and Creative Art",
+            "Dictation", "Junior Diction", "English Studies", "French", "Historical Studies",
+            "Home Economics", "Mathematics", "Music", "Physical and Health Education",
+            "Security Education", "Social Studies"
+        ];
+
+        const seniorSubjects = [
+            "Agricultural Science", "Animal Husbandry", "Biology", "Chemistry",
+            "Christian Religious Studies", "Civic Education", "Commerce", "Economics", 
+            "English Studies", "Further Mathematics", "Geography", "Government", 
+            "Historical Studies", "English Literature", "Physics"
+        ];
+
+        const allClasses = ["JS1", "JS2", "JS3", "SS1", "SS2", "SS3"];
+        let subjectPool = [...new Set([...juniorSubjects, ...seniorSubjects])].sort();
+
+        // --- UI Logic ---
+        function renderClasses() {
+            const list = document.getElementById("classList");
+            allClasses.forEach(cls => {
+                const div = document.createElement("div");
+                div.className = "chip";
+                div.textContent = cls;
+                div.onclick = () => div.classList.toggle("selected");
+                list.appendChild(div);
+            });
+        }
+
+        function filterSet(type) {
+            const list = document.getElementById("subjectList");
+            list.innerHTML = "";
+            let filtered = [];
+            if(type === 'all') filtered = subjectPool;
+            else if(type === 'junior') filtered = juniorSubjects;
+            else filtered = seniorSubjects;
+
+            filtered.forEach(subject => {
+                const div = document.createElement("div");
+                div.className = "chip";
+                div.textContent = subject;
+                div.onclick = () => div.classList.toggle("selected");
+                list.appendChild(div);
+            });
+        }
+
+        // --- Core Logic ---
+        function generateJSON() {
+            const startYear = parseInt(document.getElementById("startYear").value);
+            if(!startYear) return alert("Temporal scope required.");
+
+            const session = `${startYear}-${startYear + 1}`;
+            const selectedClasses = [...document.querySelectorAll('#classList .chip.selected')].map(el => el.textContent);
+            const selectedTerms = [...document.querySelectorAll('.term-cb:checked')].map(cb => cb.value);
+            const selectedSubjects = [...document.querySelectorAll('#subjectList .chip.selected')].map(el => el.textContent);
+
+            if(!selectedClasses.length || !selectedSubjects.length || !selectedTerms.length) {
+                return alert("Incomplete selection criteria.");
+            }
+
+            const result = {};
+
+            selectedClasses.forEach(cls => {
+                result[cls] = [];
+                // Smart Filter: Ensure only valid level-specific subjects are added
+                let validSubjects = selectedSubjects;
+                if (cls.startsWith("JS")) validSubjects = validSubjects.filter(s => juniorSubjects.includes(s));
+                if (cls.startsWith("SS")) validSubjects = validSubjects.filter(s => seniorSubjects.includes(s));
+
+                validSubjects.forEach(subject => {
+                    selectedTerms.forEach(term => {
+                        const code = subjectCodes[subject] || "SUB";
+                        result[cls].push({
+                            fileName: `${session}-${cls}-${code}-${term}`,
+                            displayName: `${classLabels[cls]} ${term} TERM ${subject.toUpperCase()} EXAM ${session}`
+                        });
+                    });
+                });
+            });
+
+            const output = document.getElementById("output");
+            output.textContent = JSON.stringify(result, null, 2);
+            output.style.color = "#a6e22e";
+        }
+
+        // --- Export Functions ---
+        function copyJSON() {
+            const text = document.getElementById("output").textContent;
+            navigator.clipboard.writeText(text).then(() => alert("Provisioning payload copied to clipboard."));
+        }
+
+        function downloadJSON() {
+            const data = document.getElementById("output").textContent;
+            const blob = new Blob([data], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `exam_database_${Date.now()}.json`;
+            a.click();
+        }
+
+        // --- Search Handler ---
+        document.getElementById("subjectSearch").oninput = function() {
+            const q = this.value.toLowerCase();
+            document.querySelectorAll("#subjectList .chip").forEach(chip => {
+                chip.style.display = chip.textContent.toLowerCase().includes(q) ? "block" : "none";
+            });
+        };
+
+        // Initialize
+        renderClasses();
+        filterSet('all');
+    </script>
+</body>
+</html>
