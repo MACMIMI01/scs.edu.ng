@@ -1,0 +1,547 @@
+<!-- http://localhost:8080/pages/test-taking.html -->
+<!DOCTYPE html>
+<!-- http://localhost:8080/pages/test-taking.html?test=third_term_basic_eight_phe -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Taking - SCS Test_Hall</title>
+    <!-- Assumes this file is in the /pages/ folder -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../scripts/css/font-awesome.min.css">
+    <!-- CRITICAL: jsPDF and the AutoTable plugin are required for PDF generation -->
+    <script src="../scripts/jspdf.umd.min1.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script> -->
+    <style>
+        :root { --primary-color: #020169; --accent-color: #FEC009; }
+        body { margin: 0; font-family: Arial, sans-serif; background-color: #f0f2f5; }
+        /* --- Sidebar & Hamburger Menu Styles --- */
+        .hamburger-icon { position: fixed; top: 20px; left: 20px; font-size: 30px; color: var(--primary-color); cursor: pointer; z-index: 1000; background-color: var(--accent-color); padding: 5px 8px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .off-canvas-menu { position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background-color: var(--primary-color); color: #fff; padding-top: 80px; box-sizing: border-box; transition: left 0.3s ease-in-out; z-index: 999; }
+        .off-canvas-menu.open { left: 0; }
+        .menu-list { list-style: none; padding: 0; margin: 0; }
+        .menu-list .menu-item { display: flex; align-items: center; padding: 15px 20px; cursor: pointer; }
+        .menu-list .menu-item i { font-size: 20px; margin-right: 15px; }
+        
+        /* --- Main Content & View Wrappers --- */
+        main { padding: 20px; padding-top: 80px; transition: margin-left 0.3s ease-in-out; }
+        .main-container { max-width: 800px; margin: auto; }
+        h1#exam-title { text-align: center; color: var(--primary-color); margin-bottom: 30px; }
+        .off-canvas-menu.open + main { margin-left: 250px; }
+
+        /* --- Question View Styles --- */
+        .question-container { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .question-image { max-width: 100%; height: auto; margin: 15px auto; display: block; border-radius: 5px; }
+        .question-container ul { list-style: none; padding: 0; }
+        .question-container li { margin-bottom: 10px; }
+        .question-container label { display: block; background-color: #f1f1f1; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
+        .question-actions { text-align: right; margin-top: 20px; }
+        .clear-answer-btn { background: #6c757d; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 0.9em; }
+        .question-nav-panel { max-width: 700px; margin: 20px auto; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+        .nav-question-btn { width: 35px; height: 35px; border: 1px solid #ccc; border-radius: 5px; background-color: #fff; cursor: pointer; font-weight: bold; }
+        .nav-question-btn.current { background-color: var(--primary-color); color: var(--accent-color); }
+        .nav-question-btn.answered { background-color: var(--accent-color); color: var(--primary-color); }
+        .navigation-buttons { display: flex; justify-content: space-between; max-width: 700px; margin: 20px auto; }
+        .navigation-buttons button, #finish-exam-button { background-color: var(--primary-color); color: #fff; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-size: 1em; }
+        .navigation-buttons button:disabled { background-color: #ccc; }
+        .finish-button-container { text-align: center; margin-top: 40px; }
+        #finish-exam-button { background-color: #dc3545; font-size: 1.2em; }
+
+        /* --- Submission Summary View --- */
+        .submission-summary-container { background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .summary-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .summary-table th, .summary-table td { border: 1px solid #ddd; padding: 12px; text-align: center; }
+        .summary-table th { background-color: var(--primary-color); color: white; }
+        .summary-table .status-answered { color: #198754; font-weight: bold; }
+        .summary-table .status-unanswered { color: #dc3545; font-weight: bold; }
+        .summary-actions { margin-top: 30px; display: flex; justify-content: center; gap: 20px; }
+        #final-submit-btn, #go-back-to-exam-btn { border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-size: 1.1em; color: #fff; }
+        #final-submit-btn { background-color: var(--primary-color); }
+        #go-back-to-exam-btn { background-color: #6c757d; }
+        
+        /* --- Final Results View --- */
+        .detailed-results-preview { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .detailed-results-preview section { border-bottom: 1px solid #eee; margin-bottom: 15px; padding-bottom: 15px; }
+        .profile-pic-preview { max-width: 100px; height: auto; border-radius: 50%; border: 2px solid var(--accent-color); }
+        .action-buttons-container { display: flex; justify-content: center; gap: 20px; border-bottom: none; }
+        .download-pdf-button, .dashboard-link-button { border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-size: 1.1em; color: #fff; text-decoration: none; }
+        .download-pdf-button { background-color: #28a745; }
+        .dashboard-link-button { background-color: #007bff; }
+
+        /* --- Footer & Profile Icon --- */
+        footer { position: fixed; bottom: 0; width: 100%; text-align: center; padding: 10px; background-color: var(--primary-color); color: var(--accent-color); z-index: 1000; }
+        .profile-display-icon { position: fixed; top: 10px; right: 10px; width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; cursor: pointer; z-index: 999; }
+    </style>
+</head>
+<body>
+    <div class="hamburger-icon" id="hamburger-icon" style="display: none;"><i class="fas fa-bars"></i></div>
+    <nav class="off-canvas-menu" id="off-canvas-menu">
+        <ul class="menu-list">
+            <li class="menu-item" id="dashboard-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></li>
+            <li class="menu-item" id="exam-library-link"><i class="fas fa-pencil-alt"></i><span>Exam Library</span></li>
+            <li class="menu-item" id="profile-link"><i class="fas fa-user-tie"></i><span>My Profile</span></li>
+            <li class="menu-item" id="logout-button"><i class="fas fa-sign-out-alt"></i><span>Logout</span></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="main-container">
+            <h1 id="exam-title">Loading Test...</h1>
+            <div id="exam-questions-wrapper">
+                <form id="test-form"></form>
+                <div id="question-navigation-panel" class="question-nav-panel"></div>
+                <div class="navigation-buttons">
+                    <button id="prev-btn" disabled>Previous</button>
+                    <button id="next-btn">Next</button>
+                </div>
+                <div class="finish-button-container"><button id="finish-exam-btn">Finish Exam</button></div>
+            </div>
+            <div id="submission-summary-wrapper" style="display: none;">
+                <div class="submission-summary-container">
+                    <h2>Exam Summary</h2>
+                    <p>Review your answers before final submission.</p>
+                    <div id="summary-table-container"></div>
+                    <div class="summary-actions">
+                        <button id="go-back-to-exam-btn">Return to Exam</button>
+                        <button id="final-submit-btn">Submit Now</button>
+                    </div>
+                </div>
+            </div>
+            <div id="results-wrapper" style="display: none;"></div>
+        </div>
+    </main>
+  
+    <img id="user-image-display" src="../assets/profile_pictures/default.jpeg" alt="User Profile" class="profile-display-icon">
+    <footer>&copy; 2024 SCS Test_Hall</footer>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // --- SECTION 1: AUTHENTICATION GUARD ---
+    const loggedInUserId = localStorage.getItem('loggedInUserId');
+    if (!loggedInUserId) {
+        window.location.href = 'login.html';
+        return;
+    }
+    
+    const expirationTime = localStorage.getItem('sessionExpiration');
+    if (expirationTime && Date.now() > parseInt(expirationTime, 10)) {
+        localStorage.clear();
+        alert('Your temporary session has expired.');
+        window.location.href = 'login.html?reason=unregistered';
+        return;
+    }
+    
+    // Get profile icon element
+    const profileDisplayIcon = document.getElementById('user-image-display');
+    
+    // Try to get user data from localStorage first
+    let studentData = {};
+    const loggedInUserString = localStorage.getItem('loggedInUser');
+    
+    if (loggedInUserString) {
+        try {
+            studentData = JSON.parse(loggedInUserString);
+            
+            // Set profile picture if available
+            if (profileDisplayIcon && studentData.profilePicture) {
+                const profilePicPath = studentData.profilePicture !== '' 
+                    ? `../${studentData.profilePicture}` 
+                    : '../assets/profile_pictures/default.jpeg';
+                profileDisplayIcon.src = profilePicPath;
+                profileDisplayIcon.alt = `${studentData.name}'s Profile Picture`;
+                profileDisplayIcon.title = `Go to ${studentData.name}'s Profile`;
+                profileDisplayIcon.style.cursor = 'pointer';
+                profileDisplayIcon.onclick = () => {
+                    window.location.href = 'profile.html';
+                };
+            }
+        } catch (e) {
+            console.error('Error parsing user data from localStorage:', e);
+        }
+    }
+    
+    // If we don't have complete user data, try to fetch from users.json
+    if (!studentData.name) {
+        fetch('../data/users.json')
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                if (Array.isArray(data)) {
+                    const foundUser = data.find(user => user.id == loggedInUserId);
+                    if (foundUser) {
+                        studentData = foundUser;
+                        
+                        // Update profile picture
+                        if (profileDisplayIcon) {
+                            const profilePicPath = studentData.profilePicture && studentData.profilePicture !== '' 
+                                ? `../${studentData.profilePicture}` 
+                                : '../assets/profile_pictures/default.jpeg';
+                            profileDisplayIcon.src = profilePicPath;
+                            profileDisplayIcon.alt = `${studentData.name}'s Profile Picture`;
+                            profileDisplayIcon.title = `Go to ${studentData.name}'s Profile`;
+                            profileDisplayIcon.style.cursor = 'pointer';
+                            profileDisplayIcon.onclick = () => {
+                                window.location.href = 'profile.html';
+                            };
+                        }
+                    } else {
+                        console.warn(`User with ID ${loggedInUserId} not found in users.json. Using minimal student data.`);
+                        studentData = { 
+                            id: loggedInUserId, 
+                            name: localStorage.getItem('loggedInUserName') || 'Student', 
+                            username: 'student.user', 
+                            role: 'Student' 
+                        };
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error loading student data:', error);
+                // Fallback to minimal data
+                studentData = { 
+                    id: loggedInUserId, 
+                    name: localStorage.getItem('loggedInUserName') || 'Student', 
+                    username: 'student.user', 
+                    role: 'Student' 
+                };
+            });
+    }
+
+    // --- SECTION 2: ELEMENT REFERENCES & STATE ---
+    const ui = {
+        title: document.getElementById('exam-title'),
+        examWrapper: document.getElementById('exam-questions-wrapper'),
+        summaryWrapper: document.getElementById('submission-summary-wrapper'),
+        resultsWrapper: document.getElementById('results-wrapper'),
+        form: document.getElementById('test-form'),
+        navPanel: document.getElementById('question-navigation-panel'),
+        prevBtn: document.getElementById('prev-btn'),
+        nextBtn: document.getElementById('next-btn'),
+        finishBtn: document.getElementById('finish-exam-btn'),
+        goBackBtn: document.getElementById('go-back-to-exam-btn'),
+        submitBtn: document.getElementById('final-submit-btn'),
+        hamburger: document.getElementById('hamburger-icon'),
+        menu: document.getElementById('off-canvas-menu'),
+        profileIcon: document.getElementById('user-image-display'),
+        summaryTableContainer: document.getElementById('summary-table-container')
+    };
+    
+    let state = { 
+        questions: [], 
+        userAnswers: [], 
+        studentData: studentData, // Use the studentData we already loaded
+        testData: {}, 
+        score: 0, 
+        currentIndex: 0 
+    };
+
+    // --- SECTION 3: INITIALIZATION ---
+    const initializeExam = async () => {
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            const testFileName = urlParams.get('test');
+            if (!testFileName) throw new Error("No exam file specified.");
+            
+            // Use the studentData we already loaded instead of trying to get from localStorage again
+            if (!state.studentData.name) {
+                // If we still don't have user data, try to get from localStorage as fallback
+                const loggedInUserString = localStorage.getItem('loggedInUser');
+                if (loggedInUserString) {
+                    state.studentData = JSON.parse(loggedInUserString);
+                } else {
+                    // Final fallback - create minimal user object
+                    state.studentData = {
+                        id: loggedInUserId,
+                        name: localStorage.getItem('loggedInUserName') || 'Student',
+                        class: 'Unknown'
+                    };
+                }
+            }
+
+            const examResponse = await fetch(`../data/${testFileName}.json`);
+            if (!examResponse.ok) throw new Error(`Could not load exam file.`);
+            state.testData = await examResponse.json();
+            
+            state.questions = state.testData.questions || [];
+            state.userAnswers = new Array(state.questions.length).fill(null);
+            ui.title.textContent = state.testData.testName || 'Exam';
+            
+            setupUI();
+            generateQuestionNavPanel();
+            displayQuestion(0);
+
+        } catch (error) {
+            console.error("Initialization Failed:", error);
+            ui.title.textContent = "Error";
+            ui.examWrapper.innerHTML = `<p style="color: red; text-align: center;">${error.message}</p>`;
+        }
+    };
+    
+    // --- SECTION 4: UI SETUP AND EVENT LISTENERS ---
+    const setupUI = () => {
+        ui.hamburger.addEventListener('click', () => ui.menu.classList.toggle('open'));
+        
+        if (state.studentData.profilePicture) {
+            ui.profileIcon.src = `../${state.studentData.profilePicture}`;
+        }
+        ui.profileIcon.addEventListener('click', () => window.location.href = 'profile.html');
+        
+        const redirectToRoleDashboard = () => {
+            const role = localStorage.getItem('loggedInUserRole') || state.studentData.role || 'student';
+            let url = 'dashboard.html';
+            if (role.toLowerCase() === 'admin') url = 'dashboard-admin.html';
+            else if (role.toLowerCase() === 'teacher') url = 'dashboard-teacher.html';
+            else if (role.toLowerCase() === 'student') url = 'dashboard-student.html';
+            else if (role.toLowerCase() === 'parent') url = 'dashboard-parents.html';
+            window.location.href = url;
+        };
+        
+        document.getElementById('dashboard-link').addEventListener('click', redirectToRoleDashboard);
+        document.getElementById('exam-library-link').addEventListener('click', () => window.location.href = 'exam-library.html');
+        document.getElementById('profile-link').addEventListener('click', () => window.location.href = 'profile.html');
+        document.getElementById('logout-button').addEventListener('click', () => { 
+            localStorage.clear(); 
+            window.location.href = 'login.html'; 
+        });
+        
+        ui.prevBtn.addEventListener('click', () => { 
+            if (state.currentIndex > 0) { 
+                saveCurrentAnswer(); 
+                displayQuestion(state.currentIndex - 1); 
+            } 
+        });
+        
+        ui.nextBtn.addEventListener('click', () => { 
+            if (state.currentIndex < state.questions.length - 1) { 
+                saveCurrentAnswer(); 
+                displayQuestion(state.currentIndex + 1); 
+            } 
+        });
+        
+        ui.finishBtn.addEventListener('click', () => { 
+            saveCurrentAnswer(); 
+            showSubmissionSummary(); 
+        });
+        
+        ui.goBackBtn.addEventListener('click', () => { 
+            ui.summaryWrapper.style.display = 'none'; 
+            ui.examWrapper.style.display = 'block'; 
+            ui.title.textContent = state.testData.testName; 
+        });
+        
+        ui.submitBtn.addEventListener('click', () => {
+            ui.summaryWrapper.style.display = 'none';
+            ui.resultsWrapper.style.display = 'block';
+            ui.title.textContent = "Final Result";
+            ui.hamburger.style.display = 'block';
+            calculateAndShowResults();
+            setTimeout(() => alert("Your results have been successfully submitted."), 1000);
+        });
+    };
+    
+    // --- SECTION 5: DYNAMIC UI FUNCTIONS ---
+    const displayQuestion = (index) => {
+        state.currentIndex = index;
+        const q = state.questions[index];
+        const imageHTML = (q.imageURL && q.imageURL.trim() !== "") 
+            ? `<img src="../${q.imageURL.replace('./', '')}" alt="Question Image" class="question-image">` 
+            : '';
+        
+        const optionsHTML = q.options.map((opt, i) => 
+            `<li>
+                <label>
+                    <input type="radio" name="q${index}" value="${opt}" ${state.userAnswers[index] === opt ? 'checked' : ''}> 
+                    ${String.fromCharCode(65+i)}. ${opt}
+                </label>
+            </li>`
+        ).join('');
+        
+        ui.form.innerHTML = `
+            <div class="question-container">
+                <p><strong>Question ${index + 1}:</strong> ${q.question}</p> 
+                ${imageHTML} 
+                <ul>${optionsHTML}</ul>
+                <div class="question-actions">
+                    <button type="button" class="clear-answer-btn">Clear My Answer</button>
+                </div>
+            </div>
+        `;
+        
+        updateNavigationButtons();
+        updateQuestionNavPanel();
+        
+        ui.form.querySelector('.clear-answer-btn').addEventListener('click', () => {
+            state.userAnswers[state.currentIndex] = null;
+            displayQuestion(state.currentIndex);
+        });
+    };
+    
+    const updateNavigationButtons = () => {
+        ui.prevBtn.disabled = state.currentIndex === 0;
+        ui.nextBtn.disabled = state.currentIndex === state.questions.length - 1;
+    };
+    
+    const generateQuestionNavPanel = () => {
+        ui.navPanel.innerHTML = state.questions.map((_, i) => 
+            `<button class="nav-question-btn">${i + 1}</button>`
+        ).join('');
+        
+        ui.navPanel.querySelectorAll('.nav-question-btn').forEach((btn, i) => {
+            btn.addEventListener('click', () => { 
+                saveCurrentAnswer(); 
+                displayQuestion(i); 
+            });
+        });
+    };
+    
+    const updateQuestionNavPanel = () => {
+        ui.navPanel.querySelectorAll('.nav-question-btn').forEach((btn, i) => {
+            btn.classList.remove('current', 'answered');
+            if (state.userAnswers[i] !== null) btn.classList.add('answered');
+            if (i === state.currentIndex) btn.classList.add('current');
+        });
+    };
+    
+    const saveCurrentAnswer = () => {
+        const selected = ui.form.querySelector(`input[name="q${state.currentIndex}"]:checked`);
+        state.userAnswers[state.currentIndex] = selected ? selected.value : null;
+    };
+
+    // --- SECTION 6: WORKFLOW & RESULTS FUNCTIONS ---
+    const showSubmissionSummary = () => {
+        ui.examWrapper.style.display = 'none';
+        ui.summaryWrapper.style.display = 'block';
+        ui.title.textContent = 'Exam Submission Summary';
+        
+        const tableHTML = `
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th>Question</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${state.userAnswers.map((ans, i) => `
+                        <tr>
+                            <td>${i + 1}</td>
+                            <td>
+                                ${ans !== null 
+                                    ? '<span class="status-answered">ANSWERED</span>' 
+                                    : '<span class="status-unanswered">NOT ANSWERED</span>'}
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+        
+        ui.summaryTableContainer.innerHTML = tableHTML;
+    };
+
+    const calculateAndShowResults = () => {
+        state.score = state.userAnswers.reduce((acc, ans, i) => 
+            acc + (ans === state.questions[i].correctAnswer ? 1 : 0), 0);
+        
+        const percentage = state.questions.length > 0 
+            ? Math.round((state.score / state.questions.length) * 100) 
+            : 0;
+
+        ui.resultsWrapper.innerHTML = `
+            <div class="detailed-results-preview">
+                <section class="header-section">
+                    <div><img src="../assets/images/logo.png" alt="School Logo" style="max-width:80px;"></div>
+                    <div><h2>St. Christopher School</h2><p style="font-weight: bold;">EXAMINATION RESULT</p></div>
+                </section>
+                <section>
+                    <h2>Candidate & Exam Information</h2>
+                    <div class="student-info">
+                        <div>
+                            <p><strong>Name:</strong> ${state.studentData.name || 'N/A'}</p>
+                            <p><strong>Class:</strong> ${state.studentData.class || 'N/A'}</p>
+                            <p><strong>Subject:</strong> ${state.testData.testName || 'N/A'}</p>
+                        </div>
+                        <div>
+                            <img src="${state.studentData.profilePicture 
+                                ? `../${state.studentData.profilePicture}` 
+                                : '../assets/profile_pictures/default.jpeg'}" 
+                                alt="Profile" class="profile-pic-preview">
+                        </div>
+                    </div>
+                </section>
+                <section class="summary-section">
+                    <h2>Performance Summary</h2>
+                    <p>Score: ${state.score} / ${state.questions.length}</p>
+                    <p>Percentage: ${percentage}%</p>
+                </section>
+                <section class="action-buttons-container">
+                    <button id="download-pdf-button" class="download-pdf-button">Download Detailed PDF</button>
+                    <a id="dashboard-redirect-link" href="#" class="dashboard-link-button">Back to Dashboard</a>
+                </section>
+            </div>
+        `;
+        
+        document.getElementById('download-pdf-button').addEventListener('click', generateDetailedResultsPDF);
+        document.getElementById('dashboard-redirect-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            const role = localStorage.getItem('loggedInUserRole') || state.studentData.role || 'student';
+            let url = 'dashboard.html';
+            if (role.toLowerCase() === 'admin') url = 'dashboard-admin.html';
+            else if (role.toLowerCase() === 'teacher') url = 'dashboard-teacher.html';
+            else if (role.toLowerCase() === 'student') url = 'dashboard-student.html';
+            else if (role.toLowerCase() === 'parent') url = 'dashboard-parents.html';
+            window.location.href = url;
+        });
+    };
+    
+    const generateDetailedResultsPDF = () => {
+        try {
+            if (!window.jspdf || !window.jspdf.jsPDF.autoTable) {
+                throw new Error('jsPDF plugins not loaded.');
+            }
+            
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            doc.setFontSize(18).text("St. Christopher School - Official Exam Result", 105, 15, { align: 'center' });
+            doc.setFontSize(11);
+            doc.text(`Candidate: ${state.studentData.name || 'N/A'}`, 14, 25);
+            doc.text(`Subject: ${state.testData.testName || 'N/A'}`, 14, 32);
+            
+            const tableColumns = ["#", "Selected Answer", "Correct Answer"];
+            const tableRows = state.questions.map((q, i) => {
+                const selected = state.userAnswers[i] ? state.userAnswers[i] : "NOT ANSWERED";
+                return [i + 1, selected, q.correctAnswer];
+            });
+            
+            doc.autoTable({ 
+                head: [tableColumns], 
+                body: tableRows, 
+                startY: 45,
+                theme: 'grid',
+                headStyles: {
+                    fillColor: [2, 1, 105], // Dark blue color similar to your primary color
+                    textColor: 255
+                }
+            });
+            
+            const finalY = doc.lastAutoTable.finalY || 60;
+            const aggregate = Math.round((state.score / state.questions.length) * 100);
+            doc.setFontSize(12).text(`Aggregate Score: ${aggregate}%`, 14, finalY + 15);
+
+            doc.save(`Detailed_Result_${state.studentData.name || 'Student'}.pdf`);
+        } catch (error) {
+            console.error("PDF Generation Failed:", error);
+            alert("Could not generate PDF. " + error.message);
+        }
+    };
+
+    // --- START THE APPLICATION ---
+    initializeExam();
+});
+</script>
+</body>
+</html>

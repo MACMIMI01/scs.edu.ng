@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<!-- http://localhost:8080/cbt/pages/contact.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - SCS Test_Hall</title>
+    <!-- Assumes this file is in the /pages/ folder -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../scripts/css/font-awesome.min.css">
+    <script src="../scripts/auth.js" defer></script>
+    <style>
+        :root { --primary-color: #020169; --accent-color: #FEC009; }
+        body { margin: 0; font-family: Arial, sans-serif; background-color: #f0f2f5; overflow-x: hidden; }
+        /* --- Hamburger Menu & Sidebar CSS (Consistent with other pages) --- */
+        .hamburger-icon { position: fixed; top: 20px; left: 20px; font-size: 30px; color: var(--primary-color); cursor: pointer; z-index: 1000; background-color: var(--accent-color); padding: 5px 8px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .off-canvas-menu { position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background-color: var(--primary-color); color: #fff; padding-top: 80px; box-sizing: border-box; transition: left 0.3s ease-in-out; z-index: 999; box-shadow: 2px 0 5px rgba(0,0,0,0.5); }
+        .off-canvas-menu.open { left: 0; }
+        .menu-list { list-style: none; padding: 0; margin: 0; }
+        .menu-list .menu-item { display: flex; align-items: center; padding: 15px 20px; cursor: pointer; transition: background 0.3s ease; }
+        .menu-list .menu-item i { font-size: 20px; margin-right: 15px; min-width: 25px; }
+        .menu-list .menu-item span { white-space: nowrap; font-size: 1.1em; }
+        .menu-list .menu-item:hover { background-color: rgba(255, 255, 255, 0.2); }
+
+        /* --- Main Content Area --- */
+        main { padding: 20px; padding-top: 80px; transition: margin-left 0.3s ease-in-out; }
+        .off-canvas-menu.open + main { margin-left: 250px; }
+
+        /* --- NEW: Professional Contact Page Styles --- */
+        .contact-container { max-width: 900px; margin: auto; }
+        .contact-header { text-align: center; margin-bottom: 40px; }
+        .contact-header h1 { color: var(--primary-color); }
+        .contact-header p { color: #666; font-size: 1.1em; }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .contact-info, .contact-form-container {
+            background: #fff; padding: 30px; border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .contact-info h2, .contact-form-container h2 {
+            margin-top: 0; color: var(--primary-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 10px;
+        }
+        .contact-item { display: flex; align-items: center; margin-bottom: 20px; }
+        .contact-item i { font-size: 24px; color: var(--primary-color); width: 40px; text-align: center; margin-right: 15px; }
+        .contact-item a { color: #333; text-decoration: none; transition: color 0.2s; }
+        .contact-item a:hover { color: var(--primary-color); text-decoration: underline; }
+        
+        .contact-form label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; }
+        .contact-form input, .contact-form textarea {
+            width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc;
+            border-radius: 5px; font-size: 1em; box-sizing: border-box;
+        }
+        .contact-form textarea { resize: vertical; min-height: 120px; }
+        .contact-form button { width: 100%; }
+
+        /* --- Footer & Profile Icon --- */
+        footer { position: fixed; bottom: 0; width: 100%; text-align: center; padding: 10px; background-color: var(--primary-color); color: var(--accent-color); z-index: 1000; }
+        .profile-display-icon { position: fixed; top: 10px; right: 10px; width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; cursor: pointer; z-index: 999; }
+    </style>
+</head>
+<body>
+    <div class="hamburger-icon" id="hamburger-icon"><i class="fas fa-bars"></i></div>
+
+    <nav class="off-canvas-menu" id="off-canvas-menu">
+        <ul class="menu-list">
+            <li class="menu-item" id="dashboard-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></li>
+            <li class="menu-item" id="test-library-link"><i class="fas fa-book"></i><span>Test Library</span></li>
+            <li class="menu-item" id="exam-library-link"><i class="fas fa-pencil-alt"></i><span>Exam Library</span></li>
+            <li class="menu-item" id="profile-link"><i class="fas fa-user-tie"></i><span>My Profile</span></li>
+            <li class="menu-item" id="classes-link"><i class="fas fa-users"></i><span>Classes</span></li>
+            <li class="menu-item" id="contact-link"><i class="fas fa-envelope"></i><span>Contact Us</span></li>
+            <li class="menu-item" id="logout-button"><i class="fas fa-sign-out-alt"></i><span>Logout</span></li>          
+        </ul>
+    </nav>
+
+    <main id="main-content">
+        <div class="contact-container">
+            <div class="contact-header">
+                <h1>Get In Touch</h1>
+                <p>We'd love to hear from you. Reach out to us through any of the methods below.</p>
+            </div>
+            
+            <div class="contact-grid">
+                <!-- Left Column: Contact Details -->
+                <div class="contact-info">
+                    <h2>Contact Information</h2>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>Physical Address:</strong><br>
+                            <a href="https://www.google.com/maps/search/?api=1&query=No.+50+Obi+Ikechukwu+Road+Agbor-Obi,+Delta+State" target="_blank">
+                                No. 50 Obi Ikechukwu Road, Agbor-Obi, Delta State, Nigeria.
+                            </a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <div>
+                            <strong>Phone Number:</strong><br>
+                            <a href="tel:+2340000000000">+234 (0) 000-000-0000</a> <!-- Replace with your actual number -->
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <div>
+                            <strong>WhatsApp:</strong><br>
+                            <a href="https://wa.me/2340000000000" target="_blank">+234 (0) 000-000-0000</a> <!-- Replace with your actual number -->
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <strong>Email Address:</strong><br>
+                            <a href="mailto:info@scs.org.ng">info@scs.org.ng</a> <!-- Replace with your actual email -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Contact Form -->
+                <div class="contact-form-container">
+                    <h2>Send Us a Message</h2>
+                    <form id="contact-form" class="contact-form">
+                        <label for="name">Your Name:</label>
+                        <input type="text" id="name" name="name" required>
+                        
+                        <label for="email">Your Email:</label>
+                        <input type="email" id="email" name="email" required>
+                        
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" required></textarea>
+                        
+                        <button type="submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+  
+    <img id="user-image-display" src="../assets/profile_pictures/default.jpeg" alt="User Profile" class="profile-display-icon">
+    <footer>&copy; 2024 SCS Test_Hall</footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- UI & NAVIGATION (Same as other pages) ---
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const offCanvasMenu = document.getElementById('off-canvas-menu');
+        hamburgerIcon.addEventListener('click', () => offCanvasMenu.classList.toggle('open'));
+
+        const redirectToRoleDashboard = () => {
+            const userRole = localStorage.getItem('loggedInUserRole');
+            let url = 'dashboard.html';
+            if (userRole) {
+                const r = userRole.toLowerCase();
+                if (r === 'admin') url = 'dashboard-admin.html';
+                else if (r === 'teacher') url = 'dashboard-teacher.html';
+                else if (r === 'student') url = 'dashboard-student.html';
+                else if (r === 'parent') url = 'dashboard-parents.html';
+            }
+            window.location.href = url;
+        };
+        document.getElementById('dashboard-link').addEventListener('click', redirectToRoleDashboard);
+        document.getElementById('test-library-link').addEventListener('click', () => window.location.href = 'test-library.html');
+        document.getElementById('exam-library-link').addEventListener('click', () => window.location.href = 'exam-library.html');
+        document.getElementById('profile-link').addEventListener('click', () => window.location.href = 'profile.html');
+        document.getElementById('classes-link').addEventListener('click', () => window.location.href = 'classes.html');
+        document.getElementById('contact-link').addEventListener('click', () => window.location.href = 'contact.html');
+        document.getElementById('logout-button').addEventListener('click', () => {
+            localStorage.clear();
+            window.location.href = 'login.html';
+        });
+
+        // --- PROFILE ICON ---
+        const profileDisplayIcon = document.getElementById('user-image-display');
+        const loggedInUserId = localStorage.getItem('loggedInUserId');
+        if (loggedInUserId) {
+                    // 2. Fetch full user data to get the profile picture (slower)
+    // ... (rest of the code)
+
+    fetch('../data/users.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(users => {
+            const tempUsers = JSON.parse(localStorage.getItem('tempUsers')) || [];
+            const allUsers = [...users, ...tempUsers];
+            const currentUser = allUsers.find(user => user.id == loggedInUserId);
+            
+            if (currentUser) {
+                const profilePicPath = currentUser.profilePicture ? currentUser.profilePicture : '../assets/profile_pictures/default.jpeg';
+                profileDisplayIcon.src = profilePicPath;
+            } else {
+                console.log('User not found');
+                profileDisplayIcon.src = '../assets/profile_pictures/default.jpeg';
+            }
+        })
+        .catch(error => {
+            console.error('Error loading profile data:', error);
+            profileDisplayIcon.src = '../assets/profile_pictures/default.jpeg';
+        });
+        
+        }
+        profileDisplayIcon.addEventListener('click', () => window.location.href = 'profile.html');
+
+        // --- CONTACT FORM SUBMISSION ---
+        const contactForm = document.getElementById('contact-form');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevent the form from actually submitting
+            
+            // In a real application, you would send this data to a server.
+            // For this static site, we will simulate a success message.
+            alert('Thank you for your message! We will get back to you shortly.');
+            
+            contactForm.reset(); // Clear the form fields
+        });
+    });
+    </script>
+</body>
+</html>

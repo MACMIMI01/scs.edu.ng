@@ -1,0 +1,606 @@
+administrative/login verification.html	
+administrative/login Agust.html	
+administrative/offline Pdf results generator.html	
+administrative/wakanda-alphabet.html	
+administrative/loading.html	
+administrative/month.html	
+administrative/media invitation.html	
+administrative/media training.html	
+administrative/wakanda alphabet 2.html	
+administrative/Login4.html	
+administrative/AUG-25TH-2025-2026-CBT- RESOURCES.html.txt	
+administrative/2025-2026-SS1-BIO-2ND.html.txt	
+api/login.js	
+api/signup.js	
+api/graduation4.jpg	
+api/cultural1.jpg	
+api/graduation2.jpg	
+api/graduation3.jpg	
+api/cultural2.jpg	
+api/guest.jpg	
+api/graduation1.jpg	
+api/parade2.jpg	
+api/parade3.jpg	
+api/parade1.jpg	
+cbt/EXAMS_AND_RECORDS/real pictures/tovia.jpeg	
+cbt/EXAMS_AND_RECORDS/real pictures/emmanuel_s.jpeg	
+cbt/EXAMS_AND_RECORDS/real pictures/wealth.jpeg	
+cbt/EXAMS_AND_RECORDS/real pictures/daniel.jpeg	
+cbt/EXAMS_AND_RECORDS/real pictures/marvelous.jpeg	
+cbt/EXAMS_AND_RECORDS/real pictures/kendra.jpeg	
+cbt/EXAMS_AND_RECORDS/real pictures/fortune.jpeg	
+cbt/EXAMS_AND_RECORDS/real pictures/IMG_2428.jpeg	
+cbt/EXAMS_AND_RECORDS/real pictures/prince.jpeg	
+cbt/EXAMS_AND_RECORDS/real pictures/Qtestimony.jpeg	
+cbt/EXAMS_AND_RECORDS/real pictures/mia.jpeg	
+cbt/EXAMS_AND_RECORDS/real pictures/excel.jpeg	
+cbt/EXAMS_AND_RECORDS/real pictures/emmanuel_o.jpeg	
+cbt/EXAMS_AND_RECORDS/real pictures/scotty.jpeg	
+cbt/EXAMS_AND_RECORDS/real pictures/chibaby.jpeg	
+cbt/EXAMS_AND_RECORDS/real pictures/IMG_20250711_135505_085.jpg	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_150151916.jpg	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_150239180.jpg	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_150302031.jpg	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_152610110.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_152849343.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_152944804.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_153032680.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_153140258.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_154110497.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_154251168.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_154354267.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_154712030.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_154934519.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_155023077.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_155055073.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_155126684.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_155313656.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_155349452.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_155425804.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_155522456.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_155601286.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_155655535.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250729_155724876.png	
+cbt/EXAMS_AND_RECORDS/real pictures/BackgroundEraser_20250801_091656667.png	
+cbt/EXAMS_AND_RECORDS/real pictures/igwe.png	
+cbt/EXAMS_AND_RECORDS/posible questions/3RD TERM CUMMULATIVE RESULT.xlsx	
+cbt/EXAMS_AND_RECORDS/posible questions/ALL SECONDARY STUDENTS NAME.xlsx	
+cbt/EXAMS_AND_RECORDS/posible questions/BASIC SEVEN LAVENDER – THIRD TERM COMPUTER STUDIES EXAMINATION.docx	
+cbt/EXAMS_AND_RECORDS/posible questions/Basic seven phe exam (1).docx	
+cbt/EXAMS_AND_RECORDS/posible questions/CRS AND PHE BASIC 9 EXAM.docx	
+cbt/EXAMS_AND_RECORDS/posible questions/BASIC EIGTH PHYSICAL AND HEALTH EDUCATION EXAMINATION.docx	
+cbt/EXAMS_AND_RECORDS/posible questions/BASIC EIGHT TULIP – COMPUTER STUDIES – THIRD TERM EXAMINATION.docx	
+cbt/EXAMS_AND_RECORDS/posible questions/Basic seven phe exam.docx	
+cbt/EXAMS_AND_RECORDS/posible questions/MOCK Test for Basic 9 EngComp.docx	
+cbt/EXAMS_AND_RECORDS/posible questions/3RD TERM CUMMULATIVE RESULT.pdf	
+cbt/EXAMS_AND_RECORDS/posible questions/move this file to the location and open it there.zip	
+cbt/EXAMS_AND_RECORDS/posible questions/2025 3RD TERM QUESTIONS NUR 1.docx	
+cbt/EXAMS_AND_RECORDS/posible questions/SS1 Maths_Government_History_JSS_History_Test.docx	
+cbt/EXAMS_AND_RECORDS/posible questions/Lesson Note on Physical and Health Education JSS1(BASIC 7) Third Term.docx	
+cbt/EXAMS_AND_RECORDS/posible questions/Physical and Health Education Lesson Note JSS3 Second Term.docx	
+cbt/EXAMS_AND_RECORDS/posible questions/Physical and Health Education Lesson Note JSS3 Thiird Term.docx	
+cbt/EXAMS_AND_RECORDS/posible questions/PHE EXAM QUESTIONS FOR JSS1 THIRD TERM (1).docx	
+cbt/EXAMS_AND_RECORDS/posible questions/Lesson Note on Physical and Health Education JSS2 First Term.docx	
+cbt/EXAMS_AND_RECORDS/posible questions/PHE EXAM QUESTIONS FOR JSS3 FIRST TERM -.docx	
+cbt/EXAMS_AND_RECORDS/posible questions/PHE EXAM QUESTIONS FOR JSS3 SECOND TERM.docx	
+cbt/EXAMS_AND_RECORDS/posible questions/Physical and Health Education Lesson Note JSS3 Second Term 1.docx	
+cbt/EXAMS_AND_RECORDS/posible questions/PHE EXAM QUESTIONS FOR JSS1 THIRD TERM.docx	
+cbt/EXAMS_AND_RECORDS/posible questions/PHE EXAM QUESTIONS FOR JSS1 SECOND TERM.docx	
+cbt/EXAMS_AND_RECORDS/posible questions/Physical and Health Education Lesson Note JSS1 Second Term.docx	
+cbt/EXAMS_AND_RECORDS/generatePDFtestResults.txt	
+cbt/EXAMS_AND_RECORDS/fake.html	
+cbt/EXAMS_AND_RECORDS/Structural Table.txt	
+cbt/EXAMS_AND_RECORDS/PHE115.html	
+cbt/EXAMS_AND_RECORDS/PHE115.2 (1).html	
+cbt/EXAMS_AND_RECORDS/structure manual.txt	
+cbt/EXAMS_AND_RECORDS/SCS CBT BLUEPRINT.txt	
+cbt/EXAMS_AND_RECORDS/generatePDFtestResults.html	
+cbt/EXAMS_AND_RECORDS/results template.jpg	
+cbt/EXAMS_AND_RECORDS/Extra class.html	
+cbt/EXAMS_AND_RECORDS/fas fa-icon.html	
+cbt/EXAMS_AND_RECORDS/Gabedge.html	
+cbt/EXAMS_AND_RECORDS/WEBEDIT.zip	
+cbt/EXAMS_AND_RECORDS/x.html	
+cbt/EXAMS_AND_RECORDS/dashboard1.html	
+cbt/EXAMS_AND_RECORDS/page guide.txt	
+cbt/EXAMS_AND_RECORDS/test-library_unidelstanserd.html	
+cbt/EXAMS_AND_RECORDS/phe_sunflower.json	
+cbt/EXAMS_AND_RECORDS/2025-07-09-SCS-CBT-UPDATED-VERSION.TXT	
+cbt/EXAMS_AND_RECORDS/index.html	
+cbt/data/ACS-JUNIOR-2025-2026/2025-2026-JS3-ACS-1ST.json	
+cbt/data/ACS-JUNIOR-2025-2026/2025-2026-JS3-ACS-2ND.json	
+cbt/data/ACS-JUNIOR-2025-2026/2025-2026-JS3-ACS-3RD.json	
+cbt/data/ACS-JUNIOR-2025-2026/2025-2026-JS1-ACS-3RD.json	
+cbt/data/ACS-JUNIOR-2025-2026/2025-2026-JS2-ACS-2ND.json	
+cbt/data/ACS-JUNIOR-2025-2026/2025-2026-JS2-ACS-3RD.json	
+cbt/data/ACS-JUNIOR-2025-2026/2025-2026-JS2-ACS-1ST.json	
+cbt/data/ACS-JUNIOR-2025-2026/2025-2026-JS1-ACS-2ND.json	
+cbt/data/ACS-JUNIOR-2025-2026/2025-2026-JS1-ACS-1ST.json	
+cbt/data/CSC-ASC-2025-2026-JSS-SSS-JSON-FILES-TEMPLATE/create-acs-files.ps1_	
+cbt/data/CSC-ASC-2025-2026-JSS-SSS-JSON-FILES-TEMPLATE/junior-2026-asc-exam.ps1	
+cbt/data/CSC-ASC-2025-2026-JSS-SSS-JSON-FILES-TEMPLATE/senior-2026-asc-exam.ps1	
+cbt/data/users.json	
+cbt/data/test_ict_lavender.json	
+cbt/data/test_ict_tulip.json	
+cbt/data/test_phe_lavender.json	
+cbt/data/test_phe_tulip.json	
+cbt/data/test_phe_sunflower.json	
+cbt/data/test_gst_112.json	
+cbt/data/classes.json	
+cbt/data/test_phe_118.json	
+cbt/data/secondary subject.txt	
+cbt/data/phe_sunflower.json	
+cbt/data/B7L-3rd.json	
+cbt/data/tests.json	
+cbt/data/question-template.json	
+cbt/data/third_term_basic_eight_phe.json	
+cbt/data/Create-Empty-Exam-Files.ps1	
+cbt/data/2025-2026-JS1-ACS-1ST.json	
+cbt/data/2025-2026-SS1-ACS-1ST.json	
+cbt/data/2025-2026-JS1-ACS-2ND.json	
+cbt/data/question-template-11.json	
+cbt/data/2025-2026-JS3-PHE-3RD.json	
+cbt/data/exams.json	
+cbt/data/index.html	
+cbt/data/exam-ase-25-26.json	
+cbt/data/2025-2026-JS2-ACS-1ST.json	
+cbt/data/agriculture-test-system.json	
+cbt/data/user2.json	
+cbt/data/users11.json	
+cbt/data/Claude.pdf	
+cbt/data/exams (1).json	
+cbt/data/notes.json	
+../assets/images/background/bg02.jpg	
+../assets/images/background/bg04.jpg	
+../assets/images/background/bg03.jpg	
+../assets/images/background/bg1.jpg	
+../assets/images/background/bg06.jpg	
+../assets/images/background/bg05.jpg	
+../assets/images/background/bg07.jpg	
+../assets/images/background/bg10.jpg	
+../assets/images/background/bg14.jpg	
+../assets/images/background/bg15.jpg	
+../assets/images/background/bg11.jpg	
+../assets/images/background/bg16.jpg	
+../assets/images/background/bg12.jpg	
+../assets/images/background/bg13.jpg	
+../assets/images/background/bg08.jpg	
+../assets/images/background/bg09.jpg	
+../assets/images/background/bg01.jpg	
+../assets/images/background/bg3.jpg	
+../assets/images/background/bg2.jpg	
+../assets/images/background/bg4.jpg	
+cbt/assets/images/questions/farm_basket.png	
+cbt/assets/images/questions/kid.jpeg	
+cbt/assets/images/questions/goat.jpeg	
+cbt/assets/images/questions/fruit.jpeg	
+cbt/assets/images/questions/soil.polution.jpeg	
+cbt/assets/images/questions/farm-animal.jpeg	
+cbt/assets/images/stamp.png	
+cbt/assets/images/logo.png	
+cbt/assets/images/1stamp.png	
+cbt/assets/images/loading note.gif	
+cbt/assets/images/stamp_black_white.png	
+cbt/assets/images/stamp_colour.png	
+cbt/assets/images/stamp_gray.png	
+cbt/assets/images/loading recycling.gif	
+cbt/assets/images/loading globe.gif	
+cbt/assets/images/favicon.ico	
+cbt/assets/images/loading bold.gif	
+cbt/assets/images/loading cloud.gif	
+cbt/assets/images/loading timer.gif	
+cbt/assets/images/loading time.gif	
+cbt/assets/images/loading equilibrium.gif	
+cbt/assets/images/loading infinite.gif	
+cbt/assets/images/loading gear.gif	
+cbt/assets/images/loading bubbles.gif	
+cbt/assets/images/default-class.jpeg	
+cbt/assets/profile_pictures/bethel.jpeg	
+cbt/assets/profile_pictures/default 2.jpeg	
+cbt/assets/profile_pictures/kendrick.jpeg	
+cbt/assets/profile_pictures/elvin.jpeg	
+cbt/assets/profile_pictures/finisher.jpeg	
+cbt/assets/profile_pictures/kendrew.jpeg	
+cbt/assets/profile_pictures/divine_monday.jpeg	
+cbt/assets/profile_pictures/prince.jpeg	
+cbt/assets/profile_pictures/marvelous.jpeg	
+cbt/assets/profile_pictures/mia.jpeg	
+cbt/assets/profile_pictures/safa.jpeg	
+cbt/assets/profile_pictures/team-2.gif	
+cbt/assets/profile_pictures/excel.jpeg	
+cbt/assets/profile_pictures/admin.jpeg	
+cbt/assets/profile_pictures/id97.jpeg	
+cbt/assets/profile_pictures/mitchelle.jpeg	
+cbt/assets/profile_pictures/cherish.jpeg	
+cbt/assets/profile_pictures/emmanuel_o.jpeg	
+cbt/assets/profile_pictures/fortune.jpeg	
+cbt/assets/profile_pictures/wealth.jpeg	
+cbt/assets/profile_pictures/rosella.jpeg	
+cbt/assets/profile_pictures/lavender.jpeg	
+cbt/assets/profile_pictures/testimony.jpeg	
+cbt/assets/profile_pictures/template t.jpeg	
+cbt/assets/profile_pictures/default 6.jpg	
+cbt/assets/profile_pictures/male.jpeg	
+cbt/assets/profile_pictures/default 8.jpg	
+cbt/assets/profile_pictures/default 9.jpeg	
+cbt/assets/profile_pictures/chibaby.jpeg	
+cbt/assets/profile_pictures/kendra.jpeg	
+cbt/assets/profile_pictures/great_eniola.jpeg	
+cbt/assets/profile_pictures/david.jpeg	
+cbt/assets/profile_pictures/best_oyindamola.jpeg	
+cbt/assets/profile_pictures/igweh_great.jpeg	
+cbt/assets/profile_pictures/memo.gif	
+cbt/assets/profile_pictures/oma.jpeg	
+cbt/assets/profile_pictures/tovia.jpeg	
+cbt/assets/profile_pictures/ife.jpeg	
+cbt/assets/profile_pictures/anointed.jpeg	
+cbt/assets/profile_pictures/eboy.jpeg	
+cbt/assets/profile_pictures/default.jpeg	
+cbt/assets/profile_pictures/jackvina.jpeg	
+cbt/assets/profile_pictures/female.jpeg	
+cbt/assets/profile_pictures/3memo.gif	
+cbt/assets/profile_pictures/divine_ekemba.jpeg	
+cbt/assets/profile_pictures/emmanuel_s.jpeg	
+cbt/assets/profile_pictures/daniel.jpeg	
+cbt/assets/profile_pictures/scotty.jpeg	
+cbt/assets/profile_pictures/BASIC_EIGHT_TULIP.jpeg	
+cbt/assets/profile_pictures/default 009.jpeg	
+cbt/assets/profile_pictures/studentone.jpeg	
+cbt/assets/profile_pictures/uwa.jpeg	
+cbt/assets/profile_pictures/template2.jpeg	
+cbt/assets/profile_pictures/template 4.jpeg	
+cbt/assets/profile_pictures/template u5r.jpeg	
+cbt/assets/profile_pictures/femtale.jpeg	
+cbt/assets/profile_pictures/default template.jpeg	
+cbt/assets/profile_pictures/template1.jpeg	
+cbt/assets/profile_pictures/template.jpeg	
+cbt/assets/notes/Print_B7_ICT.pdf	
+cbt/assets/notes/Print_B8_phe.doc	
+cbt/assets/notes/Print_B8_phe.pdf	
+cbt/assets/notes/Print_B7_ICT.docx	
+cbt/assets/notes/Print_B8_phe.docx	
+cbt/assets/notes/ASE25-26 BASIC SEVEN LAVENDER COMPUTER STUDIES LESSON NOTE.pdf	
+cbt/assets/WakandaForeverRegular-K7PzX.otf	
+cbt/assets/WakandaPanther.ttf	
+cbt/pages/game/game/game.html	
+cbt/pages/game/game/Pac-Man.html	
+cbt/pages/game/memory game/memory card.txt	
+cbt/pages/game/memory game/style.css	
+cbt/pages/game/memory game/index.html	
+cbt/pages/game/memory game/cards.json	
+cbt/pages/game/memory game/script.js	
+cbt/pages/game/ANS11/ANS11.html	
+cbt/pages/game/eng-games/games/spelling4.html	
+cbt/pages/game/eng-games/games/spelling2.html	
+cbt/pages/game/eng-games/games/spelling1.html	
+cbt/pages/game/eng-games/games/spelling5.html	
+cbt/pages/game/eng-games/games/spelling0.html	
+cbt/pages/game/eng-games/games/nursery game.txt	
+cbt/pages/game/eng-games/games/spelling3.html	
+cbt/pages/game/eng-games/index.html	
+cbt/pages/game/phe-games/games/maze/maze.html	
+cbt/pages/game/phe-games/games/obstacle-course/obstacleData.json	
+cbt/pages/game/phe-games/games/obstacle-course/obstacle.js	
+cbt/pages/game/phe-games/games/obstacle-course/obstacle.css	
+cbt/pages/game/phe-games/games/obstacle-course/obstacle.html	
+cbt/pages/game/phe-games/games/obstacle-course/blajaja.txt	
+cbt/pages/game/phe-games/games/traffic-light/traffic.js	
+cbt/pages/game/phe-games/games/traffic-light/traffic.css	
+cbt/pages/game/phe-games/games/traffic-light/traffic.html	
+cbt/pages/game/phe-games/games/traffic-light/resiysr.txt	
+cbt/pages/game/phe-games/games/traffic-light/trafficData.json	
+cbt/pages/game/phe-games/games/anatomy-sim/anatomy.html	
+cbt/pages/game/phe-games/games/anatomy-sim/boneData.json	
+cbt/pages/game/phe-games/games/anatomy-sim/anatomy.js	
+cbt/pages/game/phe-games/games/anatomy-sim/anatomy.css	
+cbt/pages/game/phe-games/games/anatomy-sim/g.html	
+cbt/pages/game/phe-games/assets/images/human_skeleton.svg	
+cbt/pages/game/phe-games/assets/images/human_skeleton.png	
+cbt/pages/game/phe-games/assets/sounds/correct.mp3	
+cbt/pages/game/phe-games/assets/sounds/wrong.mp3	
+cbt/pages/game/phe-games/assets/sounds/whistle.mp3	
+cbt/pages/game/phe-games/assets/sounds/win.mp3	
+cbt/pages/game/phe-games/index.html	
+cbt/pages/game/phe-games/x.txt	
+cbt/pages/game/frogger-game/frogger-game.txt	
+cbt/pages/game/frogger-game/index.html	
+cbt/pages/game/frogger-game/levels.json	
+cbt/pages/game/Dragon Cursor Effect/Dragon Cursor Effect/index.html	
+cbt/pages/game/Dragon Cursor Effect/Dragon Cursor Effect/script.js	
+cbt/pages/game/Dragon Cursor Effect/Dragon Cursor Effect/style.css	
+cbt/pages/game/bonr.html	
+cbt/pages/game/Space Shooter.html	
+cbt/pages/game/Brick Breaker.html	
+cbt/pages/game/Snake.html	
+cbt/pages/game/memory card.html	
+cbt/pages/game/tic tac toe meta.html	
+cbt/pages/game/anothe test taking l.html	
+cbt/pages/game/macmac.html	
+cbt/pages/game/batman.html	
+cbt/pages/game/flash card.html	
+cbt/pages/game/memory march.html	
+cbt/pages/game/frog.html	
+cbt/pages/game/pixel-invaders.html	
+cbt/pages/game/Gemini.html	
+cbt/pages/game/tic tac toe Gemini.html	
+cbt/pages/game/pixel shooter for lapto.html	
+cbt/pages/game/pixel-paddle.html	
+cbt/pages/game/super Mario.html	
+cbt/pages/game/super Mario 2.html	
+cbt/pages/game/brick-stacker.html	
+cbt/pages/game/super Mario 3.html	
+cbt/pages/game/pixel runner 1.html	
+cbt/pages/game/pixel runner 2.html	
+cbt/pages/game/Tower defense 1.html	
+cbt/pages/game/Tower defense 2.html	
+cbt/pages/game/Pixel-Quest.html	
+cbt/pages/game/dashboard.html	
+cbt/pages/classes/B8T.html	
+cbt/pages/classes/B9S.html	
+cbt/pages/classes/B7L.html	
+cbt/pages/error/cow-401page.html	
+cbt/pages/error/401 car crash.html	
+cbt/pages/error/401-id-denied.html	
+cbt/pages/error/401-id.html	
+cbt/pages/login.html	
+cbt/pages/test-taking.html	
+cbt/pages/dashboard.html	
+cbt/pages/test-library.html	
+cbt/pages/about.html	
+cbt/pages/exam-Maker.html	
+cbt/pages/guide-FAQ.html	
+cbt/pages/contact.html	
+cbt/pages/profile.html	
+cbt/pages/classes.html	
+cbt/pages/B9S.html	
+cbt/pages/B7L.html	
+cbt/pages/zip-analyzer.html	
+cbt/pages/admission.html	
+cbt/pages/HTML_Basic_Tags_Sheet1.html	
+cbt/pages/extension.html	
+cbt/pages/gamehall.html	
+cbt/pages/level.html	
+cbt/pages/exam-taking.html	
+cbt/pages/exam-dbt.html	
+cbt/pages/B8T.html	
+cbt/pages/exam-library.html	
+cbt/pages/exam-question-generator.html	
+cbt/pages/url-qr-offline-2.html	
+cbt/pages/dashboard-teacher.html	
+cbt/pages/registered-users.html	
+cbt/pages/user-addmin-check.html	
+cbt/pages/url-qr-offline-3.html	
+cbt/pages/cbt single question.html	
+cbt/pages/dashboard-admin.html	
+cbt/pages/users-line.html	
+cbt/pages/home.html	
+cbt/pages/admin_user_manager.html	
+cbt/pages/exam-docx-to-json.html	
+cbt/pages/dashboard-student.html	
+cbt/pages/HTML_Basic_Tags_Sheet2.html	
+cbt/pages/test-taking (1).html	
+cbt/pages/index.html	
+cbt/pages/form.html	
+cbt/pages/user-profile.html	
+cbt/pages/WiFi.html	
+cbt/pages/2025-2026-TEST-LIBRARY.html	
+cbt/pages/replace.html	
+cbt/pages/replacement.html	
+cbt/pages/test taking.html	
+cbt/pages/lectures.html	
+cbt/pages/dashboard-parents.html	
+cbt/pages/draft.html	
+cbt/pages/exam db Microsoft copilot.html	
+cbt/pages/HTML_Basic_Tags_Sheet3.html	
+cbt/pages/url-qr-offline-1.html	
+cbt/pages/test-library1.html	
+cbt/pages/dashboard-admin (1).html	
+cbt/pages/login-auto-auth.html	
+cbt/pages/ai_studio_code (6).html	
+cbt/pages/ai_studio_code (7).html	
+cbt/pages/ai_studio_code (8).html	
+cbt/pages/ai_studio_code (9).html	
+cbt/pages/exam-taking dead end.html	
+cbt/pages/test-taking2.html	
+cbt/pages/B1B.html	
+cbt/pages/SS1.html	
+cbt/pages/SS3.html	
+cbt/pages/B5B.html	
+cbt/pages/B3B.html	
+cbt/pages/SS2.html	
+cbt/pages/B2B.html	
+cbt/pages/B4B.html	
+cbt/pages/404.html	
+cbt/scripts/js/jspdf.umd.min.js	
+cbt/scripts/js/qrcode.min.js	
+cbt/scripts/css/font-awesome.min.css	
+cbt/scripts/css/font awesome.css.txt	
+cbt/scripts/css/wakanda.css	
+cbt/scripts/webfonts/fa-brands-400.woff2	
+cbt/scripts/webfonts/fa-regular-400.woff2	
+cbt/scripts/webfonts/fa-solid-900.woff2	
+cbt/scripts/webfonts/fa-v4compatibility.woff2	
+cbt/scripts/auth.js	
+cbt/scripts/Index.html	
+cbt/scripts/draft.txt	
+cbt/scripts/jspdf.umd.min1.js	
+cbt/scripts/font awesome hard CSS script.html	
+cbt/scripts/jspdf.umd.min.js.txt	
+cbt/scripts/qrcode.js	
+cbt/scripts/wakanda.css	
+cbt/tool/real pictures/tovia.jpeg	
+cbt/tool/real pictures/emmanuel_s.jpeg	
+cbt/tool/real pictures/wealth.jpeg	
+cbt/tool/real pictures/daniel.jpeg	
+cbt/tool/real pictures/marvelous.jpeg	
+cbt/tool/real pictures/kendra.jpeg	
+cbt/tool/real pictures/fortune.jpeg	
+cbt/tool/real pictures/IMG_2428.jpeg	
+cbt/tool/real pictures/prince.jpeg	
+cbt/tool/real pictures/Qtestimony.jpeg	
+cbt/tool/real pictures/mia.jpeg	
+cbt/tool/real pictures/excel.jpeg	
+cbt/tool/real pictures/emmanuel_o.jpeg	
+cbt/tool/real pictures/scotty.jpeg	
+cbt/tool/real pictures/chibaby.jpeg	
+cbt/tool/real pictures/IMG_20250711_135505_085.jpg	
+cbt/tool/real pictures/BackgroundEraser_20250729_150151916.jpg	
+cbt/tool/real pictures/BackgroundEraser_20250729_150239180.jpg	
+cbt/tool/real pictures/BackgroundEraser_20250729_150302031.jpg	
+cbt/tool/real pictures/BackgroundEraser_20250729_152610110.png	
+cbt/tool/real pictures/BackgroundEraser_20250729_152849343.png	
+cbt/tool/real pictures/BackgroundEraser_20250729_152944804.png	
+cbt/tool/real pictures/BackgroundEraser_20250729_153032680.png	
+cbt/tool/real pictures/BackgroundEraser_20250729_153140258.png	
+cbt/tool/real pictures/BackgroundEraser_20250729_154110497.png	
+cbt/tool/real pictures/BackgroundEraser_20250729_154251168.png	
+cbt/tool/real pictures/BackgroundEraser_20250729_154354267.png	
+cbt/tool/real pictures/BackgroundEraser_20250729_154712030.png	
+cbt/tool/real pictures/BackgroundEraser_20250729_154934519.png	
+cbt/tool/real pictures/BackgroundEraser_20250729_155023077.png	
+cbt/tool/real pictures/BackgroundEraser_20250729_155055073.png	
+cbt/tool/real pictures/BackgroundEraser_20250729_155126684.png	
+cbt/tool/real pictures/BackgroundEraser_20250729_155313656.png	
+cbt/tool/real pictures/BackgroundEraser_20250729_155349452.png	
+cbt/tool/real pictures/BackgroundEraser_20250729_155425804.png	
+cbt/tool/real pictures/BackgroundEraser_20250729_155522456.png	
+cbt/tool/real pictures/BackgroundEraser_20250729_155601286.png	
+cbt/tool/real pictures/BackgroundEraser_20250729_155655535.png	
+cbt/tool/real pictures/BackgroundEraser_20250729_155724876.png	
+cbt/tool/real pictures/BackgroundEraser_20250801_091656667.png	
+cbt/tool/real pictures/igwe.png	
+cbt/tool/grid_solver.html	
+cbt/tool/json-error-detector2.html	
+cbt/tool/grid and grid.html	
+cbt/tool/json-error-detector.html	
+cbt/tool/grid.html	
+cbt/tool/json_corrector.html	
+cbt/tool/json_diff_corrector.html__.html	
+cbt/tool/trebedit.html	
+cbt/tool/gridi.html	
+cbt/tool/grh code.html	
+cbt/tool/Screenshot_20250809-000539.jpg	
+cbt/tool/Screenshot_20250809-000621.jpg	
+cbt/tool/Screenshot_20250809-000639.jpg	
+cbt/tool/Screenshot_20250809-000651.jpg	
+cbt/tool/Screenshot_20250809-000847.jpg	
+cbt/tool/Screenshot_20250809-001306.jpg	
+cbt/tool/Screenshot_20250809-002748.jpg	
+cbt/tool/Screenshot_20250809-003114.jpg	
+cbt/tool/Screenshot_20250809-003758.jpg	
+cbt/tool/Screenshot_20250809-005337.jpg	
+cbt/tool/Screenshot_20250809-005345.jpg	
+cbt/tool/Screenshot_20250809-005355.jpg	
+cbt/tool/Screenshot_20250809-005402.jpg	
+cbt/tool/Screenshot_20250809-005409.jpg	
+cbt/tool/Screenshot_20250809-005422.jpg	
+cbt/tool/Screenshot_20250809-005436.jpg	
+cbt/tool/Screenshot_20250809-005459.jpg	
+cbt/tool/Screenshot_20250809-005510.jpg	
+cbt/tool/Screenshot_20250809-005522.jpg	
+cbt/tool/Screenshot_20250809-005535.jpg	
+cbt/tool/Screenshot_20250809-005548.jpg	
+cbt/tool/Screenshot_20250809-005618.jpg	
+cbt/tool/Screenshot_20250809-005630.jpg	
+cbt/tool/Screenshot_20250809-005711.jpg	
+cbt/tool/Screenshot_20250809-005728.jpg	
+cbt/tool/Screenshot_20250809-005745.jpg	
+cbt/tool/Screenshot_20250809-005801.jpg	
+cbt/tool/Screenshot_20250809-005818.jpg	
+cbt/tool/Screenshot_20250809-005833.jpg	
+cbt/tool/Screenshot_20250809-005849.jpg	
+cbt/tool/Screenshot_20250809-005912.jpg	
+cbt/tool/Screenshot_20250809-005944.jpg	
+cbt/tool/Screenshot_20250809-010007.jpg	
+cbt/tool/Screenshot_20250809-010032.jpg	
+cbt/tool/Screenshot_20250809-010231.jpg	
+cbt/tool/Screenshot_20250809-010248.jpg	
+cbt/tool/Screenshot_20250809-010302.jpg	
+cbt/tool/Screenshot_20250809-010312.jpg	
+cbt/tool/Screenshot_20250809-010341.jpg	
+cbt/tool/Screenshot_20250809-010353.jpg	
+cbt/tool/Screenshot_20250809-010421.jpg	
+cbt/tool/Screenshot_20250809-010448.jpg	
+cbt/tool/Screenshot_20250809-010505.jpg	
+cbt/tool/Screenshot_20250809-010526.jpg	
+cbt/tool/Screenshot_20250809-010554.jpg	
+cbt/tool/Screenshot_20250809-010611.jpg	
+cbt/tool/Screenshot_20250809-010624.jpg	
+cbt/tool/Screenshot_20250809-010632.jpg	
+cbt/tool/Screenshot_20250809-010657.jpg	
+cbt/tool/Screenshot_20250809-010714.jpg	
+cbt/tool/Screenshot_20250809-010736.jpg	
+cbt/tool/Screenshot_20250809-010756.jpg	
+cbt/tool/Screenshot_20250809-010818.jpg	
+cbt/tool/Screenshot_20250809-010842.jpg	
+cbt/tool/Screenshot_20250809-010902.jpg	
+cbt/tool/Screenshot_20250809-010929.jpg	
+cbt/tool/Screenshot_20250809-010947.jpg	
+cbt/tool/Screenshot_20250809-011012.jpg	
+cbt/tool/Screenshot_20250809-011031.jpg	
+cbt/tool/Screenshot_20250809-011039.jpg	
+cbt/tool/Screenshot_20250809-011105.jpg	
+cbt/tool/Screenshot_20250809-011130.jpg	
+cbt/tool/Screenshot_20250809-011155.jpg	
+cbt/tool/Screenshot_20250809-011210.jpg	
+cbt/tool/Screenshot_20250809-011238.jpg	
+cbt/tool/Screenshot_20250809-011259.jpg	
+cbt/tool/Screenshot_20250809-011353.jpg	
+cbt/tool/Screenshot_20250809-011430.jpg	
+cbt/tool/json user numerical order.html	
+cbt/tool/json user duplicate removal.html	
+cbt/tool/registrated uses.html	
+cbt/tool/rre registrar users.html	
+cbt/tool/percentage.html	
+cbt/tool/presents.html	
+cbt/tool/water.html	
+cbt/tool/age copilot.html	
+cbt/tool/age2plex.html	
+cbt/tool/api.meta.ai.html	
+cbt/tool/age1.html	
+cbt/tool/fileTree.inner.HTML	
+cbt/tool/redirect.html	
+cbt/tool/fa solid.html	
+cbt/tool/August.html	
+cbt/tool/wakanda.html	
+cbt/tool/Unidel.html	
+cbt/tool/text-to-table1.html	
+cbt/tool/Template.txt	
+cbt/tool/sitemap 2.html	
+cbt/tool/find-n-replace.html	
+cbt/tool/questikn.txt	
+cbt/tool/phe.txt	
+cbt/tool/text totable.html	
+cbt/tool/cssc.html	
+cbt/tool/draft.html	
+cbt/tool/2023.html	
+cbt/tool/eerro.html	
+cbt/tool/error.html	
+cbt/tool/cscs.html	
+cbt/tool/.trashed-1760391779-template.png	
+cbt/README.md	
+cbt/index.html	
+cbt/sitemap.html	
+cbt/favicon.ico	
+cbt/indexx.html	
+zip/base.apk	
+index.html	
+test run it.html	
+login.js	
+users.json	
+print.txt	
+table index.html	
+index1x.html	
+index2x.html	
+tabledocx.html	
+favicon.ico	
+ST CHRISTOPHER SCHOOL.docx	
+sep.zip	
+zip.zip	
+land.html	
+land2.html	
+Physical and Health Education Lesson Note JSS3 Second Term (.txt	
+Physical and Health Education Lesson Note JSS2 Second Term.txt	
+Lesson Note on Physical and Health Education JSS3 First Term.txt	
+Lesson Note on Physical and Health Education JSS1 (BASIC 7) First Term.txt	
+	

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registry | SCS Management Portal</title>
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico" />
+    
+    <!-- Professional Typography & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Local Fallback -->
+    <link rel="stylesheet" href="../scripts/css/font-awesome.min.css">
+
+    <style>
+        :root {
+            --primary-blue: #020169;
+            --accent-gold: #FEC009;
+            --bg-light: #f4f7fe;
+            --white: #ffffff;
+            --text-main: #333;
+            --text-muted: #666;
+            --sidebar-narrow: 80px;
+            --sidebar-wide: 260px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* 
+        ===================================================================
+            1. NAVIGATION (SIDEBAR & PROFILE)
+        ===================================================================
+        */
+        .hamburger-icon { 
+            display: block; position: fixed; top: 20px; left: 20px; font-size: 24px; 
+            color: var(--primary-blue); cursor: pointer; z-index: 1200; 
+            background-color: var(--accent-gold); padding: 8px 12px; border-radius: 6px; 
+            box-shadow: var(--shadow); border: none;
+        }
+
+        .sidebar { 
+            position: fixed; top: 0; left: -260px; width: var(--sidebar-wide); 
+            height: 100%; background-color: var(--primary-blue); color: var(--white); 
+            padding-top: 80px; transition: var(--transition); z-index: 1050; 
+            box-shadow: 3px 0 8px rgba(0,0,0,0.3); 
+        }
+
+        .sidebar.open { left: 0; }
+
+        .menu-item { 
+            display: flex; align-items: center; padding: 16px 24px; cursor: pointer; 
+            transition: var(--transition); font-size: 1rem; border-left: 4px solid transparent;
+            white-space: nowrap; color: rgba(255,255,255,0.8); text-decoration: none;
+        }
+
+        .menu-item i { font-size: 20px; margin-right: 18px; min-width: 25px; text-align: center; }
+
+        .menu-item:hover, .menu-item.active { 
+            background-color: rgba(255, 255, 255, 0.1); 
+            color: var(--accent-gold); border-left-color: var(--accent-gold);
+        }
+
+        @media (min-width: 1024px) {
+            .hamburger-icon { display: none; }
+            .sidebar { left: 0; width: var(--sidebar-narrow); padding-top: 20px; overflow: hidden;}
+            .sidebar:hover { width: var(--sidebar-expanded); width: 260px; }
+            .sidebar .menu-item span { opacity: 0; transition: opacity 0.2s; }
+            .sidebar:hover .menu-item span { opacity: 1; }
+            main { margin-left: var(--sidebar-narrow); transition: var(--transition); }
+            .sidebar:hover ~ main { margin-left: 260px; }
+        }
+
+        .profile-display-icon { 
+            position: fixed; top: 15px; right: 15px; width: 50px; height: 50px; 
+            border-radius: 50%; object-fit: cover; border: 2.5px solid var(--accent-gold); 
+            cursor: pointer; z-index: 1100; box-shadow: var(--shadow); transition: var(--transition);
+        }
+
+        /* 
+        ===================================================================
+            2. MAIN CONTENT & TABLE
+        ===================================================================
+        */
+        main { padding: 40px; padding-top: 90px; flex-grow: 1; }
+
+        .registry-container {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--primary-blue);
+        }
+
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-flex h2 { color: var(--primary-blue); font-size: 1.8rem; font-weight: 700; }
+
+        .controls { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        #search-input, #sort-select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            outline: none;
+            transition: 0.3s;
+            color: var(--text-main);
+        }
+
+        #search-input:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(2, 1, 105, 0.1); }
+
+        /* Table Design */
+        .table-responsive { overflow-x: auto; margin-top: 10px; border-radius: 8px; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            min-width: 800px;
+        }
+
+        thead { background-color: var(--primary-blue); color: var(--white); }
+
+        th { padding: 15px; text-align: left; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+
+        td { padding: 15px; border-bottom: 1px solid #eee; vertical-align: middle; }
+
+        tbody tr:hover { background-color: #f9faff; transition: 0.2s; }
+
+        /* User Identity Cell */
+        .user-cell { display: flex; align-items: center; gap: 12px; }
+        .user-cell img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #ddd; }
+        .user-name { font-weight: 600; color: var(--primary-blue); display: block; }
+        .user-id { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* Badge Styles */
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .badge-role { background: #e0e7ff; color: #4338ca; }
+        .badge-class { background: #fef3c7; color: #92400e; }
+
+        /* Actions */
+        .btn-action {
+            background: none; border: none; color: var(--primary-blue);
+            cursor: pointer; padding: 5px; font-size: 1.1rem; transition: 0.2s;
+        }
+        .btn-action:hover { color: var(--accent-gold); transform: scale(1.2); }
+
+        /* Footer */
+        footer { 
+            background-color: var(--primary-blue); color: var(--white); 
+            padding: 20px; text-align: center; font-size: 0.85rem; margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            main { padding: 20px; padding-top: 90px; }
+            .header-flex { flex-direction: column; align-items: flex-start; }
+            #search-input, #sort-select { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="hamburger-icon" id="hamburger-icon" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="menu-list">
+            <a href="dashboard.html" class="menu-item"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+            <a href="registered-users.html" class="menu-item active"><i class="fas fa-users"></i><span>Registered Users</span></a>
+            <a href="classes.html" class="menu-item"><i class="fas fa-school"></i><span>Classes</span></a>
+            <a href="notes.html" class="menu-item"><i class="fas fa-book-open"></i><span>Lecture Notes</span></a>
+            <a href="profile.html" class="menu-item"><i class="fas fa-user-circle"></i><span>My Profile</span></a>
+            <div class="menu-item" id="logout-btn" style="margin-top:auto">
+                <i class="fas fa-sign-out-alt"></i><span>Secure Logout</span>
+            </div>
+        </div>
+    </nav>
+
+    <img id="user-image-display" src="../assets/profile_pictures/default.jpeg" alt="Admin" class="profile-display-icon">
+
+    <main id="main-content">
+        <div class="registry-container">
+            <div class="header-flex">
+                <h2><i class="fas fa-id-card-alt"></i> Registered Users</h2>
+                <div class="controls">
+                    <input type="search" id="search-input" placeholder="Filter by name, role, class...">
+                    <select id="sort-select">
+                        <option value="name-asc">Name (A-Z)</option>
+                        <option value="name-desc">Name (Z-A)</option>
+                        <option value="role-asc">Role</option>
+                        <option value="class-asc">Class</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table id="users-table">
+                    <thead>
+                        <tr>
+                            <th>Identity</th>
+                            <th>Username</th>
+                            <th>Role</th>
+                            <th>Class/Dept</th>
+                            <th>Gender</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-tbody">
+                        <!-- Data injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2024 SCS CBT International Science & Tech Project. All Rights Reserved.
+    </footer>
+
+    <script>
+        const usersTbody = document.getElementById('users-tbody');
+        const searchInput = document.getElementById('search-input');
+        const sortSelect = document.getElementById('sort-select');
+        const sidebar = document.getElementById('sidebar');
+        const hamburger = document.getElementById('hamburger-icon');
+
+        let users = [];
+
+        // 1. Navigation Logic
+        hamburger.onclick = () => sidebar.classList.toggle('open');
+        document.getElementById('logout-btn').onclick = () => {
+            localStorage.clear();
+            window.location.href = 'login.html';
+        };
+
+        // 2. Load User Profile Icon
+        const currentUserId = localStorage.getItem('loggedInUserId');
+        fetch('../data/users.json')
+            .then(res => res.json())
+            .then(data => {
+                const admin = data.find(u => u.id == currentUserId);
+                if(admin) document.getElementById('user-image-display').src = admin.profilePicture || '../assets/profile_pictures/default.jpeg';
+                
+                users = data;
+                renderUsers(users);
+            })
+            .catch(err => console.error('Data acquisition error:', err));
+
+        // 3. Render Table Rows
+        function renderUsers(usersList) {
+            usersTbody.innerHTML = '';
+            
+            if(usersList.length === 0) {
+                usersTbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 40px;">No matching records found.</td></tr>';
+                return;
+            }
+
+            usersList.forEach(user => {
+                const tr = document.createElement('tr');
+                const pfp = user.profilePicture || '../assets/profile_pictures/default.jpeg';
+                
+                tr.innerHTML = `
+                    <td>
+                        <div class="user-cell">
+                            <img src="${pfp}" alt="PFP" onerror="this.src='../assets/profile_pictures/default.jpeg'">
+                            <div>
+                                <span class="user-name">${user.name}</span>
+                                <span class="user-id">UID: ${user.id}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td><code style="background:#eee; padding:2px 5px; border-radius:4px;">${user.username}</code></td>
+                    <td><span class="badge badge-role">${user.role}</span></td>
+                    <td><span class="badge badge-class">${user.class || 'N/A'}</span></td>
+                    <td><i class="fas fa-${user.gender?.toLowerCase() === 'male' ? 'mars' : 'venus'}" style="color:#888"></i> ${user.gender || '---'}</td>
+                    <td style="font-size: 0.85rem;">${user.email || 'No Email'}</td>
+                    <td>
+                        <button class="btn-action" title="View Profile" onclick="window.location.href='profile.html?id=${user.id}'">
+                            <i class="fas fa-external-link-alt"></i>
+                        </button>
+                    </td>
+                `;
+                usersTbody.appendChild(tr);
+            });
+        }
+
+        // 4. Search Functionality
+        searchInput.addEventListener('input', () => {
+            const val = searchInput.value.toLowerCase();
+            const filtered = users.filter(u => 
+                u.name.toLowerCase().includes(val) ||
+                u.username.toLowerCase().includes(val) ||
+                u.role.toLowerCase().includes(val) ||
+                (u.class && u.class.toLowerCase().includes(val))
+            );
+            renderUsers(filtered);
+        });
+
+        // 5. Sort Functionality
+        sortSelect.addEventListener('change', () => {
+            const [field, order] = sortSelect.value.split('-');
+            const sorted = [...users].sort((a, b) => {
+                let valA = (a[field] || "").toString().toLowerCase();
+                let valB = (b[field] || "").toString().toLowerCase();
+                
+                if (order === 'asc') return valA.localeCompare(valB);
+                return valB.localeCompare(valA);
+            });
+            renderUsers(sorted);
+        });
+    </script>
+</body>
+</html>

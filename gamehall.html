@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#020169">
+    <title>SCS | Strategic Game Hall</title>
+    
+    <!-- Project Assets -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../scripts/css/font-awesome.min.css">
+    
+    <!-- Professional Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-blue: #020169;
+            --accent-gold: #FEC009;
+            --bg-dark: #0a0b1e;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-light: #f4f4f9;
+            --sidebar-width: 80px;
+            --sidebar-expand: 260px;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+        }
+
+        /* 
+        ===================================================================
+            1. NAVIGATION (SLIDING SIDEBAR)
+        ===================================================================
+        */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: var(--primary-blue);
+            position: fixed;
+            left: 0; top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+        }
+
+        @media (min-width: 1024px) {
+            .sidebar:hover { width: var(--sidebar-expand); }
+        }
+
+        .menu-list { list-style: none; margin-top: 20px; flex-grow: 1; }
+        .menu-item {
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            border-left: 4px solid transparent;
+            white-space: nowrap;
+        }
+
+        .menu-item i { min-width: 30px; font-size: 1.3rem; text-align: center; }
+        .menu-item span { margin-left: 25px; opacity: 0; font-weight: 600; }
+        .sidebar:hover .menu-item span { opacity: 1; }
+
+        .menu-item:hover, .menu-item.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--accent-gold);
+            border-left-color: var(--accent-gold);
+        }
+
+        /* 
+        ===================================================================
+            2. MAIN CONTENT AREA
+        ===================================================================
+        */
+        main {
+            flex-grow: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            transition: var(--transition);
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-top: 20px;
+        }
+
+        .hero-section h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(to bottom, #fff, var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .hero-section p { font-size: 1.1rem; opacity: 0.7; font-weight: 300; }
+
+        /* Controls Area */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            color: white;
+            font-family: inherit;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-box i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--accent-gold); }
+
+        .filter-select {
+            padding: 0 25px;
+            background: var(--primary-blue);
+            color: white;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* 
+        ===================================================================
+            3. GAME GRID & CARDS
+        ===================================================================
+        */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .game-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px;
+            backdrop-filter: blur(15px);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-gold);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .game-card::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(254, 192, 9, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .game-icon-circle {
+            width: 80px; height: 80px;
+            background: rgba(254, 192, 9, 0.1);
+            border-radius: 20px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem; color: var(--accent-gold);
+            margin-bottom: 25px;
+        }
+
+        .game-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 10px; }
+        .game-desc { font-size: 0.95rem; opacity: 0.6; line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
+
+        .score-stats {
+            display: flex; justify-content: space-between;
+            padding: 15px; background: rgba(0,0,0,0.3);
+            border-radius: 15px; margin-bottom: 25px;
+        }
+
+        .stat-box { text-align: center; }
+        .stat-box small { display: block; font-size: 0.7rem; text-transform: uppercase; opacity: 0.5; margin-bottom: 5px; }
+        .stat-box span { font-weight: 800; color: var(--accent-gold); }
+
+        .game-btn {
+            background: var(--accent-gold);
+            color: var(--primary-blue);
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .game-btn:hover { background: white; transform: scale(1.02); }
+
+        /* 
+        ===================================================================
+            4. MOBILE & OVERLAYS
+        ===================================================================
+        */
+        .mobile-toggle {
+            display: none; position: fixed; top: 20px; left: 20px;
+            z-index: 1100; background: var(--accent-gold);
+            padding: 10px; border-radius: 8px; border: none; cursor: pointer;
+        }
+
+        @media (max-width: 992px) {
+            .mobile-toggle { display: block; }
+            .sidebar { left: -100%; width: 260px; }
+            .sidebar.open { left: 0; }
+            .sidebar .menu-item span { opacity: 1; }
+            main { margin-left: 0; width: 100%; padding: 80px 20px; }
+        }
+
+        .loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-dark); z-index: 2000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loading-overlay" id="loader">
+        <i class="fas fa-circle-notch fa-spin fa-3x" style="color: var(--accent-gold);"></i>
+        <p style="margin-top: 20px; font-weight: 600; letter-spacing: 2px;">AUTHENTICATING ENVIRONMENT</p>
+    </div>
+
+    <button class="mobile-toggle" id="mobile-nav-trigger"><i class="fas fa-bars fa-lg"></i></button>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="menu-list">
+            <a href="dashboard.html" class="menu-item"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+            <a href="notes.html" class="menu-item"><i class="fas fa-book-open"></i><span>Lecture Notes</span></a>
+            <a href="gamehall.html" class="menu-item active"><i class="fas fa-gamepad"></i><span>Game Hall</span></a>
+            <a href="profile.html" class="menu-item"><i class="fas fa-user-shield"></i><span>Security Profile</span></a>
+            <div class="menu-item" onclick="localStorage.clear(); window.location.href='login.html'" style="margin-top: auto;">
+                <i class="fas fa-power-off"></i><span>System Logout</span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero-section">
+            <h1>STRATEGIC HUB</h1>
+            <p>Interactive cognitive training modules for the SCS project.</p>
+        </section>
+
+        <div class="controls">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search operational modules...">
+            </div>
+            <select id="categoryFilter" class="filter-select">
+                <option value="all">All Sectors</option>
+                <option value="action">Combat / Action</option>
+                <option value="puzzle">Logic / Puzzle</option>
+                <option value="educational">Academic / Training</option>
+                <option value="arcade">Simulation / Arcade</option>
+            </select>
+        </div>
+
+        <div class="game-grid" id="gameGrid">
+            <!-- Dynamically Populated -->
+        </div>
+    </main>
+
+    <script>
+       document.addEventListener('DOMContentLoaded', async () => {
+    const grid = document.getElementById('gameGrid');
+    const searchInput = document.getElementById('searchInput');
+    const filterSelect = document.getElementById('categoryFilter');
+    const sidebar = document.getElementById('sidebar');
+    const trigger = document.getElementById('mobile-nav-trigger');
+    const loader = document.getElementById('loader');
+
+    let games = []; // Will be populated from JSON
+
+    // Toggle Mobile Nav
+    trigger.onclick = () => sidebar.classList.toggle('open');
+
+    /**
+     * FETCH ENGINE: Loads game data from external JSON
+     */
+    async function fetchGameDatabase() {
+        try {
+            const response = await fetch('../data/games.json');
+            if (!response.ok) throw new Error("Module database not found");
+            games = await response.json();
+            render();
+            
+            // Fade out loader once data is ready
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 500);
+            }, 800);
+        } catch (error) {
+            console.error("System Error:", error);
+            grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: red;">CRITICAL: MODULE DATABASE OFFLINE</div>`;
+        }
+    }
+
+    /**
+     * RENDER ENGINE: Builds the UI based on filtered data
+     */
+    function render() {
+        const search = searchInput.value.toLowerCase();
+        const cat = filterSelect.value;
+
+        grid.innerHTML = '';
+
+        const filtered = games.filter(g => {
+            const matchSearch = g.title.toLowerCase().includes(search) || g.description.toLowerCase().includes(search);
+            const matchCat = cat === 'all' || g.category === cat;
+            return matchSearch && matchCat;
+        });
+
+        if (filtered.length === 0) {
+            grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 50px; opacity: 0.5;">NO MATCHING MODULES FOUND IN DATABASE</div>`;
+            return;
+        }
+
+        filtered.forEach(g => {
+            const highScore = localStorage.getItem(`score_${g.id}`) || '0';
+            const card = document.createElement('div');
+            card.className = 'game-card';
+            card.innerHTML = `
+                <div class="game-icon-circle">
+                    <i class="fas ${g.icon}"></i>
+                </div>
+                <h3 class="game-title">${g.title}</h3>
+                <p class="game-desc">${g.description}</p>
+                <div class="score-stats">
+                    <div class="stat-box">
+                        <small>Max Record</small>
+                        <span>${highScore}</span>
+                    </div>
+                    <div class="stat-box">
+                        <small>Sector</small>
+                        <span>${g.category.toUpperCase()}</span>
+                    </div>
+                </div>
+                <a href="${g.url}" class="game-btn">Initialize Module</a>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    // Search and Filter Listeners
+    searchInput.addEventListener('input', render);
+    filterSelect.addEventListener('change', render);
+
+    // Initialize System
+    fetchGameDatabase();
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Library | SCS CBT System</title>
+    <!-- Project Identity & Assets -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Local Fallback Library -->
+    <link rel="stylesheet" href="../scripts/css/font-awesome.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        /*
+        ===================================================================
+            0. GLOBAL CONFIGURATION & BASE STYLES
+        ===================================================================
+        */
+        :root {
+            --primary-blue: #020169;
+            --accent-gold: #FEC009;
+            --background-light: #f0f2f5;
+            --white: #ffffff;
+            --dark-text: #333;
+            --muted-text: #666;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --sidebar-narrow: 80px;
+            --sidebar-wide: 260px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--background-light); 
+            color: var(--dark-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /*
+        ===================================================================
+            1. NAVIGATION SYSTEM (SLIDING SIDEBAR)
+        ===================================================================
+        */
+        .hamburger-icon { 
+            display: block; position: fixed; top: 20px; left: 20px; font-size: 24px; 
+            color: var(--primary-blue); cursor: pointer; z-index: 1200; 
+            background-color: var(--accent-gold); padding: 8px 12px; border-radius: 6px; 
+            box-shadow: var(--shadow); border: none;
+        }
+
+        .sidebar { 
+            position: fixed; top: 0; left: -260px; width: var(--sidebar-wide); 
+            height: 100%; background-color: var(--primary-blue); color: var(--white); 
+            padding-top: 80px; transition: var(--transition); z-index: 1050; 
+            box-shadow: 3px 0 8px rgba(0,0,0,0.3); overflow: hidden;
+        }
+
+        .sidebar.open { left: 0; }
+
+        .menu-item { 
+            display: flex; align-items: center; padding: 16px 24px; cursor: pointer; 
+            transition: var(--transition); font-size: 1rem; border-left: 4px solid transparent;
+            white-space: nowrap; color: rgba(255,255,255,0.8); text-decoration: none;
+        }
+
+        .menu-item i { font-size: 20px; margin-right: 25px; min-width: 25px; text-align: center; }
+        .menu-item span { opacity: 1; transition: opacity 0.2s; }
+
+        .menu-item:hover, .menu-item.active { 
+            background-color: rgba(255, 255, 255, 0.1); 
+            color: var(--accent-gold); border-left-color: var(--accent-gold);
+        }
+
+        @media (min-width: 1024px) {
+            .hamburger-icon { display: none; }
+            .sidebar { left: 0; width: var(--sidebar-narrow); padding-top: 20px; }
+            .sidebar:hover { width: var(--sidebar-wide); }
+            .sidebar .menu-item span { opacity: 0; }
+            .sidebar:hover .menu-item span { opacity: 1; }
+            
+            main, footer { margin-left: var(--sidebar-narrow); transition: var(--transition); }
+            .sidebar:hover ~ main, .sidebar:hover ~ footer { margin-left: var(--sidebar-wide); }
+        }
+
+        .profile-display-icon { 
+            position: fixed; top: 15px; right: 15px; width: 50px; height: 50px; 
+            border-radius: 50%; object-fit: cover; border: 2.5px solid var(--accent-gold); 
+            cursor: pointer; z-index: 1100; box-shadow: var(--shadow); transition: var(--transition);
+        }
+        .profile-display-icon:hover { transform: scale(1.1); border-color: var(--white); }
+
+        /*
+        ===================================================================
+            2. PAGE CONTENT STYLES
+        ===================================================================
+        */
+        main { padding: 40px; padding-top: 90px; flex-grow: 1; }
+
+        .header-section { margin-bottom: 30px; }
+        .header-section h1 { font-size: 2.2rem; font-weight: 700; color: var(--primary-blue); }
+        .header-section p { color: var(--muted-text); font-size: 1.1rem; border-bottom: 3px solid var(--accent-gold); display: inline-block; padding-bottom: 5px; }
+
+        .search-container { 
+            background: var(--white); padding: 10px; border-radius: 12px; 
+            box-shadow: var(--shadow); display: flex; gap: 10px; margin-bottom: 30px;
+        }
+        #search-input { 
+            flex-grow: 1; border: none; padding: 12px 20px; font-size: 1rem; 
+            font-family: inherit; outline: none; border-radius: 8px;
+        }
+        #search-button { 
+            background: var(--primary-blue); color: var(--accent-gold); 
+            border: none; padding: 0 25px; border-radius: 8px; cursor: pointer; 
+            font-size: 1.1rem; transition: 0.3s;
+        }
+        #search-button:hover { background: #0402a3; }
+
+        #exam-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+        .exam-card { 
+            background: var(--white); border-radius: 12px; padding: 20px; 
+            border-left: 6px solid var(--accent-gold); box-shadow: var(--shadow);
+            transition: var(--transition); text-decoration: none; display: block;
+        }
+        .exam-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); border-left-color: var(--primary-blue); }
+        .exam-card h3 { color: var(--primary-blue); font-size: 1rem; margin-bottom: 10px; line-height: 1.4; }
+        .exam-meta { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: var(--muted-text); font-weight: 600; text-transform: uppercase; }
+        .exam-meta i { color: var(--accent-gold); }
+
+        .loading-state { text-align: center; grid-column: 1 / -1; padding: 50px; color: var(--muted-text); }
+
+        /*
+        ===================================================================
+            3. FOOTER STYLES
+        ===================================================================
+        */
+        footer { background-color: var(--primary-blue); color: var(--white); padding: 40px 20px 20px; margin-top: auto; }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto 30px; }
+        .footer-column h3 { color: var(--accent-gold); margin-bottom: 15px; font-size: 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
+        .footer-links i { color: var(--accent-gold); }
+        .footer-links a { color: var(--white); text-decoration: none; transition: 0.3s; }
+        .footer-links a:hover { color: var(--accent-gold); padding-left: 5px; }
+        .copyright { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem; opacity: 0.7; }
+
+        @media (max-width: 768px) {
+            main { padding: 20px; padding-top: 90px; }
+            .header-section h1 { font-size: 1.6rem; }
+            #exam-list { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="hamburger-icon" id="hamburger-icon" aria-label="Menu"><i class="fas fa-bars"></i></button>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="menu-list">
+            <a href="dashboard.html" class="menu-item"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+            <a href="profile.html" class="menu-item"><i class="fas fa-user-circle"></i><span>My Profile</span></a>
+            <a href="notes.html" class="menu-item"><i class="fas fa-book-open"></i><span>Lecture Notes</span></a>
+            <a href="test-library.html" class="menu-item"><i class="fas fa-vial"></i><span>Test Library</span></a>
+            <a href="exam-library.html" class="menu-item active"><i class="fas fa-pencil-alt"></i><span>Exam Library</span></a>
+            <a href="gamehall.html" class="menu-item"><i class="fas fa-gamepad"></i><span>Game Hall</span></a>
+            <div class="menu-item" id="logout-button" style="margin-top: auto;"><i class="fas fa-power-off"></i><span>Secure Logout</span></div>
+        </div>
+    </nav>
+
+    <img id="user-image-display" src="../assets/profile_pictures/default.jpeg" alt="User Profile" class="profile-display-icon">
+
+    <main id="main-content">
+        <div class="header-section">
+            <h1>Exam Repository</h1>
+            <p id="class-info-text">Secure Assessment Environment</p>
+        </div>
+
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Filter by subject or term...">
+            <button id="search-button"><i class="fas fa-search"></i></button>
+        </div>
+
+        <div id="exam-list">
+            <div class="loading-state"><i class="fas fa-circle-notch fa-spin fa-2x"></i><p>Synchronizing available assessments...</p></div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>System Status</h3>
+                <p>Operational. Secure encrypted connection verified. SCS Central Servers online.</p>
+            </div>
+            <div class="footer-column">
+                <h3>System Navigation</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-chevron-right"></i><a href="dashboard.html">Admin Hub</a></li>
+                    <li><i class="fas fa-chevron-right"></i><a href="profile.html">Identity Management</a></li>
+                    <li><i class="fas fa-chevron-right"></i><a href="guide-FAQ.html">Technical Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Institutional Contact</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> Agbor-Obi, Delta State, Nigeria</li>
+                    <li><i class="fas fa-envelope"></i> info@scs.org.ng</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">&copy; 2024 St. Christopher School. Global Educational Infrastructure.</div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const examList = document.getElementById('exam-list');
+            const searchInput = document.getElementById('search-input');
+            const infoText = document.getElementById('class-info-text');
+            const sidebar = document.getElementById('sidebar');
+            const hamburger = document.getElementById('hamburger-icon');
+            const profileIcon = document.getElementById('user-image-display');
+
+            let userSpecificExams = [];
+
+            // 1. Sidebar Control
+            hamburger.onclick = () => sidebar.classList.toggle('open');
+            document.getElementById('main-content').onclick = () => sidebar.classList.remove('open');
+
+            // 2. Load Identity & Exams
+            const initialize = async () => {
+                const userId = localStorage.getItem('loggedInUserId');
+                if (!userId) return window.location.href = 'login.html';
+
+                try {
+                    const [usersRes, examsRes] = await Promise.all([
+                        fetch('../data/users.json'),
+                        fetch('../data/exams.json')
+                    ]);
+
+                    const users = await usersRes.json();
+                    const examsData = await examsRes.json();
+                    const user = users.find(u => String(u.id) === userId);
+
+                    if (user) {
+                        // Set Profile Icon
+                        profileIcon.src = user.profilePicture || '../assets/profile_pictures/default.jpeg';
+                        profileIcon.onclick = () => window.location.href = 'profile.html';
+
+                        // Process Exams based on Role
+                        if (user.role.toLowerCase() === 'student') {
+                            infoText.innerHTML = `<i class="fas fa-user-graduate"></i> Enrolled: ${user.class || 'General'}`;
+                            userSpecificExams = examsData[user.classid] || [];
+                        } else {
+                            infoText.innerHTML = `<i class="fas fa-shield-alt"></i> Faculty Authorization Access`;
+                            userSpecificExams = Object.values(examsData).flat();
+                        }
+                        renderExams(userSpecificExams);
+                    }
+                } catch (err) {
+                    examList.innerHTML = `<div class="loading-state">Data acquisition failed. Contact system webmaster.</div>`;
+                }
+            };
+
+            const renderExams = (list) => {
+                examList.innerHTML = list.length ? '' : '<div class="loading-state">No assessments matching criteria.</div>';
+                list.forEach(exam => {
+                    const card = document.createElement('a');
+                    card.className = 'exam-card';
+                    card.href = `exam-taking.html?test=${encodeURIComponent(exam.fileName)}`;
+                    card.innerHTML = `
+                        <h3>${exam.displayName}</h3>
+                        <div class="exam-meta">
+                            <span><i class="fas fa-clock"></i> 60 Minutes</span>
+                            <span><i class="fas fa-file-alt"></i> Official Assessment</span>
+                        </div>
+                    `;
+                    examList.appendChild(card);
+                });
+            };
+
+            // 3. Search Logic
+            searchInput.oninput = () => {
+                const query = searchInput.value.toLowerCase();
+                const filtered = userSpecificExams.filter(e => 
+                    e.displayName.toLowerCase().includes(query)
+                );
+                renderExams(filtered);
+            };
+
+            // 4. Logout
+            document.getElementById('logout-button').onclick = () => {
+                if(confirm("Terminate secure session?")) {
+                    localStorage.clear();
+                    window.location.href = 'login.html';
+                }
+            };
+
+            initialize();
+        });
+    </script>
+</body>
+</html>

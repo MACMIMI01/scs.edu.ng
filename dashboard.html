@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | SCS CBT System</title>
+    <!-- Project Assets & Libraries -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../scripts/css/font-awesome.min.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-blue: #020169;
+            --accent-gold: #FEC009;
+            --background-light: #f0f2f5;
+            --white: #ffffff;
+            --dark-text: #333;
+            --muted-text: #666;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --sidebar-collapsed: 80px;
+            --sidebar-expanded: 260px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body { 
+            margin: 0; 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--background-light); 
+            color: var(--dark-text);
+            min-height: 100vh; 
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* 
+        ===================================================================
+            1. NAVIGATION (SIDEBAR & MOBILE)
+        ===================================================================
+        */
+
+        .hamburger-icon { 
+            display: block; 
+            position: fixed; 
+            top: 20px; 
+            left: 20px; 
+            font-size: 24px; 
+            color: var(--primary-blue); 
+            cursor: pointer; 
+            z-index: 1200; 
+            background-color: var(--accent-gold); 
+            padding: 8px 12px; 
+            border-radius: 6px; 
+            box-shadow: var(--shadow); 
+            border: none;
+        }
+
+        .sidebar { 
+            position: fixed; 
+            top: 0; 
+            left: -260px; /* Hidden on mobile */
+            width: var(--sidebar-expanded); 
+            height: 100%; 
+            background-color: var(--primary-blue); 
+            color: var(--white); 
+            padding-top: 80px; 
+            transition: var(--transition); 
+            z-index: 1050; 
+            box-shadow: 3px 0 8px rgba(0,0,0,0.3); 
+        }
+
+        .sidebar.open { left: 0; } /* Mobile Open State */
+
+        .menu-item { 
+            display: flex; 
+            align-items: center; 
+            padding: 16px 24px; 
+            cursor: pointer; 
+            transition: var(--transition); 
+            font-size: 1rem; 
+            border-left: 4px solid transparent;
+            white-space: nowrap;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+        }
+
+        .menu-item i { font-size: 20px; margin-right: 18px; min-width: 25px; text-align: center; }
+
+        .menu-item:hover { 
+            background-color: rgba(255, 255, 255, 0.1); 
+            color: var(--accent-gold);
+            border-left-color: var(--accent-gold);
+        }
+
+        /* 
+        ===================================================================
+            2. DESKTOP PUSH LOGIC (1024px+)
+        ===================================================================
+        */
+        @media (min-width: 1024px) {
+            .hamburger-icon { display: none; }
+
+            .sidebar { 
+                left: 0; 
+                width: var(--sidebar-collapsed); 
+                padding-top: 20px; 
+                overflow: hidden;
+            }
+
+            .sidebar:hover { width: var(--sidebar-expanded); }
+
+            /* Hide text when collapsed */
+            .sidebar .menu-item span { 
+                opacity: 0; 
+                transition: opacity 0.2s; 
+            }
+            .sidebar:hover .menu-item span { opacity: 1; }
+
+            /* Push Main Content */
+            main { 
+                margin-left: var(--sidebar-collapsed); 
+                width: calc(100% - var(--sidebar-collapsed)); 
+                transition: var(--transition); 
+            }
+            .sidebar:hover ~ main { 
+                margin-left: var(--sidebar-expanded); 
+                width: calc(100% - var(--sidebar-expanded));
+            }
+
+            /* Push Footer */
+            footer { 
+                margin-left: var(--sidebar-collapsed); 
+                width: calc(100% - var(--sidebar-collapsed)) !important; 
+                transition: var(--transition); 
+            }
+            .sidebar:hover ~ footer { 
+                margin-left: var(--sidebar-expanded); 
+                width: calc(100% - var(--sidebar-expanded)) !important;
+            }
+        }
+
+        /* 
+        ===================================================================
+            3. CONTENT STYLES
+        ===================================================================
+        */
+        main { padding: 40px; padding-top: 90px; flex-grow: 1; }
+
+        .profile-display-icon { 
+            position: fixed; 
+            top: 15px; 
+            right: 15px; 
+            width: 52px; 
+            height: 52px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            border: 2.5px solid var(--accent-gold); 
+            cursor: pointer; 
+            z-index: 1100; 
+            box-shadow: var(--shadow); 
+            transition: var(--transition);
+        }
+        .profile-display-icon:hover { transform: scale(1.1); border-color: var(--white); }
+
+        .welcome-header { margin-bottom: 40px; }
+        .welcome-header h1 { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 700; color: var(--primary-blue); margin: 0; }
+        .welcome-header p { 
+            font-size: 1.1rem; color: var(--muted-text); margin-top: 5px; 
+            border-bottom: 3px solid var(--accent-gold); display: inline-block; padding-bottom: 5px; 
+        }
+
+        .dashboard-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 24px; 
+        }
+
+        .dashboard-card { 
+            background-color: var(--white); 
+            padding: 35px 25px; 
+            border-radius: 15px; 
+            box-shadow: var(--shadow); 
+            text-align: center; 
+            transition: var(--transition); 
+            cursor: pointer; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            border-top: 6px solid var(--primary-blue); 
+        }
+
+        .dashboard-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: var(--shadow-hover); 
+            border-top-color: var(--accent-gold); 
+        }
+
+        .dashboard-card i { font-size: 50px; color: var(--primary-blue); margin-bottom: 20px; transition: 0.3s; }
+        .dashboard-card:hover i { color: var(--accent-gold); transform: scale(1.1); }
+        .dashboard-card h3 { color: var(--dark-text); margin-bottom: 10px; font-size: 1.4rem; font-weight: 700; }
+        .dashboard-card p { color: var(--muted-text); font-size: 1rem; line-height: 1.5; margin: 0; }
+
+        /* 
+        ===================================================================
+            4. FOOTER
+        ===================================================================
+        */
+        footer { 
+            background-color: var(--primary-blue); 
+            color: var(--white); 
+            padding: 40px 20px 20px; 
+            margin-top: 60px;
+            width: 100%;
+        }
+
+        .footer-content { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 40px; 
+            max-width: 1200px; 
+            margin: 0 auto 40px auto; 
+        }
+
+        .footer-column h3 { color: var(--accent-gold); margin-bottom: 20px; font-size: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        .footer-links { padding: 0; }
+        .footer-links li { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; font-size: 0.95rem; }
+        .footer-links a { color: var(--white); text-decoration: none; transition: 0.3s; }
+        .footer-links a:hover { color: var(--accent-gold); padding-left: 5px; }
+        .footer-links i { color: var(--accent-gold); }
+
+        .copyright { text-align: center; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.85rem; opacity: 0.8; }
+
+        @media (max-width: 768px) {
+            main { padding: 20px; padding-top: 90px; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    
+    <button class="hamburger-icon" id="hamburger-icon" aria-label="Toggle navigation menu">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="menu-list">
+            <a href="dashboard.html" class="menu-item"><i class="fas fa-tachometer-alt"></i><span>Dashboard Overview</span></a>
+            <a href="profile.html" class="menu-item"><i class="fas fa-user"></i><span>My Profile</span></a>
+            <a href="notes.html" class="menu-item"><i class="fas fa-book-open"></i><span>Lecture Notes</span></a>
+            <a href="test-library.html" class="menu-item"><i class="fas fa-vial"></i><span>Take a Test</span></a>
+            <div class="menu-item" id="logout-button"><i class="fas fa-sign-out-alt"></i><span>Secure Logout</span></div>
+        </div>
+    </nav>
+
+    <img id="user-image-display" src="../assets/profile_pictures/default.jpeg" alt="User Profile" class="profile-display-icon">
+
+    <main id="main-content">
+        <header class="welcome-header">
+            <h1 id="welcome-title">Welcome!</h1>
+            <p id="welcome-subtitle">System Management Interface</p>
+        </header>
+
+        <section id="dashboard-grid" class="dashboard-grid">
+            <p style="text-align: center; grid-column: 1 / -1;">Initializing Secure Session...</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>System Status</h3>
+                <p>Operational. Secure encrypted connection established with SCS Central Servers.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Navigation</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-chevron-right"></i><a href="dashboard.html">Main Hub</a></li>
+                    <li><i class="fas fa-chevron-right"></i><a href="profile.html">Security Settings</a></li>
+                    <li><i class="fas fa-chevron-right"></i><a href="notes.html">Resource Library</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Support</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> Delta State, Nigeria</li>
+                    <li><i class="fas fa-envelope"></i> admin@scs.org.ng</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 St. Christopher School. All Rights Reserved. | System Version 1.2.4</p>
+        </div>
+    </footer>
+    
+    <script>
+    (function() {
+        const sidebar = document.getElementById('sidebar');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const profileIcon = document.getElementById('user-image-display');
+        const welcomeTitle = document.getElementById('welcome-title');
+        const dashboardGrid = document.getElementById('dashboard-grid');
+        
+        // Navigation Toggle
+        hamburgerIcon.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+        // Close sidebar when clicking main content (mobile)
+        document.getElementById('main-content').addEventListener('click', () => {
+            if (window.innerWidth < 1024) sidebar.classList.remove('open');
+        });
+
+        // Logout
+        const logoutAction = (e) => {
+            e.preventDefault();
+            if(confirm("Confirm security termination and logout?")) {
+                localStorage.clear(); 
+                window.location.href = 'login.html';
+            }
+        };
+        document.getElementById('logout-button').addEventListener('click', logoutAction);
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const userId = localStorage.getItem('loggedInUserId');
+            const userRole = localStorage.getItem('loggedInUserRole');
+
+            if (!userId || !userRole) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                const [usersRes, configRes] = await Promise.all([
+                    fetch('../data/users.json'),
+                    fetch('../data/dashboard-config.json')
+                ]);
+
+                const users = await usersRes.json();
+                const config = await configRes.json();
+                const user = users.find(u => u.id == userId);
+
+                if (user) {
+                    welcomeTitle.textContent = `Welcome, ${user.name || user.username}!`;
+                    profileIcon.src = user.profilePicture || '../assets/profile_pictures/default.jpeg';
+                    profileIcon.onclick = () => window.location.href = 'profile.html';
+                }
+
+                renderDashboard(userRole.toLowerCase(), config);
+            } catch (error) {
+                dashboardGrid.innerHTML = `<p style="color:red">Critical: Data Acquisition Failed.</p>`;
+            }
+        });
+
+        function renderDashboard(role, config) {
+            const cards = config[role] || [];
+            dashboardGrid.innerHTML = cards.length ? '' : '<p>No active modules for this clearance level.</p>';
+
+            cards.forEach(data => {
+                const card = document.createElement('article');
+                card.className = 'dashboard-card';
+                card.innerHTML = `
+                    <i class="${data.icon}"></i>
+                    <h3>${data.title}</h3>
+                    <p>${data.description}</p>
+                `;
+                card.onclick = () => {
+                    if (data.link) window.location.href = data.link;
+                };
+                dashboardGrid.appendChild(card);
+            });
+        }
+    })();
+    </script>
+</body>
+</html>
