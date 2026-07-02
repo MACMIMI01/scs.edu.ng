@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School History | St. Christopher School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #020169;
+            --accent-gold: #FEC009;
+            --text-dark: #1a1a1a;
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --shadow-3d-lg: 0 16px 32px rgba(2, 1, 105, 0.12), 0 24px 48px rgba(0,0,0,0.12);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; color: var(--text-dark); background: #f4f6fa; line-height: 1.6; }
+        
+        .banner {
+            background: linear-gradient(rgba(2, 1, 105, 0.85), rgba(2, 1, 105, 0.85)), url('https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+            color: white; text-align: center; padding: 120px 20px 60px;
+        }
+        .banner h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 10px; color: var(--accent-gold); }
+        .banner p { font-size: 1.1rem; opacity: 0.9; }
+
+        .content-section { max-width: 900px; margin: 60px auto; padding: 0 25px; }
+        .history-card {
+            background: white; border-radius: 20px; padding: 40px;
+            box-shadow: var(--shadow-3d-lg); border-top: 5px solid var(--accent-gold);
+        }
+        .history-card h2 { color: var(--primary-blue); font-family: 'Playfair Display', serif; margin-bottom: 20px; }
+        .history-card p { margin-bottom: 25px; color: #444; font-size: 1.05rem; }
+        
+        .timeline { margin-top: 40px; border-left: 3px solid var(--primary-blue); padding-left: 20px; }
+        .timeline-node { margin-bottom: 30px; position: relative; }
+        .timeline-node::before {
+            content: ''; position: absolute; left: -26px; top: 5px;
+            width: 10px; height: 10px; border-radius: 50%; background: var(--accent-gold);
+            border: 3px solid var(--primary-blue);
+        }
+        .timeline-node h3 { color: var(--primary-blue); font-size: 1.2rem; margin-bottom: 5px; }
+        .timeline-node span { font-weight: 700; color: #888; font-size: 0.85rem; }
+
+        .back-home { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--primary-blue); font-weight: 700; margin-top: 40px; transition: var(--transition); }
+        .back-home:hover { color: var(--accent-gold); transform: translateX(-5px); }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <h1>Our History</h1>
+        <p>A Journey of Strategic Educational Excellence</p>
+    </div>
+    <div class="content-section">
+        <div class="history-card">
+            <h2>The Foundation of St. Christopher School</h2>
+            <p>Established with a dedicated mandate to change the local educational framework, St. Christopher School has consistently developed strong curricula configurations to address local learning needs with global educational perspectives.</p>
+            
+            <p>Our infrastructure maintains modern academic modules designed to inspire computational thinking and ethical decision-making right from primary years up to secondary certifications.</p>
+            
+            <div class="timeline">
+                <div class="timeline-node">
+                    <span>September 2022</span>
+                    <h3>The Official Inauguration</h3>
+                    <p>SCS opened its doors with highly optimized basic classrooms and key standard research curricula models.</p>
+                </div>
+                <div class="timeline-node">
+                    <span>October 2024</span>
+                    <h3>STEM Integration</h3>
+                    <p>Completed transition to interactive science and computer laboratories supporting collaborative hands-on project designs.</p>
+                </div>
+                <div class="timeline-node">
+                    <span>January 2026</span>
+                    <h3>Strategic Framework Expansion v3.5</h3>
+                    <p>Fully updated learning frameworks focusing heavily on critical analytics and digitized self-study access portals.</p>
+                </div>
+            </div>
+            
+            <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> Return to Homepage</a>
+        </div>
+    </div>
+</body>
+</html>

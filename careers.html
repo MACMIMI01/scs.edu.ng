@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers | St. Christopher School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #020169;
+            --accent-gold: #FEC009;
+            --text-dark: #1a1a1a;
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --shadow-3d-lg: 0 16px 32px rgba(2, 1, 105, 0.12), 0 24px 48px rgba(0,0,0,0.12);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; color: var(--text-dark); background: #f4f6fa; line-height: 1.6; }
+        
+        .banner {
+            background: linear-gradient(rgba(2, 1, 105, 0.85), rgba(2, 1, 105, 0.85)), url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+            color: white; text-align: center; padding: 120px 20px 60px;
+        }
+        .banner h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 10px; color: var(--accent-gold); }
+        .banner p { font-size: 1.1rem; opacity: 0.9; }
+
+        .content-section { max-width: 900px; margin: 60px auto; padding: 0 25px; }
+        .career-card {
+            background: white; border-radius: 20px; padding: 40px;
+            box-shadow: var(--shadow-3d-lg); border-top: 5px solid var(--accent-gold);
+        }
+        .career-card h2 { color: var(--primary-blue); font-family: 'Playfair Display', serif; margin-bottom: 20px; }
+        .career-card p { margin-bottom: 30px; color: #444; }
+        
+        .role-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 25px; border-radius: 12px; margin-bottom: 25px; }
+        .role-box h3 { color: var(--primary-blue); margin-bottom: 5px; font-size: 1.25rem; }
+        .role-box span { color: #888; font-size: 0.8rem; font-weight: 700; display: block; margin-bottom: 12px; }
+        .role-box p { margin-bottom: 0; font-size: 0.95rem; }
+
+        .back-home { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--primary-blue); font-weight: 700; margin-top: 30px; transition: var(--transition); }
+        .back-home:hover { color: var(--accent-gold); transform: translateX(-5px); }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <h1>Work with Us</h1>
+        <p>Build the Future of Education with St. Christopher School</p>
+    </div>
+    <div class="content-section">
+        <div class="career-card">
+            <h2>Join Our Faculty</h2>
+            <p>We invite passionate, morally sound, and highly qualified educators with proven capabilities in teaching methodologies and digital learning structures to join our growing academic team.</p>
+            
+            <div class="role-box">
+                <h3>Primary Level Classroom Lead Teacher</h3>
+                <span>Full-Time | Onsite</span>
+                <p>We are seeking energetic classroom managers capable of organizing early numeric, basic reading, and technical developmental patterns for young learners.</p>
+            </div>
+
+            <div class="role-box">
+                <h3>Senior Sciences Subject Educator (Physics / Chemistry)</h3>
+                <span>Full-Time | Onsite</span>
+                <p>Instructors must possess strong secondary science curriculum expertise, active laboratory guidance practices, and preparation protocols for external promotional exams.</p>
+            </div>
+
+            <p style="font-size: 0.9rem; color: #666; font-style: italic; border-top: 1px solid #eee; padding-top: 20px;">To declare interest, please forward your cover letter and current qualifications directly to our operational email hub: <strong>info@scs.org.ng</strong>.</p>
+            
+            <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> Return to Homepage</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Calendar | St. Christopher School</title>
+    
+    <!-- Professional Assets -->
+    <link rel="icon" type="image/png" href="cbt/assets/images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Local Font Awesome Fallback -->
+    <link rel="stylesheet" href="cbt/scripts/css/font-awesome.min.css">    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-blue: #020169;
+            --primary-light: #0d0b9e;
+            --accent-gold: #FEC009;
+            --accent-gold-hover: #e0a800;
+            --text-dark: #1a1a1a;
+            --text-muted: #6c757d;
+            --white: #ffffff;
+            --bg-light: #f4f6fa;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 4px rgba(2, 1, 105, 0.08), 0 3px 10px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 8px 16px rgba(2, 1, 105, 0.06), 0 12px 24px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 16px 32px rgba(2, 1, 105, 0.12), 0 24px 48px rgba(0, 0, 0, 0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            color: var(--text-dark); 
+            line-height: 1.6; 
+            background: var(--bg-light); 
+            overflow-x: hidden;
+            padding-top: 80px; /* Offset for fixed header */
+        }
+
+        /* --- NAVIGATION HEADER --- */
+        header {
+            background: var(--primary-blue);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0; z-index: 1000;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            border-bottom: 2px solid rgba(254, 192, 9, 0.2);
+        }
+
+        header.scrolled {
+            background: rgba(2, 1, 105, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 12px 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 25px;
+        }
+
+        .logo-block { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .logo-block:hover { transform: scale(1.02); }
+        .logo-block img { height: 50px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); }
+        .logo-text { color: white; font-weight: 700; font-size: 1.4rem; line-height: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .logo-text span { display: block; color: var(--accent-gold); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
+
+        .nav-menu { display: flex; list-style: none; gap: 6px; align-items: center; }
+        .nav-menu li { position: relative; }
+        
+        .nav-menu a { 
+            color: white; 
+            text-decoration: none; 
+            font-weight: 500; 
+            font-size: 0.9rem; 
+            padding: 10px 16px;
+            transition: var(--transition); 
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border-radius: 6px;
+        }
+        .nav-menu a:hover { 
+            color: var(--accent-gold); 
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* --- DROPDOWN SYSTEM --- */
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 230px;
+            box-shadow: var(--shadow-lg);
+            border-radius: 10px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+            padding: 12px 0;
+            border-top: 4px solid var(--accent-gold);
+            z-index: 100;
+        }
+
+        .nav-menu li:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-content a {
+            color: var(--primary-blue) !important;
+            padding: 10px 20px !important;
+            display: block !important;
+            font-size: 0.85rem !important;
+            font-weight: 600;
+            border-radius: 0;
+            background: transparent !important;
+        }
+
+        .dropdown-content a:hover {
+            background: #f0f2f7 !important;
+            color: var(--accent-gold-hover) !important;
+            padding-left: 25px !important;
+        }
+
+        .portal-btn {
+            background: var(--accent-gold);
+            color: var(--primary-blue) !important;
+            padding: 10px 22px !important;
+            border-radius: 50px;
+            font-weight: 700 !important;
+            margin-left: 15px;
+            box-shadow: 0 4px 15px rgba(254, 192, 9, 0.4);
+        }
+        .portal-btn:hover {
+            background: white !important;
+            color: var(--primary-blue) !important;
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .mobile-toggle { display: none; color: white; font-size: 1.5rem; cursor: pointer; }
+
+        /* --- BANNER --- */
+        .banner {
+            background: linear-gradient(rgba(2, 1, 105, 0.88), rgba(2, 1, 105, 0.88)), url('https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+            color: white; text-align: center; padding: 100px 20px 80px;
+        }
+        .banner h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 12px; color: var(--accent-gold); }
+        .banner p { font-size: 1.15rem; opacity: 0.9; max-width: 800px; margin: 0 auto; font-weight: 300; }
+
+        /* --- CONTENT CARD --- */
+        .content-section { max-width: 1000px; margin: -50px auto 60px; padding: 0 25px; position: relative; z-index: 5; }
+        .cal-card {
+            background: white; border-radius: 20px; padding: 50px 40px;
+            box-shadow: var(--shadow-lg); border-top: 5px solid var(--accent-gold);
+        }
+        .cal-card h2 { color: var(--primary-blue); font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 30px; border-bottom: 2px solid #f0f2f7; padding-bottom: 15px; }
+        
+        .term-block { border-left: 4px solid var(--primary-blue); padding-left: 20px; margin-bottom: 40px; }
+        .term-block h3 { color: var(--primary-blue); font-size: 1.35rem; margin-bottom: 20px; font-weight: 700; }
+        
+        .event-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px dashed #e2e8f0; font-size: 0.95rem; }
+        .event-row:last-child { border-bottom: none; }
+        .event-row span.event-title { font-weight: 600; color: #333333; }
+        .event-row span.event-date { color: var(--primary-blue); font-weight: 700; background: #f0f2f7; padding: 4px 14px; border-radius: 30px; font-size: 0.85rem; }
+
+        .back-home { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--primary-blue); font-weight: 700; margin-top: 25px; transition: var(--transition); font-size: 0.9rem; }
+        .back-home:hover { color: var(--accent-gold-hover); transform: translateX(-5px); }
+
+        /* --- LIVE NEWS CONTAINER FOR CALENDAR PAGE --- */
+        .live-news-section { max-width: 1300px; margin: 60px auto; padding: 0 25px; }
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-header h2 { font-family: 'Playfair Display', serif; font-size: 2.3rem; color: var(--primary-blue); }
+        .section-header div { width: 60px; height: 3px; background: var(--accent-gold); margin: 15px auto 0 auto; border-radius: 2px; }
+
+        #calendar-news-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
+
+        .news-card {
+            background: white; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-sm);
+            transition: var(--transition); border: 1px solid rgba(2, 1, 105, 0.05); display: flex; flex-direction: column;
+        }
+        .news-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+        .news-image { height: 210px; overflow: hidden; position: relative; }
+        .news-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+        .news-card:hover .news-image img { transform: scale(1.06); }
+        
+        .category-tag {
+            position: absolute; top: 15px; left: 15px; background: var(--accent-gold); color: var(--primary-blue);
+            padding: 5px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 800;
+            text-transform: uppercase; z-index: 5; box-shadow: var(--shadow-sm);
+        }
+
+        .news-body { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
+        .news-date { font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 10px; font-weight: 500; }
+        .news-body h3 { font-size: 1.2rem; margin-bottom: 10px; color: var(--primary-blue); line-height: 1.35; font-weight: 700; }
+        .news-body p { font-size: 0.88rem; color: #555555; margin-bottom: 20px; line-height: 1.5; }
+        .read-more { 
+            color: var(--primary-blue); text-decoration: none; font-weight: 700; font-size: 0.82rem; 
+            display: inline-flex; align-items: center; gap: 8px; margin-top: auto; transition: var(--transition);
+        }
+        .read-more:hover { color: var(--accent-gold-hover); }
+
+        /* --- FOOTER --- */
+        footer { 
+            background: var(--primary-blue); color: white; padding: 90px 25px 40px; border-top: 5px solid var(--accent-gold); margin-top: 60px;
+        }
+        .footer-grid {
+            max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 50px;
+        }
+        .footer-col h4 { color: var(--accent-gold); margin-bottom: 24px; font-size: 1.15rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 14px; }
+        .footer-links a { color: rgba(255,255,255,0.75); text-decoration: none; transition: var(--transition); display: inline-block; }
+        .footer-links a:hover { color: var(--accent-gold); transform: translateX(4px); }
+
+        @media (max-width: 992px) {
+            .nav-menu {
+                position: fixed; top: 0; right: -100%; height: 100vh; width: 300px;
+                background: var(--primary-blue); flex-direction: column; padding: 100px 40px;
+                transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -10px 0 30px rgba(0,0,0,0.3);
+                align-items: flex-start; z-index: 999; gap: 15px;
+            }
+            .nav-menu.active { right: 0; }
+            .mobile-toggle { display: block; z-index: 1001; }
+            
+            .dropdown-content { 
+                position: static; opacity: 1; visibility: visible; background: none; box-shadow: none; 
+                transform: none; padding-left: 15px; border-top: none; min-width: unset; display: none;
+            }
+            .nav-menu li.mobile-open .dropdown-content { display: block; }
+            .dropdown-content a { color: rgba(255, 255, 255, 0.8) !important; padding: 8px 10px !important; }
+            .dropdown-content a:hover { padding-left: 15px !important; color: var(--accent-gold) !important; }
+            .portal-btn { margin-left: 0; margin-top: 15px; width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="main-header">
+        <div class="nav-container">
+            <a href="index.html" class="logo-block">
+                <img src="cbt/assets/images/logo.png" alt="SCS Logo" onerror="this.src='https://via.placeholder.com/52x52?text=SCS'">
+                <div class="logo-text">ST. CHRISTOPHER <span>School</span></div>
+            </a>
+
+            <nav>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="has-dropdown">
+                        <a href="#">About <i class="fas fa-chevron-down" style="font-size: 0.65rem; margin-left: 2px;"></i></a>
+                        <div class="dropdown-content">
+                            <a href="about-vision.html">Our Vision</a>
+                            <a href="about-history.html">School History</a>
+                            <a href="about-leadership.html">Leadership Team</a>
+                        </div>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#">Academics <i class="fas fa-chevron-down" style="font-size: 0.65rem; margin-left: 2px;"></i></a>
+                        <div class="dropdown-content">
+                            <a href="academics-curriculum.html">Curriculum Overview</a>
+                            <a href="academics-labs.html">Science & Tech Lab</a>
+                            <a href="academics-calendar.html">Academic Calendar</a>
+                        </div>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#">Admissions <i class="fas fa-chevron-down" style="font-size: 0.65rem; margin-left: 2px;"></i></a>
+                        <div class="dropdown-content">
+                            <a href="admissions-apply.html">How to Apply</a>
+                            <a href="admissions-fees.html">Tuition Fees</a>
+                            <a href="admissions-scholarships.html">Scholarships</a>
+                        </div>
+                    </li>
+                    <li><a href="cbt/pages/login.html" class="portal-btn"><i class="fas fa-sign-in-alt"></i> Portal Login</a></li>
+                </ul>
+            </nav>
+
+            <div class="mobile-toggle" id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="banner">
+        <h1>Academic Calendar</h1>
+        <p>Strategic Key Operational Timelines for the 2026 Academic Term</p>
+    </div>
+
+    <div class="content-section">
+        <div class="cal-card">
+            <h2>Third Term (2025/2026 Session) Outline</h2>
+            
+            <div class="term-block">
+                <h3>Key Mid-Term Schedules</h3>
+                <div class="event-row">
+                    <span class="event-title">Resumption & Assembly Sessions</span>
+                    <span class="event-date">May 4, 2026</span>
+                </div>
+                <div class="event-row">
+                    <span class="event-title">Mid-Term Assessment Reviews</span>
+                    <span class="event-date">June 8 - 11, 2026</span>
+                </div>
+                <div class="event-row">
+                    <span class="event-title">Project Exhibition Presentation</span>
+                    <span class="event-date">June 18, 2026</span>
+                </div>
+            </div>
+
+            <div class="term-block">
+                <h3>Examination & Vacation Guidelines</h3>
+                <div class="event-row">
+                    <span class="event-title">General Final Promotional Exams</span>
+                    <span class="event-date">June 22 - 26, 2026</span>
+                </div>
+                <div class="event-row">
+                    <span class="event-title">Term Conclusion & Report Cards</span>
+                    <span class="event-date">July 10, 2026</span>
+                </div>
+                <div class="event-row">
+                    <span class="event-title">Next Session Resumption Portal</span>
+                    <span class="event-date">September 14, 2026</span>
+                </div>
+            </div>
+            
+            <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> Return to Homepage</a>
+        </div>
+    </div>
+
+    <!-- LIVE DATABASE NEWS FEED FOR ACADEMICS PAGE -->
+    <section class="live-news-section">
+        <div class="section-header">
+            <h2>Recent Announcements</h2>
+            <div></div>
+        </div>
+        <div id="calendar-news-container">
+            <p style="text-align: center; color: var(--text-muted); grid-column: 1/-1;">Synchronizing news feed...</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>About SCS</h4>
+                <p style="opacity: 0.75; font-size: 0.9rem;">Providing world-class education since 2022. Strategic learning is our foundation for global success.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="academics-calendar.html">Academic Calendar</a></li>
+                    <li><a href="cbt/pages/notes.html">E-Library Access</a></li>
+                    <li><a href="careers.html">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Operational Hub</h4>
+                <ul class="footer-links">
+                    <li><a href="https://maps.app.goo.gl/LtjfK5vvmwbUdCuv9" target="_blank" style="line-height: 1.4;"><i class="fas fa-map-marker-alt" style="margin-right: 5px; color: var(--accent-gold);"></i> 5 Obi Ikechukwu Road, Agbor-Obi, Delta State</a></li>
+                </ul>
+                <p style="opacity: 0.75; margin-top: 15px; font-size: 0.9rem;"><i class="fas fa-envelope" style="margin-right: 5px; color: var(--accent-gold);"></i> info@scs.org.ng</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 60px; opacity: 0.6; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px;">
+            © 2026 St. Christopher School. Strategic Academic Framework v3.5
+        </div>
+    </footer>
+
+    <script>
+        // --- ASYNC LIVE DATABASE NEWS FETCHER ---
+        async function fetchCalendarNews() {
+            const container = document.getElementById('calendar-news-container');
+            try {
+                // Accessing the shared dynamic JSON database file
+                const response = await fetch('cbt/data/news.json');
+                if (!response.ok) throw new Error("Could not fetch news database.");
+                const newsItems = await response.json();
+                
+                container.innerHTML = newsItems.map(item => `
+                    <article class="news-card">
+                        <div class="news-image">
+                            <span class="category-tag">${item.category}</span>
+                            <img src="${item.image}" alt="${item.title}" onerror="this.src='https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=600&auto=format&fit=crop'">
+                        </div>
+                        <div class="news-body">
+                            <span class="news-date"><i class="far fa-calendar-alt"></i> ${item.date}</span>
+                            <h3>${item.title}</h3>
+                            <p>${item.excerpt}</p>
+                            <a href="about-history.html" class="read-more">Read Full Report <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                `).join('');
+            } catch (error) {
+                console.error("Error loading news database on Calendar Page:", error);
+                container.innerHTML = `
+                    <div style="text-align: center; grid-column: 1/-1; padding: 40px; color: var(--text-muted);">
+                        <i class="fas fa-exclamation-circle" style="font-size: 2rem; color: var(--accent-gold); margin-bottom: 10px;"></i>
+                        <p>Database synchronization is temporarily offline. Operational reports can still be accessed directly on the school notice boards.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // --- MENU INTERFACE LOGIC ---
+        const menuBtn = document.getElementById('menu-btn');
+        const navMenu = document.getElementById('nav-menu');
+
+        menuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuBtn.querySelector('i').classList.toggle('fa-bars');
+            menuBtn.querySelector('i').classList.toggle('fa-times');
+        });
+
+        document.querySelectorAll('.nav-menu > .has-dropdown').forEach(item => {
+            item.addEventListener('click', () => {
+                if (window.innerWidth <= 992) {
+                    item.classList.toggle('mobile-open');
+                }
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchCalendarNews();
+        });
+    </script>
+</body>
+</html>

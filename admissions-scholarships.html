@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scholarships | St. Christopher School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #020169;
+            --accent-gold: #FEC009;
+            --text-dark: #1a1a1a;
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --shadow-3d-lg: 0 16px 32px rgba(2, 1, 105, 0.12), 0 24px 48px rgba(0,0,0,0.12);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; color: var(--text-dark); background: #f4f6fa; line-height: 1.6; }
+        
+        .banner {
+            background: linear-gradient(rgba(2, 1, 105, 0.85), rgba(2, 1, 105, 0.85)), url('https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+            color: white; text-align: center; padding: 120px 20px 60px;
+        }
+        .banner h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 10px; color: var(--accent-gold); }
+        .banner p { font-size: 1.1rem; opacity: 0.9; }
+
+        .content-section { max-width: 900px; margin: 60px auto; padding: 0 25px; }
+        .scholarship-card {
+            background: white; border-radius: 20px; padding: 40px;
+            box-shadow: var(--shadow-3d-lg); border-top: 5px solid var(--accent-gold);
+        }
+        .scholarship-card h2 { color: var(--primary-blue); font-family: 'Playfair Display', serif; margin-bottom: 20px; }
+        .scholarship-card p { margin-bottom: 30px; color: #444; }
+        
+        .scheme-box { background: #fdfaf2; border-left: 4px solid var(--accent-gold); padding: 25px; border-radius: 8px; margin-bottom: 25px; }
+        .scheme-box h3 { color: var(--primary-blue); margin-bottom: 10px; font-size: 1.2rem; }
+        .scheme-box p { margin-bottom: 0; font-size: 0.95rem; }
+
+        .back-home { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--primary-blue); font-weight: 700; margin-top: 30px; transition: var(--transition); }
+        .back-home:hover { color: var(--accent-gold); transform: translateX(-5px); }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <h1>Scholarships & Support</h1>
+        <p>Rewarding Brilliance, Determination and Academic Rigor</p>
+    </div>
+    <div class="content-section">
+        <div class="scholarship-card">
+            <h2>Nurturing Young Talents</h2>
+            <p>St. Christopher School runs localized academic support programs to ensure outstanding intellectual talents are rewarded with seamless progress paths regardless of financial limits.</p>
+            
+            <div class="scheme-box">
+                <h3>The Christopher Academic Excellence Grant</h3>
+                <p>Awarded to the overall top-performing student transitioning from Junior Secondary to Senior High levels, covering partial tuition support and core textbook materials.</p>
+            </div>
+
+            <div class="scheme-box">
+                <h3>Stem & Coding Young Catalyst Initiative</h3>
+                <p>Designed to identify pupils demonstrating creative technical problem-solving capacities or software creation projects during our annual science displays.</p>
+            </div>
+            
+            <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> Return to Homepage</a>
+        </div>
+    </div>
+</body>
+</html>

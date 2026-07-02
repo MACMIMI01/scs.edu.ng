@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Apply | St. Christopher School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #020169;
+            --accent-gold: #FEC009;
+            --text-dark: #1a1a1a;
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --shadow-3d-lg: 0 16px 32px rgba(2, 1, 105, 0.12), 0 24px 48px rgba(0,0,0,0.12);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; color: var(--text-dark); background: #f4f6fa; line-height: 1.6; }
+        
+        .banner {
+            background: linear-gradient(rgba(2, 1, 105, 0.85), rgba(2, 1, 105, 0.85)), url('https://images.unsplash.com/photo-1525921429571-473b9e0f316f?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+            color: white; text-align: center; padding: 120px 20px 60px;
+        }
+        .banner h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 10px; color: var(--accent-gold); }
+        .banner p { font-size: 1.1rem; opacity: 0.9; }
+
+        .content-section { max-width: 900px; margin: 60px auto; padding: 0 25px; }
+        .apply-card {
+            background: white; border-radius: 20px; padding: 40px;
+            box-shadow: var(--shadow-3d-lg); border-top: 5px solid var(--accent-gold);
+        }
+        .apply-card h2 { color: var(--primary-blue); font-family: 'Playfair Display', serif; margin-bottom: 20px; }
+        
+        .step { display: flex; gap: 20px; margin-bottom: 30px; }
+        .step-number { background: var(--primary-blue); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; flex-shrink: 0; box-shadow: 0 4px 10px rgba(2,1,105,0.2); }
+        .step-text h3 { color: var(--primary-blue); margin-bottom: 8px; }
+        .step-text p { color: #555; font-size: 0.95rem; }
+
+        .back-home { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--primary-blue); font-weight: 700; margin-top: 20px; transition: var(--transition); }
+        .back-home:hover { color: var(--accent-gold); transform: translateX(-5px); }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <h1>How to Apply</h1>
+        <p>Join St. Christopher School Learning Community</p>
+    </div>
+    <div class="content-section">
+        <div class="apply-card">
+            <h2>The Admission Procedure</h2>
+            <p style="margin-bottom: 40px; color: #666;">Our enrollment procedure is open to forward-thinking candidates who seek high standard educational pathways. Complete our process using three key guidelines below:</p>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-text">
+                    <h3>Purchase & Fill Admission Documents</h3>
+                    <p>Acquire application guides from our main accounts counter at St. Christopher School Campus, Agbor-Obi, or print guidelines via our digital student portal.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-text">
+                    <h3>Student Assessment & Screening</h3>
+                    <p>All child applications undergo basic educational assessment reviews in Mathematics and English Language to gauge standard academic alignment levels.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-text">
+                    <h3>Approval & Document Upload</h3>
+                    <p>Upon evaluation success, final administrative offer letters are drafted, after which parents complete onboarding fee terms.</p>
+                </div>
+            </div>
+            
+            <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> Return to Homepage</a>
+        </div>
+    </div>
+</body>
+</html>

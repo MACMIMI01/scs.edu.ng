@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadership Team | St. Christopher School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #020169;
+            --accent-gold: #FEC009;
+            --text-dark: #1a1a1a;
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --shadow-3d-lg: 0 16px 32px rgba(2, 1, 105, 0.12), 0 24px 48px rgba(0,0,0,0.12);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; color: var(--text-dark); background: #f4f6fa; line-height: 1.6; }
+        
+        .banner {
+            background: linear-gradient(rgba(2, 1, 105, 0.85), rgba(2, 1, 105, 0.85)), url('https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+            color: white; text-align: center; padding: 120px 20px 60px;
+        }
+        .banner h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 10px; color: var(--accent-gold); }
+        .banner p { font-size: 1.1rem; opacity: 0.9; }
+
+        .content-section { max-width: 1100px; margin: 60px auto; padding: 0 25px; }
+        .intro-text { text-align: center; max-width: 700px; margin: 0 auto 50px; }
+        .intro-text h2 { color: var(--primary-blue); font-family: 'Playfair Display', serif; margin-bottom: 15px; }
+        
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .team-card {
+            background: white; border-radius: 18px; padding: 30px; text-align: center;
+            box-shadow: var(--shadow-3d-lg); border-top: 4px solid var(--accent-gold);
+            transform-style: preserve-3d; transition: var(--transition);
+        }
+        .team-card:hover { transform: translateY(-8px) rotateY(3deg); }
+        .avatar { width: 120px; height: 120px; border-radius: 50%; background: #eee; margin: 0 auto 20px; border: 4px solid #f0f2f7; overflow: hidden; }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .team-card h3 { color: var(--primary-blue); margin-bottom: 5px; font-size: 1.25rem; }
+        .team-card span { display: block; color: #888; font-size: 0.85rem; font-weight: 700; margin-bottom: 15px; text-transform: uppercase; }
+        .team-card p { font-size: 0.9rem; color: #555; }
+
+        .back-home { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--primary-blue); font-weight: 700; margin-top: 50px; transition: var(--transition); }
+        .back-home:hover { color: var(--accent-gold); transform: translateX(-5px); }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <h1>Our Leadership</h1>
+        <p>Steering the Vision Towards Academic Brilliance</p>
+    </div>
+    <div class="content-section">
+        <div class="intro-text">
+            <h2>Committed Educational Pioneers</h2>
+            <p>Our administration works continuously to sustain safe, high-performing learning spaces for our student community.</p>
+        </div>
+        
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="avatar"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=250&auto=format&fit=crop" alt="Director Profile"></div>
+                <h3>Rev. Dr. A. Christopher</h3>
+                <span>Chairman & Proprietor</span>
+                <p>Establishing holistic values and overseeing our school's fundamental developmental structures.</p>
+            </div>
+            <div class="team-card">
+                <div class="avatar"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=250&auto=format&fit=crop" alt="Principal Profile"></div>
+                <h3>Dr. (Mrs) Helen Obi</h3>
+                <span>Principal Administrator</span>
+                <p>Directing academic strategy, operational policy, and external curriculum development integrations.</p>
+            </div>
+            <div class="team-card">
+                <div class="avatar"><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=250&auto=format&fit=crop" alt="Director of Studies"></div>
+                <h3>Mr. Kingsley Chukwuka</h3>
+                <span>Director of Studies</span>
+                <p>Coordinating class syllabi execution, exam logistics, and tech system optimization frameworks.</p>
+            </div>
+        </div>
+        
+        <div style="text-align: center;">
+            <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> Return to Homepage</a>
+        </div>
+    </div>
+</body>
+</html>
