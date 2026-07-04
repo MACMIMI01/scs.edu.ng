@@ -3,7 +3,7 @@ name: Deploy to InfinityFree
 on:
   push:
     branches:
-      - main # If your default branch is master, change this to master
+      - main
 
 jobs:
   web-deploy:
@@ -19,5 +19,5 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        # Points directly to your scs.ifree.page folder
+        # Pushes your school site files directly into your active domain folder
         server-dir: scs.ifree.page/htdocs/
